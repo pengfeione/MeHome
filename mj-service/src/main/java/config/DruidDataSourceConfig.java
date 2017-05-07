@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class DruidDataSourceConfig {
     private DruidDataSource druidDataSource;
 
-    @Bean(initMethod = "init", destroyMethod = "close", name = "ShiHouModuleKplGuess")
+    @Bean(initMethod = "init", destroyMethod = "close", name = "MeHomeServiceDataSource")
     @Primary
     public DruidDataSource dataSource(@Value("${server.jdbc.url}") String url,
                                       @Value("${server.jdbc.username}") String username,

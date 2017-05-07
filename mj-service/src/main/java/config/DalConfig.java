@@ -35,7 +35,7 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class DalConfig {
     @Autowired
-    @Qualifier("ShiHouModuleKplGuess")
+    @Qualifier("MeHomeServiceDataSource")
     public DruidDataSource druidDataSource;
     @Value(value = "classpath:sqlmap/*.xml")
     private Resource[] mapperLocations;
