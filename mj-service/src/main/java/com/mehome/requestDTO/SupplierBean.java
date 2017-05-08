@@ -8,4 +8,5 @@ import com.mehome.utils.PageMysqlUtil;
  */
 public class SupplierBean extends PageMysqlUtil{
 
+	private Integer supplierId;
 }
