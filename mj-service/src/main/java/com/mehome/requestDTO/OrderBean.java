@@ -1,5 +1,7 @@
 package com.mehome.requestDTO;
 
-public class OrderBean {
+import com.mehome.utils.PageMysqlUtil;
+
+public class OrderBean extends PageMysqlUtil{
 
 }

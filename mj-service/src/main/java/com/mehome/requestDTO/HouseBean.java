@@ -1,5 +1,7 @@
 package com.mehome.requestDTO;
 
-public class HouseBean {
+import com.mehome.utils.PageMysqlUtil;
+
+public class HouseBean extends PageMysqlUtil{
 
 }

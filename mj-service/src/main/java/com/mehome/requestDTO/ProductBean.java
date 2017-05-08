@@ -1,5 +1,7 @@
 package com.mehome.requestDTO;
 
-public class ProductBean {
+import com.mehome.utils.PageMysqlUtil;
+
+public class ProductBean extends PageMysqlUtil{
 
 }
