@@ -1,24 +1,18 @@
-package listener;
+package com.mehome.listener;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.annotation.Order;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.File;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by renhui on 2017/3/2.

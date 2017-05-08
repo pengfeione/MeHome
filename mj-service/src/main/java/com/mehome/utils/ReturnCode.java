@@ -1,4 +1,4 @@
-package utils;
+package com.mehome.utils;
 
 /**
  * Created by pengf on 2014/9/26.

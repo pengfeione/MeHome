@@ -1,4 +1,4 @@
-package utils;
+package com.mehome.utils;
 
 /**
  * Created by renhui on 2017/5/5.
