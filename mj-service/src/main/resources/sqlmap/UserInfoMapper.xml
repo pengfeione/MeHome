@@ -3,6 +3,7 @@
 <mapper namespace="com.mehome.dao.UserInfoDao" >
   <resultMap id="BaseResultMap" type="com.mehome.domain.UserInfo" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_amount" property="userAmount" jdbcType="INTEGER" />
     <result column="wechat_id" property="wechatId" jdbcType="VARCHAR" />
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
@@ -16,7 +17,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    user_id, wechat_id, nick_name, avatar, real_name, mobile, id_card, open_id, company_id, 
+    user_id, user_amount, wechat_id, nick_name, avatar, real_name, mobile, id_card, open_id, company_id, 
     company_status, create_time, update_time
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -30,12 +31,12 @@
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.mehome.domain.UserInfo" >
-    insert into user_info (user_id, wechat_id, nick_name, 
+    insert into user_info (user_id, user_amount, wechat_id, nick_name, 
       avatar, real_name, mobile, 
       id_card, open_id, company_id, 
       company_status, create_time, update_time
       )
-    values (#{userId,jdbcType=INTEGER}, #{wechatId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+    values (#{userId,jdbcType=INTEGER}, #{userAmount,jdbcType=INTEGER}, #{wechatId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
       #{avatar,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
       #{idCard,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER}, 
       #{companyStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
@@ -46,6 +47,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
         user_id,
+      </if>
+      <if test="userAmount != null" >
+        user_amount,
       </if>
       <if test="wechatId != null" >
         wechat_id,
@@ -85,6 +89,9 @@
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
       </if>
+      <if test="userAmount != null" >
+        #{userAmount,jdbcType=INTEGER},
+      </if>
       <if test="wechatId != null" >
         #{wechatId,jdbcType=VARCHAR},
       </if>
@@ -123,6 +130,9 @@
   <update id="updateRequired" parameterType="com.mehome.domain.UserInfo" >
     update user_info
     <set >
+      <if test="userAmount != null" >
+        user_amount = #{userAmount,jdbcType=INTEGER},
+      </if>
       <if test="wechatId != null" >
         wechat_id = #{wechatId,jdbcType=VARCHAR},
       </if>
@@ -161,7 +171,8 @@
   </update>
   <update id="update" parameterType="com.mehome.domain.UserInfo" >
     update user_info
-    set wechat_id = #{wechatId,jdbcType=VARCHAR},
+    set user_amount = #{userAmount,jdbcType=INTEGER},
+      wechat_id = #{wechatId,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},
       real_name = #{realName,jdbcType=VARCHAR},

@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class UserInfo {
     private Integer userId;
+    
+    private Integer userAmount;
 
     private String wechatId;
 
@@ -35,7 +37,15 @@ public class UserInfo {
         this.userId = userId;
     }
 
-    public String getWechatId() {
+    public Integer getUserAmount() {
+		return userAmount;
+	}
+
+	public void setUserAmount(Integer userAmount) {
+		this.userAmount = userAmount;
+	}
+
+	public String getWechatId() {
         return wechatId;
     }
 
@@ -136,6 +146,7 @@ public class UserInfo {
         }
         UserInfo other = (UserInfo) that;
         return (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+        	&& (this.getUserAmount() == null ? other.getUserAmount() == null : this.getUserAmount().equals(other.getUserAmount()))
             && (this.getWechatId() == null ? other.getWechatId() == null : this.getWechatId().equals(other.getWechatId()))
             && (this.getNickName() == null ? other.getNickName() == null : this.getNickName().equals(other.getNickName()))
             && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()))
@@ -154,6 +165,7 @@ public class UserInfo {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
+        result = prime * result + ((getUserAmount() == null) ? 0 : getUserAmount().hashCode());
         result = prime * result + ((getWechatId() == null) ? 0 : getWechatId().hashCode());
         result = prime * result + ((getNickName() == null) ? 0 : getNickName().hashCode());
         result = prime * result + ((getAvatar() == null) ? 0 : getAvatar().hashCode());
