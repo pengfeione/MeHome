@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mehome.dao.AreaListDao" >
+  <resultMap id="BaseResultMap" type="com.mehome.domain.AreaList" >
+    <id column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="area_post_code" property="areaPostCode" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="area_active" property="areaActive" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    area_id, area_post_code, update_time, city_id, area_name, area_active
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from area_list
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from area_list
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mehome.domain.AreaList" >
+    insert into area_list (area_id, area_post_code, update_time, 
+      city_id, area_name, area_active
+      )
+    values (#{areaId,jdbcType=INTEGER}, #{areaPostCode,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{cityId,jdbcType=INTEGER}, #{areaName,jdbcType=VARCHAR}, #{areaActive,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertRequired" parameterType="com.mehome.domain.AreaList" >
+    insert into area_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="areaPostCode != null" >
+        area_post_code,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+      <if test="areaActive != null" >
+        area_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="areaPostCode != null" >
+        #{areaPostCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaActive != null" >
+        #{areaActive,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateRequired" parameterType="com.mehome.domain.AreaList" >
+    update area_list
+    <set >
+      <if test="areaPostCode != null" >
+        area_post_code = #{areaPostCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaActive != null" >
+        area_active = #{areaActive,jdbcType=BIT},
+      </if>
+    </set>
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </update>
+  <update id="update" parameterType="com.mehome.domain.AreaList" >
+    update area_list
+    set area_post_code = #{areaPostCode,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      city_id = #{cityId,jdbcType=INTEGER},
+      area_name = #{areaName,jdbcType=VARCHAR},
+      area_active = #{areaActive,jdbcType=BIT}
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </update>
+</mapper>
