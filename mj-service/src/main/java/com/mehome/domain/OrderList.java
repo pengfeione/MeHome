@@ -45,6 +45,8 @@ public class OrderList {
     private Boolean payOnline;
 
     private String payType;
+    
+    private String payFlow;
 
     private Integer payAmount;
 
@@ -233,8 +235,16 @@ public class OrderList {
     public void setPayType(String payType) {
         this.payType = payType == null ? null : payType.trim();
     }
+    
+    public String getPayFlow() {
+		return payFlow;
+	}
 
-    public Integer getPayAmount() {
+	public void setPayFlow(String payFlow) {
+		this.payFlow = payFlow == null ? null : payFlow.trim();;
+	}
+
+	public Integer getPayAmount() {
         return payAmount;
     }
 

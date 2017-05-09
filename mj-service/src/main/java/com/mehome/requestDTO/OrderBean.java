@@ -380,6 +380,23 @@ public class OrderBean extends PageMysqlUtil{
 		this.setHouseSubject(order.getHouseSubject());
 		this.setOrderReason(order.getOrderReason());
 		this.setOrderStatus(order.getOrderStatus());
+		this.setOrigAmount(order.getOrigAmount());
+		this.setOrigRent(order.getOrigRent());
+		this.setPayAccount(order.getPayAccount());
+		this.setPayAmount(order.getPayAmount());
+		this.setPayer(order.getPayer());
+		this.setPayFlow(order.getPayFlow());
+		this.setPayOnline(order.getPayOnline());
+		this.setPayTime(order.getPayTime()==null?null:DateUtils.dateToStr(order.getPayTime()));
+		this.setPayType(order.getPayType());
+		this.setPlatformHost(order.getPlatformHost());
+		this.setProductId(order.getProductId());
+		this.setProductName(order.getProductName());
+		this.setStartTime(order.getStartTime()==null?null:DateUtils.dateToStr(order.getStartTime()));
+		this.setSupplierId(order.getSupplierId());
+		this.setSupplierName(order.getSupplierName());
+		this.setTenancy(order.getTenancy());
+		this.setUpdateTime(order.getUpdateTime()==null?null:DateUtils.dateToStr(order.getUpdateTime()));
 	}
 	
 	
