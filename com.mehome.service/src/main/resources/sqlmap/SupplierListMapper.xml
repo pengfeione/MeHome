@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mehome.dao.SupplierListDao" >
+  <resultMap id="BaseResultMap" type="com.mehome.domain.SupplierList" >
+    <id column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
+    <result column="supplier_phone" property="supplierPhone" jdbcType="VARCHAR" />
+    <result column="recipient_type" property="recipientType" jdbcType="VARCHAR" />
+    <result column="recipient_account" property="recipientAccount" jdbcType="VARCHAR" />
+    <result column="rent_online" property="rentOnline" jdbcType="BIT" />
+    <result column="rent_percent" property="rentPercent" jdbcType="DECIMAL" />
+    <result column="deposit_online" property="depositOnline" jdbcType="BIT" />
+    <result column="deposit_percent" property="depositPercent" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    supplier_id, supplier_name, supplier_phone, recipient_type, recipient_account, rent_online, 
+    rent_percent, deposit_online, deposit_percent, create_time, update_time
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from supplier_list
+    where supplier_id = #{supplierId,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from supplier_list
+    where supplier_id = #{supplierId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mehome.domain.SupplierList" >
+    insert into supplier_list (supplier_id, supplier_name, supplier_phone, 
+      recipient_type, recipient_account, rent_online, 
+      rent_percent, deposit_online, deposit_percent, 
+      create_time, update_time)
+    values (#{supplierId,jdbcType=INTEGER}, #{supplierName,jdbcType=VARCHAR}, #{supplierPhone,jdbcType=VARCHAR}, 
+      #{recipientType,jdbcType=VARCHAR}, #{recipientAccount,jdbcType=VARCHAR}, #{rentOnline,jdbcType=BIT}, 
+      #{rentPercent,jdbcType=DECIMAL}, #{depositOnline,jdbcType=BIT}, #{depositPercent,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertRequired" parameterType="com.mehome.domain.SupplierList" >
+    insert into supplier_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="supplierId != null" >
+        supplier_id,
+      </if>
+      <if test="supplierName != null" >
+        supplier_name,
+      </if>
+      <if test="supplierPhone != null" >
+        supplier_phone,
+      </if>
+      <if test="recipientType != null" >
+        recipient_type,
+      </if>
+      <if test="recipientAccount != null" >
+        recipient_account,
+      </if>
+      <if test="rentOnline != null" >
+        rent_online,
+      </if>
+      <if test="rentPercent != null" >
+        rent_percent,
+      </if>
+      <if test="depositOnline != null" >
+        deposit_online,
+      </if>
+      <if test="depositPercent != null" >
+        deposit_percent,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="supplierId != null" >
+        #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="supplierName != null" >
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierPhone != null" >
+        #{supplierPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientType != null" >
+        #{recipientType,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientAccount != null" >
+        #{recipientAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="rentOnline != null" >
+        #{rentOnline,jdbcType=BIT},
+      </if>
+      <if test="rentPercent != null" >
+        #{rentPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="depositOnline != null" >
+        #{depositOnline,jdbcType=BIT},
+      </if>
+      <if test="depositPercent != null" >
+        #{depositPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateRequired" parameterType="com.mehome.domain.SupplierList" >
+    update supplier_list
+    <set >
+      <if test="supplierName != null" >
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierPhone != null" >
+        supplier_phone = #{supplierPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientType != null" >
+        recipient_type = #{recipientType,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientAccount != null" >
+        recipient_account = #{recipientAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="rentOnline != null" >
+        rent_online = #{rentOnline,jdbcType=BIT},
+      </if>
+      <if test="rentPercent != null" >
+        rent_percent = #{rentPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="depositOnline != null" >
+        deposit_online = #{depositOnline,jdbcType=BIT},
+      </if>
+      <if test="depositPercent != null" >
+        deposit_percent = #{depositPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where supplier_id = #{supplierId,jdbcType=INTEGER}
+  </update>
+  <update id="update" parameterType="com.mehome.domain.SupplierList" >
+    update supplier_list
+    set supplier_name = #{supplierName,jdbcType=VARCHAR},
+      supplier_phone = #{supplierPhone,jdbcType=VARCHAR},
+      recipient_type = #{recipientType,jdbcType=VARCHAR},
+      recipient_account = #{recipientAccount,jdbcType=VARCHAR},
+      rent_online = #{rentOnline,jdbcType=BIT},
+      rent_percent = #{rentPercent,jdbcType=DECIMAL},
+      deposit_online = #{depositOnline,jdbcType=BIT},
+      deposit_percent = #{depositPercent,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where supplier_id = #{supplierId,jdbcType=INTEGER}
+  </update>
+</mapper>

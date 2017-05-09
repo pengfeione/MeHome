@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mehome.dao.ProductRalationBasicDao" >
+  <resultMap id="BaseResultMap" type="com.mehome.domain.ProductRalationBasic" >
+    <id column="ralation_id" property="ralationId" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="basic_id" property="basicId" jdbcType="INTEGER" />
+    <result column="basic_type" property="basicType" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ralation_id, product_id, basic_id, basic_type, create_time
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_ralation_basic
+    where ralation_id = #{ralationId,jdbcType=VARCHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from product_ralation_basic
+    where ralation_id = #{ralationId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mehome.domain.ProductRalationBasic" >
+    insert into product_ralation_basic (ralation_id, product_id, basic_id, 
+      basic_type, create_time)
+    values (#{ralationId,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{basicId,jdbcType=INTEGER}, 
+      #{basicType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertRequired" parameterType="com.mehome.domain.ProductRalationBasic" >
+    insert into product_ralation_basic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ralationId != null" >
+        ralation_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="basicId != null" >
+        basic_id,
+      </if>
+      <if test="basicType != null" >
+        basic_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ralationId != null" >
+        #{ralationId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="basicId != null" >
+        #{basicId,jdbcType=INTEGER},
+      </if>
+      <if test="basicType != null" >
+        #{basicType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateRequired" parameterType="com.mehome.domain.ProductRalationBasic" >
+    update product_ralation_basic
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="basicId != null" >
+        basic_id = #{basicId,jdbcType=INTEGER},
+      </if>
+      <if test="basicType != null" >
+        basic_type = #{basicType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ralation_id = #{ralationId,jdbcType=VARCHAR}
+  </update>
+  <update id="update" parameterType="com.mehome.domain.ProductRalationBasic" >
+    update product_ralation_basic
+    set product_id = #{productId,jdbcType=INTEGER},
+      basic_id = #{basicId,jdbcType=INTEGER},
+      basic_type = #{basicType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where ralation_id = #{ralationId,jdbcType=VARCHAR}
+  </update>
+</mapper>
