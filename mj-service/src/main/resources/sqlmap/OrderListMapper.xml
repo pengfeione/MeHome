@@ -23,6 +23,7 @@
     <result column="pay_account" property="payAccount" jdbcType="VARCHAR" />
     <result column="pay_online" property="payOnline" jdbcType="BIT" />
     <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="pay_flow" property="payFlow" jdbcType="VARCHAR" />
     <result column="pay_amount" property="payAmount" jdbcType="INTEGER" />
     <result column="tenancy" property="tenancy" jdbcType="DECIMAL" />
     <result column="deposit_back" property="depositBack" jdbcType="BIT" />
@@ -37,7 +38,7 @@
   <sql id="Base_Column_List" >
     order_id, product_id, product_name, house_id, house_subject, supplier_id, supplier_name, 
     biller, payer, bill_time, pay_time, biller_phone, address, deposit, orig_rent, orig_amount, 
-    discount_rent, discount_amount, pay_account, pay_online, pay_type, pay_amount, tenancy, 
+    discount_rent, discount_amount, pay_account, pay_online, pay_type, pay_flow, pay_amount, tenancy, 
     deposit_back, back_amount, start_time, end_time, platform_host, update_time, order_status, 
     order_reason
   </sql>
@@ -58,7 +59,7 @@
       bill_time, pay_time, biller_phone, 
       address, deposit, orig_rent, 
       orig_amount, discount_rent, discount_amount, 
-      pay_account, pay_online, pay_type, 
+      pay_account, pay_online, pay_type, pay_flow,
       pay_amount, tenancy, deposit_back, 
       back_amount, start_time, end_time, 
       platform_host, update_time, order_status, 
@@ -69,7 +70,7 @@
       #{billTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{billerPhone,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{deposit,jdbcType=INTEGER}, #{origRent,jdbcType=INTEGER}, 
       #{origAmount,jdbcType=INTEGER}, #{discountRent,jdbcType=INTEGER}, #{discountAmount,jdbcType=INTEGER}, 
-      #{payAccount,jdbcType=VARCHAR}, #{payOnline,jdbcType=BIT}, #{payType,jdbcType=VARCHAR}, 
+      #{payAccount,jdbcType=VARCHAR}, #{payOnline,jdbcType=BIT}, #{payType,jdbcType=VARCHAR}, #{payFlow,jdbcType=VARCHAR},
       #{payAmount,jdbcType=INTEGER}, #{tenancy,jdbcType=DECIMAL}, #{depositBack,jdbcType=BIT}, 
       #{backAmount,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
       #{platformHost,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=SMALLINT}, 
@@ -140,6 +141,9 @@
       </if>
       <if test="payType != null" >
         pay_type,
+      </if>
+      <if test="payFlow != null" >
+        pay_flow,
       </if>
       <if test="payAmount != null" >
         pay_amount,
@@ -236,6 +240,9 @@
       <if test="payType != null" >
         #{payType,jdbcType=VARCHAR},
       </if>
+      <if test="payFlow != null" >
+        #{payFlow,jdbcType=VARCHAR},
+      </if>
       <if test="payAmount != null" >
         #{payAmount,jdbcType=INTEGER},
       </if>
@@ -331,6 +338,9 @@
       <if test="payType != null" >
         pay_type = #{payType,jdbcType=VARCHAR},
       </if>
+      <if test="payFlow != null" >
+        pay_flow = #{payFlow,jdbcType=VARCHAR},
+      </if>
       <if test="payAmount != null" >
         pay_amount = #{payAmount,jdbcType=INTEGER},
       </if>
@@ -386,6 +396,7 @@
       pay_account = #{payAccount,jdbcType=VARCHAR},
       pay_online = #{payOnline,jdbcType=BIT},
       pay_type = #{payType,jdbcType=VARCHAR},
+      pay_flow = #{payFlow,jdbcType=VARCHAR},
       pay_amount = #{payAmount,jdbcType=INTEGER},
       tenancy = #{tenancy,jdbcType=DECIMAL},
       deposit_back = #{depositBack,jdbcType=BIT},
@@ -398,4 +409,21 @@
       order_reason = #{orderReason,jdbcType=VARCHAR}
     where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
+  <select id="listAdByCondition" parameterType="com.mehome.requestDTO.OrderBean" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM order_list
+    WHERE 1=1
+    <if test="product_name != null" >
+      AND product_name like CONCAT('%','${productName}','%' )
+    </if>
+    <if test="biller != null">
+      AND biller = #{biller,jdbcType=VARCHAR}
+    </if>
+    <if test="payType != null">
+      AND pay_type = #{payType,jdbcType=VARCHAR}
+    </if>
+    ORDER BY bill_time DESC
+    limit #{pageNow},#{pageSize}
+  </select>
 </mapper>
