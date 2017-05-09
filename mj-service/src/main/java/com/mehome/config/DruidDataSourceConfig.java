@@ -16,7 +16,6 @@ import java.sql.SQLException;
 @EnableTransactionManagement
 public class DruidDataSourceConfig {
     private DruidDataSource druidDataSource;
-
     @Bean(initMethod = "init", destroyMethod = "close", name = "MeHomeServiceDataSource")
     @Primary
     public DruidDataSource dataSource(@Value("${server.jdbc.url}") String url,

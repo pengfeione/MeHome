@@ -31,7 +31,7 @@ import javax.sql.DataSource;
 @AutoConfigureAfter({DruidDataSourceConfig.class})
 @MapperScan(value = "com.mehome.dao", sqlSessionFactoryRef = "sqlSessionFactory")
 @EnableTransactionManagement
-public class DalConfig {
+public class MyBatisConfig {
     @Autowired
     @Qualifier("MeHomeServiceDataSource")
     public DruidDataSource druidDataSource;
