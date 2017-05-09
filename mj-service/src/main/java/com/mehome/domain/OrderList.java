@@ -62,7 +62,7 @@ public class OrderList {
 
     private Date updateTime;
 
-    private Short orderStatus;
+    private Integer orderStatus;
 
     private String orderReason;
 
@@ -298,11 +298,11 @@ public class OrderList {
         this.updateTime = updateTime;
     }
 
-    public Short getOrderStatus() {
+    public Integer getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(Short orderStatus) {
+    public void setOrderStatus(Integer orderStatus) {
         this.orderStatus = orderStatus;
     }
 

@@ -379,6 +379,7 @@ public class OrderBean extends PageMysqlUtil{
 		this.setHouseId(order.getHouseId());
 		this.setHouseSubject(order.getHouseSubject());
 		this.setOrderReason(order.getOrderReason());
+		this.setOrderStatus(order.getOrderStatus());
 	}
 	
 	
