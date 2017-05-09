@@ -209,7 +209,34 @@ public class ProductBean extends PageMysqlUtil {
 		product.setListpic(this.getListpic());
 		product.setNetRulesUrl(this.getNetRulesUrl());
 		product.setPersonalWelfare(this.getPersonalWelfare());
+		product.setPosition(this.getPosition());
+		product.setProductActive(Boolean.TRUE);
+		product.setProductDetail(this.getProductDetail());
+		product.setProductName(this.getProductName());
+		product.setProductSort(this.getProductSort()==null?0:this.getProductSort());
+		product.setRules(this.getRules());
+		product.setSupplierId(this.getSupplierId());
 		return product;
-		
+	}
+	public ProductBean(ProductList product,List<HouseBean> houseList,List<BasicBean> basicList,List<CommentBean> commentList,List<Integer> welfareList){
+		this.setAddress(product.getAddress());
+		this.setAreaId(product.getAreaId());
+		this.setBasicList(basicList);
+		this.setCommentList(commentList);
+		this.setDetailpic(product.getDetailpic());
+		this.setHasPersonal(product.getHasPersonal());
+		this.setHouseList(houseList);
+		this.setIsWelfare(product.getIsWelfare());
+		this.setListpic(product.getListpic());
+		this.setNetRulesUrl(product.getNetRulesUrl());
+		this.setPersonalWelfare(product.getPersonalWelfare());
+		this.setPosition(product.getPosition());
+		this.setProductActive(product.getProductActive());
+		this.setProductDetail(product.getProductDetail());
+		this.setProductName(product.getProductName());
+		this.setProductSort(product.getProductSort());
+		this.setRules(product.getRules());
+		this.setSupplierId(product.getSupplierId());
+		this.setWelfareList(welfareList);
 	}
 }
