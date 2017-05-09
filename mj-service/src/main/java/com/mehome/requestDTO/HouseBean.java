@@ -1,5 +1,6 @@
 package com.mehome.requestDTO;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -234,8 +235,34 @@ public class HouseBean extends PageMysqlUtil{
 		resource.setSort(this.getSort()==null?0:this.getSort());
 		resource.setStartTime(StringUtils.isEmpty(this.getStartTime())?null:DateUtils.strToDate(this.getStartTime()));
 		resource.setStatus(this.getStatus()==null?HouseStatusEnum.AVAILABLE.getKey():this.getStatus());
-		
+		resource.setSubject(this.getSubject());
+		resource.setSummary(this.getSummary());
+		resource.setSupplierId(this.getSupplierId());
+		resource.setUpdateTime(new Date());
 		return resource;
+	}
+	
+	public HouseBean(HouseResource resource){
+		this.setAddress(resource.getAddress());
+		this.setAreaId(resource.getAreaId());
+		this.setDetail(resource.getDetail());
+		this.setDetailpic(StringUtils.isEmpty(resource.getDetailpic())?null:Arrays.asList(resource.getDetailpic()));
+		this.setEndTime(resource.getEndTime()==null?null:DateUtils.dateToStr(resource.getEndTime()));
+		this.setHouseId(resource.getHouseId());
+		this.setLeaseHolder(resource.getLeaseHolder());
+		this.setListpic(resource.getListpic());
+		this.setPayType(resource.getPayType());
+		this.setPosition(resource.getPosition());
+		this.setRoomArea(resource.getRoomArea());
+		this.setRoomRent(resource.getRoomRent());
+		this.setRoomType(resource.getRoomType());
+		this.setRoomTypeDesc(resource.getRoomTypeDesc());
+		this.setSort(resource.getSort());
+		this.setStartTime(resource.getStartTime()==null?null:DateUtils.dateToStr(resource.getStartTime()));
+		this.setStatus(resource.getStatus());
+		this.setSubject(resource.getSubject());
+		this.setSummary(resource.getSummary());
+		this.setSupplierId(resource.getSupplierId());
 	}
 	
 	
