@@ -18,7 +18,7 @@
     <result column="room_area" property="roomArea" jdbcType="DOUBLE" />
     <result column="room_rent" property="roomRent" jdbcType="INTEGER" />
     <result column="pay_type" property="payType" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="lease_holder" property="leaseHolder" jdbcType="VARCHAR" />
@@ -54,7 +54,7 @@
       #{address,jdbcType=VARCHAR}, #{listpic,jdbcType=VARCHAR}, #{detailpic,jdbcType=VARCHAR}, 
       #{position,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{roomType,jdbcType=INTEGER}, 
       #{roomTypeDesc,jdbcType=VARCHAR}, #{roomArea,jdbcType=DOUBLE}, #{roomRent,jdbcType=INTEGER}, 
-      #{payType,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{payType,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, 
       #{endTime,jdbcType=TIMESTAMP}, #{leaseHolder,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -178,7 +178,7 @@
         #{payType,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=SMALLINT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="startTime != null" >
         #{startTime,jdbcType=TIMESTAMP},
@@ -246,7 +246,7 @@
         pay_type = #{payType,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=SMALLINT},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="startTime != null" >
         start_time = #{startTime,jdbcType=TIMESTAMP},
@@ -283,7 +283,7 @@
       room_area = #{roomArea,jdbcType=DOUBLE},
       room_rent = #{roomRent,jdbcType=INTEGER},
       pay_type = #{payType,jdbcType=VARCHAR},
-      status = #{status,jdbcType=SMALLINT},
+      status = #{status,jdbcType=INTEGER},
       start_time = #{startTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       lease_holder = #{leaseHolder,jdbcType=VARCHAR},

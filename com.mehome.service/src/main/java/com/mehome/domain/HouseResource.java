@@ -35,7 +35,7 @@ public class HouseResource {
 
     private String payType;
 
-    private Short status;
+    private Integer status;
 
     private Date startTime;
 
@@ -175,11 +175,11 @@ public class HouseResource {
         this.payType = payType == null ? null : payType.trim();
     }
 
-    public Short getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Short status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
