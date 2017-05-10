@@ -19,11 +19,12 @@
     <result column="personal_welfare" property="personalWelfare" jdbcType="VARCHAR" />
     <result column="has_personal" property="hasPersonal" jdbcType="BIT" />
     <result column="net_rules_url" property="netRulesUrl" jdbcType="VARCHAR" />
+    <result column="floor" property="floor" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     product_id, supplier_id, area_id, product_name, product_detail, product_sort, listpic, 
     detailpic, address, position, product_active, rules, welfare_id, is_welfare, personal_welfare, 
-    has_personal, net_rules_url
+    has_personal, net_rules_url,floor
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -41,13 +42,13 @@
       listpic, detailpic, address, 
       position, product_active, rules, 
       welfare_id, is_welfare, personal_welfare, 
-      has_personal, net_rules_url)
+      has_personal, net_rules_url,floor)
     values (#{productId,jdbcType=INTEGER}, #{supplierId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, 
       #{productName,jdbcType=VARCHAR}, #{productDetail,jdbcType=VARCHAR}, #{productSort,jdbcType=INTEGER}, 
       #{listpic,jdbcType=VARCHAR}, #{detailpic,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{position,jdbcType=VARCHAR}, #{productActive,jdbcType=BIT}, #{rules,jdbcType=VARCHAR}, 
       #{welfareId,jdbcType=INTEGER}, #{isWelfare,jdbcType=BIT}, #{personalWelfare,jdbcType=VARCHAR}, 
-      #{hasPersonal,jdbcType=BIT}, #{netRulesUrl,jdbcType=VARCHAR})
+      #{hasPersonal,jdbcType=BIT}, #{netRulesUrl,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER})
   </insert>
   <insert id="insertRequired" parameterType="com.mehome.domain.ProductList" >
     insert into product_list
@@ -103,6 +104,9 @@
       <if test="netRulesUrl != null" >
         net_rules_url,
       </if>
+      <if test="floor != null" >
+        floor,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="productId != null" >
@@ -155,6 +159,9 @@
       </if>
       <if test="netRulesUrl != null" >
         #{netRulesUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="floor != null" >
+        #{floor,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -209,6 +216,9 @@
       <if test="netRulesUrl != null" >
         net_rules_url = #{netRulesUrl,jdbcType=VARCHAR},
       </if>
+      <if test="floor != null" >
+        floor = #{floor,jdbcType=INTEGER},
+      </if>
     </set>
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
@@ -229,7 +239,8 @@
       is_welfare = #{isWelfare,jdbcType=BIT},
       personal_welfare = #{personalWelfare,jdbcType=VARCHAR},
       has_personal = #{hasPersonal,jdbcType=BIT},
-      net_rules_url = #{netRulesUrl,jdbcType=VARCHAR}
+      net_rules_url = #{netRulesUrl,jdbcType=VARCHAR},
+      floor = #{floor,jdbcType=INTEGER}
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
 </mapper>

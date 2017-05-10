@@ -34,6 +34,8 @@ public class ProductList {
     private Boolean hasPersonal;
 
     private String netRulesUrl;
+    
+    private Integer floor;
 
     public Integer getProductId() {
         return productId;
@@ -171,7 +173,16 @@ public class ProductList {
         this.netRulesUrl = netRulesUrl == null ? null : netRulesUrl.trim();
     }
 
-    @Override
+    
+    public Integer getFloor() {
+		return floor;
+	}
+
+	public void setFloor(Integer floor) {
+		this.floor = floor;
+	}
+
+	@Override
     public boolean equals(Object that) {
         if (this == that) {
             return true;

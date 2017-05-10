@@ -3,6 +3,7 @@ package com.mehome.utils;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by {renhui} on 2016-10-18.
@@ -49,5 +50,10 @@ public class OrderIdUtils {
             e.printStackTrace();
             return "";
         }
+    }
+    public static String getUUID(){ 
+        String s = UUID.randomUUID().toString(); 
+        //去掉“-”符号 
+        return s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24); 
     }
 }
