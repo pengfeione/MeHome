@@ -68,6 +68,9 @@ public class ProductBean extends PageMysqlUtil {
 	 * 点评集合
 	 */
 	private List<CommentBean> commentList;
+	
+	private Double score;
+	
 	public Integer getProductId() {
 		return productId;
 	}
@@ -194,7 +197,12 @@ public class ProductBean extends PageMysqlUtil {
 	public void setCommentList(List<CommentBean> commentList) {
 		this.commentList = commentList;
 	}
-	
+	public Double getScore() {
+		return score;
+	}
+	public void setScore(Double score) {
+		this.score = score;
+	}
 	public ProductList beanToPojo(){
 		ProductList product = new ProductList();
 		product.setAddress(this.getAddress());
