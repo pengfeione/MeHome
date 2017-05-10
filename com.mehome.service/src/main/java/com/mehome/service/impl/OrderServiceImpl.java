@@ -16,13 +16,13 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public String placeOrder(OrderBean bean) {
+	public synchronized String placeOrder(OrderBean bean) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String payOrder(OrderBean bean) {
+	public synchronized String payOrder(OrderBean bean) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -34,7 +34,7 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public String updateOrder(OrderBean bean) {
+	public synchronized String updateOrder(OrderBean bean) {
 		// TODO Auto-generated method stub
 		return null;
 	}
