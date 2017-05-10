@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mehome.dao.AuthorizeAdminDao">
+    <resultMap id="BaseResultMap" type="com.mehome.domain.AuthorizeAdmin">
+        <id column="admin_id" property="adminId" jdbcType="INTEGER"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="role" property="role" jdbcType="VARCHAR"/>
+        <result column="company_id" property="companyId" jdbcType="INTEGER"/>
+        <result column="create_by" property="createBy" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    admin_id, avatar, nick_name, name, password, role, company_id, create_by, create_time
+  </sql>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from authorize_admin
+        where admin_id = #{adminId,jdbcType=INTEGER}
+    </select>
+    <select id="login" resultMap="BaseResultMap" parameterType="com.mehome.domain.AuthorizeAdmin">
+        select
+        <include refid="Base_Column_List"/>
+        from authorize_admin
+        where name = #{name,jdbcType=VARCHAR}
+        and password=#{password,jdbcType=VARCHAR}
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
+    delete from authorize_admin
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.mehome.domain.AuthorizeAdmin">
+    insert into authorize_admin (admin_id, avatar, nick_name, 
+      name, password, role, 
+      company_id, create_by, create_time
+      )
+    values (#{adminId,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
+      #{companyId,jdbcType=INTEGER}, #{createBy,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertRequired" parameterType="com.mehome.domain.AuthorizeAdmin">
+        insert into authorize_admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">
+                admin_id,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="nickName != null">
+                nick_name,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="role != null">
+                role,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">
+                #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateRequired" parameterType="com.mehome.domain.AuthorizeAdmin">
+        update authorize_admin
+        <set>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                role = #{role,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where admin_id = #{adminId,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="com.mehome.domain.AuthorizeAdmin">
+    update authorize_admin
+    set avatar = #{avatar,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </update>
+</mapper>

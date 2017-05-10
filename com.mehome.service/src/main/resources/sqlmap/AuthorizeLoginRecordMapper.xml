@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mehome.dao.AuthorizeLoginRecordDao">
+    <resultMap id="BaseResultMap" type="com.mehome.domain.AuthorizeLoginRecord">
+        <id column="admin_id" property="adminId" jdbcType="INTEGER"/>
+        <result column="last_ip" property="lastIp" jdbcType="VARCHAR"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    admin_id, last_ip, last_login_time
+  </sql>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from authorize_login_record
+        where admin_id = #{adminId,jdbcType=INTEGER}
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
+    delete from authorize_login_record
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.mehome.domain.AuthorizeLoginRecord">
+    insert into authorize_login_record (admin_id, last_ip, last_login_time
+      )
+    values (#{adminId,jdbcType=INTEGER}, #{lastIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertRequired" parameterType="com.mehome.domain.AuthorizeLoginRecord">
+        insert into authorize_login_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">
+                admin_id,
+            </if>
+            <if test="lastIp != null">
+                last_ip,
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">
+                #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="lastIp != null">
+                #{lastIp,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateRequired" parameterType="com.mehome.domain.AuthorizeLoginRecord">
+        update authorize_login_record
+        <set>
+            <if test="lastIp != null">
+                last_ip = #{lastIp,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where admin_id = #{adminId,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="com.mehome.domain.AuthorizeLoginRecord">
+    update authorize_login_record
+    set last_ip = #{lastIp,jdbcType=VARCHAR},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </update>
+</mapper>
