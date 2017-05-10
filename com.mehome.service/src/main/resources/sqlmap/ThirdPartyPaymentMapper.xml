@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mehome.dao.ThirdPartyPaymentDao" >
+  <resultMap id="BaseResultMap" type="com.mehome.domain.ThirdPartyPayment" >
+    <id column="payment_id" property="paymentId" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="pay_uid" property="payUid" jdbcType="INTEGER" />
+    <result column="pay_account" property="payAccount" jdbcType="VARCHAR" />
+    <result column="receive_account" property="receiveAccount" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="pay_status" property="payStatus" jdbcType="INTEGER" />
+    <result column="pay_amount" property="payAmount" jdbcType="INTEGER" />
+    <result column="pay_reason" property="payReason" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    payment_id, order_id, pay_uid, pay_account, receive_account, pay_type, pay_status, 
+    pay_amount, pay_reason, pay_time
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from third_party_payment
+    where payment_id = #{paymentId,jdbcType=VARCHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from third_party_payment
+    where payment_id = #{paymentId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mehome.domain.ThirdPartyPayment" >
+    insert into third_party_payment (payment_id, order_id, pay_uid, 
+      pay_account, receive_account, pay_type, 
+      pay_status, pay_amount, pay_reason, 
+      pay_time)
+    values (#{paymentId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{payUid,jdbcType=INTEGER}, 
+      #{payAccount,jdbcType=VARCHAR}, #{receiveAccount,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, 
+      #{payStatus,jdbcType=INTEGER}, #{payAmount,jdbcType=INTEGER}, #{payReason,jdbcType=VARCHAR}, 
+      #{payTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertRequired" parameterType="com.mehome.domain.ThirdPartyPayment" >
+    insert into third_party_payment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paymentId != null" >
+        payment_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="payUid != null" >
+        pay_uid,
+      </if>
+      <if test="payAccount != null" >
+        pay_account,
+      </if>
+      <if test="receiveAccount != null" >
+        receive_account,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="payStatus != null" >
+        pay_status,
+      </if>
+      <if test="payAmount != null" >
+        pay_amount,
+      </if>
+      <if test="payReason != null" >
+        pay_reason,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paymentId != null" >
+        #{paymentId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="payUid != null" >
+        #{payUid,jdbcType=INTEGER},
+      </if>
+      <if test="payAccount != null" >
+        #{payAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAccount != null" >
+        #{receiveAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=INTEGER},
+      </if>
+      <if test="payAmount != null" >
+        #{payAmount,jdbcType=INTEGER},
+      </if>
+      <if test="payReason != null" >
+        #{payReason,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateRequired" parameterType="com.mehome.domain.ThirdPartyPayment" >
+    update third_party_payment
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="payUid != null" >
+        pay_uid = #{payUid,jdbcType=INTEGER},
+      </if>
+      <if test="payAccount != null" >
+        pay_account = #{payAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAccount != null" >
+        receive_account = #{receiveAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,jdbcType=INTEGER},
+      </if>
+      <if test="payAmount != null" >
+        pay_amount = #{payAmount,jdbcType=INTEGER},
+      </if>
+      <if test="payReason != null" >
+        pay_reason = #{payReason,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where payment_id = #{paymentId,jdbcType=VARCHAR}
+  </update>
+  <update id="update" parameterType="com.mehome.domain.ThirdPartyPayment" >
+    update third_party_payment
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      pay_uid = #{payUid,jdbcType=INTEGER},
+      pay_account = #{payAccount,jdbcType=VARCHAR},
+      receive_account = #{receiveAccount,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=VARCHAR},
+      pay_status = #{payStatus,jdbcType=INTEGER},
+      pay_amount = #{payAmount,jdbcType=INTEGER},
+      pay_reason = #{payReason,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP}
+    where payment_id = #{paymentId,jdbcType=VARCHAR}
+  </update>
+</mapper>
