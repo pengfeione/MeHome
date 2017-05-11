@@ -1,7 +1,9 @@
 package com.mehome.controller;
 
 import com.mehome.domain.CompanyList;
+import com.mehome.domain.SmsRecord;
 import com.mehome.utils.Result;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/usr")
 public class UserController {
-    private final static String cros="*";
+    @Value("${cros}")
+    private String cros = "*";
+
     /**
-     * 平台企业列表
+     * 用户登录
+     *
      * @param companyList
      * @return
      */
@@ -30,6 +35,7 @@ public class UserController {
 
     /**
      * 找回密码
+     *
      * @param companyList
      * @return
      */
@@ -42,12 +48,14 @@ public class UserController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build("/usr/back_password").content(new Object()));
     }
+
     /**
      * 用户注册
+     *
      * @param companyList
      * @return
      */
-    @GetMapping("/reg")
+    @GetMapping("/add")
     @ResponseBody
     public ResponseEntity<Result> reg(@RequestBody CompanyList companyList) {
         return ResponseEntity
@@ -58,12 +66,13 @@ public class UserController {
     }
     /**
      * 获取注册验证码（注册，找回密码）
-     * @param companyList
+     *
+     * @param smsRecord
      * @return
      */
     @GetMapping("/verification_code")
     @ResponseBody
-    public ResponseEntity<Result> verification_code(@RequestBody CompanyList companyList) {
+    public ResponseEntity<Result> verification_code(@RequestBody SmsRecord smsRecord) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)

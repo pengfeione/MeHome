@@ -5,8 +5,6 @@ import com.mehome.domain.UserInfo;
 public interface UserInfoDao {
     int delete(Integer userId);
 
-    int insert(UserInfo record);
-
     int insertRequired(UserInfo record);
 
     UserInfo selectById(Integer userId);
@@ -14,4 +12,6 @@ public interface UserInfoDao {
     int updateRequired(UserInfo record);
 
     int update(UserInfo record);
+
+    UserInfo login(UserInfo record);
 }

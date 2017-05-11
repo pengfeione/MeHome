@@ -1,48 +1,45 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mehome.dao.UserInfoDao">
     <resultMap id="BaseResultMap" type="com.mehome.domain.UserInfo">
-        <id column="user_id" property="userId" jdbcType="INTEGER"/>
-        <result column="user_amount" property="userAmount" jdbcType="INTEGER"/>
-        <result column="wechat_id" property="wechatId" jdbcType="VARCHAR"/>
-        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
-        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
-        <result column="sex" property="sex" jdbcType="INTEGER"/>
-        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
-        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
-        <result column="id_card" property="idCard" jdbcType="VARCHAR"/>
-        <result column="open_id" property="openId" jdbcType="VARCHAR"/>
-        <result column="company_id" property="companyId" jdbcType="INTEGER"/>
-        <result column="company_status" property="companyStatus" jdbcType="INTEGER"/>
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_amount" jdbcType="INTEGER" property="userAmount"/>
+        <result column="wechat_id" jdbcType="VARCHAR" property="wechatId"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="company_id" jdbcType="INTEGER" property="companyId"/>
+        <result column="company_status" jdbcType="INTEGER" property="companyStatus"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    user_id, user_amount, wechat_id, nick_name, avatar,sex, real_name, mobile, id_card, open_id, company_id,
-    company_status, create_time, update_time
+    user_id, user_amount, wechat_id, nick_name, avatar, sex, real_name, mobile, password, 
+    id_card, open_id, company_id, company_status, update_time, create_time
   </sql>
-    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from user_info
         where user_id = #{userId,jdbcType=INTEGER}
     </select>
+    <select id="login" parameterType="com.mehome.domain.UserInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        where
+        mobile = #{mobile,jdbcType=VARCHAR}
+        and password = password(#{password,jdbcType=VARCHAR})
+    </select>
     <delete id="delete" parameterType="java.lang.Integer">
-    delete from user_info
-    where user_id = #{userId,jdbcType=INTEGER}
-  </delete>
-    <insert id="insert" parameterType="com.mehome.domain.UserInfo">
-    insert into user_info (user_id, user_amount, wechat_id, nick_name, 
-      avatar, sex,real_name, mobile,
-      id_card, open_id, company_id, 
-      company_status, create_time, update_time
-      )
-    values (#{userId,jdbcType=INTEGER}, #{userAmount,jdbcType=INTEGER}, #{wechatId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{avatar,jdbcType=VARCHAR},#{sex,jdbcType=INTEGER},  #{realName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
-      #{idCard,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER}, 
-      #{companyStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
+      delete from user_info
+      where user_id = #{userId,jdbcType=INTEGER}
+    </delete>
     <insert id="insertRequired" parameterType="com.mehome.domain.UserInfo">
         insert into user_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -70,6 +67,9 @@
             <if test="mobile != null">
                 mobile,
             </if>
+            <if test="password != null">
+                password,
+            </if>
             <if test="idCard != null">
                 id_card,
             </if>
@@ -82,11 +82,11 @@
             <if test="companyStatus != null">
                 company_status,
             </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
             <if test="updateTime != null">
                 update_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -114,6 +114,9 @@
             <if test="mobile != null">
                 #{mobile,jdbcType=VARCHAR},
             </if>
+            <if test="password != null">
+                password(#{password,jdbcType=VARCHAR}),
+            </if>
             <if test="idCard != null">
                 #{idCard,jdbcType=VARCHAR},
             </if>
@@ -126,11 +129,11 @@
             <if test="companyStatus != null">
                 #{companyStatus,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
-            </if>
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -158,6 +161,9 @@
             <if test="mobile != null">
                 mobile = #{mobile,jdbcType=VARCHAR},
             </if>
+            <if test="password != null">
+                password = password(#{password,jdbcType=VARCHAR}),
+            </if>
             <if test="idCard != null">
                 id_card = #{idCard,jdbcType=VARCHAR},
             </if>
@@ -170,11 +176,11 @@
             <if test="companyStatus != null">
                 company_status = #{companyStatus,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where user_id = #{userId,jdbcType=INTEGER}
@@ -185,15 +191,16 @@
       wechat_id = #{wechatId,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},
-       sex =  #{sex,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=INTEGER},
       real_name = #{realName,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
       id_card = #{idCard,jdbcType=VARCHAR},
       open_id = #{openId,jdbcType=VARCHAR},
       company_id = #{companyId,jdbcType=INTEGER},
       company_status = #{companyStatus,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>
