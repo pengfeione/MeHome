@@ -400,7 +400,10 @@ public class OrderBean extends PageMysqlUtil{
 		this.setUpdateTime(order.getUpdateTime()==null?null:DateUtils.dateToStr(order.getUpdateTime()));
 	}
 	
-	
+	public OrderList beanToPojo(){
+		return null;
+		
+	}
 	
 	
 

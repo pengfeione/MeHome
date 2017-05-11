@@ -20,11 +20,13 @@
     <result column="has_personal" property="hasPersonal" jdbcType="BIT" />
     <result column="net_rules_url" property="netRulesUrl" jdbcType="VARCHAR" />
     <result column="floor" property="floor" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     product_id, supplier_id, area_id, product_name, product_detail, product_sort, listpic, 
     detailpic, address, position, product_active, rules, welfare_id, is_welfare, personal_welfare, 
-    has_personal, net_rules_url,floor
+    has_personal, net_rules_url,floor,create_time,update_time
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -42,13 +44,13 @@
       listpic, detailpic, address, 
       position, product_active, rules, 
       welfare_id, is_welfare, personal_welfare, 
-      has_personal, net_rules_url,floor)
+      has_personal, net_rules_url,floor,create_time,update_time)
     values (#{productId,jdbcType=INTEGER}, #{supplierId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, 
       #{productName,jdbcType=VARCHAR}, #{productDetail,jdbcType=VARCHAR}, #{productSort,jdbcType=INTEGER}, 
       #{listpic,jdbcType=VARCHAR}, #{detailpic,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{position,jdbcType=VARCHAR}, #{productActive,jdbcType=BIT}, #{rules,jdbcType=VARCHAR}, 
       #{welfareId,jdbcType=INTEGER}, #{isWelfare,jdbcType=BIT}, #{personalWelfare,jdbcType=VARCHAR}, 
-      #{hasPersonal,jdbcType=BIT}, #{netRulesUrl,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER})
+      #{hasPersonal,jdbcType=BIT}, #{netRulesUrl,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertRequired" parameterType="com.mehome.domain.ProductList" >
     insert into product_list
@@ -107,6 +109,12 @@
       <if test="floor != null" >
         floor,
       </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="productId != null" >
@@ -162,6 +170,12 @@
       </if>
       <if test="floor != null" >
         #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -219,6 +233,12 @@
       <if test="floor != null" >
         floor = #{floor,jdbcType=INTEGER},
       </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
@@ -240,7 +260,40 @@
       personal_welfare = #{personalWelfare,jdbcType=VARCHAR},
       has_personal = #{hasPersonal,jdbcType=BIT},
       net_rules_url = #{netRulesUrl,jdbcType=VARCHAR},
-      floor = #{floor,jdbcType=INTEGER}
+      floor = #{floor,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
+  <select id="getListByCondition" parameterType="com.mehome.requestDTO.ProductBean" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM product_list
+    WHERE 1=1
+    <if test="subject != null" >
+      AND subject like CONCAT('%','${subject}','%' )
+    </if>
+    <if test="areaId != null">
+      AND area_id = #{areaId,jdbcType=INTEGER}
+    </if>
+    <if test="supplierId != null">
+      AND supplier_id = #{supplierId,jdbcType=INTEGER}
+    </if>
+    ORDER BY bill_time DESC
+    limit #{pageNow},#{pageSize}
+  </select>
+  <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.ProductBean" resultType="java.lang.Long">
+    SELECT count(*)
+    FROM product_list
+    WHERE 1=1
+     <if test="productName != null" >
+      AND product_name like CONCAT('%','${productName}','%' )
+    </if>
+    <if test="areaId != null">
+      AND area_id = #{areaId,jdbcType=INTEGER}
+    </if>
+    <if test="supplierId != null">
+      AND supplier_id = #{supplierId,jdbcType=INTEGER}
+    </if>
+  </select>
 </mapper>

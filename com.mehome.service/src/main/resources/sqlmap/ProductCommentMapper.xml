@@ -217,4 +217,23 @@
       is_active = #{isActive,jdbcType=BIT}
     where comment_id = #{commentId,jdbcType=VARCHAR}
   </update>
+  <select id="getListByCondition" parameterType="com.mehome.requestDTO.CommentBean" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM product_comment
+    WHERE 1=1
+    <if test="productId != null">
+      AND product_id = #{productId,jdbcType=INTEGER}
+    </if>
+    ORDER BY create_time DESC
+    limit #{pageNow},#{pageSize}
+  </select>
+  <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.CommentBean" resultType="java.lang.Long">
+    SELECT count(*)
+    FROM product_comment
+    WHERE 1=1
+    <if test="productId != null">
+      AND product_id = #{productId,jdbcType=INTEGER}
+    </if>
+  </select>
 </mapper>

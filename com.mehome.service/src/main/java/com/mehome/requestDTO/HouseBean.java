@@ -220,6 +220,7 @@ public class HouseBean extends PageMysqlUtil {
 	
 	public HouseResource beanToPojo(){
 		HouseResource resource = new HouseResource();
+		resource.setHouseId(this.getHouseId());
 		resource.setAddress(this.getAddress());
 		resource.setAreaId(this.getAreaId());
 		resource.setCreateTime(new Date());

@@ -18,5 +18,7 @@ public interface OrderListDao {
 
     int update(OrderList record);
     
-    public List<OrderList> listAdByCondition(OrderBean bean);
+    public List<OrderList> getListByCondition(OrderBean bean);
+    
+    Long getSizeByCondition(OrderBean bean);
 }

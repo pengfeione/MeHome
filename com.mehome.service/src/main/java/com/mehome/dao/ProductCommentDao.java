@@ -1,7 +1,9 @@
 package com.mehome.dao;
 
-import com.mehome.domain.ProductComment;
+import java.util.List;
 
+import com.mehome.domain.ProductComment;
+import com.mehome.requestDTO.CommentBean;
 public interface ProductCommentDao {
     int delete(String commentId);
 
@@ -16,4 +18,8 @@ public interface ProductCommentDao {
     int updateByPrimaryKeyWithBLOBs(ProductComment record);
 
     int update(ProductComment record);
+    
+    public List<ProductComment> getListByCondition(CommentBean bean);
+    
+    Long getSizeByCondition(CommentBean bean);
 }

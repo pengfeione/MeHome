@@ -1,5 +1,7 @@
 package com.mehome.domain;
 
+import java.util.Date;
+
 public class ProductList {
     private Integer productId;
 
@@ -36,6 +38,10 @@ public class ProductList {
     private String netRulesUrl;
     
     private Integer floor;
+    
+    private Date createTime;
+    
+    private Date updateTime;
 
     public Integer getProductId() {
         return productId;
@@ -182,6 +188,22 @@ public class ProductList {
 		this.floor = floor;
 	}
 
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
 	@Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -210,7 +232,9 @@ public class ProductList {
             && (this.getIsWelfare() == null ? other.getIsWelfare() == null : this.getIsWelfare().equals(other.getIsWelfare()))
             && (this.getPersonalWelfare() == null ? other.getPersonalWelfare() == null : this.getPersonalWelfare().equals(other.getPersonalWelfare()))
             && (this.getHasPersonal() == null ? other.getHasPersonal() == null : this.getHasPersonal().equals(other.getHasPersonal()))
-            && (this.getNetRulesUrl() == null ? other.getNetRulesUrl() == null : this.getNetRulesUrl().equals(other.getNetRulesUrl()));
+            && (this.getNetRulesUrl() == null ? other.getNetRulesUrl() == null : this.getNetRulesUrl().equals(other.getNetRulesUrl()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -234,6 +258,8 @@ public class ProductList {
         result = prime * result + ((getPersonalWelfare() == null) ? 0 : getPersonalWelfare().hashCode());
         result = prime * result + ((getHasPersonal() == null) ? 0 : getHasPersonal().hashCode());
         result = prime * result + ((getNetRulesUrl() == null) ? 0 : getNetRulesUrl().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
     }
 }

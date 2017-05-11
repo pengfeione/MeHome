@@ -291,4 +291,54 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where house_id = #{houseId,jdbcType=INTEGER}
   </update>
+  <select id="getListByCondition" parameterType="com.mehome.requestDTO.HouseBean" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM house_resource
+    WHERE 1=1
+    <if test="subject != null" >
+      AND subject like CONCAT('%','${subject}','%' )
+    </if>
+    <if test="areaId != null">
+      AND area_id = #{areaId,jdbcType=INTEGER}
+    </if>
+    <if test="supplierId != null">
+      AND supplier_id = #{supplierId,jdbcType=INTEGER}
+    </if>
+    <if test="status != null">
+      AND status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="startTime != null">
+      AND start_time >= #{startTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null">
+      AND #{endTime,jdbcType=TIMESTAMP}>=end_time
+    </if>
+    ORDER BY bill_time DESC
+    limit #{pageNow},#{pageSize}
+  </select>
+  <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.HouseBean" resultType="java.lang.Long">
+    SELECT count(*)
+    FROM house_resource
+    WHERE 1=1
+     <if test="subject != null" >
+      AND product_name like CONCAT('%','${productName}','%' )
+    </if>
+    <if test="areaId != null">
+      AND area_id = #{areaId,jdbcType=INTEGER}
+    </if>
+    <if test="supplierId != null">
+      AND supplier_id = #{supplierId,jdbcType=INTEGER}
+    </if>
+    <if test="status != null">
+      AND status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="startTime != null">
+      AND start_time >= #{startTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null">
+      AND #{endTime,jdbcType=TIMESTAMP}>=end_time
+    </if>
+  </select>
+  
 </mapper>

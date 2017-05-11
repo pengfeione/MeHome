@@ -1,18 +1,32 @@
 package com.mehome.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mehome.dao.SupplierListDao;
+import com.mehome.domain.SupplierList;
 import com.mehome.requestDTO.SupplierBean;
 import com.mehome.service.iface.ISupplierSerive;
 @Service("ISupplierSerive")
 public class SupplierServiceImpl implements ISupplierSerive {
-
+	private Logger log = Logger.getLogger(this.getClass());
+	@Autowired
+	private SupplierListDao supplierListDAO;
 	@Override
 	public List<SupplierBean> getListByCondition(SupplierBean bean) {
-		// TODO Auto-generated method stub
-		return null;
+		List<SupplierList> supplierList=supplierListDAO.getListByCondition(bean);
+		List<SupplierBean> supplierBeanList=new ArrayList<SupplierBean>();
+		if(supplierList!=null&&supplierList.size()>0){
+			for (SupplierList supplier : supplierList) {
+				SupplierBean newBean=new SupplierBean(supplier);
+				supplierBeanList.add(newBean);
+			}
+		}
+		return supplierBeanList;
 	}
 
 	@Override
