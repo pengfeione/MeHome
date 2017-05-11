@@ -25,28 +25,4 @@
       </if>
     </trim>
   </insert>
-  <resultMap id="BaseResultMap" type="com.mehome.domain.AuthorizePath">
-    <id column="path" jdbcType="VARCHAR" property="path" />
-  </resultMap>
-  <delete id="delete" parameterType="java.lang.String">
-    delete from authorize_path
-    where path = #{path,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.mehome.domain.AuthorizePath">
-    insert into authorize_path (path)
-    values (#{path,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertRequired" parameterType="com.mehome.domain.AuthorizePath">
-    insert into authorize_path
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="path != null">
-        path,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="path != null">
-        #{path,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
 </mapper>
