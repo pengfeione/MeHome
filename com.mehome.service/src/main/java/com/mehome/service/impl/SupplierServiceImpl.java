@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mehome.dao.SupplierListDao;
+import com.mehome.domain.ProductList;
 import com.mehome.domain.SupplierList;
 import com.mehome.requestDTO.SupplierBean;
 import com.mehome.service.iface.ISupplierSerive;
@@ -43,8 +44,15 @@ public class SupplierServiceImpl implements ISupplierSerive {
 
 	@Override
 	public String updateSupplier(SupplierBean bean) {
-		// TODO Auto-generated method stub
-		return null;
+		SupplierList supplier = null;
+		try {
+			supplier = bean.beanToPojo();
+			int row = supplierListDAO.updateRequired(supplier);
+		} catch (Exception e) {
+			log.error("更新供应商出错:" + e);
+			return Boolean.FALSE.toString();
+		}
+		return Boolean.TRUE.toString();
 	}
 
 }
