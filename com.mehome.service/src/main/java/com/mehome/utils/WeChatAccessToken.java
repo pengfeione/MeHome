@@ -3,7 +3,7 @@ package com.mehome.utils;
 /**
  * Created by pengfei on 2017/5/10.
  */
-public class AccessToken {
+public class WeChatAccessToken {
     public String openid;
     public String access_token;
 
