@@ -22,6 +22,19 @@ public class AdministratorBean {
 
     private Date lastLoginTime;
 
+    private int companyId;
+
+
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+
     public AdministratorBean() {
     }
 
@@ -31,8 +44,10 @@ public class AdministratorBean {
             this.avatar = admin.getAvatar();
             this.nickName = admin.getNickName();
             this.role = admin.getRole();
+            this.companyId = admin.getCompanyId();
         }
     }
+
     private List<AuthorizeMenu> menus = new ArrayList<AuthorizeMenu>();
 
     private List<String> paths = new ArrayList<String>();

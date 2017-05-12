@@ -1,14 +1,18 @@
 package com.mehome.filter;
 
+import com.mehome.exceptions.InfoException;
+import com.mehome.utils.APIBaseResult;
 import com.mehome.utils.BodyRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.util.NestedServletException;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.util.*;
 
@@ -20,32 +24,33 @@ import java.util.*;
 public class BaseFilter implements Filter {
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
     public static final Set<String> allowDomain = new HashSet<String>();
-    static{
+
+    static {
         allowDomain.add("http://test.youxiduo.com");
     }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         //允许部分跨域
-        Map<String,String> headerMap = new HashMap<String,String>();
-        try{
-            Enumeration<String> enumeration = httpServletRequest.getHeaderNames();
-            while(enumeration.hasMoreElements()){
-                log.info(enumeration.nextElement()+" : "+httpServletRequest.getHeader(enumeration.nextElement()));
-                headerMap.put(enumeration.nextElement(),httpServletRequest.getHeader(enumeration.nextElement()));
+        Map<String, String> headerMap = new HashMap<String, String>();
+        Enumeration<String> enumeration = httpServletRequest.getHeaderNames();
+        while (enumeration.hasMoreElements()) {
+            try {
+                headerMap.put(enumeration.nextElement(), httpServletRequest.getHeader(enumeration.nextElement()));
+            } catch (Exception e) {
             }
-            if(allowDomain.contains(headerMap.get("accept"))){
-                response.setHeader("Access-Control-Allow-Origin", headerMap.get("accept"));
-                response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-                response.setHeader("Access-Control-Max-Age", "3600");
-                response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-            }
-        }catch (Exception e){
-           log.info("跨域请求失败",e.getMessage());
+        }
+        if (allowDomain.contains(headerMap.get("accept"))) {
+            response.setHeader("Access-Control-Allow-Origin", headerMap.get("accept"));
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         }
         BodyRequestWrapper bodyRequestWrapper = new BodyRequestWrapper(httpServletRequest);
         log.info("\n------------------------------------------------------------------------------------------" +
@@ -61,10 +66,25 @@ public class BaseFilter implements Filter {
         String st = httpServletRequest.getRequestURI().toString();
         boolean isMobile = httpServletRequest.getHeader("user-agent").indexOf("Mobile") > 0;
         if (st.endsWith("/share") && !isMobile) {
-
+            //是手机请求的
         }
         printHeader(httpServletRequest);
-        filterChain.doFilter(bodyRequestWrapper, response);
+        try {
+            filterChain.doFilter(bodyRequestWrapper, response);
+        } catch (Exception e) {
+            APIBaseResult apiBaseResult = new APIBaseResult();
+            apiBaseResult.setCode(400);
+            response.setContentType("application/json;charset=UTF-8");
+            PrintWriter printWriter = response.getWriter();
+            if (e instanceof NestedServletException) {
+                NestedServletException nestedServletException = (NestedServletException) e;
+                apiBaseResult.setMsg(e.getMessage().replace("Request processing failed; nested exception is com.mehome.exceptions.InfoException:", ""));
+            } else {
+                e.printStackTrace();
+                apiBaseResult.setMsg("系统异常");
+            }
+            printWriter.write(apiBaseResult.toString());
+        }
     }
     public String buildGetParameters(HttpServletRequest httpServletRequest) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -75,16 +95,18 @@ public class BaseFilter implements Filter {
         }
         return stringBuilder.toString();
     }
-    public void printHeader(HttpServletRequest httpServletRequest){
+
+    public void printHeader(HttpServletRequest httpServletRequest) {
         StringBuilder stringBuilder = new StringBuilder();
         Enumeration<String> names = httpServletRequest.getHeaderNames();
-        while(names.hasMoreElements()){
-           String name =  names.nextElement();
-           String header = httpServletRequest.getHeader(name);
-           stringBuilder.append(name+" : "+header).append("\n");
+        while (names.hasMoreElements()) {
+            String name = names.nextElement();
+            String header = httpServletRequest.getHeader(name);
+            stringBuilder.append(name + " : " + header).append("\n");
         }
         log.info(stringBuilder.toString());
-    };
+    }
+
     @Override
     public void destroy() {
 

@@ -1,4 +1,4 @@
-package com.mehome.servlet;
+package com.mehome.utils;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -16,21 +16,25 @@ import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.PolicyConditions;
 //import junit.framework.Assert;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+
 @WebServlet(urlPatterns = "/oss_token", description = "oss-token获取", name = "oos-token获取")
 
-public class PostObjectPolicy extends HttpServlet{
+public class AliyuncsOSSToken extends HttpServlet{
 	/**
 	 * 
 	 */
+    @Autowired
+    public AliyuncsProperties aliyuncsProperties;
 	private static final long serialVersionUID = 5522372203700422672L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 	
-	    String endpoint = "oss-cn-hangzhou.aliyuncs.com";
-        String accessId = "LTAIqVB03rjUFfd5 ";
-        String accessKey = "B7ZEToyPXOvB4Fo4SaeQojOyyjNiK0";
-        String bucket = "mijia";
-        String dir = "img-dir";
+	    String endpoint = aliyuncsProperties.getOss_endpoint();
+        String accessId = aliyuncsProperties.getAccessid();
+        String accessKey = aliyuncsProperties.getAccessKey();
+        String bucket = aliyuncsProperties.getOss_buket();
+        String dir = aliyuncsProperties.getOss_dir();
         String host = "http://" + bucket + "." + endpoint;
         OSSClient client = new OSSClient(endpoint, accessId, accessKey);
         try {

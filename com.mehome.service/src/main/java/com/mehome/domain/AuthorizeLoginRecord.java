@@ -7,6 +7,8 @@ public class AuthorizeLoginRecord {
 
     private String lastIp;
 
+    private String headers;
+
     private Date lastLoginTime;
 
     public Integer getAdminId() {
@@ -23,6 +25,14 @@ public class AuthorizeLoginRecord {
 
     public void setLastIp(String lastIp) {
         this.lastIp = lastIp == null ? null : lastIp.trim();
+    }
+
+    public String getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(String headers) {
+        this.headers = headers == null ? null : headers.trim();
     }
 
     public Date getLastLoginTime() {
@@ -47,6 +57,7 @@ public class AuthorizeLoginRecord {
         AuthorizeLoginRecord other = (AuthorizeLoginRecord) that;
         return (this.getAdminId() == null ? other.getAdminId() == null : this.getAdminId().equals(other.getAdminId()))
             && (this.getLastIp() == null ? other.getLastIp() == null : this.getLastIp().equals(other.getLastIp()))
+            && (this.getHeaders() == null ? other.getHeaders() == null : this.getHeaders().equals(other.getHeaders()))
             && (this.getLastLoginTime() == null ? other.getLastLoginTime() == null : this.getLastLoginTime().equals(other.getLastLoginTime()));
     }
 
@@ -56,6 +67,7 @@ public class AuthorizeLoginRecord {
         int result = 1;
         result = prime * result + ((getAdminId() == null) ? 0 : getAdminId().hashCode());
         result = prime * result + ((getLastIp() == null) ? 0 : getLastIp().hashCode());
+        result = prime * result + ((getHeaders() == null) ? 0 : getHeaders().hashCode());
         result = prime * result + ((getLastLoginTime() == null) ? 0 : getLastLoginTime().hashCode());
         return result;
     }

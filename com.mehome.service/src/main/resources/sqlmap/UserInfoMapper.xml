@@ -19,7 +19,7 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    user_id, user_amount, wechat_id, nick_name, avatar, sex, real_name, mobile, password, 
+    user_id, user_amount, wechat_id, nick_name, avatar, sex, real_name, mobile, password,
     id_card, open_id, company_id, company_status, update_time, create_time
   </sql>
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -36,10 +36,6 @@
         mobile = #{mobile,jdbcType=VARCHAR}
         and password = password(#{password,jdbcType=VARCHAR})
     </select>
-    <delete id="delete" parameterType="java.lang.Integer">
-      delete from user_info
-      where user_id = #{userId,jdbcType=INTEGER}
-    </delete>
     <insert id="insertRequired" parameterType="com.mehome.domain.UserInfo">
         insert into user_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -185,9 +181,18 @@
         </set>
         where user_id = #{userId,jdbcType=INTEGER}
     </update>
+    <update id="updatePasswordByMobile" parameterType="com.mehome.domain.UserInfo">
+        update user_info
+        <set>
+            <if test="password != null">
+                password = password(#{password,jdbcType=VARCHAR}),
+            </if>
+        </set>
+        where mobile = #{mobile,jdbcType=VARCHAR},
+    </update>
     <update id="update" parameterType="com.mehome.domain.UserInfo">
-    update user_info
-    set user_amount = #{userAmount,jdbcType=INTEGER},
+      update user_info
+      set user_amount = #{userAmount,jdbcType=INTEGER},
       wechat_id = #{wechatId,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},

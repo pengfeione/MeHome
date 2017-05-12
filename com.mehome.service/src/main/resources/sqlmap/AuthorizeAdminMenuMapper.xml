@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mehome.dao.AuthorizeAdminMenuDao">
+    <resultMap id="BaseResultMap" type="com.mehome.domain.AuthorizeAdminMenu">
+        <id column="admin_id" property="adminId" jdbcType="INTEGER"/>
+        <id column="menu_id" property="menuId" jdbcType="INTEGER"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="MenuResultMap" type="com.mehome.domain.AuthorizeMenu">
+        <id column="menu_id" property="menuId" jdbcType="INTEGER"/>
+        <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR"/>
+        <result column="menu_name" property="menuName" jdbcType="VARCHAR"/>
+        <result column="menu_href" property="menuHref" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        admin_id, menu_id, update_time
+    </sql>
+    <delete id="deleteByAdmin" parameterType="map">
+        delete from authorize_admin_menu
+        where admin_id = #{adminId,jdbcType=INTEGER}
+    </delete>
+    <select id="selectMenuIdByAdmin" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from authorize_admin_menu
+        where admin_id = #{adminId,jdbcType=INTEGER}
+    </select>
+    <select id="selectMenuByAdmin" resultMap="MenuResultMap" parameterType="map">
+      SELECT authorize_menu.*
+      FROM (SELECT menu_id
+	        FROM authorize_admin_menu
+	        WHERE admin_id = #{adminId,jdbcType=INTEGER}
+	        ) admin
+	        LEFT JOIN
+	        authorize_menu
+	  ON admin.menu_id = authorize_menu.menu_id
+    </select>
+    <insert id="insertRequired" parameterType="map">
+      insert into authorize_admin_menu (admin_id,menu_id) VALUES (#{adminId,jdbcType=INTEGER},#{menuId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertMenuByAdmin" parameterType="map">
+        insert into authorize_admin_menu (admin_id,menu_id)
+        VALUES
+        <foreach collection="menuIds" item="item" index="index" separator=",">
+            (#{adminId,jdbcType=INTEGER},#{item,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+    <update id="updateRequired" parameterType="map">
+        update authorize_admin_menu
+        <set>
+            <if test="menu_id != null">
+                menu_id = #{menuId,jdbcType=INTEGER}
+            </if>
+        </set>
+        where admin_id = #{adminId,jdbcType=INTEGER}
+    </update>
+</mapper>

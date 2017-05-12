@@ -14,4 +14,6 @@ public interface AuthorizeLoginRecordDao {
     int updateRequired(AuthorizeLoginRecord record);
 
     int update(AuthorizeLoginRecord record);
+
+    AuthorizeLoginRecord selectLastLogin(Integer adminId);
 }

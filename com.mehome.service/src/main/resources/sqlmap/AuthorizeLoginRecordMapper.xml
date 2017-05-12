@@ -1,29 +1,38 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mehome.dao.AuthorizeLoginRecordDao">
     <resultMap id="BaseResultMap" type="com.mehome.domain.AuthorizeLoginRecord">
-        <id column="admin_id" property="adminId" jdbcType="INTEGER"/>
-        <result column="last_ip" property="lastIp" jdbcType="VARCHAR"/>
-        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <id column="admin_id" jdbcType="INTEGER" property="adminId"/>
+        <result column="last_ip" jdbcType="VARCHAR" property="lastIp"/>
+        <result column="headers" jdbcType="VARCHAR" property="headers"/>
+        <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    admin_id, last_ip, last_login_time
+    admin_id, last_ip, headers, last_login_time
   </sql>
-    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from authorize_login_record
         where admin_id = #{adminId,jdbcType=INTEGER}
+    </select>
+    <select id="selectLastLogin" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from authorize_login_record
+        where admin_id = #{adminId,jdbcType=INTEGER}
+        ORDER BY last_login_time DESC
+        limit 1
     </select>
     <delete id="delete" parameterType="java.lang.Integer">
     delete from authorize_login_record
     where admin_id = #{adminId,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.mehome.domain.AuthorizeLoginRecord">
-    insert into authorize_login_record (admin_id, last_ip, last_login_time
-      )
-    values (#{adminId,jdbcType=INTEGER}, #{lastIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}
-      )
+    insert into authorize_login_record (admin_id, last_ip, headers, 
+      last_login_time)
+    values (#{adminId,jdbcType=INTEGER}, #{lastIp,jdbcType=VARCHAR}, #{headers,jdbcType=VARCHAR}, 
+      #{lastLoginTime,jdbcType=TIMESTAMP})
   </insert>
     <insert id="insertRequired" parameterType="com.mehome.domain.AuthorizeLoginRecord">
         insert into authorize_login_record
@@ -33,6 +42,9 @@
             </if>
             <if test="lastIp != null">
                 last_ip,
+            </if>
+            <if test="headers != null">
+                headers,
             </if>
             <if test="lastLoginTime != null">
                 last_login_time,
@@ -45,6 +57,9 @@
             <if test="lastIp != null">
                 #{lastIp,jdbcType=VARCHAR},
             </if>
+            <if test="headers != null">
+                #{headers,jdbcType=VARCHAR},
+            </if>
             <if test="lastLoginTime != null">
                 #{lastLoginTime,jdbcType=TIMESTAMP},
             </if>
@@ -56,6 +71,9 @@
             <if test="lastIp != null">
                 last_ip = #{lastIp,jdbcType=VARCHAR},
             </if>
+            <if test="headers != null">
+                headers = #{headers,jdbcType=VARCHAR},
+            </if>
             <if test="lastLoginTime != null">
                 last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
             </if>
@@ -65,7 +83,9 @@
     <update id="update" parameterType="com.mehome.domain.AuthorizeLoginRecord">
     update authorize_login_record
     set last_ip = #{lastIp,jdbcType=VARCHAR},
+      headers = #{headers,jdbcType=VARCHAR},
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
     where admin_id = #{adminId,jdbcType=INTEGER}
   </update>
+
 </mapper>
