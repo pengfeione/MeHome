@@ -26,7 +26,7 @@
         <include refid="Base_Column_List"/>
         from authorize_admin
         where name = #{name,jdbcType=VARCHAR}
-        and password=#{password,jdbcType=VARCHAR}
+        and password=password(#{password,jdbcType=VARCHAR})
     </select>
     <delete id="delete" parameterType="java.lang.Integer">
     delete from authorize_admin
@@ -38,7 +38,7 @@
       company_id, create_by, create_time
       )
     values (#{adminId,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR},password(#{password,jdbcType=VARCHAR}), #{role,jdbcType=VARCHAR},
       #{companyId,jdbcType=INTEGER}, #{createBy,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -87,7 +87,7 @@
                 #{name,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
-                #{password,jdbcType=VARCHAR},
+                password(#{password,jdbcType=VARCHAR}),
             </if>
             <if test="role != null">
                 #{role,jdbcType=VARCHAR},
@@ -116,7 +116,7 @@
                 name = #{name,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
-                password = #{password,jdbcType=VARCHAR},
+                password =password(#{password,jdbcType=VARCHAR}),
             </if>
             <if test="role != null">
                 role = #{role,jdbcType=VARCHAR},
@@ -138,7 +138,7 @@
     set avatar = #{avatar,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
+      password = password(#{password,jdbcType=VARCHAR}),
       role = #{role,jdbcType=VARCHAR},
       company_id = #{companyId,jdbcType=INTEGER},
       create_by = #{createBy,jdbcType=INTEGER},

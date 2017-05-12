@@ -2,16 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mehome.dao.SmsRecordDao">
     <resultMap id="BaseResultMap" type="com.mehome.domain.SmsRecord">
-        <id column="auto_id" property="autoId" jdbcType="INTEGER"/>
-        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
-        <result column="type" property="type" jdbcType="INTEGER"/>
+        <id column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <id column="type" property="type" jdbcType="INTEGER"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="success" property="success" jdbcType="INTEGER"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-      auto_id, mobile, type, success, update_time
-    </sql>
-    <select id="select" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    mobile, type, code, success, update_time
+  </sql>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
         from sms_record
@@ -21,14 +21,14 @@
     <insert id="insertRequired" parameterType="com.mehome.domain.SmsRecord">
         insert into sms_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="autoId != null">
-                auto_id,
-            </if>
             <if test="mobile != null">
                 mobile,
             </if>
             <if test="type != null">
                 type,
+            </if>
+            <if test="code != null">
+                code,
             </if>
             <if test="success != null">
                 success,
@@ -38,14 +38,14 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="autoId != null">
-                #{autoId,jdbcType=INTEGER},
-            </if>
             <if test="mobile != null">
                 #{mobile,jdbcType=VARCHAR},
             </if>
             <if test="type != null">
                 #{type,jdbcType=INTEGER},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
             </if>
             <if test="success != null">
                 #{success,jdbcType=INTEGER},
@@ -58,11 +58,8 @@
     <update id="updateRequired" parameterType="com.mehome.domain.SmsRecord">
         update sms_record
         <set>
-            <if test="mobile != null">
-                mobile = #{mobile,jdbcType=VARCHAR},
-            </if>
-            <if test="type != null">
-                type = #{type,jdbcType=INTEGER},
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
             </if>
             <if test="success != null">
                 success = #{success,jdbcType=INTEGER},
@@ -71,6 +68,15 @@
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where auto_id = #{autoId,jdbcType=INTEGER}
+        where mobile = #{mobile,jdbcType=VARCHAR}
+        and type = #{type,jdbcType=INTEGER}
     </update>
+    <update id="update" parameterType="com.mehome.domain.SmsRecord">
+    update sms_record
+    set code = #{code,jdbcType=VARCHAR},
+      success = #{success,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where mobile = #{mobile,jdbcType=VARCHAR}
+      and type = #{type,jdbcType=INTEGER}
+  </update>
 </mapper>
