@@ -29,34 +29,38 @@ public class Result {
 
     private Result(String log) {
         this.log = log;
-        this.code=0;
-        this.msg="success";
+        this.code = 0;
+        this.msg = "success";
         this.requestId = UUID.randomUUID().toString();
     }
-    public static Result build(String log){
+
+    public static Result build(String log) {
         return new Result(log);
     }
-    public Result content(Object object, Long totalCount){
-        try{
+
+    public Result content(Object object, Long totalCount) {
+        try {
             this.setResult(object);
-            if(null!=totalCount){
+            if (null != totalCount) {
                 this.setTotalCount(totalCount);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             this.setCode(400);
-            if(e instanceof InfoException){
+            if (e instanceof InfoException) {
                 this.setMsg(e.getMessage());
-            }else{
+            } else {
                 this.setMsg("服务器异常!");
             }
-        }finally {
-            logger.info(log+"\n"+this);
+        } finally {
+            logger.info(log + "\n" + this);
             return this;
         }
     }
-    public Result content(Object object){
-        return content(object,null);
+
+    public Result content(Object object) {
+        return content(object, null);
     }
+
     public int getCode() {
         return code;
     }
@@ -101,4 +105,6 @@ public class Result {
     public String toString() {
         return JSONObject.toJSONString(this);
     }
+
+
 }

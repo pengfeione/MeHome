@@ -2,7 +2,11 @@ package com.mehome.controller;
 
 import com.mehome.domain.CompanyList;
 import com.mehome.domain.SmsRecord;
+import com.mehome.domain.UserInfo;
+import com.mehome.requestDTO.UserBackPasswordDTO;
+import com.mehome.service.iface.IUserInfoService;
 import com.mehome.utils.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Value("${cros}")
     private String cros = "*";
+    @Autowired
+    private IUserInfoService userInfoService;
 
     /**
      * 用户登录
@@ -36,22 +42,20 @@ public class UserController {
     /**
      * 找回密码
      *
-     * @param companyList
+     * @param userBackPasswordDTO
      * @return
      */
-    @GetMapping("/back_password")
+    @PostMapping("/back_password")
     @ResponseBody
-    public ResponseEntity<Result> back_password(@RequestBody CompanyList companyList) {
+    public ResponseEntity<Result> back_password(@RequestBody UserBackPasswordDTO userBackPasswordDTO) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/usr/back_password").content(new Object()));
+                .body(Result.build("/usr/back_password").content(userInfoService.backPassword(userBackPasswordDTO)));
     }
-
     /**
      * 用户注册
-     *
      * @param companyList
      * @return
      */
@@ -66,7 +70,6 @@ public class UserController {
     }
     /**
      * 获取注册验证码（注册，找回密码）
-     *
      * @param smsRecord
      * @return
      */

@@ -1,6 +1,7 @@
 package com.mehome.service.iface;
 
 import com.mehome.domain.UserInfo;
+import com.mehome.requestDTO.UserBackPasswordDTO;
 import com.mehome.requestDTO.UserInfoDTO;
 
 import java.util.List;
@@ -16,6 +17,14 @@ public interface IUserInfoService {
      * @return
      */
     public UserInfo login(UserInfo userInfo);
+
+    /**
+     * 修改密码
+     *
+     * @param userBackPasswordDTO 手机号
+     * @return
+     */
+    public int backPassword(UserBackPasswordDTO userBackPasswordDTO);
 
     /**
      * h5用户注册

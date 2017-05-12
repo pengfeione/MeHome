@@ -2,10 +2,10 @@ package com.mehome.domain;
 
 import java.util.Date;
 
-public class AuthorizeRoleMenu {
+public class AuthorizeAdminPath {
     private Integer adminId;
 
-    private Integer menuId;
+    private Integer pathId;
 
     private Date updateTime;
 
@@ -17,12 +17,12 @@ public class AuthorizeRoleMenu {
         this.adminId = adminId;
     }
 
-    public Integer getMenuId() {
-        return menuId;
+    public Integer getPathId() {
+        return pathId;
     }
 
-    public void setMenuId(Integer menuId) {
-        this.menuId = menuId;
+    public void setPathId(Integer pathId) {
+        this.pathId = pathId;
     }
 
     public Date getUpdateTime() {
@@ -44,9 +44,9 @@ public class AuthorizeRoleMenu {
         if (getClass() != that.getClass()) {
             return false;
         }
-        AuthorizeRoleMenu other = (AuthorizeRoleMenu) that;
+        AuthorizeAdminPath other = (AuthorizeAdminPath) that;
         return (this.getAdminId() == null ? other.getAdminId() == null : this.getAdminId().equals(other.getAdminId()))
-            && (this.getMenuId() == null ? other.getMenuId() == null : this.getMenuId().equals(other.getMenuId()))
+            && (this.getPathId() == null ? other.getPathId() == null : this.getPathId().equals(other.getPathId()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
@@ -55,7 +55,7 @@ public class AuthorizeRoleMenu {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getAdminId() == null) ? 0 : getAdminId().hashCode());
-        result = prime * result + ((getMenuId() == null) ? 0 : getMenuId().hashCode());
+        result = prime * result + ((getPathId() == null) ? 0 : getPathId().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
     }

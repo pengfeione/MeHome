@@ -2,7 +2,7 @@ package com.mehome.domain;
 
 import java.util.Date;
 
-public class AuthorizeRoleMenu {
+public class AuthorizeAdminMenu {
     private Integer adminId;
 
     private Integer menuId;
@@ -44,7 +44,7 @@ public class AuthorizeRoleMenu {
         if (getClass() != that.getClass()) {
             return false;
         }
-        AuthorizeRoleMenu other = (AuthorizeRoleMenu) that;
+        AuthorizeAdminMenu other = (AuthorizeAdminMenu) that;
         return (this.getAdminId() == null ? other.getAdminId() == null : this.getAdminId().equals(other.getAdminId()))
             && (this.getMenuId() == null ? other.getMenuId() == null : this.getMenuId().equals(other.getMenuId()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));

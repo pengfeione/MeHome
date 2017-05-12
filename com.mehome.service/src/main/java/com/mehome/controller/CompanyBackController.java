@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/company")
 public class CompanyBackController {
-    private final static String cros="*";
+    private final static String cros = "*";
     /**
      * 企业用户列表
      * @param requestDto
      * @return
      */
-    @GetMapping("/users")
+    @GetMapping("/{company}/users")
     @ResponseBody
     public ResponseEntity<Result> users(@RequestBody CompanyUserListDTO requestDto) {
         return ResponseEntity
@@ -30,10 +30,11 @@ public class CompanyBackController {
     }
     /**
      * 获取企业认证用户的数量
+     *
      * @param company 企业id
      * @return
      */
-    @GetMapping("/auth_num/{company}")
+    @GetMapping("/{company}/auth_num")
     @ResponseBody
     public ResponseEntity<Result> auth_num(@PathVariable String company) {
         return ResponseEntity
@@ -42,12 +43,14 @@ public class CompanyBackController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build("/platform/auth_num").content(new Object()));
     }
+
     /**
      * 企业操作用户的审核（审核通过，审核不通过，注销）
+     *
      * @param company
      * @return
      */
-    @GetMapping("/operation/{company}/{operation}")
+    @GetMapping("/{company}/operation/{operation}")
     @ResponseBody
     public ResponseEntity<Result> operation(@PathVariable String company) {
         return ResponseEntity

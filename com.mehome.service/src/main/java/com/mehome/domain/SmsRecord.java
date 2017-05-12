@@ -3,22 +3,23 @@ package com.mehome.domain;
 import java.util.Date;
 
 public class SmsRecord {
-    private Integer autoId;
-
     private String mobile;
 
     private Integer type;
+
+    private String code;
 
     private Integer success;
 
     private Date updateTime;
 
-    public Integer getAutoId() {
-        return autoId;
+
+    public SmsRecord() {
     }
 
-    public void setAutoId(Integer autoId) {
-        this.autoId = autoId;
+    public SmsRecord(String mobile, Integer type) {
+        this.mobile = mobile;
+        this.type = type;
     }
 
     public String getMobile() {
@@ -35,6 +36,14 @@ public class SmsRecord {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
     }
 
     public Integer getSuccess() {
@@ -65,20 +74,20 @@ public class SmsRecord {
             return false;
         }
         SmsRecord other = (SmsRecord) that;
-        return (this.getAutoId() == null ? other.getAutoId() == null : this.getAutoId().equals(other.getAutoId()))
-            && (this.getMobile() == null ? other.getMobile() == null : this.getMobile().equals(other.getMobile()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
-            && (this.getSuccess() == null ? other.getSuccess() == null : this.getSuccess().equals(other.getSuccess()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+        return (this.getMobile() == null ? other.getMobile() == null : this.getMobile().equals(other.getMobile()))
+                && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
+                && (this.getCode() == null ? other.getCode() == null : this.getCode().equals(other.getCode()))
+                && (this.getSuccess() == null ? other.getSuccess() == null : this.getSuccess().equals(other.getSuccess()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getAutoId() == null) ? 0 : getAutoId().hashCode());
         result = prime * result + ((getMobile() == null) ? 0 : getMobile().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
+        result = prime * result + ((getCode() == null) ? 0 : getCode().hashCode());
         result = prime * result + ((getSuccess() == null) ? 0 : getSuccess().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;

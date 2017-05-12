@@ -7,5 +7,5 @@ import com.mehome.resonpseDTO.AdministratorBean;
  */
 public interface IAuthorizeService {
 
-    public AdministratorBean login(String userName, String password);
+    public AdministratorBean login(String userName, String password, String loginIp, String headers);
 }
