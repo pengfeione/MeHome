@@ -13,7 +13,7 @@ import com.mehome.requestDTO.CommentBean;
 import com.mehome.requestDTO.HouseBean;
 import com.mehome.service.iface.ICommentService;
 import com.mehome.service.iface.IHouseService;
-import com.mehome.service.iface.ISupplierSerive;
+import com.mehome.service.iface.ISupplierService;
 import com.mehome.utils.Result;
 
 @RestController

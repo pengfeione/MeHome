@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mehome.requestDTO.SupplierBean;
-import com.mehome.service.iface.ISupplierSerive;
+import com.mehome.service.iface.ISupplierService;
 import com.mehome.utils.Result;
 
 @RestController
@@ -18,7 +18,7 @@ import com.mehome.utils.Result;
 public class SupplierController {
 	private final static String cros="*";
 	@Autowired
-	private ISupplierSerive supplierSerive;
+	private ISupplierService supplierSerive;
 	@PostMapping("/list")
 	@ResponseBody
 	public ResponseEntity<Result> list(@RequestBody SupplierBean bean){

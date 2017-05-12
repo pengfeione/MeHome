@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mehome.dao.SupplierListDao;
-import com.mehome.domain.ProductList;
 import com.mehome.domain.SupplierList;
 import com.mehome.requestDTO.SupplierBean;
-import com.mehome.service.iface.ISupplierSerive;
+import com.mehome.service.iface.ISupplierService;
 @Service("ISupplierSerive")
-public class SupplierServiceImpl implements ISupplierSerive {
+public class SupplierServiceImpl implements ISupplierService {
 	private Logger log = Logger.getLogger(this.getClass());
 	@Autowired
 	private SupplierListDao supplierListDAO;
@@ -32,14 +31,20 @@ public class SupplierServiceImpl implements ISupplierSerive {
 
 	@Override
 	public String addSupplier(SupplierBean bean) {
-		// TODO Auto-generated method stub
-		return null;
+		SupplierList supplier = null;
+		try {
+			supplier = bean.beanToPojo();
+			supplierListDAO.insert(supplier);
+		} catch (Exception e) {
+			log.error("加入供应商出错:" + e);
+		}
+		return supplier.getSupplierId() == null ? "" : supplier.getSupplierId().toString();
 	}
 
 	@Override
 	public Long getSizeByCondition(SupplierBean bean) {
-		// TODO Auto-generated method stub
-		return null;
+		Long size = supplierListDAO.getSizeByCondition(bean);
+		return size;
 	}
 
 	@Override

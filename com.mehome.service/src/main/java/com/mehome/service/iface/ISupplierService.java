@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.mehome.requestDTO.SupplierBean;
 
-public interface ISupplierSerive {
+public interface ISupplierService {
 	public List<SupplierBean> getListByCondition(SupplierBean bean);
 
 	public String addSupplier(SupplierBean bean);

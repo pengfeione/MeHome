@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mehome.dao.ProductListDao;
+import com.mehome.domain.ProductComment;
 import com.mehome.domain.ProductList;
 import com.mehome.requestDTO.ProductBean;
 import com.mehome.service.iface.IProductService;
@@ -33,8 +34,14 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public String addProduct(ProductBean bean) {
-		// TODO Auto-generated method stub
-		return null;
+		ProductList product = null;
+		try {
+			product = bean.beanToPojo();
+			productListDAO.insert(product);
+		} catch (Exception e) {
+			log.error("加入产品出错:" + e);
+		}
+		return product.getProductId() == null ? "" : product.getProductId().toString();
 	}
 
 	@Override
