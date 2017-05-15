@@ -6,17 +6,17 @@
 <title>ME+预约－租借管理</title>
 <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<link rel="stylesheet" href="js/jPlayer/jplayer.flat.css" type="text/css" />
-<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
-<link rel="stylesheet" href="css/animate.css" type="text/css" />
-<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
-<link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
-<link rel="stylesheet" href="css/font.css" type="text/css" />
-<link rel="stylesheet" href="css/app.css" type="text/css" />
+<link rel="stylesheet" href="/js/jPlayer/jplayer.flat.css" type="text/css" />
+<link rel="stylesheet" href="/css/bootstrap.css" type="text/css" />
+<link rel="stylesheet" href="/css/animate.css" type="text/css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css" />
+<link rel="stylesheet" href="/css/simple-line-icons.css" type="text/css" />
+<link rel="stylesheet" href="/css/font.css" type="text/css" />
+<link rel="stylesheet" href="/css/app.css" type="text/css" />
 <!--[if lt IE 9]>
-<script src="js/ie/html5shiv.js"></script>
-<script src="js/ie/respond.min.js"></script>
-<script src="js/ie/excanvas.js"></script>
+<script src="/js/ie/html5shiv.js"></script>
+<script src="/js/ie/respond.min.js"></script>
+<script src="/js/ie/excanvas.js"></script>
 <![endif]-->
 
 <style>
@@ -37,7 +37,11 @@
 
 	<!-- header -->
 	<header class="bg-white-only header header-md navbar navbar-fixed-top-xs">
-		<div class="navbar-header aside bg-info nav-xs"><a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html"> <i class="icon-list"></i> </a> <a href="index.html" class="navbar-brand text-lt"> <i class="icon-earphones"></i> <img src="images/logo.png" alt="." class="hide"> <span class="hidden-nav-xs m-l-sm">ME+</span> </a> <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user"> <i class="icon-settings"></i> </a> </div>
+		<div class="navbar-header aside bg-info nav-xs">
+            <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
+                <i class="icon-list"></i> </a>
+            <a href="company.html" class="navbar-brand text-lt"> <i class="icon-earphones"></i>
+                <img src="/img/logo.png" alt="." class="hide"/> <span class="hidden-nav-xs m-l-sm">ME+</span> </a> <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user"> <i class="icon-settings"></i> </a> </div>
 		<ul class="nav navbar-nav hidden-xs">
 			<li><a href="#nav,.navbar-header" data-toggle="class:nav-xs,nav-xs" class="text-muted"> <i class="fa fa-indent text"></i> <i class="fa fa-dedent text-active"></i> </a> </li>
 		</ul>
@@ -45,7 +49,7 @@
             <div class="form-group">
             	<div class="input-group">
                 	<span class="input-group-btn"><button type="submit" class="btn btn-sm bg-white btn-icon rounded"><i class="fa fa-search"></i></button></span>
-              		<input type="text" class="form-control input-sm no-border rounded" placeholder="ME+搜索">
+              		<input type="text" class="form-control input-sm no-border rounded" placeholder="ME+搜索"/>
             	</div>
           	</div>
         </form>
@@ -55,8 +59,8 @@
               <section class="dropdown-menu aside-xl animated fadeInUp">
                 <section class="panel bg-white">
                   <div class="panel-heading b-light bg-light"> <strong>You have <span class="count">2</span> notifications</strong> </div>
-                  <div class="list-group list-group-alt"> <a href="#" class="media list-group-item"> <span class="pull-left thumb-sm"> <img src="images/a0.png" alt="..." class="img-circle"> </span> <span class="media-body block m-b-none"> Use awesome animate.css<br>
-                    <small class="text-muted">10 minutes ago</small> </span> </a> <a href="#" class="media list-group-item"> <span class="media-body block m-b-none"> 1.0 initial released<br>
+                  <div class="list-group list-group-alt"> <a href="#" class="media list-group-item"> <span class="pull-left thumb-sm"> <img src="/img/a0.png" alt="..." class="img-circle"/> </span> <span class="media-body block m-b-none"> Use awesome animate.css<br/>
+                    <small class="text-muted">10 minutes ago</small> </span> </a> <a href="#" class="media list-group-item"> <span class="media-body block m-b-none"> 1.0 initial released<br/>
                     <small class="text-muted">1 hour ago</small> </span> </a> </div>
                   <div class="panel-footer text-sm"> <a href="#" class="pull-right"><i class="fa fa-cog"></i></a> <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a> </div>
                 </section>
@@ -65,7 +69,7 @@
             <li class="dropdown">
             	<a href="#" class="dropdown-toggle bg clear" data-toggle="dropdown">
                 	<span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
-                    <img src="images/a0.png" alt="..."> </span>兽爷雄霸天下<b class="caret"></b></a>
+                    <img src="/img/a0.png" alt="..."/> </span>兽爷雄霸天下<b class="caret"></b></a>
                 <ul class="dropdown-menu animated fadeInRight">
                     <li><span class="arrow top"></span><a href="#">设置</a></li>
                     <li><a href="profile.html">简介</a></li>
@@ -96,7 +100,7 @@
                         <li>
                             <a href="#" class="auto"><span class="pull-right text-muted"><i class="fa fa-angle-left text"></i><i class="fa fa-angle-down text-active"></i></span><i class="icon-screen-desktop icon"></i><span>企业应用平台1.0</span></a>
                             <ul class="nav dk text-sm">
-                                <li><a href="index.html" class="auto"><i class="fa fa-angle-right text-xs"></i><span>企业用户管理</span> </a></li>
+                                <li><a href="company.html" class="auto"><i class="fa fa-angle-right text-xs"></i><span>企业用户管理</span> </a></li>
                             </ul>
                         </li>
                         <li>
@@ -135,9 +139,9 @@
                           <option>注销</option>
                         </select>
                     </span>
-                    <span class="col-md-1"><input type="text" class="form-control" placeholder="产品名称" aria-describedby="basic-addon2"></span>
-                    <span class="col-md-1"><input type="text" class="form-control" placeholder="房源名称" aria-describedby="basic-addon2"></span>
-                    <span class="col-md-1"><input type="text" class="form-control" placeholder="用户ID" aria-describedby="basic-addon2"></span>
+                    <span class="col-md-1"><input type="text" class="form-control" placeholder="产品名称" aria-describedby="basic-addon2"/></span>
+                    <span class="col-md-1"><input type="text" class="form-control" placeholder="房源名称" aria-describedby="basic-addon2"/></span>
+                    <span class="col-md-1"><input type="text" class="form-control" placeholder="用户ID" aria-describedby="basic-addon2"/></span>
                     <span class="col-md-1"><button type="button" class="btn btn-primary">查询</button></span>
                     <span class="col-md-2 text-right"><button type="button" class="btn btn-default">未来一个月内到期房源</button></span>
                     <span class="col-md-2"><button type="button" class="btn btn-default">未来3d内到期房源</button></span>
@@ -145,21 +149,21 @@
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <tr>
-                            <th>订单<br>ID</th>
-                            <th>产品<br>名称</th>
-                            <th>房源<br>名称</th>
-                            <th>用户<br>ID</th>
-                            <th>订单<br>金额</th>
-                            <th>平台<br>应收款</th>
-                            <th>供应商<br>应收款</th>
-                            <th>租借<br>周期</th>
-                            <th>是否平台<br>押金托管</th>
-                            <th>线上／<br>线下支付</th>
-                            <th>线上<br>支付渠道</th>
-                            <th>线上<br>支付账户</th>
-                            <th>线上<br>支付时间</th>
-                            <th>订单<br>状态</th>
-                            <th>最后<br>处理时间</th>
+                            <th>订单<br/>ID</th>
+                            <th>产品<br/>名称</th>
+                            <th>房源<br/>名称</th>
+                            <th>用户<br/>ID</th>
+                            <th>订单<br/>金额</th>
+                            <th>平台<br/>应收款</th>
+                            <th>供应商<br/>应收款</th>
+                            <th>租借<br/>周期</th>
+                            <th>是否平台<br/>押金托管</th>
+                            <th>线上／<br/>线下支付</th>
+                            <th>线上<br/>支付渠道</th>
+                            <th>线上<br/>支付账户</th>
+                            <th>线上<br/>支付时间</th>
+                            <th>订单<br/>状态</th>
+                            <th>最后<br/>处理时间</th>
                             <th>操作</th>
                         </tr>
                         <tr>
@@ -325,7 +329,7 @@
                         <div class="panel-heading">确认订单</div>
                         <div class="panel-body">
                             <span>租借周期&nbsp;&nbsp;日历控件，选择入住起始时间~入住结束时间，不得与房源可用时间重叠</span>
-                            <span>是否选择押金平台托管：<label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>&nbsp;是</label>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">&nbsp;否</label></span>
+                            <span>是否选择押金平台托管：<label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="checked" />&nbsp;是</label>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" />&nbsp;否</label></span>
 							<p class="text-center">
 								<button type="button" class="btn btn-primary btn-sm">取 消</button>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm">确 认</button>
 							</p>
@@ -346,19 +350,11 @@
 
 
 
-<script src="js/jquery.min.js"></script>
+<script src="/js/jquery.min.js"></script>
 
 <!-- Bootstrap -->
 
-<script src="js/bootstrap.js"></script>
+<script src="/js/bootstrap.js"></script>
 
-<!-- App -->
-
-<script src="js/app.js"></script>
-<script src="js/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="js/app.plugin.js"></script>
-<script type="text/javascript" src="js/jPlayer/jquery.jplayer.min.js"></script>
-<script type="text/javascript" src="js/jPlayer/add-on/jplayer.playlist.min.js"></script>
-<script type="text/javascript" src="js/jPlayer/demo.js"></script>
 </body>
 </html>
