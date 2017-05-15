@@ -7,8 +7,9 @@ import org.springframework.util.StringUtils;
 
 import com.mehome.domain.ProductComment;
 import com.mehome.utils.OrderIdUtils;
+import com.mehome.utils.PageMysqlUtil;
 
-public class CommentBean {
+public class CommentBean extends PageMysqlUtil{
 
 	private String commentId;
 	
