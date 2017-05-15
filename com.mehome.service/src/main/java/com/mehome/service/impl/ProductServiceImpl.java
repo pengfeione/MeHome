@@ -36,7 +36,7 @@ public class ProductServiceImpl implements IProductService {
 	public String addProduct(ProductBean bean) {
 		ProductList product = null;
 		try {
-			product = bean.beanToPojo();
+			product = bean.beanToPojo(Boolean.TRUE);
 			productListDAO.insert(product);
 		} catch (Exception e) {
 			log.error("加入产品出错:" + e);
@@ -54,7 +54,7 @@ public class ProductServiceImpl implements IProductService {
 	public String updateProduct(ProductBean bean) {
 		ProductList product = null;
 		try {
-			product = bean.beanToPojo();
+			product = bean.beanToPojo(Boolean.FALSE);
 			int row = productListDAO.updateRequired(product);
 		} catch (Exception e) {
 			log.error("更新产品出错:" + e);

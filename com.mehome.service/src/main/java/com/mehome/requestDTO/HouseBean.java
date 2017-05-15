@@ -1,5 +1,6 @@
 package com.mehome.requestDTO;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mehome.domain.HouseResource;
 import com.mehome.enumDTO.HouseStatusEnum;
 import com.mehome.utils.DateUtils;
@@ -228,30 +229,33 @@ public class HouseBean extends PageMysqlUtil {
 		this.productId = productId;
 	}
 
-	public HouseResource beanToPojo(){
+	public HouseResource beanToPojo(Boolean addBoolean){
 		HouseResource resource = new HouseResource();
+		Date date = new Date();
 		resource.setHouseId(this.getHouseId());
 		resource.setAddress(this.getAddress());
 		resource.setAreaId(this.getAreaId());
-		resource.setCreateTime(new Date());
+		resource.setCreateTime(addBoolean?date:null);
 		resource.setDetail(this.getDetail());
-		resource.setDetailpic(this.getDetailpic()==null?null:this.getDetailpic().toString());
-		resource.setEndTime(StringUtils.isEmpty(this.getEndTime())?null:DateUtils.strToDate(this.getEndTime()));
+		resource.setDetailpic(this.getDetailpic()==null&&addBoolean?null:this.getDetailpic().toString());
+		resource.setEndTime(StringUtils.isEmpty(this.getEndTime())&&addBoolean?date:DateUtils.strToDate(this.getEndTime()));
 		resource.setLeaseHolder(this.getLeaseHolder());
 		resource.setListpic(this.getListpic());
-		resource.setPayType(this.getPayType());
+		resource.setPayType(StringUtils.isEmpty(this.getPayType())&&addBoolean?"{\"payMentNum\":3,\"mortagageNum\":1}":this.getPayType());
 		resource.setPosition(this.getPosition());
-		resource.setRoomArea(this.getRoomArea());
-		resource.setRoomRent(this.getRoomRent());
-		resource.setRoomType(this.getRoomType());
-		resource.setRoomTypeDesc(this.getRoomTypeDesc());
-		resource.setSort(this.getSort()==null?0:this.getSort());
-		resource.setStartTime(StringUtils.isEmpty(this.getStartTime())?null:DateUtils.strToDate(this.getStartTime()));
-		resource.setStatus(this.getStatus()==null?HouseStatusEnum.AVAILABLE.getKey():this.getStatus());
-		resource.setSubject(this.getSubject());
+		resource.setRoomArea(this.getRoomArea()==null&&addBoolean?0.00:this.getRoomArea());
+		resource.setRoomRent(this.getRoomRent()==null&&addBoolean?0:this.getRoomRent());
+		resource.setRoomTypeDesc(StringUtils.isEmpty(this.getRoomTypeDesc())&&addBoolean?"{\"room\":0,\"hall\":0,\"toilet\":0}":this.getRoomTypeDesc());
+		JSONObject roomTypeObject=JSONObject.parseObject(this.getRoomTypeDesc());
+		Integer roomType=(roomTypeObject.getInteger("room")==null&&addBoolean?0:roomTypeObject.getInteger("room"));
+		resource.setRoomType(this.getRoomType()==null&&addBoolean?roomType:this.getRoomType());
+		resource.setSort(this.getSort()==null&&addBoolean?0:this.getSort());
+		resource.setStartTime(StringUtils.isEmpty(this.getStartTime())&&addBoolean?date:DateUtils.strToDate(this.getStartTime()));
+		resource.setStatus(this.getStatus()==null&&addBoolean?HouseStatusEnum.AVAILABLE.getKey():this.getStatus());
+		resource.setSubject(StringUtils.isEmpty(this.getSubject())&&addBoolean?"房源标题未定义":this.getSubject());
 		resource.setSummary(this.getSummary());
-		resource.setSupplierId(this.getSupplierId());
-		resource.setUpdateTime(new Date());
+		resource.setSupplierId(this.getSupplierId()==null&&addBoolean?0:this.getSupplierId());
+		resource.setUpdateTime(date);
 		resource.setProductId(this.getProductId());
 		return resource;
 	}

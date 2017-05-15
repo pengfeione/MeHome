@@ -33,6 +33,8 @@ public class CommentBean {
 	private String fromTag;
 	
 	private Float score;
+	
+	private Boolean isActive;
 
 	public String getCommentId() {
 		return commentId;
@@ -130,22 +132,30 @@ public class CommentBean {
 		this.score = score;
 	}
 
-	public ProductComment beanToPojo(){
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public ProductComment beanToPojo(Boolean addBoolean){
 		ProductComment comment = new ProductComment();
-		comment.setCommentId(OrderIdUtils.getUUID());
+		comment.setCommentId(addBoolean?OrderIdUtils.getUUID():this.getCommentId());
 		comment.setContent(this.getContent());
 		comment.setCreateTime(new Date());
-		comment.setFloor(this.getFloor());
+		comment.setFloor(this.getFloor()==null&&addBoolean?0:this.getFloor());
 		comment.setFormatContent(this.getFormatContent());
-		comment.setFromTag(StringUtils.isEmpty(this.getFromTag())?"meApp_1.0":this.getFromTag());
-		comment.setIsActive(Boolean.TRUE);
-		comment.setIsAdmin(this.getIsAdmin()==null?Boolean.FALSE:this.getIsAdmin());
-		comment.setIsBest(this.getIsBest()==null?Boolean.FALSE:this.getIsBest());
+		comment.setFromTag(StringUtils.isEmpty(this.getFromTag())&&addBoolean?"meApp_1.0":this.getFromTag());
+		comment.setIsActive(addBoolean?Boolean.TRUE:this.getIsActive());
+		comment.setIsAdmin(this.getIsAdmin()==null&&addBoolean?Boolean.FALSE:this.getIsAdmin());
+		comment.setIsBest(this.getIsBest()==null&&addBoolean?Boolean.FALSE:this.getIsBest());
 		comment.setListpic(this.getListpic());
 		comment.setProductId(this.getProductId());
 		comment.setReplier(this.getReplier());
-		comment.setScore(this.getScore()==null?5.0f:this.getScore());
-		comment.setType(StringUtils.isEmpty(this.getType())?"undefined":this.getType());
+		comment.setScore(this.getScore()==null&&addBoolean?5.0f:this.getScore());
+		comment.setType(StringUtils.isEmpty(this.getType())&&addBoolean?"undefined":this.getType());
 		return comment;
 	}
 	

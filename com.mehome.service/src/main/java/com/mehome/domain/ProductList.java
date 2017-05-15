@@ -42,6 +42,8 @@ public class ProductList {
     private Date createTime;
     
     private Date updateTime;
+    
+    private Float score;
 
     public Integer getProductId() {
         return productId;
@@ -204,6 +206,14 @@ public class ProductList {
 		this.updateTime = updateTime;
 	}
 
+	public Float getScore() {
+		return score;
+	}
+
+	public void setScore(Float score) {
+		this.score = score;
+	}
+
 	@Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -234,7 +244,8 @@ public class ProductList {
             && (this.getHasPersonal() == null ? other.getHasPersonal() == null : this.getHasPersonal().equals(other.getHasPersonal()))
             && (this.getNetRulesUrl() == null ? other.getNetRulesUrl() == null : this.getNetRulesUrl().equals(other.getNetRulesUrl()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getScore() == null ? other.getScore() == null : this.getScore().equals(other.getScore()));
     }
 
     @Override
@@ -260,6 +271,7 @@ public class ProductList {
         result = prime * result + ((getNetRulesUrl() == null) ? 0 : getNetRulesUrl().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getScore() == null) ? 0 : getScore().hashCode());
         return result;
     }
 }
