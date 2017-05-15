@@ -25,7 +25,6 @@ public class AdministratorBean {
     private int companyId;
 
 
-
     public int getCompanyId() {
         return companyId;
     }

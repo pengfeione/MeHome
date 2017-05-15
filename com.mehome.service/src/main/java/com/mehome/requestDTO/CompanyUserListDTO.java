@@ -7,9 +7,18 @@ import com.mehome.utils.PageMysqlUtil;
  * Created by renhui on 2017/5/8.
  */
 public class CompanyUserListDTO extends PageMysqlUtil {
+    private String companyId;
     private String authStatus;
     private String key;
     private String orderBy;
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
 
     public String getAuthStatus() {
         return authStatus;

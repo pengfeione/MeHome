@@ -5,6 +5,7 @@ import com.mehome.utils.APIBaseResult;
 import com.mehome.utils.BodyRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.util.NestedServletException;
 
 import javax.servlet.*;
@@ -20,8 +21,8 @@ import java.util.*;
 /**
  * Created by {renhui} on 2016-10-17.
  */
-@WebFilter(filterName = "baseFilter", urlPatterns = "/*")
-public class BaseFilter implements Filter {
+//@WebFilter(filterName = "baseFilter", urlPatterns = "/*")
+public class LogFilter implements Filter {
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
     public static final Set<String> allowDomain = new HashSet<String>();
 
@@ -31,11 +32,13 @@ public class BaseFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, filterConfig.getServletContext());
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        System.out.println(httpServletRequest.getRequestURI());
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         //允许部分跨域
         Map<String, String> headerMap = new HashMap<String, String>();
@@ -72,6 +75,7 @@ public class BaseFilter implements Filter {
         try {
             filterChain.doFilter(bodyRequestWrapper, response);
         } catch (Exception e) {
+            e.printStackTrace();
             APIBaseResult apiBaseResult = new APIBaseResult();
             apiBaseResult.setCode(400);
             response.setContentType("application/json;charset=UTF-8");
@@ -86,6 +90,7 @@ public class BaseFilter implements Filter {
             printWriter.write(apiBaseResult.toString());
         }
     }
+
     public String buildGetParameters(HttpServletRequest httpServletRequest) {
         StringBuilder stringBuilder = new StringBuilder();
         Enumeration<String> parameterName = httpServletRequest.getParameterNames();

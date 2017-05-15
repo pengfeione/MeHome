@@ -1,6 +1,7 @@
 package com.mehome.dao;
 
 import com.mehome.domain.AuthorizePath;
+import org.apache.ibatis.annotations.Param;
 
 public interface AuthorizePathDao {
     int delete(Integer pathId);
@@ -14,4 +15,11 @@ public interface AuthorizePathDao {
     int updateRequired(AuthorizePath record);
 
     int update(AuthorizePath record);
+
+    /**
+     * 根据path查找pathId
+     * @param path
+     * @return
+     */
+    int getPathIdByPath(@Param("path") String path);
 }

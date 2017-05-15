@@ -11,15 +11,17 @@ import org.springframework.web.bind.annotation.*;
  * 公司平台后台接口
  */
 @RestController
-@RequestMapping("/company")
+@RequestMapping("/api/company")
 public class CompanyBackController {
     private final static String cros = "*";
+
     /**
      * 企业用户列表
+     *
      * @param requestDto
      * @return
      */
-    @GetMapping("/{company}/users")
+    @PostMapping("/users/{company}")
     @ResponseBody
     public ResponseEntity<Result> users(@RequestBody CompanyUserListDTO requestDto) {
         return ResponseEntity
@@ -28,13 +30,14 @@ public class CompanyBackController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build("/company/users").content(new Object()));
     }
+
     /**
      * 获取企业认证用户的数量
      *
      * @param company 企业id
      * @return
      */
-    @GetMapping("/{company}/auth_num")
+    @PostMapping("/auth_num/{company}")
     @ResponseBody
     public ResponseEntity<Result> auth_num(@PathVariable String company) {
         return ResponseEntity
@@ -50,7 +53,7 @@ public class CompanyBackController {
      * @param company
      * @return
      */
-    @GetMapping("/{company}/operation/{operation}")
+    @PostMapping("/operation/{operation}/{company}")
     @ResponseBody
     public ResponseEntity<Result> operation(@PathVariable String company) {
         return ResponseEntity

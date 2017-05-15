@@ -3,6 +3,7 @@ package com.mehome.service.impl;
 import com.mehome.dao.*;
 import com.mehome.domain.AuthorizeAdmin;
 import com.mehome.domain.AuthorizeAdminMenu;
+import com.mehome.domain.AuthorizeAdminPath;
 import com.mehome.domain.AuthorizeLoginRecord;
 import com.mehome.exceptions.InfoException;
 import com.mehome.resonpseDTO.AdministratorBean;
@@ -10,6 +11,7 @@ import com.mehome.service.iface.IAuthorizeService;
 import com.mehome.utils.AssertUtils;
 import com.mehome.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -24,6 +26,10 @@ public class AuthorizeServiceImpl implements IAuthorizeService {
     private AuthorizeAdminDao authorizeAdminDao;
     @Autowired
     private AuthorizeLoginRecordDao loginRecordDao;
+    @Autowired
+    private AuthorizePathDao pathDao;
+    @Autowired
+    private AuthorizeAdminPathDao adminPathDao;
 
     @Override
     public AdministratorBean login(String userName, String password, String loginIp, String headers) {
@@ -52,7 +58,40 @@ public class AuthorizeServiceImpl implements IAuthorizeService {
             }
             return result;
         } else {
-            throw new InfoException("用户名或密码不正确！");
+            return null;
         }
+    }
+
+    @Override
+    public boolean permitCompanyPath(String path, Integer companyAdminId) {
+        //若路径和ID为空
+        if (StringUtils.isNull(path) || null == companyAdminId) {
+            return false;
+        }
+        Integer pathId = pathDao.getPathIdByPath(path);
+        if (null == pathId) {
+            return false;
+        }
+        AuthorizeAdminPath authorizeAdminPath = adminPathDao.isexits(companyAdminId, pathId);
+        if (null == authorizeAdminPath) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public AuthorizeAdmin getAdminInfoById(Integer adminId) {
+        if (null == adminId) {
+            return null;
+        }
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+
+        }
+        AuthorizeAdmin authorizeAdmin = authorizeAdminDao.selectById(adminId);
+        authorizeAdmin.setCompanyId(10);
+        authorizeAdminDao.updateRequired(authorizeAdmin);
+        return authorizeAdmin;
     }
 }

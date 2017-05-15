@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by renhui on 2017/5/8.
  */
 @RestController
-@RequestMapping("/usr")
+@RequestMapping("/api/usr")
 public class UserController {
     @Value("${cros}")
     private String cros = "*";
@@ -29,7 +29,7 @@ public class UserController {
      * @param companyList
      * @return
      */
-    @GetMapping("/login")
+    @PostMapping("/login")
     @ResponseBody
     public ResponseEntity<Result> company_add(@RequestBody CompanyList companyList) {
         return ResponseEntity
@@ -54,12 +54,14 @@ public class UserController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build("/usr/back_password").content(userInfoService.backPassword(userBackPasswordDTO)));
     }
+
     /**
      * 用户注册
+     *
      * @param companyList
      * @return
      */
-    @GetMapping("/add")
+    @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<Result> reg(@RequestBody CompanyList companyList) {
         return ResponseEntity
@@ -68,12 +70,14 @@ public class UserController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build("/usr/reg").content(new Object()));
     }
+
     /**
      * 获取注册验证码（注册，找回密码）
+     *
      * @param smsRecord
      * @return
      */
-    @GetMapping("/verification_code")
+    @PostMapping("/verification_code")
     @ResponseBody
     public ResponseEntity<Result> verification_code(@RequestBody SmsRecord smsRecord) {
         return ResponseEntity
@@ -82,12 +86,14 @@ public class UserController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build("/usr/verification_code").content(new Object()));
     }
+
     /**
      * 获取用户信息
+     *
      * @param companyList
      * @return
      */
-    @GetMapping("/get")
+    @PostMapping("/get")
     @ResponseBody
     public ResponseEntity<Result> get(@RequestBody CompanyList companyList) {
         return ResponseEntity

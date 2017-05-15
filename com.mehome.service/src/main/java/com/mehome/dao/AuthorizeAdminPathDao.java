@@ -23,6 +23,16 @@ public interface AuthorizeAdminPathDao {
      */
     List<Integer> selectPathIdByAdminId(@Param("adminId") Integer adminId);
 
+
+    /**
+     * 根据管理员ID查询路径列表
+     *
+     * @param adminId 管理员ID
+     * @return
+     */
+    List<AuthorizePath> selectPathBeanByAdminId(@Param("adminId") Integer adminId);
+
+
     /**
      * 根据管理员ID查询路径列表
      *
@@ -51,5 +61,8 @@ public interface AuthorizeAdminPathDao {
 
 
     int updateRequired(@Param("adminId") Integer adminId, @Param("pathId") Integer pathId);
+
+
+    AuthorizeAdminPath isexits(@Param("adminId") Integer adminId, @Param("pathId") Integer pathId);
 
 }

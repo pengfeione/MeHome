@@ -1,5 +1,7 @@
 package com.mehome.domain;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.Date;
 
 public class AuthorizeAdmin {
@@ -138,5 +140,10 @@ public class AuthorizeAdmin {
         result = prime * result + ((getCreateBy() == null) ? 0 : getCreateBy().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }
