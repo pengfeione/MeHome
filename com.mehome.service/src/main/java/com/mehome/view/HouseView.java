@@ -42,4 +42,14 @@ public class HouseView {
 		return mav;
 	}
 	
+	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+    @PostMapping(path = "/add")
+	public ModelAndView add(@RequestBody HouseBean house){
+		ModelAndView mav=new ModelAndView();
+		String ret=houseService.addHouse(house);
+		mav.setViewName("house");
+		mav.addObject("addRet", ret);
+		return mav;
+	}
+	
 }
