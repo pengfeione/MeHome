@@ -53,13 +53,19 @@ public class SpringContextHelper implements ApplicationContextAware {
                 }
                 if (null != permits) {
                     permitsMap.put(base + methodPath, permits);
-                    System.out.println("【" + methods[i].getName() + "】【" + base + methodPath + "】" + permits.needLogin());
                 }
             }
-            System.out.println(clazz.getSimpleName() + "------------------------------------------");
         }
     }
 
+    /**
+     * 获取spring中加载的bean
+     *
+     * @param name
+     * @param clazz
+     * @param <T>
+     * @return
+     */
     public <T> T getBean(String name, Class<T> clazz) {
         return TypeUtils.castToJavaBean(context.getBean(name), clazz);
     }
@@ -73,6 +79,4 @@ public class SpringContextHelper implements ApplicationContextAware {
     public Permits getPermits(String requestUri) {
         return permitsMap.get(requestUri);
     }
-
-    ;
 }
