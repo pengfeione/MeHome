@@ -1,6 +1,9 @@
 package com.mehome.requestDTO;
 
+import java.util.Arrays;
 import java.util.List;
+
+import org.springframework.util.StringUtils;
 
 import com.mehome.domain.ProductList;
 import com.mehome.utils.PageMysqlUtil;
@@ -39,7 +42,7 @@ public class ProductBean extends PageMysqlUtil {
 	
 	private String listpic;
 	
-	private String detailpic;
+	private List<String> detailpic;
 	
 	private String address;
 	
@@ -137,10 +140,10 @@ public class ProductBean extends PageMysqlUtil {
 	public void setListpic(String listpic) {
 		this.listpic = listpic;
 	}
-	public String getDetailpic() {
+	public List<String> getDetailpic() {
 		return detailpic;
 	}
-	public void setDetailpic(String detailpic) {
+	public void setDetailpic(List<String> detailpic) {
 		this.detailpic = detailpic;
 	}
 	public String getAddress() {
@@ -207,7 +210,7 @@ public class ProductBean extends PageMysqlUtil {
 		ProductList product = new ProductList();
 		product.setAddress(this.getAddress());
 		product.setAreaId(this.getAreaId());
-		product.setDetailpic(this.getDetailpic());
+		product.setDetailpic(this.getDetailpic()==null?null:this.getDetailpic().toString());
 		product.setHasPersonal(this.getHasPersonal()==null?Boolean.TRUE:this.getHasPersonal());
 		if(this.getWelfareList()!=null&&this.getWelfareList().size()>0){
 			product.setIsWelfare(Boolean.TRUE);
@@ -231,7 +234,7 @@ public class ProductBean extends PageMysqlUtil {
 		this.setAreaId(product.getAreaId());
 		this.setBasicList(basicList);
 		this.setCommentList(commentList);
-		this.setDetailpic(product.getDetailpic());
+		this.setDetailpic(StringUtils.isEmpty(product.getDetailpic())?null:Arrays.asList(product.getDetailpic()));
 		this.setHasPersonal(product.getHasPersonal());
 		this.setHouseList(houseList);
 		this.setIsWelfare(product.getIsWelfare());

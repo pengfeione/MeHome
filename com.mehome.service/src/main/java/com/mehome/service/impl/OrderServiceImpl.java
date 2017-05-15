@@ -41,7 +41,7 @@ public class OrderServiceImpl implements IOrderService {
 	@Override
 	public synchronized String payOrder(OrderBean bean) {
 		// TODO Auto-generated method stub
-		String iface=
+//		String iface=
 		return null;
 	}
 
