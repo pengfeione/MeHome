@@ -37,7 +37,7 @@ public class CommentServiceImpl implements ICommentService {
 	public String addComment(CommentBean bean) {
 		ProductComment comment = null;
 		try {
-			comment = bean.beanToPojo();
+			comment = bean.beanToPojo(Boolean.TRUE);
 			ProductCommentDAO.insert(comment);
 		} catch (Exception e) {
 			log.error("加入点评出错:" + e);
@@ -55,7 +55,7 @@ public class CommentServiceImpl implements ICommentService {
 	public String updateComment(CommentBean bean) {
 		ProductComment comment = null;
 		try {
-			comment = bean.beanToPojo();
+			comment = bean.beanToPojo(Boolean.FALSE);
 			int row = ProductCommentDAO.updateRequired(comment);
 		} catch (Exception e) {
 			log.error("更新点评出错:" + e);

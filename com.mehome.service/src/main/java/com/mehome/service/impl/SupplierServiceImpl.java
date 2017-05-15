@@ -33,7 +33,7 @@ public class SupplierServiceImpl implements ISupplierService {
 	public String addSupplier(SupplierBean bean) {
 		SupplierList supplier = null;
 		try {
-			supplier = bean.beanToPojo();
+			supplier = bean.beanToPojo(Boolean.TRUE);
 			supplierListDAO.insert(supplier);
 		} catch (Exception e) {
 			log.error("加入供应商出错:" + e);
@@ -51,7 +51,7 @@ public class SupplierServiceImpl implements ISupplierService {
 	public String updateSupplier(SupplierBean bean) {
 		SupplierList supplier = null;
 		try {
-			supplier = bean.beanToPojo();
+			supplier = bean.beanToPojo(Boolean.FALSE);
 			int row = supplierListDAO.updateRequired(supplier);
 		} catch (Exception e) {
 			log.error("更新供应商出错:" + e);

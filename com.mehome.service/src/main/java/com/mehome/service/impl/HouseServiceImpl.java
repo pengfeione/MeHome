@@ -35,7 +35,7 @@ public class HouseServiceImpl implements IHouseService {
 	public String addHouse(HouseBean bean) {
 		HouseResource resource = null;
 		try {
-			resource = bean.beanToPojo();
+			resource = bean.beanToPojo(Boolean.TRUE);
 			houseResourceDAO.insert(resource);
 		} catch (Exception e) {
 			log.error("加入房源出错:" + e);
@@ -53,7 +53,7 @@ public class HouseServiceImpl implements IHouseService {
 	public String updateHouse(HouseBean bean) {
 		HouseResource resource = null;
 		try {
-			resource = bean.beanToPojo();
+			resource = bean.beanToPojo(Boolean.FALSE);
 			int row = houseResourceDAO.updateRequired(resource);
 		} catch (Exception e) {
 			log.error("更新房源出错:" + e);

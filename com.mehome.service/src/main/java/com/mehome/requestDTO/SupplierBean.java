@@ -3,6 +3,8 @@ package com.mehome.requestDTO;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.springframework.util.StringUtils;
+
 import com.mehome.domain.SupplierList;
 import com.mehome.utils.DateUtils;
 import com.mehome.utils.PageMysqlUtil;
@@ -124,18 +126,19 @@ public class SupplierBean extends PageMysqlUtil{
 		this.updateTime = updateTime;
 	}
 	
-	public SupplierList beanToPojo(){
+	public SupplierList beanToPojo(Boolean addBoolean){
 		SupplierList supplier = new SupplierList();
 		Date newDate = new Date();
-		supplier.setCreateTime(newDate);
-		supplier.setDepositOnline(this.getDepositOnline()==null?Boolean.FALSE:this.getDepositOnline());
-		supplier.setDepositPercent(this.getDepositPercent());
+		supplier.setSupplierId(this.getSupplierId());
+		supplier.setCreateTime(addBoolean?newDate:null);
+		supplier.setDepositOnline(this.getDepositOnline()==null&&addBoolean?Boolean.FALSE:this.getDepositOnline());
+		supplier.setDepositPercent(this.getDepositPercent()==null&&addBoolean?new BigDecimal("0.00"):this.getDepositPercent());
 		supplier.setRecipientAccount(this.getRecipientAccount());
 		supplier.setRecipientType(this.getRecipientType());
-		supplier.setRentOnline(this.getRentOnline());
-		supplier.setRentPercent(this.getRentPercent());
+		supplier.setRentOnline(this.getRentOnline()==null&&addBoolean?Boolean.FALSE:this.getRentOnline());
+		supplier.setRentPercent(this.getRentPercent()==null&&addBoolean?new BigDecimal("0.00"):this.getRentPercent());
 		supplier.setSupplierName(this.getSupplierName());
-		supplier.setSupplierPhone(this.getSupplierPhone());
+		supplier.setSupplierPhone(StringUtils.isEmpty(this.getSupplierPhone())?"联系电话未定义":this.getSupplierPhone());
 		supplier.setUpdateTime(newDate);
 		return supplier;
 	}

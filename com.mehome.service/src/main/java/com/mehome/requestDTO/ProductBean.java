@@ -1,5 +1,6 @@
 package com.mehome.requestDTO;
 
+import java.util.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,7 +73,9 @@ public class ProductBean extends PageMysqlUtil {
 	 */
 	private List<CommentBean> commentList;
 	
-	private Double score;
+	private Float score;
+	
+	private Integer floor;
 	
 	public Integer getProductId() {
 		return productId;
@@ -200,33 +203,47 @@ public class ProductBean extends PageMysqlUtil {
 	public void setCommentList(List<CommentBean> commentList) {
 		this.commentList = commentList;
 	}
-	public Double getScore() {
+	public Float getScore() {
 		return score;
 	}
-	public void setScore(Double score) {
+	public void setScore(Float score) {
 		this.score = score;
 	}
-	public ProductList beanToPojo(){
+	public Integer getFloor() {
+		return floor;
+	}
+	public void setFloor(Integer floor) {
+		this.floor = floor;
+	}
+	public ProductList beanToPojo(Boolean addBoolean){
 		ProductList product = new ProductList();
+		Date date=new Date();
+		product.setProductId(this.getProductId());
 		product.setAddress(this.getAddress());
 		product.setAreaId(this.getAreaId());
-		product.setDetailpic(this.getDetailpic()==null?null:this.getDetailpic().toString());
-		product.setHasPersonal(this.getHasPersonal()==null?Boolean.TRUE:this.getHasPersonal());
+		product.setDetailpic(this.getDetailpic()==null&&addBoolean?null:this.getDetailpic().toString());
+		product.setHasPersonal(this.getHasPersonal()==null&&addBoolean?Boolean.TRUE:this.getHasPersonal());
 		if(this.getWelfareList()!=null&&this.getWelfareList().size()>0){
 			product.setIsWelfare(Boolean.TRUE);
-		}else{
+		}else if(addBoolean){
 			product.setIsWelfare(Boolean.FALSE);
+		}else{
+			product.setIsWelfare(this.getIsWelfare());
 		}
 		product.setListpic(this.getListpic());
 		product.setNetRulesUrl(this.getNetRulesUrl());
 		product.setPersonalWelfare(this.getPersonalWelfare());
 		product.setPosition(this.getPosition());
-		product.setProductActive(Boolean.TRUE);
+		product.setProductActive(addBoolean?Boolean.TRUE:this.getProductActive());
 		product.setProductDetail(this.getProductDetail());
 		product.setProductName(this.getProductName());
-		product.setProductSort(this.getProductSort()==null?0:this.getProductSort());
+		product.setProductSort(this.getProductSort()==null&&addBoolean?0:this.getProductSort());
 		product.setRules(this.getRules());
 		product.setSupplierId(this.getSupplierId());
+		product.setFloor(this.getFloor()==null&&addBoolean?0:this.getFloor());
+		product.setScore(this.getScore()==null&&addBoolean?5.0f:this.getScore());
+		product.setCreateTime(addBoolean?date:null);
+		product.setUpdateTime(date);
 		return product;
 	}
 	public ProductBean(ProductList product,List<HouseBean> houseList,List<BasicBean> basicList,List<CommentBean> commentList,List<Integer> welfareList){
