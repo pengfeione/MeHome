@@ -11,7 +11,6 @@ import java.util.UUID;
  * Created by renhui on 2017/5/8.
  */
 public class Result {
-    protected final Logger logger = LoggerFactory.getLogger("Request");
     private int code;
     private String msg;
     private String requestId;
@@ -19,27 +18,21 @@ public class Result {
     private Long totalCount;
 
 
-    private Result(String log) {
-        this.code = 0;
-        this.msg = "success";
-        this.requestId = UUID.randomUUID().toString();
-    }
-
     private Result(int code, String msg) {
         this.code = code;
         this.msg = msg;
         this.requestId = UUID.randomUUID().toString();
     }
 
-    public static Result build(String log) {
-        return new Result(log);
+    public static Result build() {
+        Result result = new Result();
+        result.code = 0;
+        result.msg = "success";
+        result.requestId = UUID.randomUUID().toString();
+        return result;
     }
 
     public Result() {
-    }
-
-    public static Result build() {
-        return new Result();
     }
 
     public static Result buildError(String msg) {
