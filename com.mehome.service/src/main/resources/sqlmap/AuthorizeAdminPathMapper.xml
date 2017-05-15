@@ -6,6 +6,12 @@
         <id column="path_id" property="pathId" jdbcType="INTEGER"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <resultMap id="PathResultMap" type="com.mehome.domain.AuthorizePath">
+        <id column="path_id" property="pathId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
     <sql id="Base_Column_List">
     admin_id, path_id, update_time
   </sql>
@@ -24,6 +30,16 @@
 	        LEFT JOIN
 	        authorize_path
 	  ON admin.path_id = authorize_path.path_id
+    </select>
+    <select id="selectPathBeanByAdminId" resultMap="PathResultMap" parameterType="map">
+        SELECT authorize_path.*
+        FROM (SELECT path_id
+        FROM authorize_admin_path
+        WHERE admin_id = #{adminId,jdbcType=INTEGER}
+        ) admin
+        LEFT JOIN
+        authorize_path
+        ON admin.path_id = authorize_path.path_id
     </select>
     <delete id="delete" parameterType="map">
     delete from authorize_admin_path
@@ -64,4 +80,11 @@
         </set>
         where admin_id = #{adminId,jdbcType=INTEGER}
     </update>
+    <select id="isexits" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from authorize_admin_path
+        where admin_id = #{adminId,jdbcType=INTEGER}
+        and path_id = #{pathId,jdbcType=INTEGER},
+    </select>
 </mapper>

@@ -1,70 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mehome.dao.AuthorizePathDao" >
-  <resultMap id="BaseResultMap" type="com.mehome.domain.AuthorizePath" >
-    <id column="path_id" property="pathId" jdbcType="INTEGER" />
-    <result column="path" property="path" jdbcType="VARCHAR" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    path_id, path, update_time
+<mapper namespace="com.mehome.dao.AuthorizePathDao">
+    <resultMap id="BaseResultMap" type="com.mehome.domain.AuthorizePath">
+        <id column="path_id" property="pathId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    path_id, name, path, update_time
   </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from authorize_path
-    where path_id = #{pathId,jdbcType=INTEGER}
-  </select>
-  <delete id="delete" parameterType="java.lang.Integer" >
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from authorize_path
+        where path_id = #{pathId,jdbcType=INTEGER}
+    </select>
+    <select id="getPathIdByPath" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        path_id
+        from authorize_path
+        where path = #{path,jdbcType=VARCHAR}
+        limit 1
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
     delete from authorize_path
     where path_id = #{pathId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.mehome.domain.AuthorizePath" >
-    insert into authorize_path (path_id, path, update_time
-      )
-    values (#{pathId,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+    <insert id="insert" parameterType="com.mehome.domain.AuthorizePath">
+    insert into authorize_path (path_id, name, path, 
+      update_time)
+    values (#{pathId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertRequired" parameterType="com.mehome.domain.AuthorizePath" >
-    insert into authorize_path
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="pathId != null" >
-        path_id,
-      </if>
-      <if test="path != null" >
-        path,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="pathId != null" >
-        #{pathId,jdbcType=INTEGER},
-      </if>
-      <if test="path != null" >
-        #{path,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateRequired" parameterType="com.mehome.domain.AuthorizePath" >
+    <insert id="insertRequired" parameterType="com.mehome.domain.AuthorizePath">
+        insert into authorize_path
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pathId != null">
+                path_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pathId != null">
+                #{pathId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateRequired" parameterType="com.mehome.domain.AuthorizePath">
+        update authorize_path
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                path = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where path_id = #{pathId,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="com.mehome.domain.AuthorizePath">
     update authorize_path
-    <set >
-      <if test="path != null" >
-        path = #{path,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where path_id = #{pathId,jdbcType=INTEGER}
-  </update>
-  <update id="update" parameterType="com.mehome.domain.AuthorizePath" >
-    update authorize_path
-    set path = #{path,jdbcType=VARCHAR},
+    set name = #{name,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where path_id = #{pathId,jdbcType=INTEGER}
   </update>
