@@ -17,20 +17,17 @@ public class Result {
     private String requestId;
     private Object result;
     private Long totalCount;
-    private String log;
 
-    public String getLog() {
-        return log;
-    }
-
-    public void setLog(String log) {
-        this.log = log;
-    }
 
     private Result(String log) {
-        this.log = log;
         this.code = 0;
         this.msg = "success";
+        this.requestId = UUID.randomUUID().toString();
+    }
+
+    private Result(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
         this.requestId = UUID.randomUUID().toString();
     }
 
@@ -38,23 +35,21 @@ public class Result {
         return new Result(log);
     }
 
+    public Result() {
+    }
+
+    public static Result build() {
+        return new Result();
+    }
+
+    public static Result buildError(String msg) {
+        return new Result(400, msg);
+    }
+
     public Result content(Object object, Long totalCount) {
-        try {
-            this.setResult(object);
-            if (null != totalCount) {
-                this.setTotalCount(totalCount);
-            }
-        } catch (Exception e) {
-            this.setCode(400);
-            if (e instanceof InfoException) {
-                this.setMsg(e.getMessage());
-            } else {
-                this.setMsg("服务器异常!");
-            }
-        } finally {
-            logger.info(log + "\n" + this);
-            return this;
-        }
+        this.setResult(object);
+        this.setTotalCount(totalCount);
+        return this;
     }
 
     public Result content(Object object) {
