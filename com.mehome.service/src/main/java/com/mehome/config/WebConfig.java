@@ -1,6 +1,7 @@
 package com.mehome.config;
 
 import com.mehome.filter.LogFilter;
+import com.mehome.filter.PermitFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,7 @@ public class WebConfig {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setName("hello");
 
-        LogFilter helloFilter = new LogFilter();
+        PermitFilter helloFilter = new PermitFilter();
         registrationBean.setFilter(helloFilter);
         List<String> list = new ArrayList<String>();
         list.add("/*");

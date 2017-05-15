@@ -2,10 +2,12 @@ package com.mehome.config;
 
 import com.alibaba.fastjson.util.TypeUtils;
 import com.mehome.utils.Permits;
+import com.mehome.utils.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -40,23 +42,52 @@ public class SpringContextHelper implements ApplicationContextAware {
                 }
             }
             Method[] methods = clazz.getDeclaredMethods();
-            String methodPath = "";
-            for (int i = 0; i < methods.length; i++) {
-                Permits permits = methods[i].getAnnotation(Permits.class);
-                PostMapping postMapping = methods[i].getAnnotation(PostMapping.class);
-                if (null != postMapping) {
-                    String[] paths = postMapping.value();
-                    if (paths.length > 0) {
-                        methodPath = paths[0];
 
+            for (int i = 0; i < methods.length; i++) {
+                String methodPath = "";
+                Permits permits = methods[i].getAnnotation(Permits.class);
+                if (null == permits) {
+                    continue;
+                }
+                GetMapping methodGetMapping = methods[i].getAnnotation(GetMapping.class);
+                if (null != methodGetMapping) {
+                    methodPath = hasMethodPath(methodGetMapping.value(), methodGetMapping.path());
+                    if (StringUtils.isNotNull(methodPath)) {
+                        permitsMap.put((base + methodPath).replace("/", ""), permits);
+                        continue;
                     }
                 }
-                if (null != permits) {
-                    permitsMap.put(base + methodPath, permits);
+                PostMapping methodPostMapping = methods[i].getAnnotation(PostMapping.class);
+                if (null != methodPostMapping) {
+                    methodPath = hasMethodPath(methodPostMapping.value(), methodPostMapping.path());
+                    if (StringUtils.isNotNull(methodPath)) {
+                        permitsMap.put((base + methodPath).replace("/", ""), permits);
+                        continue;
+                    }
+                }
+                RequestMapping methodRequestMapping = methods[i].getAnnotation(RequestMapping.class);
+                if (null != methodRequestMapping) {
+                    methodPath = hasMethodPath(methodRequestMapping.value(), methodRequestMapping.path());
+                    if (StringUtils.isNotNull(methodPath)) {
+                        permitsMap.put((base + methodPath).replace("/", ""), permits);
+                    }
                 }
             }
         }
     }
+
+    private String hasMethodPath(String[] values, String[] paths) {
+        String methodPath = "";
+        if (values.length > 0) {
+            methodPath = values[0];
+        } else {
+            if (paths.length > 0) {
+                methodPath = paths[0];
+            }
+        }
+        return methodPath;
+    }
+
 
     /**
      * 获取spring中加载的bean
@@ -76,7 +107,7 @@ public class SpringContextHelper implements ApplicationContextAware {
      * @param requestUri
      * @return
      */
-    public Permits getPermits(String requestUri) {
+    public static Permits getPermits(String requestUri) {
         return permitsMap.get(requestUri);
     }
 }

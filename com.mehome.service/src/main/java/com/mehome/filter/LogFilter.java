@@ -107,7 +107,7 @@ public class LogFilter implements Filter {
         while (names.hasMoreElements()) {
             String name = names.nextElement();
             String header = httpServletRequest.getHeader(name);
-            stringBuilder.append(name + " : " + header).append("\n");
+            stringBuilder.append("\n"+name + " : " + header);
         }
         log.info(stringBuilder.toString());
     }
