@@ -2,6 +2,7 @@ package com.mehome.controller;
 
 import com.mehome.requestDTO.CompanyUserListDTO;
 import com.mehome.utils.Result;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/company")
 public class CompanyBackController {
-    private final static String cros = "*";
+    @Value("${cros}")
+    private String cros;
 
     /**
      * 企业用户列表

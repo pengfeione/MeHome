@@ -1,6 +1,7 @@
 package com.mehome.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,30 +17,34 @@ import com.mehome.utils.Result;
 @RestController
 @RequestMapping("/api/supplier")
 public class SupplierController {
-	private final static String cros="*";
-	@Autowired
-	private ISupplierService supplierSerive;
-	@PostMapping("/list")
-	@ResponseBody
-	public ResponseEntity<Result> list(@RequestBody SupplierBean bean){
+    @Value("${cros}")
+    private String cros;
+    @Autowired
+    private ISupplierService supplierSerive;
+
+    @PostMapping("/list")
+    @ResponseBody
+    public ResponseEntity<Result> list(@RequestBody SupplierBean bean) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(supplierSerive.getListByCondition(bean),supplierSerive.getSizeByCondition(bean)));
+                .body(Result.build().content(supplierSerive.getListByCondition(bean), supplierSerive.getSizeByCondition(bean)));
     }
-	@PostMapping("/add")
-	@ResponseBody
-	public ResponseEntity<Result> add(@RequestBody SupplierBean bean){
+
+    @PostMapping("/add")
+    @ResponseBody
+    public ResponseEntity<Result> add(@RequestBody SupplierBean bean) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(supplierSerive.addSupplier(bean)));
     }
-	@PostMapping("/update")
-	@ResponseBody
-	public ResponseEntity<Result> update(@RequestBody SupplierBean bean){
+
+    @PostMapping("/update")
+    @ResponseBody
+    public ResponseEntity<Result> update(@RequestBody SupplierBean bean) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)

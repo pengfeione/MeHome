@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/usr")
 public class UserController {
     @Value("${cros}")
-    private String cros = "*";
+    private String cros;
     @Autowired
     private IUserInfoService userInfoService;
 

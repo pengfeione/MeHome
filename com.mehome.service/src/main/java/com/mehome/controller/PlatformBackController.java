@@ -3,6 +3,7 @@ package com.mehome.controller;
 import com.mehome.domain.CompanyList;
 import com.mehome.requestDTO.PlatformCompanyListDTO;
 import com.mehome.utils.Result;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/platform")
 public class PlatformBackController {
-    private final static String cros="*";
+    @Value("${cros}")
+    private String cros;
+
     /**
      * 平台用户列表
+     *
      * @param code
      * @return
      */
@@ -29,8 +33,10 @@ public class PlatformBackController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(new Object()));
     }
+
     /**
      * 平台企业列表
+     *
      * @param requestDTO
      * @return
      */
@@ -43,8 +49,10 @@ public class PlatformBackController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(new Object()));
     }
+
     /**
      * 平台企业列表
+     *
      * @param companyList
      * @return
      */
@@ -57,8 +65,10 @@ public class PlatformBackController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(new Object()));
     }
+
     /**
      * 平台企业列表
+     *
      * @param companyList
      * @return
      */
