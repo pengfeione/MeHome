@@ -22,11 +22,12 @@
     <result column="floor" property="floor" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="score" property="score" jdbcType="REAL" />
   </resultMap>
   <sql id="Base_Column_List" >
     product_id, supplier_id, area_id, product_name, product_detail, product_sort, listpic, 
     detailpic, address, position, product_active, rules, welfare_id, is_welfare, personal_welfare, 
-    has_personal, net_rules_url,floor,create_time,update_time
+    has_personal, net_rules_url,floor,create_time,update_time,score
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -50,7 +51,7 @@
       #{listpic,jdbcType=VARCHAR}, #{detailpic,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{position,jdbcType=VARCHAR}, #{productActive,jdbcType=BIT}, #{rules,jdbcType=VARCHAR}, 
       #{welfareId,jdbcType=INTEGER}, #{isWelfare,jdbcType=BIT}, #{personalWelfare,jdbcType=VARCHAR}, 
-      #{hasPersonal,jdbcType=BIT}, #{netRulesUrl,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{hasPersonal,jdbcType=BIT}, #{netRulesUrl,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{score,jdbcType=REAL})
   </insert>
   <insert id="insertRequired" parameterType="com.mehome.domain.ProductList" >
     insert into product_list
@@ -115,6 +116,9 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="score != null" >
+        score,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="productId != null" >
@@ -176,6 +180,9 @@
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=REAL},
       </if>
     </trim>
   </insert>
@@ -239,6 +246,9 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=REAL},
+      </if>
     </set>
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
@@ -262,7 +272,8 @@
       net_rules_url = #{netRulesUrl,jdbcType=VARCHAR},
       floor = #{floor,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      score = #{score,jdbcType=REAL}
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
   <select id="getListByCondition" parameterType="com.mehome.requestDTO.ProductBean" resultMap="BaseResultMap">
