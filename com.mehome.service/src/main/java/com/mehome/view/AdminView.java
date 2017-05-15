@@ -4,6 +4,7 @@ import com.mehome.enumDTO.RoleEnum;
 import com.mehome.resonpseDTO.AdministratorBean;
 import com.mehome.service.iface.IAuthorizeService;
 import com.mehome.utils.NetUtils;
+import com.mehome.utils.Permits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ public class AdminView {
     @Autowired
     private IAuthorizeService authorizeService;
     //平台管理员登录，企业管理员登录
+    @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM}, needLogin = true)
     @PostMapping(path = "/login")
     public String login(HttpServletRequest request, @RequestParam(value = "username", required = false) String username, @RequestParam(value = "password", required = false) String password) {
         HttpSession session = request.getSession();
@@ -40,6 +42,7 @@ public class AdminView {
             }
         }
     }
+
     @RequestMapping(path = "/")
     public String login() {
         return "signin";

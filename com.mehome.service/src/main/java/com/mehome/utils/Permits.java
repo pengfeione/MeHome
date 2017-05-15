@@ -1,5 +1,6 @@
 package com.mehome.utils;
 
+import com.mehome.enumDTO.RoleEnum;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.ElementType;
@@ -13,6 +14,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Permits {
-    @AliasFor("role")
-    String[] role() default {};
+    RoleEnum[] role() default {};
+
+    boolean needLogin() default true;
+
 }
