@@ -28,7 +28,7 @@ public class CompanyBackController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/company/users").content(new Object()));
+                .body(Result.build().content(new Object()));
     }
 
     /**
@@ -44,7 +44,7 @@ public class CompanyBackController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/platform/auth_num").content(new Object()));
+                .body(Result.build().content(new Object()));
     }
 
     /**
@@ -61,7 +61,7 @@ public class CompanyBackController {
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result
-                        .build("/platform/auth_num")
+                        .build()
                         .content(new Object()));
     }
 }

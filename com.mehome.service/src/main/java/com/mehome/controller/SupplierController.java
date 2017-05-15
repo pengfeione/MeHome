@@ -26,7 +26,7 @@ public class SupplierController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("供应商列表请求/supplier/list").content(supplierSerive.getListByCondition(bean),supplierSerive.getSizeByCondition(bean)));
+                .body(Result.build().content(supplierSerive.getListByCondition(bean),supplierSerive.getSizeByCondition(bean)));
     }
 	@PostMapping("/add")
 	@ResponseBody
@@ -35,7 +35,7 @@ public class SupplierController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("供应商添加请求/supplier/add").content(supplierSerive.addSupplier(bean)));
+                .body(Result.build().content(supplierSerive.addSupplier(bean)));
     }
 	@PostMapping("/update")
 	@ResponseBody
@@ -44,7 +44,7 @@ public class SupplierController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("供应商修改请求/supplier/update").content(supplierSerive.updateSupplier(bean)));
+                .body(Result.build().content(supplierSerive.updateSupplier(bean)));
     }
 
 

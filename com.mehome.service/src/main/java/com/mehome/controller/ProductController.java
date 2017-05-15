@@ -28,7 +28,7 @@ public class ProductController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("产品列表请求/product/list").content(productService.getListByCondition(bean),productService.getSizeByCondition(bean)));
+                .body(Result.build().content(productService.getListByCondition(bean),productService.getSizeByCondition(bean)));
     }
 	@PostMapping("/add")
 	@ResponseBody
@@ -37,7 +37,7 @@ public class ProductController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("产品添加请求/product/add").content(productService.addProduct(bean)));
+                .body(Result.build().content(productService.addProduct(bean)));
     }
 	@PostMapping("/update")
 	@ResponseBody
@@ -46,7 +46,7 @@ public class ProductController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("产品修改请求/product/update").content(productService.updateProduct(bean)));
+                .body(Result.build().content(productService.updateProduct(bean)));
     }
 
 }

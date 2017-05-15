@@ -36,7 +36,7 @@ public class UserController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/usr/login").content(new Object()));
+                .body(Result.build().content(new Object()));
     }
 
     /**
@@ -52,7 +52,7 @@ public class UserController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/usr/back_password").content(userInfoService.backPassword(userBackPasswordDTO)));
+                .body(Result.build().content(userInfoService.backPassword(userBackPasswordDTO)));
     }
 
     /**
@@ -68,7 +68,7 @@ public class UserController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/usr/reg").content(new Object()));
+                .body(Result.build().content(new Object()));
     }
 
     /**
@@ -84,7 +84,7 @@ public class UserController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/usr/verification_code").content(new Object()));
+                .body(Result.build().content(new Object()));
     }
 
     /**
@@ -100,6 +100,6 @@ public class UserController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/usr/get").content(new Object()));
+                .body(Result.build().content(new Object()));
     }
 }

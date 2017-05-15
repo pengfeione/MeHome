@@ -28,7 +28,7 @@ public class HouseController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("房源列表请求/house/list").content(houseService.getListByCondition(bean),houseService.getSizeByCondition(bean)));
+                .body(Result.build().content(houseService.getListByCondition(bean),houseService.getSizeByCondition(bean)));
     }
 	@PostMapping("/add")
 	@ResponseBody
@@ -37,7 +37,7 @@ public class HouseController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("房源添加请求/house/add").content(houseService.addHouse(bean)));
+                .body(Result.build().content(houseService.addHouse(bean)));
     }
 	@PostMapping("/update")
 	@ResponseBody
@@ -46,6 +46,6 @@ public class HouseController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("房源修改请求/house/update").content(houseService.updateHouse(bean)));
+                .body(Result.build().content(houseService.updateHouse(bean)));
     }
 }

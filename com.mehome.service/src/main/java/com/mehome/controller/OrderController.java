@@ -32,7 +32,7 @@ public class OrderController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("订单列表请求/order/list").content(orderService.getListByCondition(order),orderService.getSizeByCondition(order)));
+                .body(Result.build().content(orderService.getListByCondition(order),orderService.getSizeByCondition(order)));
     }
 	/**
 	 * 下单
@@ -46,7 +46,7 @@ public class OrderController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("订单下单请求/order/placeOrder").content(orderService.placeOrder(order)));
+                .body(Result.build().content(orderService.placeOrder(order)));
     }
 	/**
 	 * 支付订单
@@ -60,7 +60,7 @@ public class OrderController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("订单支付请求/order/payOrder").content(orderService.payOrder(order)));
+                .body(Result.build().content(orderService.payOrder(order)));
     }
 	/**
 	 * 修改订单
@@ -74,6 +74,6 @@ public class OrderController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("订单修改请求/order/updateOrder").content(orderService.updateOrder(order)));
+                .body(Result.build().content(orderService.updateOrder(order)));
     }
 }

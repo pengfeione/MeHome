@@ -27,7 +27,7 @@ public class PlatformBackController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/platform/users").content(new Object()));
+                .body(Result.build().content(new Object()));
     }
     /**
      * 平台企业列表
@@ -41,7 +41,7 @@ public class PlatformBackController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/platform/company/").content(new Object()));
+                .body(Result.build().content(new Object()));
     }
     /**
      * 平台企业列表
@@ -55,7 +55,7 @@ public class PlatformBackController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/platform/company/edit").content(new Object()));
+                .body(Result.build().content(new Object()));
     }
     /**
      * 平台企业列表
@@ -69,6 +69,6 @@ public class PlatformBackController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("/platform/company/add").content(new Object()));
+                .body(Result.build().content(new Object()));
     }
 }

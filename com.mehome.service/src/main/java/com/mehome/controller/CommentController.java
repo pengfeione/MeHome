@@ -29,7 +29,7 @@ public class CommentController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("点评列表请求/comment/list").content(commentService.getListByCondition(bean),commentService.getSizeByCondition(bean)));
+                .body(Result.build().content(commentService.getListByCondition(bean),commentService.getSizeByCondition(bean)));
     }
 	@PostMapping("/add")
 	@ResponseBody
@@ -38,7 +38,7 @@ public class CommentController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("点评添加请求/comment/add").content(commentService.addComment(bean)));
+                .body(Result.build().content(commentService.addComment(bean)));
     }
 	@PostMapping("/update")
 	@ResponseBody
@@ -47,7 +47,7 @@ public class CommentController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build("点评修改请求/comment/update").content(commentService.updateComment(bean)));
+                .body(Result.build().content(commentService.updateComment(bean)));
     }
 
 }
