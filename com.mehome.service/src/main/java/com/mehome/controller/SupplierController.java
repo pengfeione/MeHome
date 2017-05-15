@@ -14,7 +14,7 @@ import com.mehome.service.iface.ISupplierService;
 import com.mehome.utils.Result;
 
 @RestController
-@RequestMapping("/supplier")
+@RequestMapping("/api/supplier")
 public class SupplierController {
 	private final static String cros="*";
 	@Autowired

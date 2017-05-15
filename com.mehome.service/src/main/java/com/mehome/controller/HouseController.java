@@ -16,7 +16,7 @@ import com.mehome.service.iface.IHouseService;
 import com.mehome.utils.Result;
 
 @RestController
-@RequestMapping("/house")
+@RequestMapping("/api/house")
 public class HouseController {
 	private final static String cros="*";
 	@Autowired

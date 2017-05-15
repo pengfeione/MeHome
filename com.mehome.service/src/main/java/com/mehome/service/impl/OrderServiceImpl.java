@@ -11,11 +11,14 @@ import com.mehome.dao.OrderListDao;
 import com.mehome.domain.OrderList;
 import com.mehome.requestDTO.OrderBean;
 import com.mehome.service.iface.IOrderService;
+import com.mehome.utils.PropertiesUtil;
 @Service("IOrderService")
 public class OrderServiceImpl implements IOrderService {
 	private Logger log = Logger.getLogger(this.getClass());
 	@Autowired
 	private OrderListDao orderListDAO;
+	@Autowired
+	private PropertiesUtil propertiesUtil;
 	@Override
 	public List<OrderBean> getListByCondition(OrderBean bean) {
 		List<OrderList> orderList=orderListDAO.getListByCondition(bean);
@@ -38,6 +41,7 @@ public class OrderServiceImpl implements IOrderService {
 	@Override
 	public synchronized String payOrder(OrderBean bean) {
 		// TODO Auto-generated method stub
+//		String iface=
 		return null;
 	}
 

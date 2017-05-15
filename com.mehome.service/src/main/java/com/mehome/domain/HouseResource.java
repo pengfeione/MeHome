@@ -46,6 +46,8 @@ public class HouseResource {
     private Date createTime;
 
     private Date updateTime;
+    
+    private Integer productId;
 
     public Integer getHouseId() {
         return houseId;
@@ -223,7 +225,15 @@ public class HouseResource {
         this.updateTime = updateTime;
     }
 
-    @Override
+    public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
+	@Override
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -256,7 +266,8 @@ public class HouseResource {
             && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
             && (this.getLeaseHolder() == null ? other.getLeaseHolder() == null : this.getLeaseHolder().equals(other.getLeaseHolder()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getProductId() == null ? other.getProductId() == null : this.getProductId().equals(other.getProductId()));
     }
 
     @Override
@@ -285,6 +296,7 @@ public class HouseResource {
         result = prime * result + ((getLeaseHolder() == null) ? 0 : getLeaseHolder().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getProductId() == null) ? 0 : getProductId().hashCode());
         return result;
     }
 }

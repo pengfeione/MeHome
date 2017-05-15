@@ -15,7 +15,7 @@ import com.mehome.service.iface.IOrderService;
 import com.mehome.utils.Result;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/api/order")
 public class OrderController {
 	private final static String cros="*";
 	@Autowired
