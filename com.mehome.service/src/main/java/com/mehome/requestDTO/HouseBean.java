@@ -57,6 +57,8 @@ public class HouseBean extends PageMysqlUtil {
 	private String endTime;
 	
 	private String leaseHolder;
+	
+	private Integer productId;
 
 	public Integer getHouseId() {
 		return houseId;
@@ -218,6 +220,14 @@ public class HouseBean extends PageMysqlUtil {
 		this.leaseHolder = leaseHolder;
 	}
 	
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
 	public HouseResource beanToPojo(){
 		HouseResource resource = new HouseResource();
 		resource.setHouseId(this.getHouseId());
@@ -242,6 +252,7 @@ public class HouseBean extends PageMysqlUtil {
 		resource.setSummary(this.getSummary());
 		resource.setSupplierId(this.getSupplierId());
 		resource.setUpdateTime(new Date());
+		resource.setProductId(this.getProductId());
 		return resource;
 	}
 	
@@ -266,6 +277,7 @@ public class HouseBean extends PageMysqlUtil {
 		this.setSubject(resource.getSubject());
 		this.setSummary(resource.getSummary());
 		this.setSupplierId(resource.getSupplierId());
+		this.setProductId(resource.getProductId());
 	}
 	
 	

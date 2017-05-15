@@ -16,7 +16,7 @@ import com.mehome.service.iface.IProductService;
 import com.mehome.utils.Result;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 public class ProductController {
 	private final static String cros="*";
 	@Autowired
