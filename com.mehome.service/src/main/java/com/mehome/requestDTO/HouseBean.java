@@ -260,6 +260,9 @@ public class HouseBean extends PageMysqlUtil {
 		return resource;
 	}
 	
+	public HouseBean(){
+		
+	}
 	public HouseBean(HouseResource resource){
 		this.setAddress(resource.getAddress());
 		this.setAreaId(resource.getAreaId());

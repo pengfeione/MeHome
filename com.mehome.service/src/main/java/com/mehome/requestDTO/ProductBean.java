@@ -246,6 +246,10 @@ public class ProductBean extends PageMysqlUtil {
 		product.setUpdateTime(date);
 		return product;
 	}
+	
+	public ProductBean(){
+		
+	}
 	public ProductBean(ProductList product,List<HouseBean> houseList,List<BasicBean> basicList,List<CommentBean> commentList,List<Integer> welfareList){
 		this.setAddress(product.getAddress());
 		this.setAreaId(product.getAreaId());

@@ -143,6 +143,9 @@ public class SupplierBean extends PageMysqlUtil{
 		return supplier;
 	}
 	
+	public SupplierBean(){
+		
+	}
 	public SupplierBean(SupplierList supplier){
 		this.setCreateTime(supplier.getCreateTime()==null?null:DateUtils.dateToStr(supplier.getCreateTime()));
 		this.setDepositOnline(supplier.getDepositOnline());

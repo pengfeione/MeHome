@@ -366,6 +366,9 @@ public class OrderBean extends PageMysqlUtil{
 		this.orderReason = orderReason;
 	}
 	
+	public OrderBean(){
+		
+	}
 	public OrderBean(OrderList order){
 		this.setAddress(order.getAddress());
 		this.setBackAmount(order.getBackAmount());

@@ -159,6 +159,9 @@ public class CommentBean {
 		return comment;
 	}
 	
+	public CommentBean(){
+		
+	}
 	public CommentBean(ProductComment comment){
 		this.setCommentId(comment.getCommentId());
 		this.setContent(comment.getContent());
