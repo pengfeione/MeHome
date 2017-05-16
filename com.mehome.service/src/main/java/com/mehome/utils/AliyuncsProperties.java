@@ -8,13 +8,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "aliyuncs")
+
 public class AliyuncsProperties {
+
     private  String accessid;
     private  String accessKey;
     private  String  oss_endpoint;
     private  String oss_buket;
     private  String oss_dir;
     private  String sms_topic;
+    private  String sms_endpoint;
+
 
     public String getSms_endpoint() {
         return sms_endpoint;
@@ -24,7 +28,7 @@ public class AliyuncsProperties {
         this.sms_endpoint = sms_endpoint;
     }
 
-    private  String sms_endpoint;
+
 
     public String getAccessid() {
         return accessid;
