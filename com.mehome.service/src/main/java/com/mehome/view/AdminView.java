@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSession;
 public class AdminView {
     @Autowired
     private IAuthorizeService authorizeService;
+
     //平台管理员登录，企业管理员登录
-    @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM}, needLogin = true)
     @PostMapping(path = "/login")
     public String login(HttpServletRequest request, @RequestParam(value = "username", required = false) String username, @RequestParam(value = "password", required = false) String password) {
         HttpSession session = request.getSession();
