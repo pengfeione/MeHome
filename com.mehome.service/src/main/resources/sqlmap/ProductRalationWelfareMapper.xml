@@ -79,4 +79,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where ralation_id = #{ralationId,jdbcType=VARCHAR}
   </update>
+  <select id="getRalationList" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select * from product_ralation_welfare
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -15,5 +15,11 @@ public interface IOrderService {
 	public Long getSizeByCondition(OrderBean bean);
 	
 	public String updateOrder(OrderBean bean);
+	/**
+	 * 计算福利以及房租、押金
+	 * @param bean
+	 * @return
+	 */
+	public OrderBean calculateWelfare(OrderBean bean);
 	
 }

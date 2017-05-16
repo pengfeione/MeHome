@@ -5,6 +5,8 @@ import java.net.NetworkInterface;
 import java.util.Date;
 import java.util.UUID;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * Created by {renhui} on 2016-10-18.
  */
@@ -56,4 +58,8 @@ public class OrderIdUtils {
         //去掉“-”符号 
         return s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24); 
     }
+    public static void main(String[] args) {
+    	JSONObject payTypeJson=JSONObject.parseObject(null);
+    	System.out.println(payTypeJson);
+	}
 }

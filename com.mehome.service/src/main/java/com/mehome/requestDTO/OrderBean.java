@@ -1,11 +1,15 @@
 package com.mehome.requestDTO;
 
 import com.mehome.domain.OrderList;
+import com.mehome.enumDTO.OrderStatusEnum;
 import com.mehome.utils.DateUtils;
+import com.mehome.utils.OrderIdUtils;
 import com.mehome.utils.PageMysqlUtil;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 订单
@@ -85,6 +89,8 @@ public class OrderBean extends PageMysqlUtil{
 	private String updateTime;
 	
 	private String orderReason;
+	
+	private String orderId;
 
 	public String getBiller() {
 		return biller;
@@ -366,6 +372,14 @@ public class OrderBean extends PageMysqlUtil{
 		this.orderReason = orderReason;
 	}
 	
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
 	public OrderBean(){
 		
 	}
@@ -403,8 +417,42 @@ public class OrderBean extends PageMysqlUtil{
 		this.setUpdateTime(order.getUpdateTime()==null?null:DateUtils.dateToStr(order.getUpdateTime()));
 	}
 	
-	public OrderList beanToPojo(){
-		return null;
+	public OrderList beanToPojo(Boolean addBoolean){
+		OrderList order=new OrderList();
+		Date date=new Date();
+		order.setAddress(StringUtils.isEmpty(this.getAddress())&&addBoolean?"未填写联系地址":this.getAddress());
+		order.setBackAmount(this.getBackAmount()==null&&addBoolean?0:this.getBackAmount());
+		order.setBiller(StringUtils.isEmpty(this.getBiller())&&addBoolean?"0":this.getBiller());
+		order.setBillerPhone(StringUtils.isEmpty(this.getBillerPhone())&&addBoolean?"0":this.getBillerPhone());
+		order.setBillTime(StringUtils.isEmpty(this.getBillTime())&&addBoolean?date:(StringUtils.isEmpty(this.getBillTime())?null:DateUtils.strToDate(this.getBillTime())));
+		order.setDeposit(this.getDeposit()==null&&addBoolean?0:this.getDeposit());
+		order.setDepositBack(this.getDepositBack()==null&&addBoolean?Boolean.FALSE:this.getDepositBack());
+		order.setDiscountAmount(this.getDiscountAmount()==null&&addBoolean?0:this.getDiscountAmount());
+		order.setDiscountRent(this.getDiscountRent()==null&&addBoolean?0:this.getDiscountRent());
+		order.setEndTime(StringUtils.isEmpty(this.getEndTime())&&addBoolean?date:(StringUtils.isEmpty(this.getEndTime())?null:DateUtils.strToDate(this.getEndTime())));
+		order.setHouseId(this.getHouseId()==null&&addBoolean?0:this.getHouseId());
+		order.setHouseSubject(StringUtils.isEmpty(this.getHouseSubject())&&addBoolean?"房源标题":this.getHouseSubject());
+		order.setOrderId(StringUtils.isEmpty(this.getOrderId())&&addBoolean?OrderIdUtils.getOrderId(order.getBiller()):this.getOrderId());
+		order.setOrderReason(StringUtils.isEmpty(this.getOrderReason())&&addBoolean?"正常交易":this.getOrderReason());
+		order.setOrderStatus(this.getOrderStatus()==null&&addBoolean?OrderStatusEnum.ORDER.getKey():this.getOrderStatus());
+		order.setOrigAmount(this.getOrigAmount()==null&&addBoolean?0:this.getOrigAmount());
+		order.setOrigRent(this.getOrigRent()==null&&addBoolean?0:this.getOrigRent());
+		order.setPayAccount(this.getPayAccount());
+		order.setPayAmount(this.getPayAmount());
+		order.setPayer(this.getPayer());
+		order.setPayFlow(this.getPayFlow());
+		order.setPayOnline(this.getPayOnline());
+		order.setPayTime(StringUtils.isEmpty(this.getPayTime())?null:DateUtils.strToDate(this.getPayTime()));
+		order.setPayType(this.getPayType());
+		order.setPlatformHost(this.getPlatformHost()==null?Boolean.FALSE:this.getPlatformHost());
+		order.setProductId(this.getProductId());
+		order.setProductName(this.getProductName());
+		order.setStartTime(StringUtils.isEmpty(this.getStartTime())&&addBoolean?date:(StringUtils.isEmpty(this.getStartTime())?null:DateUtils.strToDate(this.getStartTime())));
+		order.setSupplierId(this.getSupplierId());
+		order.setSupplierName(this.getSupplierName());
+		order.setTenancy(this.getTenancy()==null?new BigDecimal("0"):this.getTenancy());
+		order.setUpdateTime(date);
+		return order;
 		
 	}
 	

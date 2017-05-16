@@ -1,5 +1,7 @@
 package com.mehome.dao;
 
+import java.util.List;
+
 import com.mehome.domain.ProductRalationWelfare;
 
 public interface ProductRalationWelfareDao {
@@ -14,4 +16,6 @@ public interface ProductRalationWelfareDao {
     int updateRequired(ProductRalationWelfare record);
 
     int update(ProductRalationWelfare record);
+    
+    List<ProductRalationWelfare> getRalationList(Integer productId);
 }
