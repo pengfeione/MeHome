@@ -84,11 +84,6 @@ public class AuthorizeServiceImpl implements IAuthorizeService {
         if (null == adminId) {
             return null;
         }
-        try {
-            Thread.sleep(2000);
-        } catch (Exception e) {
-
-        }
         AuthorizeAdmin authorizeAdmin = authorizeAdminDao.selectById(adminId);
         authorizeAdminDao.updateRequired(authorizeAdmin);
         return authorizeAdmin;
