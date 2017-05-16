@@ -1,7 +1,10 @@
 package com.mehome.service.iface;
 
 import com.mehome.domain.AuthorizeAdmin;
+import com.mehome.domain.AuthorizeMenu;
 import com.mehome.resonpseDTO.AdministratorBean;
+
+import java.awt.*;
 
 /**
  * Created by Administrator on 2017/5/10.
@@ -29,8 +32,8 @@ public interface IAuthorizeService {
 
     /**
      * 获取管理员的角色
-     *
      * @return
      */
     public AuthorizeAdmin getAdminInfoById(Integer adminId);
+
 }

@@ -38,7 +38,7 @@ public class AuthorizeServiceImpl implements IAuthorizeService {
         //查询登录成功的后的信息
         AuthorizeAdmin admin = authorizeAdminDao.login(new AuthorizeAdmin(userName, password));
         if (null != admin) {
-            AdministratorBean result = new AdministratorBean();
+            AdministratorBean result = new AdministratorBean(admin);
             //登录成功
             if (StringUtils.isNotNull(admin.getRole())) {
                 //查询最后一次登录时间
@@ -90,7 +90,6 @@ public class AuthorizeServiceImpl implements IAuthorizeService {
 
         }
         AuthorizeAdmin authorizeAdmin = authorizeAdminDao.selectById(adminId);
-        authorizeAdmin.setCompanyId(10);
         authorizeAdminDao.updateRequired(authorizeAdmin);
         return authorizeAdmin;
     }
