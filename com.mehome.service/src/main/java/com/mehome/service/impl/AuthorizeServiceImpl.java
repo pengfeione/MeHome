@@ -84,8 +84,6 @@ public class AuthorizeServiceImpl implements IAuthorizeService {
         if (null == adminId) {
             return null;
         }
-        AuthorizeAdmin authorizeAdmin = authorizeAdminDao.selectById(adminId);
-        authorizeAdminDao.updateRequired(authorizeAdmin);
-        return authorizeAdmin;
+        return authorizeAdminDao.selectById(adminId);
     }
 }
