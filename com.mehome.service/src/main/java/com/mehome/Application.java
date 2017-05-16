@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableCaching
 @ServletComponentScan
 public class Application extends SpringBootServletInitializer {
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
