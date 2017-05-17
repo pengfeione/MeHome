@@ -86,14 +86,14 @@ public class OrderController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(orderService.updateOrder(order)));
     }
-    
+
     /**
      * 退款
      *
      * @param order
      * @return
      */
-    @PostMapping("/updateOrder")
+    @PostMapping("/refundOrder")
     @ResponseBody
     public ResponseEntity<Result> refundOrder(@RequestBody OrderBean order) {
         return ResponseEntity
