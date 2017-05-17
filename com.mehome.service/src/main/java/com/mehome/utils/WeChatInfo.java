@@ -20,6 +20,17 @@ public class WeChatInfo {
     @Autowired
     public WeChatProperties weChatProperties;
     RestTemplate restTemplate = new RestTemplate();
+
+    /**
+     * 生成用于获取access_token的Code的Url
+     *
+     * @param redirectUrl
+     * @return
+     */
+    public String getRequestCodeUrl(String redirectUrl) {
+        return String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect",
+                weChatProperties.getAppid(), redirectUrl, "snsapi_userinfo", "xxxx_state");
+    }
      /*
      * 第二步：通过code换取网页授权access_token
      * https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code

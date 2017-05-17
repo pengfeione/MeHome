@@ -63,7 +63,7 @@ public class OrderController {
      */
     @GetMapping("/payOrder")
     @ResponseBody
-    public ResponseEntity<Result> payOrder(@RequestBody OrderBean order) {
+    public ResponseEntity<Result> payOrder(OrderBean order) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)

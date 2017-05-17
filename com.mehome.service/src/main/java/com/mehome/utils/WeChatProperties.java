@@ -22,6 +22,15 @@ public class WeChatProperties {
     private String granttype;
     private String ticketurl;
 
+    public String getPay_unifiedorder() {
+        return pay_unifiedorder;
+    }
+
+    public void setPay_unifiedorder(String pay_unifiedorder) {
+        this.pay_unifiedorder = pay_unifiedorder;
+    }
+
+    private String pay_unifiedorder;
 
     public String getCustomsend() {
         return customsend;
