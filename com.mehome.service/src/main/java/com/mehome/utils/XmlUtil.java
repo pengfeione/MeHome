@@ -2,8 +2,6 @@ package com.mehome.utils;
 
 import java.io.Writer;
 import java.util.List;
-
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
