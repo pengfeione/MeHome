@@ -44,7 +44,7 @@ public class AliyuncsSMSService  implements IAliyuncsSMSService {
         MessageAttributes messageAttributes = new MessageAttributes();
         BatchSmsAttributes batchSmsAttributes = new BatchSmsAttributes();
         // 3.1 设置发送短信的签名（SMSSignName）
-        batchSmsAttributes.setFreeSignName(aliyuncsSMSTemp.getSignname());
+            batchSmsAttributes.setFreeSignName(aliyuncsSMSTemp.getSignname());
         // 3.2 设置发送短信使用的模板（SMSTempateCode）
         batchSmsAttributes.setTemplateCode(aliyuncsSMSTemp.getSmstemplatecode());
         // 3.3 设置发送短信所使用的模板中参数对应的值（在短信模板中定义的，没有可以不用设置）
