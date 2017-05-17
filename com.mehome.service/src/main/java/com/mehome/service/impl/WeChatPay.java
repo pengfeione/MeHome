@@ -1,20 +1,34 @@
-package com.mehome.utils;
+package com.mehome.service.impl;
+
+import ch.qos.logback.core.joran.spi.XMLUtil;
+import com.mehome.requestDTO.ThirdPayMentBean;
+import com.mehome.service.iface.IThirdPay;
+import com.mehome.utils.WeChatJsAPIConfig;
+import com.mehome.utils.WeChatProperties;
+import com.mehome.utils.WeChatUnifiedOrder;
+import com.mehome.utils.XmlUtil;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
-public class WeChatPay {
-
+@Service("IThirdPay")
+public class WeChatPay implements IThirdPay {
+	RestTemplate restTemplate = new RestTemplate();
+	private Logger logger = Logger.getLogger(this.getClass());
 	@Autowired
-
 	public  WeChatUnifiedOrder weChatUnifiedOrder;
-
+	@Autowired
+	public  WeChatProperties weChatProperties;
 	private String appId =weChatUnifiedOrder.getAppid();
-
-	private  String mchId=weChatUnifiedOrder.getMch_id();
+	private  String unifiedOrderUrl=weChatProperties.getPay_unifiedorder();
 	private  String payKey;
+	private  String mchId=weChatUnifiedOrder.getMch_id();
+
 	/**
 	 * 统一下单
 	 * @Title: unifiedOrder
@@ -47,20 +61,12 @@ public class WeChatPay {
 
 		String sign = createUnifiedOrderSign(unifiedOrder);
 		unifiedOrder.setSign(sign);
-
-//		/**
-//		 * 转成XML格式
-//		 */
-//		xmlUtil.getXstreamInclueUnderline().alias("xml", unifiedOrder.getClass());
-//		String xml = xmlUtil.getXstreamInclueUnderline().toXML(unifiedOrder);
-//
-//		String response = httpConnection.post(unifiedOrderUrl, xml);
-//		logger.info("unifiedOrder");
-//		logger.info(response);
-//		Map<String, String> responseMap = xmlUtil.parseXml(response);
-//
-//		return responseMap.get("prepay_id");
-		return  "";
+		/**
+		 * 转成XML格式
+		 */
+		String xml= XmlUtil.toXml(unifiedOrder);
+		Map<String, String> responseMap = restTemplate.getForObject(unifiedOrderUrl, Map.class);
+		return responseMap.get("prepay_id");
 	}
 	/**
 	 * 获取统一下单签名
@@ -190,5 +196,10 @@ public class WeChatPay {
 		config.setSignature(signature);
 
 		return config;
+	}
+
+	@Override
+	public String pay(ThirdPayMentBean bean) {
+		return null;
 	}
 }
