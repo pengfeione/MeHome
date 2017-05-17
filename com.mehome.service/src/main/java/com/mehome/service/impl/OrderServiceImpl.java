@@ -2,6 +2,7 @@ package com.mehome.service.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -15,6 +16,7 @@ import com.mehome.dao.OrderListDao;
 import com.mehome.dao.ProductListDao;
 import com.mehome.dao.ProductRalationWelfareDao;
 import com.mehome.dao.SupplierListDao;
+import com.mehome.dao.UserAccountOperationDao;
 import com.mehome.dao.UserInfoDao;
 import com.mehome.domain.CompanyWelfare;
 import com.mehome.domain.HouseResource;
@@ -22,13 +24,16 @@ import com.mehome.domain.OrderList;
 import com.mehome.domain.ProductList;
 import com.mehome.domain.ProductRalationWelfare;
 import com.mehome.domain.SupplierList;
+import com.mehome.domain.UserAccountOperation;
 import com.mehome.domain.UserInfo;
+import com.mehome.enumDTO.OperationTypeEnum;
 import com.mehome.enumDTO.OrderStatusEnum;
 import com.mehome.enumDTO.UserCompanyEnum;
 import com.mehome.requestDTO.OrderBean;
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IOrderService;
 import com.mehome.service.iface.IThirdPay;
+import com.mehome.utils.OrderIdUtils;
 import com.mehome.utils.PropertiesUtil;
 import com.mehome.utils.SpringContextUtil;
 
@@ -51,6 +56,8 @@ public class OrderServiceImpl implements IOrderService {
 	private CompanyWelfareDao companyWelfareDAO;
 	@Autowired
 	private ProductRalationWelfareDao productRalationWelfareDAO;
+	@Autowired
+	private UserAccountOperationDao userAccountOperationDAO;
 
 	@Override
 	public List<OrderBean> getListByCondition(OrderBean bean) {
@@ -196,6 +203,43 @@ public class OrderServiceImpl implements IOrderService {
 			bean.setDiscountAmount(deposit + bean.getDiscountRent());
 		}
 		return bean;
+	}
+
+	@Override
+	public String refundOrder(OrderBean bean) {
+		if (bean.getOrderStatus() == null||(bean.getOrderStatus()!=null&&bean.getOrderStatus().intValue()!=OrderStatusEnum.CANCEL.getKey())) {
+			log.error("当前订单状态下不可进行退款操作");
+			return Boolean.FALSE.toString();
+		}
+		if (StringUtils.isEmpty(bean.getOrderId())){
+			log.error("订单号未传");
+			return Boolean.FALSE.toString();
+		}
+		OrderList order = orderListDAO.selectById(bean.getOrderId());
+		if(order!=null&&order.getPlatformHost()){
+			String uid=order.getBiller();
+			Integer deposit=order.getDeposit();
+			UserInfo user = userInfoDAO.selectById(Integer.parseInt(uid));
+			Integer oldAmount=user.getUserAmount();
+			user.setUserAmount(oldAmount+deposit);
+			userInfoDAO.updateRequired(user);
+			UserAccountOperation oper=new UserAccountOperation();
+			oper.setBalanceChange(deposit);
+			oper.setOrderId(bean.getOrderId());
+			oper.setOperationIndex((int)System.nanoTime());
+			oper.setPlatform("plat");
+			oper.setUserId(uid);
+			oper.setOperationTime(new Date());
+			oper.setOperationType(OperationTypeEnum.PLAT_REFUND.getKey());
+			oper.setOperationDesc(OperationTypeEnum.PLAT_REFUND.getValue());
+			oper.setOperationId(OrderIdUtils.getUUID());
+			userAccountOperationDAO.insertRequired(oper);
+			bean.setDepositBack(Boolean.TRUE);
+			OrderList updateOrder=bean.beanToPojo(Boolean.FALSE);
+			orderListDAO.updateRequired(updateOrder);
+			return Boolean.TRUE.toString();
+		}
+		return null;
 	}
 
 }

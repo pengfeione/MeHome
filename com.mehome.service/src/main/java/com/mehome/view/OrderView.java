@@ -42,4 +42,14 @@ public class OrderView {
 		return mav;
 	}
 	
+	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+    @PostMapping(path = "/refund")
+	public ModelAndView refund(@RequestBody OrderBean order){
+		ModelAndView mav=new ModelAndView();
+		String ret=orderService.refundOrder(order);
+		mav.setViewName("order");
+		mav.addObject("refundRet", ret);
+		return mav;
+	}
+	
 }

@@ -22,4 +22,6 @@ public interface IOrderService {
 	 */
 	public OrderBean calculateWelfare(OrderBean bean);
 	
+	public String refundOrder(OrderBean bean);
+	
 }
