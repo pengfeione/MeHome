@@ -3,7 +3,6 @@ package com.mehome.service.impl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,11 @@ import com.mehome.domain.UserInfo;
 import com.mehome.enumDTO.OrderStatusEnum;
 import com.mehome.enumDTO.UserCompanyEnum;
 import com.mehome.requestDTO.OrderBean;
+import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IOrderService;
+import com.mehome.service.iface.IThirdPay;
 import com.mehome.utils.PropertiesUtil;
+import com.mehome.utils.SpringContextUtil;
 
 @Service("IOrderService")
 public class OrderServiceImpl implements IOrderService {
@@ -86,8 +88,12 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Override
 	public synchronized String payOrder(OrderBean bean) {
-		// TODO Auto-generated method stub
-		// String iface=
+		String payType=bean.getPayType();
+		//动态加载对应支付渠道的实现类
+		IThirdPay payImpl=SpringContextUtil.getBean(payType);
+		ThirdPayMentBean paybean=new ThirdPayMentBean();
+		String payRet=payImpl.pay(paybean);
+		JSONObject payJson=JSONObject.parseObject(payRet);
 		return null;
 	}
 
