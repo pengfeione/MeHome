@@ -1,13 +1,15 @@
 package com.mehome.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IThirdPay;
-
+@Service("creditcard")
 public class CardPay implements IThirdPay {
 
 	@Override
 	public String pay(ThirdPayMentBean bean) {
-		// TODO Auto-generated method stub
+		System.out.println("creditcard");
 		return null;
 	}
 
