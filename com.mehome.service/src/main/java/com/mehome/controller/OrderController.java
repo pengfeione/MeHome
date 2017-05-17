@@ -72,7 +72,7 @@ public class OrderController {
     }
 
     /**
-     * 修改订单
+     * 修改订单（包括修改租赁日期，托管，状态更改)
      *
      * @param order
      * @return
@@ -85,5 +85,21 @@ public class OrderController {
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(orderService.updateOrder(order)));
+    }
+    
+    /**
+     * 退款
+     *
+     * @param order
+     * @return
+     */
+    @PostMapping("/updateOrder")
+    @ResponseBody
+    public ResponseEntity<Result> refundOrder(@RequestBody OrderBean order) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(orderService.refundOrder(order)));
     }
 }
