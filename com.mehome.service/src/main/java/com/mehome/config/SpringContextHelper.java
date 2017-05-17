@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,8 +43,14 @@ public class SpringContextHelper implements ApplicationContextAware {
                 }
             }
             Method[] methods = clazz.getDeclaredMethods();
-
             for (int i = 0; i < methods.length; i++) {
+                StringBuilder stringBuilder = new StringBuilder();
+                Annotation[] annotations = methods[i].getAnnotations();
+                for (Annotation ann : annotations
+                        ) {
+                    stringBuilder.append("\n\t" + ann.annotationType().getSimpleName());
+                }
+                System.out.println(clazz.getSimpleName()+"--"+methods[i].getName() + stringBuilder);
                 String methodPath = "";
                 Permits permits = methods[i].getAnnotation(Permits.class);
                 if (null == permits) {
@@ -88,18 +95,6 @@ public class SpringContextHelper implements ApplicationContextAware {
         return methodPath;
     }
 
-
-    /**
-     * 获取spring中加载的bean
-     *
-     * @param name
-     * @param clazz
-     * @param <T>
-     * @return
-     */
-    public <T> T getBean(String name, Class<T> clazz) {
-        return TypeUtils.castToJavaBean(context.getBean(name), clazz);
-    }
 
     /**
      * 通过requestUri获取权限

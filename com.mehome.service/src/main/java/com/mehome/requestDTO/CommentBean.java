@@ -159,9 +159,9 @@ public class CommentBean extends PageMysqlUtil{
 		comment.setType(StringUtils.isEmpty(this.getType())&&addBoolean?"undefined":this.getType());
 		return comment;
 	}
-	
+
 	public CommentBean(){
-		
+
 	}
 	public CommentBean(ProductComment comment){
 		this.setCommentId(comment.getCommentId());

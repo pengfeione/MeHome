@@ -1,7 +1,14 @@
 package com.mehome.controller;
 
+import com.mehome.dao.CompanyListDao;
+import com.mehome.enumDTO.RoleEnum;
 import com.mehome.requestDTO.CompanyUserListDTO;
+import com.mehome.requestDTO.UserInfoDTO;
+import com.mehome.service.iface.ICompanyService;
+import com.mehome.service.iface.IUserInfoService;
+import com.mehome.utils.Permits;
 import com.mehome.utils.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class CompanyBackController {
     @Value("${cros}")
     private String cros;
+    @Autowired
+    private IUserInfoService userInfoService;
 
     /**
      * 企业用户列表
@@ -23,47 +32,53 @@ public class CompanyBackController {
      * @param requestDto
      * @return
      */
-    @PostMapping("/users/{company}")
+    @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM}, needLogin = true)
+    @PostMapping("/users")
     @ResponseBody
-    public ResponseEntity<Result> users(@RequestBody CompanyUserListDTO requestDto) {
+    public ResponseEntity<Result> users(@RequestBody UserInfoDTO requestDto) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(new Object()));
+                .body(Result.build().content(userInfoService.listByCondition(requestDto), userInfoService.countByCondition(requestDto)));
     }
 
     /**
      * 获取企业认证用户的数量
      *
-     * @param company 企业id
+     * @param companyId 企业id
      * @return
      */
-    @PostMapping("/auth_num/{company}")
+    @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM}, needLogin = true)
+    @PostMapping("/auth_num")
     @ResponseBody
-    public ResponseEntity<Result> auth_num(@PathVariable String company) {
+    public ResponseEntity<Result> auth_num(@RequestParam(value = "companyId", required = true) Integer companyId) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(new Object()));
+                .body(Result.build().content(userInfoService.authNum(companyId)));
     }
 
     /**
      * 企业操作用户的审核（审核通过，审核不通过，注销）
      *
-     * @param company
+     * @param operation
+     * @param companyId
      * @return
      */
-    @PostMapping("/operation/{operation}/{company}")
+    @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM}, needLogin = true)
+    @PostMapping("/operation")
     @ResponseBody
-    public ResponseEntity<Result> operation(@PathVariable String company) {
+    public ResponseEntity<Result> operation(@RequestParam(value = "operation") Integer operation,
+                                            @RequestParam(value = "companyId") Integer companyId,
+                                            @RequestParam(value = "userId") Integer userId) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result
                         .build()
-                        .content(new Object()));
+                        .content(userInfoService.operation(companyId, userId, operation)));
     }
 }

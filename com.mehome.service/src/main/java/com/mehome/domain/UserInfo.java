@@ -1,7 +1,11 @@
 package com.mehome.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Date;
 
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class UserInfo {
     private Integer userId;
 
@@ -29,6 +33,10 @@ public class UserInfo {
 
     private Integer companyStatus;
 
+    private Date companyCreateTime;
+
+    private Date companyUpdateTime;
+
     private Date updateTime;
 
     private Date createTime;
@@ -40,6 +48,22 @@ public class UserInfo {
     public UserInfo(String mobile, String password) {
         this.mobile = mobile;
         this.password = password;
+    }
+
+    public Date getCompanyCreateTime() {
+        return companyCreateTime;
+    }
+
+    public void setCompanyCreateTime(Date companyCreateTime) {
+        this.companyCreateTime = companyCreateTime;
+    }
+
+    public Date getCompanyUpdateTime() {
+        return companyUpdateTime;
+    }
+
+    public void setCompanyUpdateTime(Date companyUpdateTime) {
+        this.companyUpdateTime = companyUpdateTime;
     }
 
     public Integer getUserId() {

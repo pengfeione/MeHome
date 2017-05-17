@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/html/company")
 public class CompanyView {
     @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM}, needLogin = true)
-    @RequestMapping("/users")
-    public String index(@RequestParam(value = "companyId", required = true) String companyId) {
+    @RequestMapping("/home.html")
+    public String index() {
         return "company";
     }
 }

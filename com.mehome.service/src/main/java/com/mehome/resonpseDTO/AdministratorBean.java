@@ -38,25 +38,13 @@ public class AdministratorBean {
     }
 
     public AdministratorBean(AuthorizeAdmin admin) {
-        if (null == admin) {
+        if (null != admin) {
             this.adminId = admin.getAdminId();
             this.avatar = admin.getAvatar();
             this.nickName = admin.getNickName();
             this.role = admin.getRole();
             this.companyId = admin.getCompanyId();
         }
-    }
-
-    private List<AuthorizeMenu> menus = new ArrayList<AuthorizeMenu>();
-
-    private List<String> paths = new ArrayList<String>();
-
-    public List<String> getPaths() {
-        return paths;
-    }
-
-    public void setPaths(List<String> paths) {
-        this.paths = paths;
     }
 
     public Integer getAdminId() {
@@ -97,14 +85,6 @@ public class AdministratorBean {
 
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
-    }
-
-    public List<AuthorizeMenu> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<AuthorizeMenu> menus) {
-        this.menus = menus;
     }
 
     @Override

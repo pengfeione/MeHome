@@ -36,8 +36,8 @@ import java.util.Set;
 /**
  * Created by renhui on 2017/5/14.
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class ApiLogAop {
     private static final Logger logger = LoggerFactory.getLogger("");
     private static boolean isJsonFormat = true;
@@ -83,7 +83,7 @@ public class ApiLogAop {
 
             }
         }
-        stringBuilder.append("\nrequest path : " + base + methodPath);
+        stringBuilder.append("\npath : " + base + methodPath);
         //构造params
         ParameterNameDiscoverer parameterNameDiscoverer =
                 new LocalVariableTableParameterNameDiscoverer();
@@ -97,19 +97,20 @@ public class ApiLogAop {
             } else if (arg instanceof HttpServletResponse) {
             } else if (arg instanceof Map<?, ?>) {
             } else {
-                jsonObject.put(parameter, JSONObject.parseObject(JSONObject.toJSONString(arg)));
+                jsonObject.put(parameter, JSONObject.toJSONString(arg));
             }
         }
-        stringBuilder.append("\n\t  params : " + jsonObject);
+        stringBuilder.append("\nparam : " + jsonObject);
         String errMsg = "";
         Result result = null;
         ResponseEntity<Result> resultEntity = null;
         try {
             resultEntity = TypeUtils.castToJavaBean(pjp.proceed(), ResponseEntity.class);
             result = resultEntity.getBody();
-            stringBuilder.append("\nstatus code : " + resultEntity.getStatusCodeValue());
-            stringBuilder.append("\n\t\tresult : " + result);
-            stringBuilder.append("\n cost time : " + (System.currentTimeMillis() - beginTime) + "ms");
+            stringBuilder.append("\norder : " + result.getRequestId());
+            stringBuilder.append("\nstatus : " + resultEntity.getStatusCodeValue());
+            stringBuilder.append("\nresult : " + result);
+            stringBuilder.append("\ncosts : " + (System.currentTimeMillis() - beginTime) + "ms");
             stringBuilder.append("\n--------------------------------------------");
             logger.info(stringBuilder.toString());
             return resultEntity;

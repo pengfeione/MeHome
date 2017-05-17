@@ -50,7 +50,7 @@ public class LogFilter implements Filter {
             }
         }
         if (allowDomain.contains(headerMap.get("accept"))) {
-            response.setHeader("Access-Control-Allow-Origin", headerMap.get("accept"));
+            response.setHeader("Access-Control-Allow-Origin", " *");
             response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
             response.setHeader("Access-Control-Max-Age", "3600");
             response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
@@ -107,7 +107,7 @@ public class LogFilter implements Filter {
         while (names.hasMoreElements()) {
             String name = names.nextElement();
             String header = httpServletRequest.getHeader(name);
-            stringBuilder.append("\n"+name + " : " + header);
+            stringBuilder.append("\n" + name + " : " + header);
         }
         log.info(stringBuilder.toString());
     }

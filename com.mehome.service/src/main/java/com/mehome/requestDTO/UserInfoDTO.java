@@ -2,22 +2,19 @@ package com.mehome.requestDTO;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mehome.utils.PageMysqlUtil;
+import com.mehome.utils.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/5/11.
  */
-public class UserInfoDTO {
+public class UserInfoDTO extends PageMysqlUtil {
     private Integer userId;
-
-    private Integer userAmount;
-
-    private String wechatId;
-
-    private String nickName;
-
-    private String avatar;
 
     private Integer sex;
 
@@ -25,20 +22,55 @@ public class UserInfoDTO {
 
     private String mobile;
 
-    private String idCard;
-
-    private String openId;
-
-    private Integer companyId;
+    private String companyIds;
 
     private Integer companyStatus;
 
-    private Date createTime;
+    private Date startTime;
 
-    private Date updateTime;
+    private Date endTime;
 
-    private String company;
+    private String companyName;
 
+
+    private String namePhoneKeyWords;
+
+
+    public String getNamePhoneKeyWords() {
+        return namePhoneKeyWords;
+    }
+
+    public void setNamePhoneKeyWords(String namePhoneKeyWords) {
+        this.namePhoneKeyWords = namePhoneKeyWords;
+    }
+
+    private List<String> companyIdList = null;
+
+
+    public void setCompanyIdList(List<String> companyIdList) {
+        this.companyIdList = companyIdList;
+    }
+
+
+    public String getCompanyIds() {
+        return companyIds;
+    }
+
+    public void setCompanyIds(String companyIds) {
+        this.companyIds = companyIds;
+    }
+
+    public List<String> getCompanyIdList() {
+        String companyIds = getCompanyIds();
+        if (StringUtils.isNotNull(companyIds)) {
+            String[] companyArr = companyIds.split(",");
+            if (companyArr.length > 0) {
+                companyIdList = new ArrayList<String>();
+                Collections.addAll(companyIdList, companyArr);
+            }
+        }
+        return null;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -46,38 +78,6 @@ public class UserInfoDTO {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public Integer getUserAmount() {
-        return userAmount;
-    }
-
-    public void setUserAmount(Integer userAmount) {
-        this.userAmount = userAmount;
-    }
-
-    public String getWechatId() {
-        return wechatId;
-    }
-
-    public void setWechatId(String wechatId) {
-        this.wechatId = wechatId;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public Integer getSex() {
@@ -104,29 +104,6 @@ public class UserInfoDTO {
         this.mobile = mobile;
     }
 
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
-
-    public Integer getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
-    }
 
     public Integer getCompanyStatus() {
         return companyStatus;
@@ -136,28 +113,28 @@ public class UserInfoDTO {
         this.companyStatus = companyStatus;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
-    public String getCompany() {
-        return company;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     @Override

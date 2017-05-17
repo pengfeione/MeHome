@@ -15,12 +15,14 @@
         <result column="open_id" jdbcType="VARCHAR" property="openId"/>
         <result column="company_id" jdbcType="INTEGER" property="companyId"/>
         <result column="company_status" jdbcType="INTEGER" property="companyStatus"/>
+        <result column="company_create_time" jdbcType="TIMESTAMP" property="companyCreateTime"/>
+        <result column="company_update_time" jdbcType="TIMESTAMP" property="companyUpdateTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
     user_id, user_amount, wechat_id, nick_name, avatar, sex, real_name, mobile, password,
-    id_card, open_id, company_id, company_status, update_time, create_time
+    id_card, open_id, company_id, company_status,company_create_time,company_update_time, update_time, create_time
   </sql>
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -35,6 +37,98 @@
         where
         mobile = #{mobile,jdbcType=VARCHAR}
         and password = password(#{password,jdbcType=VARCHAR})
+    </select>
+
+    <select id="listByCondition" parameterType="com.mehome.requestDTO.UserInfoDTO" resultMap="BaseResultMap">
+        select
+        user_id, user_amount, wechat_id, nick_name, avatar, sex, real_name, mobile,
+        id_card, open_id, company_id, company_status,company_create_time,company_update_time
+        from user_info
+        where
+        1=1
+        <if test="userId != null">
+            and user_id = #{userId,jdbcType=VARCHAR}
+        </if>
+        <if test="sex != null">
+            and sex = #{sex,jdbcType=INTEGER}
+        </if>
+        <if test="namePhoneKeyWords != null">
+            and (
+            real_name like CONCAT('%','${namePhoneKeyWords}','%')
+            or
+            mobile like CONCAT('%','${namePhoneKeyWords}','%')
+            )
+        </if>
+        <if test="namePhoneKeyWords == null">
+            <if test="realName != null">
+                and real_name like CONCAT('%','${realName}','%')
+            </if>
+            <if test="mobile != null">
+                and mobile like CONCAT('%','${mobile}','%')
+            </if>
+        </if>
+        <if test="companyIdList != null">
+            and company_id IN
+            <foreach collection="companyIdList" close=")" index="index" item="item" open="(" separator=",">
+                ${item}
+            </foreach>
+        </if>
+        <if test="companyStatus != null">
+            and company_status = #{companyStatus,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            and create_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and create_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        ORDER BY create_time DESC
+        <if test="pageNow !=null and pageSize !=null">
+            limit #{pageNow},#{pageSize}
+        </if>
+    </select>
+    <select id="countByCondition" parameterType="com.mehome.requestDTO.UserInfoDTO" resultType="java.lang.Long">
+        select
+        count(DISTINCT user_id)
+        from user_info
+        where
+        1=1
+        <if test="userId != null">
+            and user_id = #{userId,jdbcType=VARCHAR}
+        </if>
+        <if test="sex != null">
+            and sex = #{sex,jdbcType=INTEGER}
+        </if>
+        <if test="namePhoneKeyWords != null">
+            and (
+            real_name like CONCAT('%','${namePhoneKeyWords}','%')
+            or
+            mobile like CONCAT('%','${namePhoneKeyWords}','%')
+            )
+        </if>
+        <if test="namePhoneKeyWords == null">
+            <if test="realName != null">
+                and real_name like CONCAT('%','${realName}','%')
+            </if>
+            <if test="mobile != null">
+                and mobile like CONCAT('%','${mobile}','%')
+            </if>
+        </if>
+        <if test="companyIdList != null">
+            and company_id IN
+            <foreach collection="companyIdList" close=")" index="index" item="item" open="(" separator=",">
+                ${item}
+            </foreach>
+        </if>
+        <if test="companyStatus != null">
+            and company_status = #{companyStatus,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            and create_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and create_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
     </select>
     <insert id="insertRequired" parameterType="com.mehome.domain.UserInfo">
         insert into user_info
@@ -77,6 +171,12 @@
             </if>
             <if test="companyStatus != null">
                 company_status,
+            </if>
+            <if test="companyCreateTime != null">
+                company_create_time,
+            </if>
+            <if test="companyUpdateTime != null">
+                company_update_time,
             </if>
             <if test="updateTime != null">
                 update_time,
@@ -125,6 +225,12 @@
             <if test="companyStatus != null">
                 #{companyStatus,jdbcType=INTEGER},
             </if>
+            <if test="companyCreateTime != null">
+                #{companyCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="companyUpdateTime != null">
+                #{companyUpdateTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
@@ -172,6 +278,12 @@
             <if test="companyStatus != null">
                 company_status = #{companyStatus,jdbcType=INTEGER},
             </if>
+            <if test="companyCreateTime != null">
+                company_create_time = #{companyCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="companyUpdateTime != null">
+                company_update_time = #{companyUpdateTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
@@ -190,22 +302,4 @@
         </set>
         where mobile = #{mobile,jdbcType=VARCHAR},
     </update>
-    <update id="update" parameterType="com.mehome.domain.UserInfo">
-      update user_info
-      set user_amount = #{userAmount,jdbcType=INTEGER},
-      wechat_id = #{wechatId,jdbcType=VARCHAR},
-      nick_name = #{nickName,jdbcType=VARCHAR},
-      avatar = #{avatar,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
-      real_name = #{realName,jdbcType=VARCHAR},
-      mobile = #{mobile,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      id_card = #{idCard,jdbcType=VARCHAR},
-      open_id = #{openId,jdbcType=VARCHAR},
-      company_id = #{companyId,jdbcType=INTEGER},
-      company_status = #{companyStatus,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where user_id = #{userId,jdbcType=INTEGER}
-  </update>
 </mapper>

@@ -15,12 +15,12 @@ import java.util.List;
 @Configuration
 public class WebConfig {
     @Bean
-    public FilterRegistrationBean helloFilterRegistrationBean() {
+    public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setName("hello");
+        registrationBean.setName("filterRegistration");
 
-        PermitFilter helloFilter = new PermitFilter();
-        registrationBean.setFilter(helloFilter);
+        PermitFilter permitFilter = new PermitFilter();
+        registrationBean.setFilter(permitFilter);
         List<String> list = new ArrayList<String>();
         list.add("/*");
         registrationBean.setUrlPatterns(list);

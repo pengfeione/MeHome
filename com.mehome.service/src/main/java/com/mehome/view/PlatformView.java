@@ -13,6 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class PlatformView {
     @RequestMapping("/home.html")
     public String index(ModelAndView modelAndView) {
-        return "company";
+        return "platform";
     }
 }

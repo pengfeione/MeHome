@@ -19,6 +19,14 @@ public interface IUserInfoService {
     public UserInfo login(UserInfo userInfo);
 
     /**
+     * 通过企业认证的
+     *
+     * @param companyId
+     * @return
+     */
+    public long authNum(Integer companyId);
+
+    /**
      * 修改密码
      *
      * @param userBackPasswordDTO 手机号
@@ -40,5 +48,25 @@ public interface IUserInfoService {
      * @param UserInfoDTO
      * @return
      */
-    public List<UserInfoDTO> listByCondition(UserInfoDTO UserInfoDTO);
+    public List<UserInfo> listByCondition(UserInfoDTO UserInfoDTO);
+
+
+    /**
+     * 根据条件查询用户信息
+     *
+     * @param UserInfoDTO
+     * @return
+     */
+    public Long countByCondition(UserInfoDTO UserInfoDTO);
+
+
+    /**
+     * 企业操作
+     *
+     * @param companyId
+     * @param userId
+     * @param operationEnum
+     * @return
+     */
+    public boolean operation(Integer companyId, Integer userId, Integer operationEnum);
 }

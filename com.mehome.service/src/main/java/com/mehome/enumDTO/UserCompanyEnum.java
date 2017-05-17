@@ -13,6 +13,16 @@ public enum UserCompanyEnum {
         this.value = value;
     }
 
+    public static boolean containKey(Integer key) {
+        UserCompanyEnum[] enums = UserCompanyEnum.values();
+        for (UserCompanyEnum enumItem : enums) {
+            if (enumItem.getKey() == key) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Integer getKey() {
         return key;
     }

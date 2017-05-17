@@ -1,6 +1,7 @@
 package com.mehome.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mehome.exceptions.InfoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import java.util.UUID;
 /**
  * Created by renhui on 2017/5/8.
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Result {
     private int code;
     private String msg;

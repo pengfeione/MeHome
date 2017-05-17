@@ -1,10 +1,12 @@
 package com.mehome.service.impl;
 
+import com.mehome.dao.CompanyListDao;
 import com.mehome.dao.SmsRecordDao;
 import com.mehome.dao.UserInfoDao;
 import com.mehome.domain.SmsRecord;
 import com.mehome.domain.UserInfo;
 import com.mehome.enumDTO.SmsEnum;
+import com.mehome.enumDTO.UserCompanyEnum;
 import com.mehome.exceptions.InfoException;
 import com.mehome.requestDTO.UserBackPasswordDTO;
 import com.mehome.requestDTO.UserInfoDTO;
@@ -12,10 +14,10 @@ import com.mehome.service.iface.IUserInfoService;
 import com.mehome.utils.AssertUtils;
 import com.mehome.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -25,6 +27,8 @@ import java.util.List;
 public class UserInfoServiceImpl implements IUserInfoService {
     @Autowired
     private UserInfoDao userInfoDao;
+    @Autowired
+    private CompanyListDao companyListDao;
     @Autowired
     private SmsRecordDao smsRecordDao;
 
@@ -57,9 +61,54 @@ public class UserInfoServiceImpl implements IUserInfoService {
     }
 
     @Override
-    public List<UserInfoDTO> listByCondition(UserInfoDTO UserInfoDTO) {
+    public List<UserInfo> listByCondition(UserInfoDTO userInfoDTO) {
+        if (StringUtils.isNotNull(userInfoDTO.getCompanyName())) {
+            List<String> companyList = userInfoDTO.getCompanyIdList();
+            List<String> nameCompanyIdList = companyListDao.listIdsByName(userInfoDTO.getCompanyName());
+            if (null == companyList) {
+                companyList = new ArrayList<String>();
+                companyList.addAll(nameCompanyIdList);
+                userInfoDTO.setCompanyIdList(companyList);
+            } else {
+                companyList.addAll(nameCompanyIdList);
+            }
+        }
+        return userInfoDao.listByCondition(userInfoDTO);
+    }
 
+    @Override
+    public long authNum(Integer companyId) {
+        AssertUtils.isNotNull(companyId, "企业ID不能为空！");
+        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        userInfoDTO.setCompanyIds(String.valueOf(companyId));
+        userInfoDTO.setCompanyStatus(UserCompanyEnum.ACTIVE.getKey());
+        return countByCondition(userInfoDTO);
+    }
 
-        return null;
+    @Override
+    public Long countByCondition(UserInfoDTO UserInfoDTO) {
+        Long ret = userInfoDao.countByCondition(UserInfoDTO);
+        if (null == ret) {
+            return 0l;
+        } else {
+            return ret;
+        }
+    }
+
+    @Override
+    public boolean operation(Integer companyId, Integer userId, Integer operationEnum) {
+        AssertUtils.isNotNull(companyId, "企业未知!");
+        AssertUtils.isNotNull(userId, "操作用户未知!");
+        AssertUtils.isNotNull(operationEnum, "操作未知!");
+        boolean isValidOperation = UserCompanyEnum.containKey(operationEnum);
+        if (!isValidOperation) {
+            throw new InfoException("操作未识别！");
+        }
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserId(userId);
+        userInfo.setCompanyId(companyId);
+        userInfo.setCompanyStatus(operationEnum);
+        userInfo.setCompanyUpdateTime(Calendar.getInstance().getTime());
+        return userInfoDao.updateRequired(userInfo) == 1;
     }
 }
