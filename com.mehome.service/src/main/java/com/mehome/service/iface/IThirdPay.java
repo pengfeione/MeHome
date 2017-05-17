@@ -4,5 +4,5 @@ import com.mehome.requestDTO.ThirdPayMentBean;
 
 public interface IThirdPay {
 	
-	public String pay(ThirdPayMentBean bean);
+	public ThirdPayMentBean pay(ThirdPayMentBean bean);
 }

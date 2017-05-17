@@ -8,7 +8,7 @@ import com.mehome.service.iface.IThirdPay;
 public class AliPay implements IThirdPay {
 
 	@Override
-	public String pay(ThirdPayMentBean bean) {
+	public ThirdPayMentBean pay(ThirdPayMentBean bean) {
 		System.out.println("alipay");
 		return null;
 	}

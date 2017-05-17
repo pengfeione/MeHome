@@ -15,6 +15,8 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 	private Integer amount;
 	
 	private String callbackUrl;
+	
+	private String payFlow;
 
 	public String getOrderId() {
 		return orderId;
@@ -62,6 +64,14 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 
 	public void setCallbackUrl(String callbackUrl) {
 		this.callbackUrl = callbackUrl;
+	}
+
+	public String getPayFlow() {
+		return payFlow;
+	}
+
+	public void setPayFlow(String payFlow) {
+		this.payFlow = payFlow;
 	}
 	
 	

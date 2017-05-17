@@ -34,13 +34,14 @@ public class WeChatPay implements IThirdPay {
     private String mchId = weChatUnifiedOrder.getMch_id();
 
 	@Override
-	public String pay(ThirdPayMentBean bean) {
+	public ThirdPayMentBean pay(ThirdPayMentBean bean) {
 		try {
-			return unifiedOrder(bean.getOpenId(), bean.getOrderId(), bean.getAmount(),bean.getCallbackUrl());
+			String payflow=unifiedOrder(bean.getOpenId(), bean.getOrderId(), bean.getAmount(),bean.getCallbackUrl());
+			bean.setPayFlow(payflow);
 		} catch (Exception e) {
 			logger.error("微信下单出错:"+e);
-			return null;
 		}
+		return bean;
 	}
 	 /**
      * 统一下单

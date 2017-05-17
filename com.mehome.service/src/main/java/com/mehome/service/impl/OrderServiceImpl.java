@@ -99,8 +99,7 @@ public class OrderServiceImpl implements IOrderService {
 		//动态加载对应支付渠道的实现类
 		IThirdPay payImpl=SpringContextUtil.getBean(payType);
 		ThirdPayMentBean paybean=new ThirdPayMentBean();
-		String payRet=payImpl.pay(paybean);
-		JSONObject payJson=JSONObject.parseObject(payRet);
+		ThirdPayMentBean payRet=payImpl.pay(paybean);
 		return null;
 	}
 
@@ -240,6 +239,11 @@ public class OrderServiceImpl implements IOrderService {
 			return Boolean.TRUE.toString();
 		}
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		JSONObject payJson=JSONObject.parseObject("dsdcscscs");
+		System.out.println(payJson);
 	}
 
 }
