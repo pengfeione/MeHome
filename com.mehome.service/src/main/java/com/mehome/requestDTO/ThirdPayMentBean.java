@@ -1,5 +1,6 @@
 package com.mehome.requestDTO;
 
+import com.mehome.domain.ThirdPartyPayment;
 import com.mehome.utils.PageMysqlUtil;
 
 public class ThirdPayMentBean extends PageMysqlUtil {
@@ -74,7 +75,12 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 		this.payFlow = payFlow;
 	}
 	
-	
+	public ThirdPartyPayment beanToPojo(Boolean addBoolean){
+		ThirdPartyPayment payMent=new ThirdPartyPayment();
+		
+		return null;
+		
+	}
 	
 	
 

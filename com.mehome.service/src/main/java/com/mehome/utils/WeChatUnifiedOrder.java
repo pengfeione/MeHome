@@ -1,8 +1,13 @@
 package com.mehome.utils;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
 /**
  * Created by pengfei on 2017/5/12.
  */
+@Component
+@ConfigurationProperties(prefix = "send.weixin")
 public class WeChatUnifiedOrder {
     /**
      * 公众账号ID

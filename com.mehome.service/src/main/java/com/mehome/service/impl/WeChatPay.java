@@ -28,10 +28,10 @@ public class WeChatPay implements IThirdPay {
     public WeChatUnifiedOrder weChatUnifiedOrder;
     @Autowired
     public WeChatProperties weChatProperties;
-    private String appId = weChatUnifiedOrder.getAppid();
-    private String unifiedOrderUrl = weChatProperties.getPay_unifiedorder();
+//    private String appId = weChatUnifiedOrder.getAppid();
+//    private String unifiedOrderUrl = weChatProperties.getPay_unifiedorder();
     private String payKey;
-    private String mchId = weChatUnifiedOrder.getMch_id();
+//    private String mchId = weChatUnifiedOrder.getMch_id();
 
 	@Override
 	public ThirdPayMentBean pay(ThirdPayMentBean bean) {
@@ -58,11 +58,11 @@ public class WeChatPay implements IThirdPay {
      */
     public String unifiedOrder(String openId, String orderId, int money, String callbackUrl) throws Exception {
         WeChatUnifiedOrder unifiedOrder = new WeChatUnifiedOrder();
-        unifiedOrder.setAppid(appId);
+        unifiedOrder.setAppid(weChatUnifiedOrder.getAppid());
         unifiedOrder.setAttach("hehedesk");
 
         unifiedOrder.setBody("hehedesk");
-        unifiedOrder.setMch_id(mchId);
+        unifiedOrder.setMch_id(weChatUnifiedOrder.getMch_id());
 
         String nonce = UUID.randomUUID().toString().substring(0, 30);
         unifiedOrder.setNonce_str(nonce);
@@ -80,7 +80,7 @@ public class WeChatPay implements IThirdPay {
          * 转成XML格式
          */
         String xml = XmlUtil.toXml(unifiedOrder);
-        Map<String, String> responseMap = restTemplate.getForObject(unifiedOrderUrl, Map.class);
+        Map<String, String> responseMap = restTemplate.getForObject(weChatProperties.getPay_unifiedorder(), Map.class);
         return responseMap.get("prepay_id");
     }
 
@@ -202,7 +202,7 @@ public class WeChatPay implements IThirdPay {
         String timestamp = Long.toString(System.currentTimeMillis() / 1000);
         String packageName = "prepay_id=" + prepayId;
         StringBuffer sign = new StringBuffer();
-        sign.append("appId=").append(appId);
+        sign.append("appId=").append(weChatUnifiedOrder.getAppid());
         sign.append("&nonceStr=").append(nonce);
         sign.append("&package=").append(packageName);
         sign.append("&signType=").append(config.getSignType());
@@ -210,7 +210,7 @@ public class WeChatPay implements IThirdPay {
         sign.append("&key=").append(payKey);
         String signature = DigestUtils.md5Hex(sign.toString()).toUpperCase();
 
-        config.setAppId(appId);
+        config.setAppId(weChatUnifiedOrder.getAppid());
         config.setNonce(nonce);
         config.setTimestamp(timestamp);
         config.setPackageName(packageName);
