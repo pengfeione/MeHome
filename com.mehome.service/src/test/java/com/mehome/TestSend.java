@@ -22,12 +22,17 @@ public class TestSend {
     public AliyuncsSMSService aliyuncsSMSService;
     @Test
     public void SendMsg() {
+        //密码找回	67315188	SMS_67245574
+        //注册短信	67275188	SMS_67195847
         AliyuncsSMSTemp aliyuncsSMSTemp =new AliyuncsSMSTemp();
+
         aliyuncsSMSTemp.setCheckcode("123456");
         aliyuncsSMSTemp.setChecktime("10");
         aliyuncsSMSTemp.setReceiverphonenumber("18501640340");
-        aliyuncsSMSTemp.setSmstemplatecode("SMS_66935087");
+        aliyuncsSMSTemp.setSmstemplatecode("SMS_67245574");
+        aliyuncsSMSTemp.setSignname("米家公寓");
         aliyuncsSMSService.SendMsg(aliyuncsSMSTemp);
+
         System.out.println("2222");
     }
 }

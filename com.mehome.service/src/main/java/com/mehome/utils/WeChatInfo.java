@@ -6,6 +6,7 @@ import com.mehome.exceptions.ArgumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,7 +15,7 @@ import java.text.SimpleDateFormat;
 /**
  * Created by ${pengfei} on 2016/3/24 0024.
  */
-@Service
+@Component
 public class WeChatInfo {
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
@@ -28,8 +29,9 @@ public class WeChatInfo {
      * @return
      */
     public String getRequestCodeUrl(String redirectUrl) {
+
         return String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect",
-                weChatProperties.getAppid(), redirectUrl, "snsapi_userinfo", "xxxx_state");
+                weChatProperties.getAppid(), redirectUrl, "snsapi_userinfo", "STATE");
     }
      /*
      * 第二步：通过code换取网页授权access_token
