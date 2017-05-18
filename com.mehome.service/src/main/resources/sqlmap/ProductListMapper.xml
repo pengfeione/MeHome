@@ -281,8 +281,8 @@
     <include refid="Base_Column_List"/>
     FROM product_list
     WHERE 1=1
-    <if test="subject != null" >
-      AND subject like CONCAT('%','${subject}','%' )
+    <if test="productName != null" >
+      AND product_name like CONCAT('%','${productName}','%' )
     </if>
     <if test="areaId != null">
       AND area_id = #{areaId,jdbcType=INTEGER}
@@ -290,7 +290,7 @@
     <if test="supplierId != null">
       AND supplier_id = #{supplierId,jdbcType=INTEGER}
     </if>
-    ORDER BY bill_time DESC
+    ORDER BY create_time DESC
     limit #{pageNow},#{pageSize}
   </select>
   <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.ProductBean" resultType="java.lang.Long">
