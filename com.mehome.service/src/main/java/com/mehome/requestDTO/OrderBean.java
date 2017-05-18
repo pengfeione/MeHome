@@ -91,6 +91,8 @@ public class OrderBean extends PageMysqlUtil{
 	private String orderReason;
 	
 	private String orderId;
+	
+	private HouseBean house;
 
 	public String getBiller() {
 		return biller;
@@ -378,6 +380,14 @@ public class OrderBean extends PageMysqlUtil{
 
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
+	}
+
+	public HouseBean getHouse() {
+		return house;
+	}
+
+	public void setHouse(HouseBean house) {
+		this.house = house;
 	}
 
 	public OrderBean(){

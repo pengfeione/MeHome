@@ -29,6 +29,7 @@ import com.mehome.domain.UserInfo;
 import com.mehome.enumDTO.OperationTypeEnum;
 import com.mehome.enumDTO.OrderStatusEnum;
 import com.mehome.enumDTO.UserCompanyEnum;
+import com.mehome.requestDTO.HouseBean;
 import com.mehome.requestDTO.OrderBean;
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IOrderService;
@@ -66,6 +67,9 @@ public class OrderServiceImpl implements IOrderService {
 		if (orderList != null && orderList.size() > 0) {
 			for (OrderList order : orderList) {
 				OrderBean newBean = new OrderBean(order);
+				HouseResource resource=houseResourceDAO.selectById(newBean.getHouseId());
+				HouseBean house=new HouseBean(resource);
+				newBean.setHouse(house);
 				orderBeanList.add(newBean);
 			}
 		}
