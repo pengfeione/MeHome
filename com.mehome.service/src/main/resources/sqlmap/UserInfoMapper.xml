@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.mehome.domain.UserInfo">
         <id column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="user_amount" jdbcType="INTEGER" property="userAmount"/>
-        <result column="wechat_id" jdbcType="VARCHAR" property="wechatId"/>
+        <result column="open_type" jdbcType="INTEGER" property="openType"/>
         <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
         <result column="sex" jdbcType="INTEGER" property="sex"/>
@@ -21,7 +21,7 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    user_id, user_amount, wechat_id, nick_name, avatar, sex, real_name, mobile, password,
+    user_id, user_amount, open_type, nick_name, avatar, sex, real_name, mobile, password,
     id_card, open_id, company_id, company_status,company_create_time,company_update_time, update_time, create_time
   </sql>
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -32,16 +32,17 @@
     </select>
     <select id="login" parameterType="com.mehome.domain.UserInfo" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        user_id, user_amount, open_type, nick_name, avatar, sex, real_name, mobile,
+      id_card, open_id, company_id, company_status,company_create_time,company_update_time
         from user_info
         where
         mobile = #{mobile,jdbcType=VARCHAR}
         and password = password(#{password,jdbcType=VARCHAR})
+        limit 1
     </select>
-
     <select id="listByCondition" parameterType="com.mehome.requestDTO.UserInfoDTO" resultMap="BaseResultMap">
         select
-        user_id, user_amount, wechat_id, nick_name, avatar, sex, real_name, mobile,
+        user_id, user_amount, open_type, nick_name, avatar, sex, real_name, mobile,
         id_card, open_id, company_id, company_status,company_create_time,company_update_time
         from user_info
         where
@@ -133,8 +134,8 @@
             <if test="userAmount != null">
                 user_amount,
             </if>
-            <if test="wechatId != null">
-                wechat_id,
+            <if test="openType != null">
+                open_type,
             </if>
             <if test="nickName != null">
                 nick_name,
@@ -186,8 +187,8 @@
             <if test="userAmount != null">
                 #{userAmount,jdbcType=INTEGER},
             </if>
-            <if test="wechatId != null">
-                #{wechatId,jdbcType=VARCHAR},
+            <if test="openType != null">
+                #{openType,jdbcType=VARCHAR},
             </if>
             <if test="nickName != null">
                 #{nickName,jdbcType=VARCHAR},
@@ -239,8 +240,8 @@
             <if test="userAmount != null">
                 user_amount = #{userAmount,jdbcType=INTEGER},
             </if>
-            <if test="wechatId != null">
-                wechat_id = #{wechatId,jdbcType=VARCHAR},
+            <if test="openType != null">
+                open_type = #{openType,jdbcType=INTEGER},
             </if>
             <if test="nickName != null">
                 nick_name = #{nickName,jdbcType=VARCHAR},
@@ -294,6 +295,6 @@
                 password = password(#{password,jdbcType=VARCHAR}),
             </if>
         </set>
-        where mobile = #{mobile,jdbcType=VARCHAR},
+        where mobile = #{mobile,jdbcType=VARCHAR}
     </update>
 </mapper>

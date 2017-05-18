@@ -13,6 +13,15 @@ public class SmsRecord {
 
     private Date updateTime;
 
+    private Long stamp;
+
+    public Long getStamp() {
+        return stamp;
+    }
+
+    public void setStamp(Long stamp) {
+        this.stamp = stamp;
+    }
 
     public SmsRecord() {
     }

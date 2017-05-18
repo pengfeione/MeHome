@@ -14,6 +14,7 @@ import com.mehome.service.iface.IUserInfoService;
 import com.mehome.utils.AssertUtils;
 import com.mehome.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,33 +32,48 @@ public class UserInfoServiceImpl implements IUserInfoService {
     private CompanyListDao companyListDao;
     @Autowired
     private SmsRecordDao smsRecordDao;
+    @Value("${default_normal_avatar}")
+    private String defaultAvatar;
 
     @Override
     public UserInfo login(UserInfo userInfo) {
-        return userInfoDao.login(userInfo);
+        AssertUtils.isNotNull(userInfo.getMobile(), "用户手机号不能为空！");
+        AssertUtils.isNotNull(userInfo.getPassword(), "用户密码不能为空！");
+        UserInfo result = userInfoDao.login(userInfo);
+        if (null != result) {
+            return result;
+        } else {
+            throw new InfoException("用户名或密码错误！");
+        }
     }
 
     @Override
-    public int register(UserInfo userInfo) {
+    public int mobile_register(UserInfo userInfo) {
         if (StringUtils.isNull(userInfo.getMobile())) {
             throw new InfoException("手机号不能为空！");
-        } else if (StringUtils.isNull(userInfo.getMobile())) {
+        } else if (StringUtils.isNull(userInfo.getPassword())) {
             throw new InfoException("密码不能为空！");
         }
-        return 0;
+        if (StringUtils.isNull(userInfo.getAvatar())) {
+            userInfo.setAvatar(defaultAvatar);
+        }
+        return userInfoDao.insertRequired(userInfo);
     }
 
     @Override
     public int backPassword(UserBackPasswordDTO userBackPasswordDTO) {
         AssertUtils.isNotNull(userBackPasswordDTO.getMobile(), "手机号不能为空！");
         AssertUtils.isNotNull(userBackPasswordDTO.getVerifyCode(), "验证码不能为空！");
-        SmsRecord smsRecord = smsRecordDao.selectById(userBackPasswordDTO.getMobile(), SmsEnum.NORMAL_FIX_PASSWORD.getKey());
-        AssertUtils.isNotNull(smsRecord, "验证码发送失败请重试！");
-        if (!userBackPasswordDTO.getVerifyCode().equals(smsRecord.getCode())) {
-            return userInfoDao.updatePasswordByMobile(new UserInfo(userBackPasswordDTO.getMobile(), userBackPasswordDTO.getPassword()));
+        AssertUtils.isNotNull(userBackPasswordDTO.getPassword(), "新密码不能为空！");
+        SmsRecord validSms = smsRecordDao.selectValid(userBackPasswordDTO.getMobile(), SmsEnum.NORMAL_FIX_PASSWORD.getKey());
+        if (null == validSms) {
+            throw new InfoException("验证码已失效！");
         } else {
-            throw new InfoException("验证码不正确");
+            if (!validSms.getCode().equals(userBackPasswordDTO.getVerifyCode())) {
+                throw new InfoException("验证码不正确！");
+            }
         }
+        return userInfoDao.updatePasswordByMobile(new UserInfo(userBackPasswordDTO.getMobile(), userBackPasswordDTO.getPassword()));
     }
 
     @Override
@@ -99,5 +115,15 @@ public class UserInfoServiceImpl implements IUserInfoService {
         userInfo.setCompanyStatus(operationEnum);
         userInfo.setCompanyUpdateTime(Calendar.getInstance().getTime());
         return userInfoDao.updateRequired(userInfo) == 1;
+    }
+
+    @Override
+    public int updateRequired(UserInfo record) {
+        AssertUtils.isNotNull(record.getUserId(), "更新用户无法确定！");
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserId(record.getUserId());
+        userInfo.setMobile(record.getMobile());
+        userInfo.setAvatar(record.getAvatar());
+        return userInfoDao.updateRequired(record);
     }
 }

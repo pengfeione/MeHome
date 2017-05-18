@@ -4,19 +4,22 @@
     <resultMap id="BaseResultMap" type="com.mehome.domain.SmsRecord">
         <id column="mobile" property="mobile" jdbcType="VARCHAR"/>
         <id column="type" property="type" jdbcType="INTEGER"/>
+        <id column="stamp" property="stamp" jdbcType="INTEGER"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="success" property="success" jdbcType="INTEGER"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-    mobile, type, code, success, update_time
+    mobile, type, stamp,code, success, update_time
   </sql>
-    <select id="selectById" resultMap="BaseResultMap" parameterType="map">
+    <select id="selectValid" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
         from sms_record
         where mobile = #{mobile,jdbcType=VARCHAR}
         and type = #{type,jdbcType=INTEGER}
+        and stamp &gt;UNIX_TIMESTAMP(now())
+        limit 1
     </select>
     <insert id="insertRequired" parameterType="com.mehome.domain.SmsRecord">
         insert into sms_record
@@ -26,6 +29,9 @@
             </if>
             <if test="type != null">
                 type,
+            </if>
+            <if test="stamp != null">
+                stamp,
             </if>
             <if test="code != null">
                 code,
@@ -44,6 +50,9 @@
             <if test="type != null">
                 #{type,jdbcType=INTEGER},
             </if>
+            <if test="stamp != null">
+                #{stamp,jdbcType=INTEGER},
+            </if>
             <if test="code != null">
                 #{code,jdbcType=VARCHAR},
             </if>
@@ -61,6 +70,9 @@
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
             </if>
+            <if test="stamp != null">
+                stamp = #{stamp,jdbcType=INTEGER},
+            </if>
             <if test="success != null">
                 success = #{success,jdbcType=INTEGER},
             </if>
@@ -71,12 +83,4 @@
         where mobile = #{mobile,jdbcType=VARCHAR}
         and type = #{type,jdbcType=INTEGER}
     </update>
-    <update id="update" parameterType="com.mehome.domain.SmsRecord">
-    update sms_record
-    set code = #{code,jdbcType=VARCHAR},
-      success = #{success,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where mobile = #{mobile,jdbcType=VARCHAR}
-      and type = #{type,jdbcType=INTEGER}
-  </update>
 </mapper>
