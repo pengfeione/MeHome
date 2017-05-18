@@ -93,6 +93,8 @@ public class OrderBean extends PageMysqlUtil{
 	private String orderId;
 	
 	private HouseBean house;
+	
+	private String orderStatusDesc;
 
 	public String getBiller() {
 		return biller;
@@ -390,6 +392,14 @@ public class OrderBean extends PageMysqlUtil{
 		this.house = house;
 	}
 
+	public String getOrderStatusDesc() {
+		return orderStatusDesc;
+	}
+
+	public void setOrderStatusDesc(String orderStatusDesc) {
+		this.orderStatusDesc = orderStatusDesc;
+	}
+
 	public OrderBean(){
 		
 	}
@@ -408,6 +418,13 @@ public class OrderBean extends PageMysqlUtil{
 		this.setHouseSubject(order.getHouseSubject());
 		this.setOrderReason(order.getOrderReason());
 		this.setOrderStatus(order.getOrderStatus());
+		OrderStatusEnum[] enums=OrderStatusEnum.values();
+		for (OrderStatusEnum orderStatusEnum : enums) {
+			if(order.getOrderStatus()==orderStatusEnum.getKey()){
+				this.setOrderStatusDesc(orderStatusEnum.getValue());
+			}
+		}
+		this.setOrderStatusDesc("");
 		this.setOrigAmount(order.getOrigAmount());
 		this.setOrigRent(order.getOrigRent());
 		this.setPayAccount(order.getPayAccount());
@@ -466,6 +483,11 @@ public class OrderBean extends PageMysqlUtil{
 		
 	}
 	
-	
+	public static void main(String[] args) {
+		OrderStatusEnum[] enums=OrderStatusEnum.values();
+		for (OrderStatusEnum orderStatusEnum : enums) {
+			System.out.println(orderStatusEnum.getKey()+"|"+orderStatusEnum.getValue());
+		}
+	}
 
 }

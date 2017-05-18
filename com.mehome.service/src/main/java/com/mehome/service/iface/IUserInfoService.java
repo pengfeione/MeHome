@@ -40,7 +40,7 @@ public interface IUserInfoService {
      * @param userInfo
      * @return
      */
-    public int register(UserInfo userInfo);
+    public int mobile_register(UserInfo userInfo);
 
     /**
      * 根据条件查询用户信息
@@ -69,4 +69,9 @@ public interface IUserInfoService {
      * @return
      */
     public boolean operation(Integer companyId, Integer userId, Integer operationEnum);
+
+
+
+    int updateRequired(UserInfo record);
+
 }

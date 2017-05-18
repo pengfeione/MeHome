@@ -1,11 +1,13 @@
 package com.mehome.filter;
 
 import com.mehome.config.SpringContextHelper;
+import com.mehome.domain.LoginUser;
 import com.mehome.enumDTO.RoleEnum;
 import com.mehome.resonpseDTO.AdministratorBean;
 import com.mehome.utils.Permits;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.util.TypeUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -34,12 +36,23 @@ public class PermitFilter implements Filter {
 
         Enumeration<String> attrNames = session.getAttributeNames();
         AdministratorBean loginUser = null;
+        LoginUser normalLoginUser = null;
         while (attrNames.hasMoreElements()) {
             if ("user".equals(attrNames.nextElement())) {
-                loginUser = (AdministratorBean) session.getAttribute("user");
+                Object obj = session.getAttribute("user");
+                if (obj instanceof LoginUser) {
+                    normalLoginUser = (LoginUser) obj;
+                } else if (obj instanceof AdministratorBean) {
+                    loginUser = (AdministratorBean) obj;
+                }
                 break;
             }
         }
+        response.setHeader("Access-Control-Allow-Origin", " *");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+
         Permits permits = SpringContextHelper.getPermits((request.getRequestURI().replace("/", "")));
         if (null != permits) {
             if (permits.needLogin()) {

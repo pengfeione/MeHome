@@ -4,6 +4,7 @@ import com.mehome.domain.CompanyList;
 import com.mehome.domain.SmsRecord;
 import com.mehome.domain.UserInfo;
 import com.mehome.requestDTO.UserBackPasswordDTO;
+import com.mehome.service.iface.IAliyuncsSMSService;
 import com.mehome.service.iface.IUserInfoService;
 import com.mehome.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by renhui on 2017/5/8.
@@ -23,20 +27,46 @@ public class UserController {
     @Autowired
     private IUserInfoService userInfoService;
 
+    @Autowired
+    private IAliyuncsSMSService aliyuncsSMSService;
+
     /**
-     * 用户登录
+     * 用户注册
      *
-     * @param companyList
+     * @param userInfo
      * @return
      */
-    @PostMapping("/login")
+    @PostMapping("/mobile_register")
     @ResponseBody
-    public ResponseEntity<Result> company_add(@RequestBody CompanyList companyList) {
+    public ResponseEntity<Result> mobile_register(@RequestBody UserInfo userInfo) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(new Object()));
+                .body(Result.build().content(userInfoService.mobile_register(userInfo)));
+    }
+
+    /**
+     * 用户登录
+     *
+     * @param request
+     * @return
+     */
+    @PostMapping("/mobile_login")
+    @ResponseBody
+    public ResponseEntity<Result> mobile_login(HttpServletRequest
+                                                       request,
+                                               @RequestBody UserInfo userInfo) {
+        UserInfo result = userInfoService.login(userInfo);
+        if (null != result) {
+            HttpSession session = request.getSession();
+            session.setAttribute("normal", result);
+        }
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(result));
     }
 
     /**
@@ -56,22 +86,6 @@ public class UserController {
     }
 
     /**
-     * 用户注册
-     *
-     * @param companyList
-     * @return
-     */
-    @PostMapping("/add")
-    @ResponseBody
-    public ResponseEntity<Result> reg(@RequestBody CompanyList companyList) {
-        return ResponseEntity
-                .ok()
-                .header("Access-Control-Allow-Origin", cros)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(new Object()));
-    }
-
-    /**
      * 获取注册验证码（注册，找回密码）
      *
      * @param smsRecord
@@ -84,18 +98,34 @@ public class UserController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(new Object()));
+                .body(Result.build().content(aliyuncsSMSService.verifyCode(smsRecord)));
+    }
+
+    /**
+     * 绑定手机号
+     *
+     * @param userInfo
+     * @return
+     */
+    @PostMapping("/update_info")
+    @ResponseBody
+    public ResponseEntity<Result> bind_phone(@RequestBody UserInfo userInfo) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(userInfoService.updateRequired(userInfo)));
     }
 
     /**
      * 获取用户信息
      *
-     * @param companyList
+     * @param userInfo
      * @return
      */
     @PostMapping("/get")
     @ResponseBody
-    public ResponseEntity<Result> get(@RequestBody CompanyList companyList) {
+    public ResponseEntity<Result> get(@RequestBody UserInfo userInfo) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)

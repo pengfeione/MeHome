@@ -1,13 +1,16 @@
 package com.mehome.enumDTO;
 
+import com.mehome.domain.SmsRecord;
+import com.mehome.utils.AliyuncsSMSTemp;
+
 /**
  * Created by Administrator on 2017/5/11.
  */
 public enum SmsEnum {
     //  类型（0注册普通用户，1修改密码，2短信登录）
-    NORMAL_REG(0, "注册普通用户", "米加欢迎登录"),
-    NORMAL_FIX_PASSWORD(1, "普通用户修改密码", ""),
-    NORMAL_LOGIN(2, "普通用户短信登录", "");
+    NORMAL_REG(0, "普通短信", "SMS_67195847"),
+    NORMAL_FIX_PASSWORD(1, "找回密码", "SMS_67245574"),
+    NORMAL_LOGIN(2, "找回密码", "SMS_67245574");
     private int key;
 
     private String value;
@@ -42,5 +45,17 @@ public enum SmsEnum {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+
+    public static SmsEnum getByKey(Integer key) {
+        SmsEnum[] enums = SmsEnum.values();
+        for (SmsEnum item : enums
+                ) {
+            if (item.getKey() == key) {
+                return item;
+            }
+        }
+        return null;
     }
 }
