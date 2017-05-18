@@ -5,12 +5,11 @@ package com.mehome.utils;
  */
 public class AliyuncsSMSTemp {
     //模版code
-    private String smstemplatecode;
-    private String receiverphonenumber;
-    //短信模板变量：模板内容中的变量${number}，手机验证码
-    private String checkcode;
-    private String checktime;
-    private String signname;
+    private String smstemplatecode;//模版code 阿里云生成，动态变化的
+    private String receiverphonenumber;//发送的手机号码
+    private String checkcode;//短信模板变量：模板内容中的变量${number}，手机验证码
+    private String checktime;//有效时间
+    private String signname;//签名
 
 
     public String getSmstemplatecode() {

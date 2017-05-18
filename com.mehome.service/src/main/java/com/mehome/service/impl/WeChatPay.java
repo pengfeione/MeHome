@@ -42,6 +42,9 @@ public class WeChatPay implements IThirdPay {
 			logger.error("微信下单出错:"+e);
 		}
 		return bean;
+
+
+
 	}
 	 /**
      * 统一下单
