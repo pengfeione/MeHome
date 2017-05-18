@@ -1,5 +1,6 @@
 package com.mehome;
 
+import com.mehome.enumDTO.TemplateCodeEnum;
 import com.mehome.service.impl.AliyuncsSMSService;
 import com.mehome.utils.AliyuncsSMSTemp;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class TestSend {
         aliyuncsSMSTemp.setCheckcode("123456");
         aliyuncsSMSTemp.setChecktime("10");
         aliyuncsSMSTemp.setReceiverphonenumber("18501640340");
-        aliyuncsSMSTemp.setSmstemplatecode("SMS_67245574");
+        aliyuncsSMSTemp.setSmstemplatecode(TemplateCodeEnum.REGISTER_MSG.getKey());
         aliyuncsSMSTemp.setSignname("米家公寓");
         aliyuncsSMSService.SendMsg(aliyuncsSMSTemp);
 
