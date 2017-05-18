@@ -9,7 +9,7 @@ public class CardPay implements IThirdPay {
 
 	@Override
 	public ThirdPayMentBean pay(ThirdPayMentBean bean) {
-		System.out.println("creditcard");
+		System.out.println(" creditcard");
 		return null;
 	}
 
