@@ -29,6 +29,16 @@ public class CompanyList {
 
     private String position;
 
+    private String adminAccount;
+
+    public String getAdminAccount() {
+        return adminAccount;
+    }
+
+    public void setAdminAccount(String adminAccount) {
+        this.adminAccount = adminAccount;
+    }
+
     public Integer getCompanyId() {
         return companyId;
     }
@@ -146,18 +156,18 @@ public class CompanyList {
         }
         CompanyList other = (CompanyList) that;
         return (this.getCompanyId() == null ? other.getCompanyId() == null : this.getCompanyId().equals(other.getCompanyId()))
-            && (this.getRegisterNum() == null ? other.getRegisterNum() == null : this.getRegisterNum().equals(other.getRegisterNum()))
-            && (this.getCompanyName() == null ? other.getCompanyName() == null : this.getCompanyName().equals(other.getCompanyName()))
-            && (this.getLogo() == null ? other.getLogo() == null : this.getLogo().equals(other.getLogo()))
-            && (this.getAuthCode() == null ? other.getAuthCode() == null : this.getAuthCode().equals(other.getAuthCode()))
-            && (this.getCompanyCode() == null ? other.getCompanyCode() == null : this.getCompanyCode().equals(other.getCompanyCode()))
-            && (this.getArtificialPerson() == null ? other.getArtificialPerson() == null : this.getArtificialPerson().equals(other.getArtificialPerson()))
-            && (this.getIdentityCode() == null ? other.getIdentityCode() == null : this.getIdentityCode().equals(other.getIdentityCode()))
-            && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
-            && (this.getCompanyPhone() == null ? other.getCompanyPhone() == null : this.getCompanyPhone().equals(other.getCompanyPhone()))
-            && (this.getCompanyActive() == null ? other.getCompanyActive() == null : this.getCompanyActive().equals(other.getCompanyActive()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()));
+                && (this.getRegisterNum() == null ? other.getRegisterNum() == null : this.getRegisterNum().equals(other.getRegisterNum()))
+                && (this.getCompanyName() == null ? other.getCompanyName() == null : this.getCompanyName().equals(other.getCompanyName()))
+                && (this.getLogo() == null ? other.getLogo() == null : this.getLogo().equals(other.getLogo()))
+                && (this.getAuthCode() == null ? other.getAuthCode() == null : this.getAuthCode().equals(other.getAuthCode()))
+                && (this.getCompanyCode() == null ? other.getCompanyCode() == null : this.getCompanyCode().equals(other.getCompanyCode()))
+                && (this.getArtificialPerson() == null ? other.getArtificialPerson() == null : this.getArtificialPerson().equals(other.getArtificialPerson()))
+                && (this.getIdentityCode() == null ? other.getIdentityCode() == null : this.getIdentityCode().equals(other.getIdentityCode()))
+                && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
+                && (this.getCompanyPhone() == null ? other.getCompanyPhone() == null : this.getCompanyPhone().equals(other.getCompanyPhone()))
+                && (this.getCompanyActive() == null ? other.getCompanyActive() == null : this.getCompanyActive().equals(other.getCompanyActive()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+                && (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()));
     }
 
     @Override

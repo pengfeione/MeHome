@@ -62,17 +62,6 @@ public class UserInfoServiceImpl implements IUserInfoService {
 
     @Override
     public List<UserInfo> listByCondition(UserInfoDTO userInfoDTO) {
-        if (StringUtils.isNotNull(userInfoDTO.getCompanyName())) {
-            List<String> companyList = userInfoDTO.getCompanyIdList();
-            List<String> nameCompanyIdList = companyListDao.listIdsByName(userInfoDTO.getCompanyName());
-            if (null == companyList) {
-                companyList = new ArrayList<String>();
-                companyList.addAll(nameCompanyIdList);
-                userInfoDTO.setCompanyIdList(companyList);
-            } else {
-                companyList.addAll(nameCompanyIdList);
-            }
-        }
         return userInfoDao.listByCondition(userInfoDTO);
     }
 
@@ -80,7 +69,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
     public long authNum(Integer companyId) {
         AssertUtils.isNotNull(companyId, "企业ID不能为空！");
         UserInfoDTO userInfoDTO = new UserInfoDTO();
-        userInfoDTO.setCompanyIds(String.valueOf(companyId));
+        userInfoDTO.setCompanyId(String.valueOf(companyId));
         userInfoDTO.setCompanyStatus(UserCompanyEnum.ACTIVE.getKey());
         return countByCondition(userInfoDTO);
     }

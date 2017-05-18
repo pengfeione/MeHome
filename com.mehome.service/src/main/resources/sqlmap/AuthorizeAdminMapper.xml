@@ -21,6 +21,13 @@
         from authorize_admin
         where admin_id = #{adminId,jdbcType=INTEGER}
     </select>
+    <select id="selectByCompanyId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from authorize_admin
+        where company_id = #{companyId,jdbcType=INTEGER}
+        limit 1
+    </select>
     <select id="login" resultMap="BaseResultMap" parameterType="com.mehome.domain.AuthorizeAdmin">
         select
         <include refid="Base_Column_List"/>

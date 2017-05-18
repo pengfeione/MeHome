@@ -9,16 +9,14 @@ public interface AuthorizeAdminDao {
 
     int insert(AuthorizeAdmin record);
 
-
     AuthorizeAdmin login(AuthorizeAdmin record);
 
     int insertRequired(AuthorizeAdmin record);
 
-
-    @Cacheable(value = "admin")
     AuthorizeAdmin selectById(Integer adminId);
 
-    @CachePut(value = "admin", key = "#record.adminId")
     int updateRequired(AuthorizeAdmin record);
+
+    AuthorizeAdmin selectByCompanyId(Integer companyId);
 
 }

@@ -5,6 +5,8 @@ import com.mehome.utils.Result;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +37,15 @@ public class ExceptionAdviceController {
         if (throwable instanceof MissingServletRequestParameterException) {
             String errorMsg = throwable.getMessage();
             msg = "缺少参数 : " + errorMsg.substring(errorMsg.indexOf("'") + 1, errorMsg.lastIndexOf("'"));
+        } else if (throwable instanceof HttpMessageNotReadableException) {
+            msg = throwable.getMessage();
+            if (msg.contains("Required request body is missing")) {
+                msg = "请至少传一个参数，或传‘{}’";
+            } else {
+                throwable.printStackTrace();
+            }
+        } else if (throwable instanceof BadSqlGrammarException) {
+            System.out.println(((BadSqlGrammarException) throwable).getMessage());
         } else {
             throwable.printStackTrace();
             msg = throwable.getClass().getName();
@@ -43,8 +54,6 @@ public class ExceptionAdviceController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result
-                        .build()
-                        .content(msg));
+                .body(Result.buildError(msg));
     }
 }

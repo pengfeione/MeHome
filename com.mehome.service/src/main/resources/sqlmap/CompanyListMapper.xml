@@ -32,22 +32,80 @@
         from company_list
         where company_name LIKE  concat('%','${name}','%')
     </select>
+    <select id="listByCondition" resultMap="BaseResultMap" parameterType="com.mehome.requestDTO.CompanyDTO">
+        select
+        <include refid="Base_Column_List"/>
+        from company_list
+        where 1=1
+        <if test="companyId != null">
+            and company_id = #{companyId,jdbcType=INTEGER}
+        </if>
+        <if test="registerNumTop != null">
+            and register_num &lt;= #{registerNumTop,jdbcType=INTEGER}
+        </if>
+        <if test="registerNumBottom != null">
+            and register_num &gt;= #{registerNumBottom,jdbcType=INTEGER}
+        </if>
+        <if test="companyName != null">
+            and company_name like CONCAT('%','${companyName}','%')
+        </if>
+        <if test="companyActive != null">
+            and company_active = #{companyActive,jdbcType=BIT}
+        </if>
+        <if test="startTime != null">
+            and update_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and update_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        ORDER BY update_time DESC
+        <if test="pageNow !=null and pageSize !=null">
+            limit #{pageNow},#{pageSize}
+        </if>
+    </select>
+    <select id="countByCondition" resultType="java.lang.Long" parameterType="com.mehome.requestDTO.CompanyDTO">
+        select
+        count(company_id)
+        from company_list
+        where 1=1
+        <if test="companyId != null">
+            and company_id = #{companyId,jdbcType=INTEGER}
+        </if>
+        <if test="registerNumTop != null">
+            and register_num &lt;= #{registerNumTop,jdbcType=INTEGER}
+        </if>
+        <if test="registerNumBottom != null">
+            and register_num &gt;= #{registerNumBottom,jdbcType=INTEGER}
+        </if>
+        <if test="companyName != null">
+            and company_name like CONCAT('%','${companyName}','%')
+        </if>
+        <if test="companyActive != null">
+            and company_active = #{companyActive,jdbcType=BIT}
+        </if>
+        <if test="startTime != null">
+            and update_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and update_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
     <delete id="delete" parameterType="java.lang.Integer">
-    delete from company_list
-    where company_id = #{companyId,jdbcType=INTEGER}
-  </delete>
+        delete from company_list
+        where company_id = #{companyId,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="com.mehome.domain.CompanyList">
-    insert into company_list (company_id, register_num, company_name, 
-      logo, auth_code, company_code, 
-      artificial_person, identity_code, address, 
-      company_phone, company_active, update_time, 
-      position)
-    values (#{companyId,jdbcType=INTEGER}, #{registerNum,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, 
-      #{logo,jdbcType=VARCHAR}, #{authCode,jdbcType=VARCHAR}, #{companyCode,jdbcType=VARCHAR}, 
-      #{artificialPerson,jdbcType=VARCHAR}, #{identityCode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{companyPhone,jdbcType=VARCHAR}, #{companyActive,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{position,jdbcType=VARCHAR})
-  </insert>
+        insert into company_list (company_id, register_num, company_name,
+          logo, auth_code, company_code,
+          artificial_person, identity_code, address,
+          company_phone, company_active, update_time,
+          position)
+        values (#{companyId,jdbcType=INTEGER}, #{registerNum,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR},
+          #{logo,jdbcType=VARCHAR}, #{authCode,jdbcType=VARCHAR}, #{companyCode,jdbcType=VARCHAR},
+          #{artificialPerson,jdbcType=VARCHAR}, #{identityCode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+          #{companyPhone,jdbcType=VARCHAR}, #{companyActive,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP},
+          #{position,jdbcType=VARCHAR})
+    </insert>
     <insert id="insertRequired" parameterType="com.mehome.domain.CompanyList">
         insert into company_list
         <trim prefix="(" suffix=")" suffixOverrides=",">

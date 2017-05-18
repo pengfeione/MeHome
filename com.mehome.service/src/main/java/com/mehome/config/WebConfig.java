@@ -25,6 +25,8 @@ public class WebConfig {
         list.add("/*");
         registrationBean.setUrlPatterns(list);
         registrationBean.setOrder(1);
+
+
         return registrationBean;
     }
 }

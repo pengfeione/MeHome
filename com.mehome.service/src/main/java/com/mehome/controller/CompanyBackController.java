@@ -2,6 +2,7 @@ package com.mehome.controller;
 
 import com.mehome.dao.CompanyListDao;
 import com.mehome.enumDTO.RoleEnum;
+import com.mehome.requestDTO.CompanyDTO;
 import com.mehome.requestDTO.CompanyUserListDTO;
 import com.mehome.requestDTO.UserInfoDTO;
 import com.mehome.service.iface.ICompanyService;
@@ -24,6 +25,8 @@ public class CompanyBackController {
     @Value("${cros}")
     private String cros;
     @Autowired
+    private ICompanyService companyService;
+    @Autowired
     private IUserInfoService userInfoService;
 
     /**
@@ -32,7 +35,7 @@ public class CompanyBackController {
      * @param requestDto
      * @return
      */
-    @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM}, needLogin = true)
+    @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM})
     @PostMapping("/users")
     @ResponseBody
     public ResponseEntity<Result> users(@RequestBody UserInfoDTO requestDto) {
@@ -49,7 +52,7 @@ public class CompanyBackController {
      * @param companyId 企业id
      * @return
      */
-    @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM}, needLogin = true)
+    @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM})
     @PostMapping("/auth_num")
     @ResponseBody
     public ResponseEntity<Result> auth_num(@RequestParam(value = "companyId", required = true) Integer companyId) {
@@ -67,7 +70,7 @@ public class CompanyBackController {
      * @param companyId
      * @return
      */
-    @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM}, needLogin = true)
+    @Permits(role = {RoleEnum.COMPANY, RoleEnum.PLATFORM})
     @PostMapping("/operation")
     @ResponseBody
     public ResponseEntity<Result> operation(@RequestParam(value = "operation") Integer operation,
@@ -80,5 +83,31 @@ public class CompanyBackController {
                 .body(Result
                         .build()
                         .content(userInfoService.operation(companyId, userId, operation)));
+    }
+
+    @Permits(role = {RoleEnum.PLATFORM, RoleEnum.COMPANY})
+    @PostMapping("/list")
+    @ResponseBody
+    public ResponseEntity<Result> list(@RequestBody CompanyDTO condition) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result
+                        .build()
+                        .content(companyService.listByCondition(condition), companyService.countByCondition(condition)));
+    }
+
+    @Permits(role = {RoleEnum.PLATFORM})
+    @PostMapping("/update")
+    @ResponseBody
+    public ResponseEntity<Result> updateCompany(@RequestBody CompanyDTO condition) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result
+                        .build()
+                        .content(companyService.listByCondition(condition), companyService.countByCondition(condition)));
     }
 }

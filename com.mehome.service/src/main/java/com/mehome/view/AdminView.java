@@ -64,8 +64,16 @@ public class AdminView {
         }
     }
 
+    @RequestMapping(path = "/logout.html")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        session.invalidate();
+        return "redirect:/html/login.html";
+    }
+
     @RequestMapping(path = "/login.html")
     public String login() {
         return "login";
     }
+
 }

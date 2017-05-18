@@ -44,13 +44,6 @@ public class SpringContextHelper implements ApplicationContextAware {
             }
             Method[] methods = clazz.getDeclaredMethods();
             for (int i = 0; i < methods.length; i++) {
-                StringBuilder stringBuilder = new StringBuilder();
-                Annotation[] annotations = methods[i].getAnnotations();
-                for (Annotation ann : annotations
-                        ) {
-                    stringBuilder.append("\n\t" + ann.annotationType().getSimpleName());
-                }
-                System.out.println(clazz.getSimpleName()+"--"+methods[i].getName() + stringBuilder);
                 String methodPath = "";
                 Permits permits = methods[i].getAnnotation(Permits.class);
                 if (null == permits) {

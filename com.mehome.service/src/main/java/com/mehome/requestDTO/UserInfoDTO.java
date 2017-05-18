@@ -22,7 +22,7 @@ public class UserInfoDTO extends PageMysqlUtil {
 
     private String mobile;
 
-    private String companyIds;
+    private String companyId;
 
     private Integer companyStatus;
 
@@ -30,47 +30,7 @@ public class UserInfoDTO extends PageMysqlUtil {
 
     private Date endTime;
 
-    private String companyName;
-
-
     private String namePhoneKeyWords;
-
-
-    public String getNamePhoneKeyWords() {
-        return namePhoneKeyWords;
-    }
-
-    public void setNamePhoneKeyWords(String namePhoneKeyWords) {
-        this.namePhoneKeyWords = namePhoneKeyWords;
-    }
-
-    private List<String> companyIdList = null;
-
-
-    public void setCompanyIdList(List<String> companyIdList) {
-        this.companyIdList = companyIdList;
-    }
-
-
-    public String getCompanyIds() {
-        return companyIds;
-    }
-
-    public void setCompanyIds(String companyIds) {
-        this.companyIds = companyIds;
-    }
-
-    public List<String> getCompanyIdList() {
-        String companyIds = getCompanyIds();
-        if (StringUtils.isNotNull(companyIds)) {
-            String[] companyArr = companyIds.split(",");
-            if (companyArr.length > 0) {
-                companyIdList = new ArrayList<String>();
-                Collections.addAll(companyIdList, companyArr);
-            }
-        }
-        return null;
-    }
 
     public Integer getUserId() {
         return userId;
@@ -104,6 +64,13 @@ public class UserInfoDTO extends PageMysqlUtil {
         this.mobile = mobile;
     }
 
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
 
     public Integer getCompanyStatus() {
         return companyStatus;
@@ -129,12 +96,12 @@ public class UserInfoDTO extends PageMysqlUtil {
         this.endTime = endTime;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getNamePhoneKeyWords() {
+        return namePhoneKeyWords;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setNamePhoneKeyWords(String namePhoneKeyWords) {
+        this.namePhoneKeyWords = namePhoneKeyWords;
     }
 
     @Override
