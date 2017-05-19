@@ -126,4 +126,10 @@ public class UserInfoServiceImpl implements IUserInfoService {
         userInfo.setAvatar(record.getAvatar());
         return userInfoDao.updateRequired(record);
     }
+
+    @Override
+    public UserInfo selectById(Integer userId) {
+        AssertUtils.isNotNull(userId, "用户标识未知");
+        return userInfoDao.selectById(userId);
+    }
 }

@@ -63,4 +63,12 @@ public class CompanyServiceImpl implements ICompanyService {
     public Long countByCondition(CompanyDTO companyDTO) {
         return companyDao.countByCondition(companyDTO);
     }
+
+    @Override
+    public CompanyList selectById(Integer companyId) {
+        if (null == companyId) {
+            return null;
+        }
+        return companyDao.selectById(companyId);
+    }
 }
