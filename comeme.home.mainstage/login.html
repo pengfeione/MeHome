@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="css/loginshare.css" />
 <script src="js/jquery.min.js"></script>
 <script src="js/loginshare.js"></script>
+<script src="js/util.js"></script>
 </head>
 <body>
     
@@ -25,8 +26,12 @@
         <section>
         	<div class="loginList login">
             	<ul>
-                	<li><span>手机号</span><input type="text" value="" class="text" /></li>
-                    <li><span>密码</span><input type="text" value="" class="text" /></li>
+                	<li><span>手机号</span>
+                		<input type="text" value="" class="text" id="mobile" />
+                	</li>
+                    <li><span>密码</span>
+                    	<input type="password" value="" class="text" id="pwd"/>
+                    </li>
                 </ul>
                 <a class="btn btnLogin" onclick="userLogin();">登录</a>
                 <span class="loginInfo">
@@ -39,14 +44,46 @@
 
 </body>
 <script type="text/javascript">
+	var util;
+	var isSubmit = 0;
 	//页面初始化
 	$(function(){
-		
+		util = new Util();
 	});
 	
 	//用户登录
 	function userLogin(){
-		window.location.href="my.html";
+		if(isSubmit == 0){
+			var mobile = $('#mobile').val();
+			if(mobile == ''){
+				alert('请输入手机号码!');
+				$('#mobile').focus();
+				isSubmit = 0;
+				return false;
+			}
+			var pwd = $('#pwd').val();
+			if(pwd == ''){
+				alert('请输入密码!');
+				$('#pwd').select();
+				isSubmit = 0;
+				return false;
+			}
+			
+			var url = util.baseUrl + '/usr/mobile_login';
+			var param ='{"mobile": '+mobile+',"password":'+pwd+'}';
+			var contentType = "application/json";
+			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+				util.logResult(data); 
+				var errorCode = data.code;
+				util.logResult(errorCode); 
+				if(errorCode == 0){
+					window.location.href="my.html";
+				}else{
+					alert('登录失败!');
+					isSubmit = 0;
+				}
+			});
+		}
 	}
 	
 	//跳到注册页

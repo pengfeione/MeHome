@@ -24,12 +24,15 @@
             	<ul>
                 	<li><span>手机号</span><input type="text" value="" class="text" id="mobile" /></li>
                     <li class="yzm">
-                    	<span>验证码</span><input type="text" value="" class="text" />
+                    	<span>验证码</span><input type="text" value="" class="text" id="in_code"/>
                     	<a class="btnGetYzm" onclick="getCode();" id="btnGetYzm">
                     		<label id="l_code">获取验证码</label>
                     	</a>
                     </li>
-                    <li class="setPwd"><span>设置密码</span><input type="password" placeholder="6位" class="text" /><a class="btnShowPwd"></a></li>
+                    <li class="setPwd"><span>设置密码</span>
+                    	<input type="password" placeholder="6位" class="text" id="pwd"/>
+                    	<a class="btnShowPwd"></a>
+                    </li>
                 </ul>
                 <a class="btn btnRegister" onclick="userRegister();">注册</a>
                 <span class="loginIm">已有账号，<a onclick="gotoLogin();">立即登录</a></span>
@@ -56,6 +59,7 @@
 	var util;
 	var countdown=61; 
 	var clock = '';
+	var isSubmit = 0;
 	//页面初始化
 	$(function(){
 		util = new Util();
@@ -75,6 +79,7 @@
 			if(mobile == ''){
 				alert('请输入手机号码!');
 				$('#mobile').focus();
+				countdown = 61;
 				return false;
 			}
 			var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
@@ -82,13 +87,14 @@
 			{ 
 			    alert('请输入有效的手机号码！'); 
 			    $('#mobile').select();
+			    countdown = 61;
 			    return false;
 			} 
 			var url = util.baseUrl + '/usr/verification_code';
 			var param ='{"mobile": '+mobile+',"type":0}';
 			var contentType = "application/json";
 			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
-				util.logResult(data);
+				util.logResult(data); 
 				clock = setInterval(settime, 1000); 
 			});
 		}
@@ -110,7 +116,61 @@
 	
 	//用户注册
 	function userRegister(){
-		window.location.href="login.html";
+		if(isSubmit == 0){
+			isSubmit = 1;
+			var mobile = $('#mobile').val();
+			if(mobile == ''){
+				alert('请输入手机号码!');
+				$('#mobile').focus();
+				isSubmit = 0;
+				return false;
+			}
+			var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
+			if(!myreg.test(mobile)) 
+			{ 
+			    alert('请输入有效的手机号码！'); 
+			    $('#mobile').select();
+			    isSubmit = 0;
+			    return false;
+			}
+			var code = $('#in_code').val();
+			if(code == ''){
+				alert('请获取并输入验证码!');
+				$('#in_code').focus();
+				isSubmit = 0;
+				return false;
+			}
+			var patrn=/^(\w){6,20}$/;  
+			var pwd = $('#pwd').val();
+			if(pwd == ''){
+				alert('请输入密码!');
+				$('#pwd').select();
+				isSubmit = 0;
+				return false;
+			}
+			if (!patrn.exec(pwd)){
+				alert('只能输入6-20个字母、数字、下划线 !');
+				$('#pwd').select();
+				isSubmit = 0;
+				return false;
+			}
+			
+			var url = util.baseUrl + '/usr/mobile_register';
+			var param ='{"mobile": '+mobile+',"password":'+pwd+',"verifyCode":'+code+'}';
+			var contentType = "application/json";
+			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+				util.logResult(data); 
+				var errorCode = data.code;
+				util.logResult(errorCode); 
+				if(errorCode == 0){
+					window.location.href="login.html";
+				}else{
+					alert('注册失败!');
+					isSubmit = 0;
+				}
+				
+			});
+		}
 	}
 	 
 </script>
