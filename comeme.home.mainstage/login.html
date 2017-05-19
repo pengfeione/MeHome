@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+<!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
+<base href="http://me.trancyboy.com/iweb/"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name = "format-detection" content="telephone=no">
+<meta name="viewport"  content="width=device-width,user-scalable=no">
+<title>ME+登录</title>
+<meta name="keywords" content="ME+">
+<meta name="description" content="ME+">
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<link rel="stylesheet" type="text/css" href="css/common.css" />
+<link rel="stylesheet" type="text/css" href="css/loginshare.css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/loginshare.js"></script>
+</head>
+<body>
+    
+    <div class="wrap loginBg">
+    
+    	<!-- header -->
+		<header class="loginTitle">登录米家</header>
+        
+        <section>
+        	<div class="loginList login">
+            	<ul>
+                	<li><span>手机号</span><input type="text" value="" class="text" /></li>
+                    <li><span>密码</span><input type="text" value="" class="text" /></li>
+                </ul>
+                <a class="btn btnLogin" onclick="userLogin();">登录</a>
+                <span class="loginInfo">
+                	<a class="linkRegister" onclick="gotoRegister()">立即注册</a>
+                	<a class="linkForgetPwd" onclick="forgetPwd()">忘记密码？</a>
+                </span>
+            </div>
+        </section>
+    </div>
+
+</body>
+<script type="text/javascript">
+	//页面初始化
+	$(function(){
+		
+	});
+	
+	//用户登录
+	function userLogin(){
+		window.location.href="my.html";
+	}
+	
+	//跳到注册页
+	function gotoRegister(){
+		window.location.href="register.html";
+	}
+	
+	//忘记密码
+	function forgetPwd(){
+		window.location.href="getbackpwd1.html";
+	}
+</script>
+</html>

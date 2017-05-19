@@ -1,0 +1,56 @@
+@charset "utf-8";
+
+/*
+	project : me+
+	auther  : Charles
+	date    : 2017-05-15
+	page    : order
+*/
+
+body { background:#f5f5f5; }
+.iconYj { margin-left:8px; width:56px; height:18px; display:inline-block; text-align:center; line-height:18px; font-size:12px; color:#fff; background:url(../img/tagMoney.png) no-repeat; background-size:56px 18px; }
+
+.order   { padding-bottom:20px; overflow:hidden; }
+.orderList li { margin:10px 10px 0;  }
+.orderList li a,.orderList li .boxList { border-radius:10px; display:block; background:#fff; overflow:hidden; }
+.orderList .orderTop { margin-top:10px; padding:0 10px 0 140px; height:80px; display:block; position:relative; }
+.orderList .orderTop img { width:120px; height:80px; position:absolute; left:10px; top:0; z-index:3; }
+.orderList .orderTop h3  { height:36px; line-height:36px; overflow:hidden; font-size:16px; }
+.orderList .orderTop em  { height:22px; line-height:22px; display:block; overflow:hidden; color:#f36700; }
+.orderList .orderTop i   { height:22px; line-height:22px; display:block; overflow:hidden; font-style:normal; }
+.orderList .orderLine { margin-bottom:10px; height:20px; display:block; border-bottom:1px dashed #c9c9c9; position:relative; }
+.orderList .orderLine i { width:7px; height:15px; display:block; position:absolute; top:13px; z-index:3; }
+.orderList .orderLine .orderLt { left:0; background:url(../img/orderLeft.png) no-repeat; background-size:7px 15px; }
+.orderList .orderLine .orderRt { right:0; background:url(../img/orderRight.png) no-repeat; background-size:7px 15px; }
+.orderList .orderState { margin-bottom:10px; height:30px; font-size:16px; text-align:center; line-height:30px; display:block; color:#1eaa94; font-weight:bold; }
+.orderList .orderState i { margin:0 5px; width:3px; height:3px; display:inline-block; vertical-align:middle; background:#1eaa94; }
+.orderList .cancelEnd h3,.order .cancelEnd em,.order .cancelEnd i,.order .cancelEnd .orderState { color:#b5b5b5; }
+.orderList .cancelEnd .orderTop img { opacity:0.5; filter:alpha(opacity=50); }
+
+
+.orderTel { padding:0 28px 0 39px; height:30px; display:block; position:relative; }
+.orderTel .iconMore { right:10px; top:3px; }
+.orderList .orderDatilLine,.orderList .orderOverLine { border-bottom:1px solid #dcdcdc; }
+.orderList .orderOverLine { margin:0 10px 10px; }
+
+.box { margin:10px 10px 0; padding:5px 10px; border-radius:10px; background:#fff; color:#3c3c3c; overflow:hidden; }
+.box h3 { height:40px; line-height:40px; font-size:16px; border-bottom:1px solid #dcdcdc; position:relative; }
+.boxInfo ul { margin:10px 0; }
+.boxInfo li { height:24px; line-height:24px; }
+.deposit { height:38px; line-height:38px; position:relative; }
+.depositInit { width:22px; height:22px; display:block; cursor:pointer; background:url(../img/iconDeposit.png) no-repeat; background-size:22px; position:absolute; right:10px; top:8px; z-index:3; }
+.depositSelect { width:22px; height:22px; display:block; cursor:pointer; background:url(../img/iconDeposit2.png) no-repeat; background-size:22px; position:absolute; right:10px; top:8px; z-index:3; }
+.boxDeposit h3 em { width:50px; height:40px; text-align:right; display:block; color:#1eaa94; position:absolute; right:0; top:0; z-index:3; }
+.btnPj { margin:10px; }
+
+
+
+
+
+
+
+
+
+
+
+
