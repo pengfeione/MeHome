@@ -1,5 +1,7 @@
 package com.mehome.domain;
 
+import com.mehome.requestDTO.UserApplyCompanyDTO;
+
 import java.util.Date;
 
 public class UserReview {
@@ -22,6 +24,24 @@ public class UserReview {
     private Date updateTime;
 
     private String confirmTime;
+
+    public UserReview(UserApplyCompanyDTO userApplyCompany, UserInfo userInfo, CompanyList companyList) {
+        if (null != userApplyCompany) {
+            setUserId(userApplyCompany.getUserId());
+            setUserIdCard(userApplyCompany.getIdCard());
+        }
+        if (null != userInfo) {
+            setUserPhone(userInfo.getMobile());
+
+        }
+        if (null != companyList) {
+            setCompanyId(companyList.getCompanyId());
+        }
+        setCreateTime(new Date());
+    }
+
+    public UserReview() {
+    }
 
     public Integer getAutoId() {
         return autoId;
@@ -116,15 +136,15 @@ public class UserReview {
         }
         UserReview other = (UserReview) that;
         return (this.getAutoId() == null ? other.getAutoId() == null : this.getAutoId().equals(other.getAutoId()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getUserIdCard() == null ? other.getUserIdCard() == null : this.getUserIdCard().equals(other.getUserIdCard()))
-            && (this.getUserPhone() == null ? other.getUserPhone() == null : this.getUserPhone().equals(other.getUserPhone()))
-            && (this.getCompanyId() == null ? other.getCompanyId() == null : this.getCompanyId().equals(other.getCompanyId()))
-            && (this.getReviewResult() == null ? other.getReviewResult() == null : this.getReviewResult().equals(other.getReviewResult()))
-            && (this.getRemarks() == null ? other.getRemarks() == null : this.getRemarks().equals(other.getRemarks()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getConfirmTime() == null ? other.getConfirmTime() == null : this.getConfirmTime().equals(other.getConfirmTime()));
+                && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+                && (this.getUserIdCard() == null ? other.getUserIdCard() == null : this.getUserIdCard().equals(other.getUserIdCard()))
+                && (this.getUserPhone() == null ? other.getUserPhone() == null : this.getUserPhone().equals(other.getUserPhone()))
+                && (this.getCompanyId() == null ? other.getCompanyId() == null : this.getCompanyId().equals(other.getCompanyId()))
+                && (this.getReviewResult() == null ? other.getReviewResult() == null : this.getReviewResult().equals(other.getReviewResult()))
+                && (this.getRemarks() == null ? other.getRemarks() == null : this.getRemarks().equals(other.getRemarks()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+                && (this.getConfirmTime() == null ? other.getConfirmTime() == null : this.getConfirmTime().equals(other.getConfirmTime()));
     }
 
     @Override

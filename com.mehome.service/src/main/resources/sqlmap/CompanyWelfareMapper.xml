@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mehome.dao.CompanyWelfareDao" >
-  <resultMap id="BaseResultMap" type="com.mehome.domain.CompanyWelfare" >
-    <id column="welfare_id" property="welfareId" jdbcType="INTEGER" />
-    <result column="welfare_content" property="welfareContent" jdbcType="VARCHAR" />
-    <result column="company_id" property="companyId" jdbcType="INTEGER" />
-    <result column="is_select" property="isSelect" jdbcType="BIT" />
-    <result column="welfare_active" property="welfareActive" jdbcType="BIT" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.mehome.dao.CompanyWelfareDao">
+    <resultMap id="BaseResultMap" type="com.mehome.domain.CompanyWelfare">
+        <id column="welfare_id" property="welfareId" jdbcType="INTEGER"/>
+        <result column="welfare_content" property="welfareContent" jdbcType="VARCHAR"/>
+        <result column="company_id" property="companyId" jdbcType="INTEGER"/>
+        <result column="is_select" property="isSelect" jdbcType="BIT"/>
+        <result column="welfare_active" property="welfareActive" jdbcType="BIT"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     welfare_id, welfare_content, company_id, is_select, welfare_active, update_time
   </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from company_welfare
-    where welfare_id = #{welfareId,jdbcType=INTEGER}
-  </select>
-  <delete id="delete" parameterType="java.lang.Integer" >
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from company_welfare
+        where welfare_id = #{welfareId,jdbcType=INTEGER}
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
     delete from company_welfare
     where welfare_id = #{welfareId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.mehome.domain.CompanyWelfare" >
+    <insert id="insert" parameterType="com.mehome.domain.CompanyWelfare">
     insert into company_welfare (welfare_id, welfare_content, company_id, 
       is_select, welfare_active, update_time
       )
@@ -30,71 +30,72 @@
       #{isSelect,jdbcType=BIT}, #{welfareActive,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertRequired" parameterType="com.mehome.domain.CompanyWelfare" >
-    insert into company_welfare
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="welfareId != null" >
-        welfare_id,
-      </if>
-      <if test="welfareContent != null" >
-        welfare_content,
-      </if>
-      <if test="companyId != null" >
-        company_id,
-      </if>
-      <if test="isSelect != null" >
-        is_select,
-      </if>
-      <if test="welfareActive != null" >
-        welfare_active,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="welfareId != null" >
-        #{welfareId,jdbcType=INTEGER},
-      </if>
-      <if test="welfareContent != null" >
-        #{welfareContent,jdbcType=VARCHAR},
-      </if>
-      <if test="companyId != null" >
-        #{companyId,jdbcType=INTEGER},
-      </if>
-      <if test="isSelect != null" >
-        #{isSelect,jdbcType=BIT},
-      </if>
-      <if test="welfareActive != null" >
-        #{welfareActive,jdbcType=BIT},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateRequired" parameterType="com.mehome.domain.CompanyWelfare" >
-    update company_welfare
-    <set >
-      <if test="welfareContent != null" >
-        welfare_content = #{welfareContent,jdbcType=VARCHAR},
-      </if>
-      <if test="companyId != null" >
-        company_id = #{companyId,jdbcType=INTEGER},
-      </if>
-      <if test="isSelect != null" >
-        is_select = #{isSelect,jdbcType=BIT},
-      </if>
-      <if test="welfareActive != null" >
-        welfare_active = #{welfareActive,jdbcType=BIT},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where welfare_id = #{welfareId,jdbcType=INTEGER}
-  </update>
-  <update id="update" parameterType="com.mehome.domain.CompanyWelfare" >
+    <insert id="insertRequired" parameterType="com.mehome.domain.CompanyWelfare" useGeneratedKeys="true"
+            keyProperty="welfareId">
+        insert into company_welfare
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="welfareId != null">
+                welfare_id,
+            </if>
+            <if test="welfareContent != null">
+                welfare_content,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="isSelect != null">
+                is_select,
+            </if>
+            <if test="welfareActive != null">
+                welfare_active,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="welfareId != null">
+                #{welfareId,jdbcType=INTEGER},
+            </if>
+            <if test="welfareContent != null">
+                #{welfareContent,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="isSelect != null">
+                #{isSelect,jdbcType=BIT},
+            </if>
+            <if test="welfareActive != null">
+                #{welfareActive,jdbcType=BIT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateRequired" parameterType="com.mehome.domain.CompanyWelfare">
+        update company_welfare
+        <set>
+            <if test="welfareContent != null">
+                welfare_content = #{welfareContent,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="isSelect != null">
+                is_select = #{isSelect,jdbcType=BIT},
+            </if>
+            <if test="welfareActive != null">
+                welfare_active = #{welfareActive,jdbcType=BIT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where welfare_id = #{welfareId,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="com.mehome.domain.CompanyWelfare">
     update company_welfare
     set welfare_content = #{welfareContent,jdbcType=VARCHAR},
       company_id = #{companyId,jdbcType=INTEGER},

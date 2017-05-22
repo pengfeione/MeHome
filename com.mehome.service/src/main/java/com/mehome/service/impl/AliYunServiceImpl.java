@@ -25,7 +25,7 @@ public class AliYunServiceImpl implements IAliYunService {
     public AliyuncsProperties aliyuncsProperties;
 
     @Override
-    public String getToken() {
+    public AliyunOssToken getToken() {
         AliyunOssToken aliyuncsOSSToken = new AliyunOssToken();
         String endpoint = aliyuncsProperties.getOss_endpoint();
         String accessId = aliyuncsProperties.getAccessid();
@@ -53,7 +53,7 @@ public class AliYunServiceImpl implements IAliYunService {
             aliyuncsOSSToken.setDir(dir);
             aliyuncsOSSToken.setHost(host);
             aliyuncsOSSToken.setExpire(String.valueOf(expireEndTime / 1000));
-            return "var upload_params=" + aliyuncsOSSToken + ";";
+            return aliyuncsOSSToken;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

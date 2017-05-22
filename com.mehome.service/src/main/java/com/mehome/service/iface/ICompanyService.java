@@ -1,6 +1,7 @@
 package com.mehome.service.iface;
 
 import com.mehome.domain.CompanyList;
+import com.mehome.domain.CompanyWelfare;
 import com.mehome.requestDTO.CompanyDTO;
 
 import java.util.List;
@@ -20,5 +21,8 @@ public interface ICompanyService {
 
 
     public int insertRequired(CompanyList record);
+
+    public int add_company_welfare(CompanyWelfare companyWelfare);
+
 
 }

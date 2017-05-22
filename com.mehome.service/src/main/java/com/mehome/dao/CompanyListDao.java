@@ -15,6 +15,15 @@ public interface CompanyListDao {
 
     CompanyList selectById(Integer companyId);
 
+    /**
+     * 根据授权码查询企业信息
+     *
+     * @param authCode
+     * @return
+     */
+    CompanyList selectByAuthCode(String authCode);
+
+
     int updateRequired(CompanyList record);
 
     int update(CompanyList record);

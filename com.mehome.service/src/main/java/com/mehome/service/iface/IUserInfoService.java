@@ -1,6 +1,7 @@
 package com.mehome.service.iface;
 
 import com.mehome.domain.UserInfo;
+import com.mehome.requestDTO.UserApplyCompanyDTO;
 import com.mehome.requestDTO.UserBackPasswordDTO;
 import com.mehome.requestDTO.UserInfoDTO;
 
@@ -69,6 +70,14 @@ public interface IUserInfoService {
      * @return
      */
     public boolean operation(Integer companyId, Integer userId, Integer operationEnum);
+
+    /**
+     * 用户申请企业用户
+     *
+     * @param userApplyCompanyDTO
+     * @return
+     */
+    public boolean applyCompany(UserApplyCompanyDTO userApplyCompanyDTO);
 
 
     int updateRequired(UserInfo record);

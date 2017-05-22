@@ -3,11 +3,15 @@ package com.mehome.service.impl;
 import com.mehome.dao.CompanyListDao;
 import com.mehome.dao.SmsRecordDao;
 import com.mehome.dao.UserInfoDao;
+import com.mehome.dao.UserReviewDao;
+import com.mehome.domain.CompanyList;
 import com.mehome.domain.SmsRecord;
 import com.mehome.domain.UserInfo;
+import com.mehome.domain.UserReview;
 import com.mehome.enumDTO.SmsEnum;
 import com.mehome.enumDTO.UserCompanyEnum;
 import com.mehome.exceptions.InfoException;
+import com.mehome.requestDTO.UserApplyCompanyDTO;
 import com.mehome.requestDTO.UserBackPasswordDTO;
 import com.mehome.requestDTO.UserInfoDTO;
 import com.mehome.service.iface.IUserInfoService;
@@ -16,6 +20,7 @@ import com.mehome.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,9 +34,11 @@ public class UserInfoServiceImpl implements IUserInfoService {
     @Autowired
     private UserInfoDao userInfoDao;
     @Autowired
-    private CompanyListDao companyListDao;
+    private CompanyListDao companyDao;
     @Autowired
     private SmsRecordDao smsRecordDao;
+    @Autowired
+    private UserReviewDao userReviewDao;
     @Value("${default_normal_avatar}")
     private String defaultAvatar;
 
@@ -63,7 +70,8 @@ public class UserInfoServiceImpl implements IUserInfoService {
             }
         }
         AssertUtils.isNull(userInfoDao.selectByMobile(userInfo.getMobile()), "该手机号已注册！");
-        return userInfoDao.insertRequired(userInfo);
+        userInfoDao.insertRequired(userInfo);
+        return userInfo.getUserId();
     }
 
     @Override
@@ -137,5 +145,48 @@ public class UserInfoServiceImpl implements IUserInfoService {
     public UserInfo selectById(Integer userId) {
         AssertUtils.isNotNull(userId, "用户标识未知");
         return userInfoDao.selectById(userId);
+    }
+
+    @Transactional
+    public boolean applyCompany(UserApplyCompanyDTO userApplyCompanyDTO) {
+        AssertUtils.isNotNull(userApplyCompanyDTO.getUserId(), "用户ID不能为空!");
+        AssertUtils.isNotNull(userApplyCompanyDTO.getAuthCode(), "授权码不能为空！");
+        AssertUtils.isNotNull(userApplyCompanyDTO.getIdCard(), "身份证号不能为空！");
+        AssertUtils.isNotNull(userApplyCompanyDTO.getRealName(), "真实姓名不能为空！");
+        CompanyList companyList = companyDao.selectByAuthCode(userApplyCompanyDTO.getAuthCode());
+        if (null == companyList) {
+            throw new InfoException("未找到相关的企业！");
+        }
+        UserInfo userInfo = userInfoDao.selectById(userApplyCompanyDTO.getUserId());
+        if (null == userInfo) {
+            throw new InfoException("未找到相关的用户！");
+        }
+        if (null != userInfo.getCompanyId()
+                && userInfo.getCompanyId() != companyList.getCompanyId()
+                ) {
+            //申请别的企业
+            if (UserCompanyEnum.ACTIVE.getKey() == userInfo.getCompanyStatus()) {
+                throw new InfoException("您已经有一个申请一个企业了!");
+            }
+            if (UserCompanyEnum.WAITING.getKey() == userInfo.getCompanyStatus()) {
+                throw new InfoException("一个人一次只能申请一个企业！");
+            }
+        } else {
+            if (userInfo.getCompanyId() == companyList.getCompanyId()
+                    && (UserCompanyEnum.ACTIVE.getKey() == userInfo.getCompanyStatus() || UserCompanyEnum.WAITING.getKey() == userInfo.getCompanyStatus())) {
+                throw new InfoException("不能重复申请！");
+            }
+        }
+        if (null != userInfo.getCompanyId()
+                && UserCompanyEnum.DISMISS.getKey() == userInfo.getCompanyStatus()
+                && userInfo.getCompanyId() == companyList.getCompanyId()) {
+            throw new InfoException("该企业已经拒绝了您的申请！");
+        }
+        UserReview userReview = new UserReview(userApplyCompanyDTO, userInfo, companyList);
+        userReviewDao.insertRequired(userReview);
+        userInfo.setCompanyId(companyList.getCompanyId());
+        userInfo.setCompanyStatus(UserCompanyEnum.WAITING.getKey());
+        userInfoDao.updateRequired(userInfo);
+        return false;
     }
 }

@@ -1,16 +1,18 @@
 package com.mehome.service.impl;
 
-import com.mehome.dao.AuthorizeAdminDao;
-import com.mehome.dao.CompanyListDao;
-import com.mehome.dao.UserInfoDao;
-import com.mehome.dao.UserReviewDao;
+import com.alibaba.fastjson.JSONObject;
+import com.mehome.dao.*;
 import com.mehome.domain.AuthorizeAdmin;
 import com.mehome.domain.CompanyList;
+import com.mehome.domain.CompanyWelfare;
 import com.mehome.enumDTO.UserCompanyEnum;
+import com.mehome.exceptions.InfoException;
 import com.mehome.requestDTO.CompanyDTO;
+import com.mehome.requestDTO.CompanyWelfareNotice;
 import com.mehome.requestDTO.UserInfoDTO;
 import com.mehome.service.iface.ICompanyService;
 import com.mehome.utils.AssertUtils;
+import com.mehome.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,8 @@ import java.util.List;
 public class CompanyServiceImpl implements ICompanyService {
     @Autowired
     private CompanyListDao companyDao;
+    @Autowired
+    private CompanyWelfareDao companyWelfareDao;
     @Autowired
     private UserInfoDao userInfoDao;
     @Autowired
@@ -75,6 +79,20 @@ public class CompanyServiceImpl implements ICompanyService {
     @Override
     public int insertRequired(CompanyList record) {
         AssertUtils.isNotNull(record.getCompanyName(), "企业名称不能为空！");
+        if (StringUtils.isNotNull(record.getAuthCode())) {
+            if (null != companyDao.selectByAuthCode(record.getAuthCode())) {
+                throw new InfoException("授权码冲突，请重新填写");
+            }
+        }
         return companyDao.insertRequired(record);
+    }
+
+    @Override
+    public int add_company_welfare(CompanyWelfare companyWelfare) {
+        AssertUtils.isNotNull(companyWelfare.getCompanyId(), "企业ID不能为空！");
+        CompanyWelfareNotice companyWelfareNotice = JSONObject.parseObject(companyWelfare.getWelfareContent(), CompanyWelfareNotice.class);
+        companyWelfare.setWelfareContent(companyWelfareNotice.toString());
+        companyWelfareDao.insertRequired(companyWelfare);
+        return companyWelfare.getWelfareId();
     }
 }

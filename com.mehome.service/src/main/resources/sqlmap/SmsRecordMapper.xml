@@ -19,6 +19,7 @@
         where mobile = #{mobile,jdbcType=VARCHAR}
         and type = #{type,jdbcType=INTEGER}
         and stamp &gt;UNIX_TIMESTAMP(now())
+        ORDER BY update_time DESC
         limit 1
     </select>
     <insert id="insertRequired" parameterType="com.mehome.domain.SmsRecord">

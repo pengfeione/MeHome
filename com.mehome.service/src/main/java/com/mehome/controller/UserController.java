@@ -3,6 +3,7 @@ package com.mehome.controller;
 import com.mehome.domain.CompanyList;
 import com.mehome.domain.SmsRecord;
 import com.mehome.domain.UserInfo;
+import com.mehome.requestDTO.UserApplyCompanyDTO;
 import com.mehome.requestDTO.UserBackPasswordDTO;
 import com.mehome.service.iface.IAliyuncsSMSService;
 import com.mehome.service.iface.IUserInfoService;
@@ -116,6 +117,22 @@ public class UserController {
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(userInfoService.updateRequired(userInfo)));
+    }
+
+    /**
+     * 绑定手机号
+     *
+     * @param userApplyCompanyDTO
+     * @return
+     */
+    @PostMapping("/apply_company")
+    @ResponseBody
+    public ResponseEntity<Result> apply_company(@RequestBody UserApplyCompanyDTO userApplyCompanyDTO) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(userInfoService.applyCompany(userApplyCompanyDTO)));
     }
 
     /**

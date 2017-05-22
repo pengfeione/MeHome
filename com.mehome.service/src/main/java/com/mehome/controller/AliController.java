@@ -29,9 +29,9 @@ public class AliController {
      *
      * @return
      */
-    @GetMapping("/oss_token")
+    @PostMapping("/oss_token")
     @ResponseBody
-    public ResponseEntity<String> users() {
+    public ResponseEntity<AliyunOssToken> users() {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)

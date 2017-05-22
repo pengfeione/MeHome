@@ -26,6 +26,13 @@
         from company_list
         where company_id = #{companyId,jdbcType=INTEGER}
     </select>
+    <select id="selectByAuthCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from company_list
+        where auth_code = #{authCode,jdbcType=VARCHAR}
+        limit 1
+    </select>
     <select id="listIdsByName" resultType="java.lang.String" parameterType="map">
         select
         company_id
