@@ -71,7 +71,9 @@ public interface IUserInfoService {
     public boolean operation(Integer companyId, Integer userId, Integer operationEnum);
 
 
-
     int updateRequired(UserInfo record);
+
+
+    UserInfo selectById(Integer userId);
 
 }

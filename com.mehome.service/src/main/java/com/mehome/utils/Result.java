@@ -1,6 +1,7 @@
 package com.mehome.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mehome.exceptions.InfoException;
 import org.slf4j.Logger;
@@ -11,12 +12,12 @@ import java.util.UUID;
 /**
  * Created by renhui on 2017/5/8.
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class Result {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Result<T> {
     private int code;
     private String msg;
     private String requestId;
-    private Object result;
+    private T result;
     private Long totalCount;
 
 
@@ -41,13 +42,13 @@ public class Result {
         return new Result(400, msg);
     }
 
-    public Result content(Object object, Long totalCount) {
+    public Result content(T object, Long totalCount) {
         this.setResult(object);
         this.setTotalCount(totalCount);
         return this;
     }
 
-    public Result content(Object object) {
+    public Result content(T object) {
         return content(object, null);
     }
 
@@ -75,11 +76,11 @@ public class Result {
         this.requestId = requestId;
     }
 
-    public Object getResult() {
+    public T getResult() {
         return result;
     }
 
-    public void setResult(Object result) {
+    public void setResult(T result) {
         this.result = result;
     }
 

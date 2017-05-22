@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+<!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
+<base href="http://me.trancyboy.com/iweb/"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name = "format-detection" content="telephone=no">
+<meta name="viewport"  content="width=device-width,user-scalable=no">
+<title>ME+</title>
+<meta name="keywords" content="ME+">
+<meta name="description" content="ME+">
+<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<link rel="stylesheet" type="text/css" href="css/common.css" />
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+<link rel="stylesheet" type="text/css" href="css/iosSelect.css" />
+<script src="js/util.js"></script>
+<script src="js/jquery.min.js"></script>
+</head>
+<body>
+    
+    <div class="wrap">
+    
+    	<!-- header -->
+    	<header class="bannerIndex">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="img/test/test1.jpg" /></div>
+                    <div class="swiper-slide"><img src="img/test/test1.jpg" /></div>
+                    <div class="swiper-slide"><img src="img/test/test1.jpg" /></div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- search -->
+        <div class="search" id="search"><section></section><em class="iconSearch"></em></div>
+        
+        <!-- section -->
+        <section class="section">
+        	<div class="houseList">
+            	<ul id="ul_product">
+                	<!--<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
+                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
+                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
+                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
+                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>-->
+                </ul>
+            </div>
+        </section>
+        
+        <!-- footer -->
+        <footer class="footer">
+        	<a href="index.html" class="curr">发现</a>
+            <a  onclick="gotoME();">我的</a>
+        </footer>
+        
+    </div>
+<script src="js/jquery.min.js"></script>
+<script src="js/swiper.min.js"></script>
+<script src="js/iosSelect.js"></script>
+<script src="js/index.js"></script>
+<script type="text/javascript">
+	var util;
+	$(function()
+	{
+		var data = [
+			{'id': 1, 'value': '黄浦区'},
+			{'id': 2,'value': '徐汇区'},
+			{'id': 3,'value': '长宁区'},
+			{'id': 4,'value': '静安区'},
+			{'id': 5,'value': '闸北区'},
+			{'id': 6,'value': '虹口区'},
+			{'id': 7,'value': '宝山区'},
+			{'id': 8,'value': '奉贤区'},
+			{'id': 9,'value': '嘉定区'},
+			{'id': 10,'value': '闵行区'},
+			{'id': 11,'value': '松江区'},
+			{'id': 12,'value': '金山区'},
+			{'id': 13,'value': '青浦区'},
+			{'id': 14,'value': '浦东新区'}
+		];
+		
+		$("#search").on("click","span",function(event)
+		{
+			event.stopPropagation();
+			$("#search span").remove();
+		});
+		
+		$("#search").bind('click', function ()
+		{
+			var bankSelect = new IosSelect(1, [data],{
+					title: '选择区域',
+					itemHeight: 35,
+					oneLevelId: 7,
+					callback: function (selectOneObj)
+					{
+						$("#search section").html('<span><em id="address">'+selectOneObj.value+'</em><i></i></span>');
+					}
+			});
+		});
+		
+		util = new Util();
+		//加载轮播 图片
+		
+		//加载产品信息
+		loadProductList();
+	});
+	
+	//加载产品信息 ul_product
+	function loadProductList(){
+		var url = util.baseUrl + '/product/list';
+		var param ='{"areaId": 1}';
+		var contentType = "application/json";
+		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+			util.logResult(data);
+			$.each(data.result,function(index,productInfo){
+				var detailpic = productInfo.detailpic;
+				var html_str = '<li>'
+							 + '	<a href="#">'
+							 + '		<img src="'+detailpic[0]+'" />'
+							 + '		<h3>'+productInfo.productName+'</h3>'
+							 + '		<em></em><span>老牌英伦风格，顶级配置</span>'
+							 + ' 	</a>'
+							 + '</li>';
+				$('#ul_product').append(html_str);
+			})
+		});
+	}
+	
+	function gotoME(){
+		var isLogin = false;
+		//判断用户是否登录
+		
+		
+		//如果登录跳转到个人中心,否则跳转到登录页面
+		if(isLogin){
+			window.location.href='my.html';
+		}else{
+			window.location.href='login.html';
+		}
+	}
+</script>
+
+</body>
+</html>

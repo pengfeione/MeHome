@@ -1,0 +1,74 @@
+@charset "utf-8";
+
+/*
+	project : me+
+	auther  : Charles
+	date    : 2017-05-15
+*/
+
+body     { margin:0; font-size:14px; font-family:"黑体"; background:#ffffff; }
+
+.section   { padding-bottom:54px; }
+.btn       { border-radius:5px; height:35px; display:block; text-align:center; font-size:16px; line-height:35px; background:url(../img/btnSubmit.png) no-repeat; background-size:100% 35px; color:#fff; }
+.iconMy    { width:20px; height:20px; display:block; background:url(../img/iconOrder.png) no-repeat; background-size:20px; position:absolute; left:10px; top:12px; z-index:3; }
+.iconEdit  { width:20px; height:20px; display:block; background:url(../img/iconEdit.png) no-repeat; background-size:20px; position:absolute; left:10px; top:12px; z-index:3; }
+.iconMore  { width:8px; height:13px; display:block; background:url(../img/iconMore.png) no-repeat; background-size:8px 13px; position:absolute; right:10px; top:15px; z-index:3; }
+.iconTel   { width:19px; height:19px; display:block; background:url(../img/iconTel.png) no-repeat; background-size:19px 18px; position:absolute; left:10px; top:0; z-index:3; }
+.iconQrz,.iconXyy,.iconYqr,.iconYrz   { width:60px; height:60px; display:block; position:absolute; right:0; top:-10px; z-index:3; }
+.iconQrz { background:url(../img/iconQrz.png) no-repeat; background-size:60px; }
+.iconXyy { background:url(../img/iconXyy.png) no-repeat; background-size:60px; }
+.iconYqr { background:url(../img/iconYqr.png) no-repeat; background-size:60px; }
+.iconYrz { background:url(../img/iconYrz.png) no-repeat; background-size:60px; }
+
+
+/* footer */
+.footer       { width:100%; height:44px; position:fixed; left:0; bottom:0; z-index:99; }
+.footer a     { float:left; width:50%; height:42px; font-size:16px; border-bottom:2px solid #fff; text-align:center; line-height:44px; display:block; background:#fff; color:#b4b4b4; }
+.footer .curr { border-bottom:2px solid #20aa94; color:#20aa94; }
+
+/* pop */
+.pop          { margin:-65px 0 0 -75px; width:150px; height:130px; display:none; border-radius:10px; background:url(../img/opacity.png) repeat; position:fixed; left:50%; top:50%; z-index:33; }
+.iconSuccess  { margin:15px auto 10px; width:50px; height:50px; display:block; background:url(../img/iconSuccess.png) no-repeat; background-size:50px; }
+.iconFail     { margin:15px auto 10px; width:50px; height:50px; display:block; background:url(../img/iconFail.png) center center no-repeat; background-size:30px; }
+
+.popBox,.popOrder            { margin:-100px 0 0 -150px; width:300px; height:200px; display:none; border-radius:10px; background:#fff; position:fixed; left:50%; top:50%; z-index:9999; }
+.popBox h3         { height:60px; line-height:60px; text-align:center; }
+.popBox span       { line-height:20px; display:block; text-align:center; }
+.btnPop            { margin-top:20px; height:40px; text-align:center; }
+.btnPop a          { margin:0 10px; width:100px; height:34px; line-height:34px; display:inline-block; }
+.btnPop .btnQd2    { border-radius:5px; background:url(../img/btnSubmit.png) no-repeat; background-size:100% 34px; color:#fff; }
+.btnPop .btnCancel { border-radius:5px; background:#dcdcdc; color:#646464; }
+.mask { width:100%; height:100%; opacity:0.8; filter:alpha(opacity=80); display:none; background:#000; position:fixed; left:0; top:0; z-index:999; }
+
+/* pop orderdetail */
+.popOrder .titleTg    { height:55px; line-height:55px; font-size:16px; text-align:center; border-bottom:1px solid #dcdcdc; position:relative; }
+.popOrder .titlePay   { padding-top:10px; height:45px; font-size:16px; text-align:center; border-bottom:1px solid #dcdcdc; position:relative; }
+.popOrder .titlePay i { height:18px; line-height:18px; display:block; font-weight:normal; font-style:normal; font-size:12px; }
+.popOrder .close      { width:21px; height:21px; display:block; background:url(../img/close.png) no-repeat; background-size:21px; position:absolute; right:15px; top:15px; z-index:3; }
+.selectTg             { padding:20px 20px 0 20px; font-size:14px; font-weight:bold; }
+.selectTg i           { height:20px; line-height:20px; font-weight:normal; font-style:normal; font-size:12px; display:block; }
+.btnTg                { padding:20px 20px 0; }
+.selectPay            { padding:22px 20px 5px; height:32px; display:block; }
+.selectPay .payWx     { float:left; font-size:18px; }
+.selectPay .payWx i   { margin-right:10px; width:32px; height:32px; vertical-align:middle; display:inline-block; background:url(../img/iconWx.png) no-repeat; background-size:32px; }
+.selectPay .paySel    { float:right; margin-top:4px; width:22px; height:22px; display:block; background:url(../img/iconDeposit2.png) no-repeat; background-size:22px; }
+.titleOffline         { padding:40px 0 35px; line-height:24px; font-size:16px; text-align:center; font-weight:normal; }
+.btnOffline           { height:34px; text-align:center; }
+.btnOffline a         { margin:0 10px; width:100px; height:34px; text-align:center; line-height:34px; display:inline-block; }
+.btnPay    { border-radius:5px; background:url(../img/btnSubmit.png) no-repeat; background-size:100% 34px; color:#fff; }
+.btnQx     { border-radius:5px; background:#dcdcdc; color:#646464; }
+
+@media screen and (min-width:375px)
+{
+	.btn span  { line-height:42px; font-size:16px; }
+}
+
+@media screen and (min-width:414px)
+{
+	.btn span   { line-height:50px; font-size:18px; }
+}
+
+
+
+
+

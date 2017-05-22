@@ -49,14 +49,20 @@ public class UserInfoServiceImpl implements IUserInfoService {
 
     @Override
     public int mobile_register(UserInfo userInfo) {
-        if (StringUtils.isNull(userInfo.getMobile())) {
-            throw new InfoException("手机号不能为空！");
-        } else if (StringUtils.isNull(userInfo.getPassword())) {
-            throw new InfoException("密码不能为空！");
-        }
+        AssertUtils.isNotNull(userInfo.getMobile(), "手机号不能为空！");
+        AssertUtils.isNotNull(userInfo.getPassword(), "密码不能为空！");
         if (StringUtils.isNull(userInfo.getAvatar())) {
             userInfo.setAvatar(defaultAvatar);
         }
+        SmsRecord validSms = smsRecordDao.selectValid(userInfo.getMobile(), SmsEnum.NORMAL_FIX_PASSWORD.getKey());
+        if (null == validSms) {
+            throw new InfoException("验证码已失效！");
+        } else {
+            if (!validSms.getCode().equals(userInfo.getVerifyCode())) {
+                throw new InfoException("验证码不正确！");
+            }
+        }
+        AssertUtils.isNotNull(userInfoDao.selectByMobile(userInfo.getMobile()), "该手机号已注册！");
         return userInfoDao.insertRequired(userInfo);
     }
 
@@ -125,5 +131,11 @@ public class UserInfoServiceImpl implements IUserInfoService {
         userInfo.setMobile(record.getMobile());
         userInfo.setAvatar(record.getAvatar());
         return userInfoDao.updateRequired(record);
+    }
+
+    @Override
+    public UserInfo selectById(Integer userId) {
+        AssertUtils.isNotNull(userId, "用户标识未知");
+        return userInfoDao.selectById(userId);
     }
 }

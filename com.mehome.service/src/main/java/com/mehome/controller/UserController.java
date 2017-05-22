@@ -130,6 +130,6 @@ public class UserController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(new Object()));
+                .body(Result.build().content(userInfoService.selectById(userInfo.getUserId())));
     }
 }

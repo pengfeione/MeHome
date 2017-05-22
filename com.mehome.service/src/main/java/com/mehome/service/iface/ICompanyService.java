@@ -16,4 +16,6 @@ public interface ICompanyService {
 
     public int update(CompanyList company);
 
+    public CompanyList selectById(Integer companyId);
+
 }

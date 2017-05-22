@@ -1,0 +1,47 @@
+@charset "utf-8";
+
+/*
+	project : me+
+	auther  : Charles
+	date    : 2017-05-15
+*/
+body { background:#fff; }
+
+.bannerDetail      { position:relative; width:100%; overflow:hidden; }
+.swiper-slide img  { width:100%; max-height:250px; display:block; }
+.swiper-container-horizontal > .swiper-pagination .swiper-pagination-bullet { margin:0 4px; vertical-align:middle; width:15px; height:3px; opacity:1; border-radius:0px; background:#ffffff; }
+.swiper-container-horizontal > .swiper-pagination .swiper-pagination-bullet-active { width:15px; height:3px; border:none; background:#28af90; }
+
+.houseInfo { margin:0 15px; padding-right:110px; height:68px; border-bottom:1px solid #dcdcdc; color:#3c3c3c; position:relative; overflow:hidden; }
+.houseInfo h3 { margin-top:5px; height:30px; line-height:30px; font-weight:normal; font-size:18px; }
+.houseInfo span { height:20px; line-height:20px; display:block; font-size:16px; }
+.houseInfo span i { margin-right:5px; width:56px; height:18px; line-height:18px; text-align:center; font-size:12px; display:inline-block; font-style:normal; color:#fff; background:url(../img/tagMoney.png) no-repeat; background-size:56px 18px; }
+.houseInfo em { width:100px; height:30px; line-height:30px; display:block; vertical-align:middle; text-align:right; font-size:16px; color:#f36700; position:absolute; right:0; top:19px; z-index:3; } 
+
+.housePt { margin:0 15px; }
+.housePt h3 { padding:10px 0; height:30px; line-height:30px; color:#3c3c3c; font-weight:normal; font-size:16px; }
+.housePt h3 em { margin-top:-5px; width:5px; height:15px; display:inline-block; vertical-align:middle; border-left:5px solid #28af90;}
+.housePt ul li { float:left; margin:10px 0; width:20%; height:60px; }
+.housePt ul li em { margin:0 auto; width:30px; height:31px; display:block; }
+.housePt ul li i { height:30px; line-height:30px; text-align:center; display:block; font-style:normal; }
+.iconBed { background:url(../img/iconBed.png) no-repeat; background-size:30px 31px; }
+.iconYg  { background:url(../img/iconYg.png) no-repeat; background-size:30px 31px; }
+.iconCz  { background:url(../img/iconCz.png) no-repeat; background-size:30px 31px; }
+.iconTv  { background:url(../img/iconTv.png) no-repeat; background-size:30px 31px; }
+.iconKt  { background:url(../img/iconKt.png) no-repeat; background-size:30px 31px; }
+.iconRsq { background:url(../img/iconRsq.png) no-repeat; background-size:30px 31px; }
+.iconNet { background:url(../img/iconNet.png) no-repeat; background-size:30px 31px; }
+.iconCyj { background:url(../img/iconCyj.png) no-repeat; background-size:30px 31px; }
+.iconCg  { background:url(../img/iconCg.png) no-repeat; background-size:30px 31px; }
+
+.btnYy { width:100%; height:40px; line-height:40px; font-size:16px; background-size:100% 40px; border-radius:0; position:absolute; left:0; bottom:0; z-index:33; }
+
+
+.popYy      { margin:-150px 0 0 -75px; }
+.popFail2 .iconFail { width:50px; height:50px; display:block; background:url(../img/iconFail2.png) no-repeat; background-size:50px; }
+.pop span   { height:30px; line-height:30px; font-size:16px; text-align:center; display:block; color:#fff; }
+
+
+
+
+
