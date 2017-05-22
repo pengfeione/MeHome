@@ -132,7 +132,7 @@
         </if>
     </select>
     <insert id="insertRequired" parameterType="com.mehome.domain.UserInfo" useGeneratedKeys="true"
-            keyProperty="companyId">
+            keyProperty="userId">
         insert into user_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">
