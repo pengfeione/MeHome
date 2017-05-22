@@ -270,5 +270,6 @@ public class ProductBean extends PageMysqlUtil {
 		this.setRules(product.getRules());
 		this.setSupplierId(product.getSupplierId());
 		this.setWelfareList(welfareList);
+		this.setProductId(product.getProductId());
 	}
 }
