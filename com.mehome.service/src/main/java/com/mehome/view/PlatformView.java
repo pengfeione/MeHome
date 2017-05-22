@@ -1,6 +1,8 @@
 package com.mehome.view;
 
 import com.mehome.domain.CompanyList;
+import com.mehome.enumDTO.InfoOperationEnum;
+import com.mehome.enumDTO.OperationTypeEnum;
 import com.mehome.enumDTO.RoleEnum;
 import com.mehome.service.iface.ICompanyService;
 import com.mehome.utils.Permits;
@@ -48,8 +50,17 @@ public class PlatformView {
         if (null == companyList) {
             return "404";
         }
+        if (!InfoOperationEnum.contain(operation)) {
+            return "404";
+        }
+        if (InfoOperationEnum.UPDATE.getOperation().equals(operation)) {
+            model.addAttribute("update", true);
+            model.addAttribute("action", "/api/company/update");
+        } else {
+            model.addAttribute("update", false);
+            model.addAttribute("action", "/api/company/add");
+        }
         model.addAttribute("companyInfo", companyList);
-        model.addAttribute("operation", operation);
         return "platformCompanyInfo";
     }
 }

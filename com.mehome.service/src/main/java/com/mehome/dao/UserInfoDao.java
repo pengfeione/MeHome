@@ -12,6 +12,8 @@ public interface UserInfoDao {
 
     UserInfo selectById(Integer userId);
 
+    UserInfo selectByMobile(String mobile);
+
     int updateRequired(UserInfo record);
 
     int updatePasswordByMobile(UserInfo record);

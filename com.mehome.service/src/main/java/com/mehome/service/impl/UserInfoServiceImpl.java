@@ -54,7 +54,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
         if (StringUtils.isNull(userInfo.getAvatar())) {
             userInfo.setAvatar(defaultAvatar);
         }
-        SmsRecord validSms = smsRecordDao.selectValid(userInfo.getMobile(), SmsEnum.NORMAL_FIX_PASSWORD.getKey());
+        SmsRecord validSms = smsRecordDao.selectValid(userInfo.getMobile(), SmsEnum.NORMAL_REG.getKey());
         if (null == validSms) {
             throw new InfoException("验证码已失效！");
         } else {
@@ -62,7 +62,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
                 throw new InfoException("验证码不正确！");
             }
         }
-        AssertUtils.isNotNull(userInfoDao.selectByMobile(userInfo.getMobile()), "该手机号已注册！");
+        AssertUtils.isNull(userInfoDao.selectByMobile(userInfo.getMobile()), "该手机号已注册！");
         return userInfoDao.insertRequired(userInfo);
     }
 

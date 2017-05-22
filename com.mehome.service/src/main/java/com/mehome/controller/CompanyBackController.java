@@ -1,6 +1,7 @@
 package com.mehome.controller;
 
 import com.mehome.dao.CompanyListDao;
+import com.mehome.domain.CompanyList;
 import com.mehome.enumDTO.RoleEnum;
 import com.mehome.requestDTO.CompanyDTO;
 import com.mehome.requestDTO.CompanyUserListDTO;
@@ -101,13 +102,26 @@ public class CompanyBackController {
     @Permits(role = {RoleEnum.PLATFORM})
     @PostMapping("/update")
     @ResponseBody
-    public ResponseEntity<Result> updateCompany(@RequestBody CompanyDTO condition) {
+    public ResponseEntity<Result> updateCompany(CompanyList companyList) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result
                         .build()
-                        .content(companyService.listByCondition(condition), companyService.countByCondition(condition)));
+                        .content(companyService.update(companyList)));
+    }
+
+    @Permits(role = {RoleEnum.PLATFORM})
+    @PostMapping("/add")
+    @ResponseBody
+    public ResponseEntity<Result> addCompany(CompanyList condition) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result
+                        .build()
+                        .content(companyService.insertRequired(condition)));
     }
 }
