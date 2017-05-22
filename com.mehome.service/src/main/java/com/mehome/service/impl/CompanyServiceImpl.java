@@ -71,4 +71,10 @@ public class CompanyServiceImpl implements ICompanyService {
         }
         return companyDao.selectById(companyId);
     }
+
+    @Override
+    public int insertRequired(CompanyList record) {
+        AssertUtils.isNotNull(record.getCompanyName(), "企业名称不能为空！");
+        return companyDao.insertRequired(record);
+    }
 }

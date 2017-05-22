@@ -19,11 +19,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @WebServlet(urlPatterns = "/oss_token", description = "oss-token获取", name = "oos-token获取")
-
 public class AliyuncsOSSToken extends HttpServlet{
-	/**
-	 * 
-	 */
     @Autowired
     public AliyuncsProperties aliyuncsProperties;
 	private static final long serialVersionUID = 5522372203700422672L;
@@ -33,7 +29,7 @@ public class AliyuncsOSSToken extends HttpServlet{
 	    String endpoint = aliyuncsProperties.getOss_endpoint();
         String accessId = aliyuncsProperties.getAccessid();
         String accessKey = aliyuncsProperties.getAccessKey();
-        String bucket = aliyuncsProperties.getOss_buket();
+        String bucket = aliyuncsProperties.getOss_bucket();
         String dir = aliyuncsProperties.getOss_dir();
         String host = "http://" + bucket + "." + endpoint;
         OSSClient client = new OSSClient(endpoint, accessId, accessKey);

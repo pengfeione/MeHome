@@ -18,4 +18,7 @@ public interface ICompanyService {
 
     public CompanyList selectById(Integer companyId);
 
+
+    public int insertRequired(CompanyList record);
+
 }

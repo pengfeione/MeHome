@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 
 public class AliyuncsProperties {
 
-    private  String accessid;
-    private  String accessKey;
-    private  String  oss_endpoint;
-    private  String oss_buket;
-    private  String oss_dir;
-    private  String sms_topic;
-    private  String sms_endpoint;
+    private String accessid;
+    private String accessKey;
+    private String oss_endpoint;
+    private String oss_bucket;
+    private String oss_dir;
+    private String sms_topic;
+    private String sms_endpoint;
 
 
     public String getSms_endpoint() {
@@ -27,7 +27,6 @@ public class AliyuncsProperties {
     public void setSms_endpoint(String sms_endpoint) {
         this.sms_endpoint = sms_endpoint;
     }
-
 
 
     public String getAccessid() {
@@ -54,12 +53,12 @@ public class AliyuncsProperties {
         this.oss_endpoint = oss_endpoint;
     }
 
-    public String getOss_buket() {
-        return oss_buket;
+    public String getOss_bucket() {
+        return oss_bucket;
     }
 
-    public void setOss_buket(String oss_buket) {
-        this.oss_buket = oss_buket;
+    public void setOss_bucket(String oss_bucket) {
+        this.oss_bucket = oss_bucket;
     }
 
     public String getOss_dir() {
