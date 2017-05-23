@@ -10,17 +10,16 @@ Index.prototype={
 	init:function()
 	{
 		var _this = this;
-		_this.bannerScroll();
+		_this.showImage();
 	},
-	//banner滚动
-	bannerScroll:function()
+	//showImage滚动
+	showImage:function()
 	{
-		var swiper = new Swiper('.swiper-container', {
-			pagination: '.swiper-pagination',
-			paginationClickable: true, //此参数设置为true时，点击分页器的指示点分页器会控制Swiper切换。
+		var swiper = new Swiper('#showImage', {
+			prevButton:'.swiper-button-prev',
+			nextButton:'.swiper-button-next',
 			spaceBetween: 10,
 			centeredSlides: true,
-			autoplay: 5000,
 			loop:true,
 			autoplayDisableOnInteraction : false  //播放完毕后
 		});

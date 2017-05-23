@@ -126,6 +126,10 @@ Util.prototype = {
 	preDate:function(){
 		return this.GetDateStr(-1);
 	},
+	sleep:function(n) {//单位毫秒
+    	var start = new Date().getTime();
+    	while(true)  if(new Date().getTime()-start > n) break;
+   },
 	GetDateStr:function(AddDayCount) { 
 		var dd = new Date(); 
 		dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期 
@@ -188,8 +192,8 @@ Util.prototype = {
 		var Days = 30;
 		var exp = new Date();
 		exp.setTime(exp.getTime() + Days*24*60*60*1000);
-		//测试 TODO
-     	document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()+";path=/; domain=.shihou.tv";
+		//测试 TODO http://me.trancyboy.com/api
+     	document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()+";path=/; domain=.me.trancyboy.com";
 	},
 	isLogin:function(){
 		var url = this.baseUrl + '/guess/isLogin';
