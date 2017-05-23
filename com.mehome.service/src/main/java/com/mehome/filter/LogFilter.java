@@ -76,18 +76,6 @@ public class LogFilter implements Filter {
             filterChain.doFilter(bodyRequestWrapper, response);
         } catch (Exception e) {
             e.printStackTrace();
-            APIBaseResult apiBaseResult = new APIBaseResult();
-            apiBaseResult.setCode(400);
-            response.setContentType("application/json;charset=UTF-8");
-            PrintWriter printWriter = response.getWriter();
-            if (e instanceof NestedServletException) {
-                NestedServletException nestedServletException = (NestedServletException) e;
-                apiBaseResult.setMsg(e.getMessage().replace("Request processing failed; nested exception is com.mehome.exceptions.InfoException:", ""));
-            } else {
-                e.printStackTrace();
-                apiBaseResult.setMsg("系统异常");
-            }
-            printWriter.write(apiBaseResult.toString());
         }
     }
 

@@ -12,7 +12,15 @@ public class AliyunOssToken {
     private String dir;
     private String host;
     private String expire;
+    private String callback;
 
+    public String getCallback() {
+        return callback;
+    }
+
+    public void setCallback(String callback) {
+        this.callback = callback;
+    }
 
     public String getAccessId() {
         return accessId;

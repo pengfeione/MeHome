@@ -1,5 +1,6 @@
 package com.mehome.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.MatchMode;
@@ -25,8 +26,7 @@ public class AliYunServiceImpl implements IAliYunService {
     public AliyuncsProperties aliyuncsProperties;
 
     @Override
-    public AliyunOssToken getToken() {
-        AliyunOssToken aliyuncsOSSToken = new AliyunOssToken();
+    public String getToken() {
         String endpoint = aliyuncsProperties.getOss_endpoint();
         String accessId = aliyuncsProperties.getAccessid();
         String accessKey = aliyuncsProperties.getAccessKey();
@@ -35,7 +35,7 @@ public class AliYunServiceImpl implements IAliYunService {
         String host = "http://" + bucket + "." + endpoint;
         OSSClient client = new OSSClient(endpoint, accessId, accessKey);
         try {
-            long expireTime = 30;
+            long expireTime = 5 * 1000;
             long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
             Date expiration = new Date(expireEndTime);
             PolicyConditions policyConds = new PolicyConditions();
@@ -47,13 +47,15 @@ public class AliYunServiceImpl implements IAliYunService {
             String encodedPolicy = BinaryUtil.toBase64String(binaryData);
             String postSignature = client.calculatePostSignature(postPolicy);
 
-            aliyuncsOSSToken.setAccessId(accessId);
-            aliyuncsOSSToken.setPolicy(encodedPolicy);
-            aliyuncsOSSToken.setSignature(postSignature);
-            aliyuncsOSSToken.setDir(dir);
-            aliyuncsOSSToken.setHost(host);
-            aliyuncsOSSToken.setExpire(String.valueOf(expireEndTime / 1000));
-            return aliyuncsOSSToken;
+
+            Map<String, String> respMap = new LinkedHashMap<String, String>();
+            respMap.put("accessid", accessId);
+            respMap.put("policy", encodedPolicy);
+            respMap.put("signature", postSignature);
+            respMap.put("dir", dir);
+            respMap.put("host", host);
+            respMap.put("expire", String.valueOf(expireEndTime / 1000));
+            return JSON.toJSONString(respMap);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
