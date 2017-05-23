@@ -15,9 +15,9 @@ import java.util.List;
 @Configuration
 public class WebConfig {
     @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
+    public FilterRegistrationBean filterRegistrationBeanRole() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setName("filterRegistration");
+        registrationBean.setName("RolefilterRegistration");
 
         PermitFilter permitFilter = new PermitFilter();
         registrationBean.setFilter(permitFilter);
@@ -25,6 +25,22 @@ public class WebConfig {
         list.add("/*");
         registrationBean.setUrlPatterns(list);
         registrationBean.setOrder(1);
+
+
+        return registrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean filterRegistrationBeanLog() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setName("LogfilterRegistration");
+
+        LogFilter permitFilter = new LogFilter();
+        registrationBean.setFilter(permitFilter);
+        List<String> list = new ArrayList<String>();
+        list.add("/*");
+        registrationBean.setUrlPatterns(list);
+        registrationBean.setOrder(2);
 
 
         return registrationBean;
