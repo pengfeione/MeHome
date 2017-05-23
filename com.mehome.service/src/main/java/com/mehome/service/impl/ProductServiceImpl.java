@@ -11,7 +11,6 @@ import com.mehome.dao.BasicFacilitiesDao;
 import com.mehome.dao.ProductListDao;
 import com.mehome.dao.ProductRalationBasicDao;
 import com.mehome.domain.BasicFacilities;
-import com.mehome.domain.ProductComment;
 import com.mehome.domain.ProductList;
 import com.mehome.domain.ProductRalationBasic;
 import com.mehome.requestDTO.BasicBean;
