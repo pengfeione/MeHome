@@ -29,7 +29,7 @@ body     { margin:0; font-size:14px; font-family:"黑体"; background:#ffffff; }
 /* pop */
 .pop          { margin:-65px 0 0 -75px; width:150px; height:130px; display:none; border-radius:10px; background:url(../img/opacity.png) repeat; position:fixed; left:50%; top:50%; z-index:33; }
 .iconSuccess  { margin:15px auto 10px; width:50px; height:50px; display:block; background:url(../img/iconSuccess.png) no-repeat; background-size:50px; }
-.iconFail     { margin:15px auto 10px; width:50px; height:50px; display:block; background:url(../img/iconFail.png) center center no-repeat; background-size:30px; }
+.iconFail     { margin:15px auto 10px; width:50px; height:50px; display:block; background:url(../img/iconfail.png) center center no-repeat; background-size:30px; }
 
 .popBox,.popOrder            { margin:-100px 0 0 -150px; width:300px; height:200px; display:none; border-radius:10px; background:#fff; position:fixed; left:50%; top:50%; z-index:9999; }
 .popBox h3         { height:60px; line-height:60px; text-align:center; }
@@ -58,6 +58,13 @@ body     { margin:0; font-size:14px; font-family:"黑体"; background:#ffffff; }
 .btnPay    { border-radius:5px; background:url(../img/btnSubmit.png) no-repeat; background-size:100% 34px; color:#fff; }
 .btnQx     { border-radius:5px; background:#dcdcdc; color:#646464; }
 
+/* common */
+.commonList li { padding:10px 0 10px 50px; position:relative; overflow:hidden; border-bottom:1px solid #dcdcdc; color:#282828; }
+.commonList li img { width:40px; height:40px; display:block; border-radius:50%; overflow:hidden; position:absolute; left:0; top:10px; z-index:3; }
+.commonList li h3 { height:26px; line-height:26px; font-weight:normal; overflow:hidden; }
+.commonList li span { display:block; line-height:22px; }
+
+
 @media screen and (min-width:375px)
 {
 	.btn span  { line-height:42px; font-size:16px; }
@@ -67,8 +74,3 @@ body     { margin:0; font-size:14px; font-family:"黑体"; background:#ffffff; }
 {
 	.btn span   { line-height:50px; font-size:18px; }
 }
-
-
-
-
-
