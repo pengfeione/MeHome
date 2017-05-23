@@ -290,6 +290,9 @@
     <if test="supplierId != null">
       AND supplier_id = #{supplierId,jdbcType=INTEGER}
     </if>
+    <if test="productId != null">
+      AND product_id = #{productId,jdbcType=INTEGER}
+    </if>
     ORDER BY create_time DESC
     limit #{pageNow},#{pageSize}
   </select>
@@ -305,6 +308,9 @@
     </if>
     <if test="supplierId != null">
       AND supplier_id = #{supplierId,jdbcType=INTEGER}
+    </if>
+    <if test="productId != null">
+      AND product_id = #{productId,jdbcType=INTEGER}
     </if>
   </select>
 </mapper>

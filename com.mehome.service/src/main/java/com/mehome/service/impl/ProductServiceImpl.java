@@ -25,7 +25,9 @@ public class ProductServiceImpl implements IProductService {
 		List<ProductBean> productBeanList = new ArrayList<ProductBean>();
 		if (productList != null && productList.size() > 0) {
 			for (ProductList product : productList) {
+				
 				ProductBean newBean = new ProductBean(product, null, null, null, null);
+				
 				productBeanList.add(newBean);
 			}
 		}
