@@ -90,4 +90,15 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where ralation_id = #{ralationId,jdbcType=VARCHAR}
   </update>
+  <select id="getListByCondition" parameterType="com.mehome.requestDTO.BasicBean" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM product_ralation_basic
+    WHERE 1=1
+    <if test="productId != null">
+      AND product_id = #{productId,jdbcType=INTEGER}
+    </if>
+    ORDER BY create_time DESC
+    limit #{pageNow},#{pageSize}
+  </select>
 </mapper>

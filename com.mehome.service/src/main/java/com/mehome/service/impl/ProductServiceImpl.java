@@ -7,9 +7,14 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mehome.dao.BasicFacilitiesDao;
 import com.mehome.dao.ProductListDao;
+import com.mehome.dao.ProductRalationBasicDao;
+import com.mehome.domain.BasicFacilities;
 import com.mehome.domain.ProductComment;
 import com.mehome.domain.ProductList;
+import com.mehome.domain.ProductRalationBasic;
+import com.mehome.requestDTO.BasicBean;
 import com.mehome.requestDTO.ProductBean;
 import com.mehome.service.iface.IProductService;
 
@@ -18,6 +23,10 @@ public class ProductServiceImpl implements IProductService {
 	private Logger log = Logger.getLogger(this.getClass());
 	@Autowired
 	private ProductListDao productListDAO;
+	@Autowired
+	private ProductRalationBasicDao productRalationBasicDAO;
+	@Autowired
+	private BasicFacilitiesDao basicFacilitiesDAO;
 
 	@Override
 	public List<ProductBean> getListByCondition(ProductBean bean) {
@@ -25,8 +34,20 @@ public class ProductServiceImpl implements IProductService {
 		List<ProductBean> productBeanList = new ArrayList<ProductBean>();
 		if (productList != null && productList.size() > 0) {
 			for (ProductList product : productList) {
-				
-				ProductBean newBean = new ProductBean(product, null, null, null, null);
+				Integer productId=product.getProductId();
+				BasicBean basic=new BasicBean();
+				basic.setProductId(productId);
+				List<ProductRalationBasic> relationList=productRalationBasicDAO.getListByCondition(basic);
+				List<BasicBean> basicBeanList=new ArrayList<BasicBean>();
+				if(relationList!=null&&relationList.size()>0){
+					for (ProductRalationBasic productRalationBasic : relationList) {
+						Integer basicId=productRalationBasic.getBasicId();
+						BasicFacilities basicObj=basicFacilitiesDAO.selectById(basicId);
+						BasicBean newBean=new BasicBean(basicObj);
+						basicBeanList.add(newBean);
+					}
+				}
+				ProductBean newBean = new ProductBean(product, null, basicBeanList, null, null);
 				
 				productBeanList.add(newBean);
 			}

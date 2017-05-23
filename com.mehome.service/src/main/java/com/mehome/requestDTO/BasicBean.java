@@ -2,10 +2,11 @@ package com.mehome.requestDTO;
 
 import com.mehome.domain.BasicFacilities;
 import com.mehome.utils.DateUtils;
+import com.mehome.utils.PageMysqlUtil;
 
 import java.util.Date;
 
-public class BasicBean {
+public class BasicBean extends PageMysqlUtil {
 
 	private Integer basicId;
 	
@@ -18,6 +19,8 @@ public class BasicBean {
 	private String updateTime;
 	
 	private Boolean basicActive;
+	
+	private Integer productId;
 	
 	
 	public Integer getBasicId() {
@@ -80,6 +83,16 @@ public class BasicBean {
 	}
 
 
+	public Integer getProductId() {
+		return productId;
+	}
+
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
+
 	public BasicFacilities beanToPojo(){
 		BasicFacilities basic = new BasicFacilities();
 		basic.setBasicActive(Boolean.TRUE);
@@ -97,5 +110,9 @@ public class BasicBean {
 		this.setBasicType(pojo.getBasicType());
 		this.setPic(pojo.getPic());
 		this.setUpdateTime(DateUtils.dateToStr(pojo.getUpdateTime()));
+	}
+	
+	public BasicBean(){
+		
 	}
 }

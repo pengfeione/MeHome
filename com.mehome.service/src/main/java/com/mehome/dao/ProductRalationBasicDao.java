@@ -1,6 +1,9 @@
 package com.mehome.dao;
 
+import java.util.List;
+
 import com.mehome.domain.ProductRalationBasic;
+import com.mehome.requestDTO.BasicBean;
 
 public interface ProductRalationBasicDao {
     int delete(String ralationId);
@@ -14,4 +17,6 @@ public interface ProductRalationBasicDao {
     int updateRequired(ProductRalationBasic record);
 
     int update(ProductRalationBasic record);
+    
+    List<ProductRalationBasic> getListByCondition(BasicBean bean);
 }

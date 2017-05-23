@@ -42,7 +42,7 @@ public class LbsAmapUtils {
 		return locationArray;
 	}
 	public static void main(String[] args) {
-		String[] location=getPosition("东方明珠");
+		String[] location=getPosition("三林路1515号");
 		for (String string : location) {
 			System.out.println(string);
 		}
