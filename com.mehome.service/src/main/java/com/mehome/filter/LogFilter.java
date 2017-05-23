@@ -27,7 +27,7 @@ public class LogFilter implements Filter {
     public static final Set<String> allowDomain = new HashSet<String>();
 
     static {
-        allowDomain.add("http://test.youxiduo.com");
+        allowDomain.add("http://m.mjiahome.com");
     }
 
     @Override
@@ -50,10 +50,10 @@ public class LogFilter implements Filter {
             }
         }
 //        if (allowDomain.contains(headerMap.get("accept"))) {
-//            response.setHeader("Access-Control-Allow-Origin", " *");
-//            response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-//            response.setHeader("Access-Control-Max-Age", "3600");
-//            response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+        response.setHeader("Access-Control-Allow-Origin", "http://m.mjiahome.com");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "Origin,X-Requested-With,content-type,Accept");
 //        }
         BodyRequestWrapper bodyRequestWrapper = new BodyRequestWrapper(httpServletRequest);
         log.info("\n------------------------------------------------------------------------------------------" +
