@@ -420,11 +420,10 @@ public class OrderBean extends PageMysqlUtil{
 		this.setOrderStatus(order.getOrderStatus());
 		OrderStatusEnum[] enums=OrderStatusEnum.values();
 		for (OrderStatusEnum orderStatusEnum : enums) {
-			if(order.getOrderStatus()==orderStatusEnum.getKey()){
+			if(order.getOrderStatus().intValue()==orderStatusEnum.getKey()){
 				this.setOrderStatusDesc(orderStatusEnum.getValue());
 			}
 		}
-		this.setOrderStatusDesc("");
 		this.setOrigAmount(order.getOrigAmount());
 		this.setOrigRent(order.getOrigRent());
 		this.setPayAccount(order.getPayAccount());
@@ -442,6 +441,7 @@ public class OrderBean extends PageMysqlUtil{
 		this.setSupplierName(order.getSupplierName());
 		this.setTenancy(order.getTenancy());
 		this.setUpdateTime(order.getUpdateTime()==null?null:DateUtils.dateToStr(order.getUpdateTime()));
+		this.setOrderId(order.getOrderId());
 	}
 	
 	public OrderList beanToPojo(Boolean addBoolean){
