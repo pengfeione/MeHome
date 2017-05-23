@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
-<title>ME+房间详情</title>
+<title>Me+房间详情</title>
 <meta name="keywords" content="ME+">
 <meta name="description" content="ME+">
 <link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
@@ -16,6 +16,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/swiper.min.js"></script>
 <script src="js/detail.js"></script>
+<script src="js/util.js"></script>
 </head>
 <body>
     
@@ -85,4 +86,12 @@
     <div class="mask"></div>
     
 </body>
+<script type="text/javascript">
+	var util;
+	var isSubmit = 0;
+	//页面初始化
+	$(function(){
+		util = new Util();
+	});
+</script>
 </html>

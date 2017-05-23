@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+<!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
+<base href="http://me.trancyboy.com/iweb/"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name = "format-detection" content="telephone=no">
+<meta name="viewport"  content="width=device-width,user-scalable=no">
+<title>Me+评价</title>
+<meta name="keywords" content="ME+">
+<meta name="description" content="ME+">
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<link rel="stylesheet" type="text/css" href="css/common.css" />
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+<script src="js/util.js"></script>
+<script src="js/jquery.min.js"></script>
+</head>
+<body>
+    
+    <div class="wrap">
+        
+        <!-- section -->
+        <section class="section">
+        	
+            <ul class="service">
+            	<li>
+                	<span class="ssd">舒适度</span>
+                	<dl>
+                    	<dd class="ssdSelect" data-state="非常不满意"></dd>
+                        <dd data-state="不满意"></dd>
+                        <dd data-state="一般"></dd>
+                        <dd data-state="满意"></dd>
+                        <dd data-state="非常满意"></dd>
+                    </dl>
+                    <span class="ssdResult">非常不满意</span>
+                </li>
+                <li>
+                	<span class="ssd">便捷度</span>
+                    <dl>
+                    	<dd class="ssdSelect" data-state="非常不满意"></dd>
+                        <dd class="ssdSelect" data-state="不满意"></dd>
+                        <dd class="ssdSelect" data-state="一般"></dd>
+                        <dd data-state="满意"></dd>
+                        <dd data-state="非常满意"></dd>
+                    </dl>
+                    <span class="ssdResult">一般</span>
+                </li>
+                <li>
+                	<span class="ssd">服务度</span>
+                    <dl>
+                    	<dd class="ssdSelect" data-state="非常不满意"></dd>
+                        <dd class="ssdSelect" data-state="不满意"></dd>
+                        <dd class="ssdSelect" data-state="一般"></dd>
+                        <dd class="ssdSelect" data-state="满意"></dd>
+                        <dd class="ssdSelect" data-state="非常满意"></dd>
+                    </dl>
+                    <span class="ssdResult">非常满意</span>
+                </li>
+            </ul>
+            
+            <div class="evaTextarea">
+            	<textarea class="textarea">说点什么吧</textarea>
+            	<div class="btnFb"><a href="#" class="btn">发布</a></div>
+        	</div>
+            
+        	<div class="common">
+            	<h2>历史评价</h2>
+                <ul class="commonList">
+                	<li>
+                    	<img src="img/test/test4.jpg" />
+                        <h3>用户名</h3>
+                        <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
+                    </li>
+                    <li>
+                    	<img src="img/test/test4.jpg" />
+                        <h3>用户名</h3>
+                        <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
+                    </li>
+                    <li>
+                    	<img src="img/test/test4.jpg" />
+                        <h3>用户名</h3>
+                        <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
+                    </li>
+                    <li>
+                    	<img src="img/test/test4.jpg" />
+                        <h3>用户名</h3>
+                        <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
+                    </li>
+                    <li>
+                    	<img src="img/test/test4.jpg" />
+                        <h3>用户名</h3>
+                        <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
+                    </li>
+                </ul>
+            </div>	
+        </section>
+        
+        <!-- footer -->
+        <footer class="footer">
+        	<a href="#" class="curr">发现</a>
+            <a href="#">我的</a>
+        </footer>
+        
+    </div>
+    
+    <!-- 评价成功 -->
+    <div class="pop popEva">
+    	<em class="iconSuccess"></em>
+    	<span>评价成功</span>
+    </div>
+    
+<script src="js/jquery.min.js"></script>
+<script>
+$(function()
+{
+	$(".service li").each(function()
+	{
+		var _this = $(this);
+		var aDd = _this.find("dd");
+		aDd.on("click",function()
+		{
+			aDd.removeClass("ssdSelect");
+			for(var i=0; i<=$(this).index(); i++)
+			{
+				aDd.eq(i).addClass("ssdSelect");
+			}
+			_this.find(".ssdResult").html($(this).attr("data-state"));
+		})
+	});
+});
+</script>
+
+</body>
+<script type="text/javascript">
+	var util;
+	var isSubmit = 0;
+	//页面初始化
+	$(function(){
+		util = new Util();
+	});
+</script>
+</html>

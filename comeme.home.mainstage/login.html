@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
-<title>ME+登录</title>
+<title>Me+登录</title>
 <meta name="keywords" content="ME+">
 <meta name="description" content="ME+">
 <link rel="stylesheet" type="text/css" href="css/base.css" />
@@ -77,6 +77,8 @@
 				var errorCode = data.code;
 				util.logResult(errorCode); 
 				if(errorCode == 0){
+					util.setCookie("userId", mobile);
+					var uid = util.getCookie("userId");
 					window.location.href="my.html";
 				}else{
 					alert('登录失败!');

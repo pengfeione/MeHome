@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
-<title>ME+注册</title>
+<title>Me+注册</title>
 <meta name="keywords" content="ME+">
 <meta name="description" content="ME+">
 <link rel="stylesheet" type="text/css" href="css/base.css" />
@@ -41,19 +41,19 @@
     </div>
     
     <!-- 注册成功 -->
-    <div class="pop popRegister">
+    <div class="pop popRegister" id="div_register_res">
     	<em class="iconSuccess"></em>
-    	<span class="registerSuccess">注册成功</span>
+    	<span class="registerSuccess" id="registerRes">注册成功</span>
     </div>
     
     <!-- 验证码错误 -->
-    <div class="pop popFail">
+    <div class="pop popFail" id="div_register_fail">
     	<em class="iconFail"></em>
-    	<span class="registerSuccess">验证码错误</span>
+    	<span class="registerSuccess" id="registerFail">验证码错误</span>
     </div>
     
     <!-- 验证码已发送 -->
-    <div class="popSendYzm">验证码已发送，请耐心等待</div>
+    <div class="popSendYzm" id="div_send_yzm">验证码已发送，请耐心等待</div>
 </body>
 <script type="text/javascript">
 	var util;
@@ -95,6 +95,8 @@
 			var contentType = "application/json";
 			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 				util.logResult(data); 
+				$('#div_send_yzm').fadeIn();
+				setTimeout( function(){$( '#div_send_yzm' ).fadeOut();}, ( 1 * 1000 ) );
 				clock = setInterval(settime, 1000); 
 			});
 		}
@@ -163,9 +165,14 @@
 				var errorCode = data.code;
 				util.logResult(errorCode); 
 				if(errorCode == 0){
-					window.location.href="login.html";
+					$('#div_register_res').fadeIn();
+					setTimeout( function(){$( '#div_register_res' ).fadeOut();
+						window.location.href="enterpriseuser.html";
+						}, ( 1 * 1000 ) );
 				}else{
-					alert('注册失败!');
+					$('#registerFail').html(data.msg);
+					$('#div_register_fail').fadeIn();
+					setTimeout( function(){$( '#div_register_fail' ).fadeOut();}, ( 1 * 1000 ) );
 					isSubmit = 0;
 				}
 				

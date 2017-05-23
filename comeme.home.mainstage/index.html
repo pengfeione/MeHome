@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
-<title>ME+</title>
+<title>Me+</title>
 <meta name="keywords" content="ME+">
 <meta name="description" content="ME+">
 <link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
@@ -33,7 +33,9 @@
         </header>
         
         <!-- search -->
-        <div class="search" id="search"><section></section><em class="iconSearch"></em></div>
+        <div class="search" id="search"><section></section>
+        	<em class="iconSearch"></em>
+        </div>
         
         <!-- section -->
         <section class="section">
@@ -84,6 +86,7 @@
 		{
 			event.stopPropagation();
 			$("#search span").remove();
+			queryProduct(null);
 		});
 		
 		$("#search").bind('click', function ()
@@ -95,6 +98,7 @@
 					callback: function (selectOneObj)
 					{
 						$("#search section").html('<span><em id="address">'+selectOneObj.value+'</em><i></i></span>');
+						queryProduct(selectOneObj.id);
 					}
 			});
 		});
@@ -106,17 +110,17 @@
 		loadProductList();
 	});
 	
-	//加载产品信息 ul_product
+	//加载产品信息 ul_product 
 	function loadProductList(){
 		var url = util.baseUrl + '/product/list';
-		var param ='{"areaId": 1}';
+		var param ='{}';
 		var contentType = "application/json";
 		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 			util.logResult(data);
 			$.each(data.result,function(index,productInfo){
 				var detailpic = productInfo.detailpic;
 				var html_str = '<li>'
-							 + '	<a href="#">'
+							 + '	<a href="apartmentdetail.html?productId='+productInfo.productId+'">'
 							 + '		<img src="'+detailpic[0]+'" />'
 							 + '		<h3>'+productInfo.productName+'</h3>'
 							 + '		<em></em><span>老牌英伦风格，顶级配置</span>'
@@ -127,13 +131,35 @@
 		});
 	}
 	
+	//查询产品
+	function queryProduct(areaId){
+		var url = util.baseUrl + '/product/list';
+		var param ='{"areaId": '+areaId+'}';
+		var contentType = "application/json";
+		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+			util.logResult(data);
+			$('#ul_product').html('');
+			$.each(data.result,function(index,productInfo){
+				var detailpic = productInfo.detailpic;
+				var html_str = '<li>'
+							 + '	<a href="#">'
+							 + '		<img src="'+detailpic[0]+'" />'
+							 + '		<h3>'+productInfo.productName+'</h3>'
+							 + '		<em></em><span>老牌英伦风格，顶级配置</span>'
+							 + ' 	</a>'
+							 + '</li>';
+				$('#ul_product').append(html_str);
+			});
+		});
+	}
+	
+	//跳到个人页面
 	function gotoME(){
-		var isLogin = false;
 		//判断用户是否登录
-		
-		
+		var uid = util.getCookie("userId");
+		util.logResult(uid);
 		//如果登录跳转到个人中心,否则跳转到登录页面
-		if(isLogin){
+		if(uid != null && uid != ''){
 			window.location.href='my.html';
 		}else{
 			window.location.href='login.html';

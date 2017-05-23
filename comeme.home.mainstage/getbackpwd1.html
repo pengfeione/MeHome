@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
-<title>ME+找回密码(1/2)</title>
+<title>Me+找回密码(1/2)</title>
 <meta name="keywords" content="ME+">
 <meta name="description" content="ME+">
 <link rel="stylesheet" type="text/css" href="css/base.css" />
@@ -36,7 +36,7 @@
     </div>
     
     <!-- 验证码已发送 -->
-<div class="popSendYzm">验证码已发送，请耐心等待</div>
+<div class="popSendYzm" id="div_send_yzm">验证码已发送，请耐心等待</div>
 </body>
 <script type="text/javascript">
 	var util;
@@ -73,6 +73,8 @@
 			var contentType = "application/json";
 			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 				util.logResult(data); 
+				$('#div_send_yzm').fadeIn();
+				setTimeout( function(){$( '#div_send_yzm' ).fadeOut();}, ( 1 * 1000 ) );
 				clock = setInterval(settime, 1000); 
 			});
 		}

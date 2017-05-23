@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
-<title>ME+企业用户认证</title>
+<title>Me+企业用户认证</title>
 <meta name="keywords" content="ME+">
 <meta name="description" content="ME+">
 <link rel="stylesheet" type="text/css" href="css/base.css" />
@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="css/loginshare.css" />
 <script src="js/jquery.min.js"></script>
 <script src="js/loginshare.js"></script>
+<script src="js/util.js"></script>
 </head>
 <body>
     
@@ -29,16 +30,37 @@
                     <li><span>姓名<i>*</i></span><input type="text" value="" class="text" /></li>
                     <li><span>身份证号<i>*</i></span><input type="text" value="" class="text" /></li>
                 </ul>
-                <a class="btn btnSubmit">提交</a>
-                <a href="#" class="btnGoto">暂不申请，跳过</a>
+                <a class="btn btnSubmit" onclick="submitAuth();">提交</a>
+                <a class="btnGoto" onclick="gotoNext();">暂不申请，跳过</a>
             </div>
         </section>
     </div>
     
     <!-- 提交成功等待企业审核 -->
-    <div class="pop popEnter">
+    <div class="pop popEnter" id="div_enter">
     	<em class="iconSuccess"></em>
-    	<span>提交成功</span>
+    	<span id="span_success">提交成功</span>
     </div>
 </body>
+<script type="text/javascript">
+	var util;
+	var isSubmit = 0;
+	//页面初始化
+	$(function(){
+		util = new Util();
+	});
+	
+	//申请企业用户
+	function submitAuth(){
+		$('#div_enter').fadeIn();
+		$('#span_success').html('该功能尚在开发...');
+		setTimeout( function(){$( '#div_enter' ).fadeOut();}, ( 1 * 1000 ) );
+	}
+	
+	//暂不申请
+	function gotoNext(){
+		window.location.href="login.html";
+	}
+	
+</script>
 </html>

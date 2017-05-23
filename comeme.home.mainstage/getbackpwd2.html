@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
-<title>ME+找回密码(2/2)</title>
+<title>Me+找回密码(2/2)</title>
 <meta name="keywords" content="ME+">
 <meta name="description" content="ME+">
 <link rel="stylesheet" type="text/css" href="css/base.css" />
@@ -33,9 +33,15 @@
     </div>
     
     <!-- 注册成功 -->
-    <div class="pop popGetbackPwd">
+    <div class="pop popGetbackPwd" id="div_register_res">
     	<em class="iconSuccess"></em>
-    	<span class="registerSuccess">设置成功</span>
+    	<span class="registerSuccess" id="registerRes">设置成功</span>
+    </div>
+    
+    <!-- 验证码错误 -->
+    <div class="pop popFail" id="div_register_fail">
+    	<em class="iconFail"></em>
+    	<span class="registerSuccess" id="registerFail">验证码错误</span>
     </div>
 </body>
 <script type="text/javascript">
@@ -72,9 +78,14 @@
 				var errorCode = data.code;
 				util.logResult(errorCode); 
 				if(errorCode == 0){
-					window.location.href="login.html"
+					$('#div_register_res').fadeIn();
+					setTimeout( function(){$( '#div_register_res' ).fadeOut();
+						window.location.href="login.html";
+						}, ( 1 * 1000 ) );
 				}else{
-					alert('发送失败!');
+					$('#registerFail').html(data.msg);
+					$('#div_register_fail').fadeIn();
+					setTimeout( function(){$( '#div_register_fail' ).fadeOut();}, ( 1 * 1000 ) );
 					isSubmit = 0;
 				}
 				
