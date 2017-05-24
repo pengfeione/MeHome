@@ -13,23 +13,22 @@ public class WeChatProperties {
     private String customsend;
     private String templatesend;
     private String sendurl;
-    private String codeurl;
-    private String accesstokenurl;
+    private String tokenurl;
+
+    public String getTokenurl() {
+        return tokenurl;
+    }
+
+    public void setTokenurl(String tokenurl) {
+        this.tokenurl = tokenurl;
+    }
+
     private String appid;
     private String secret;
     private String grant_type;
     private String basetokenurl;
     private String granttype;
     private String ticketurl;
-
-    public String getPay_unifiedorder() {
-        return pay_unifiedorder;
-    }
-
-    public void setPay_unifiedorder(String pay_unifiedorder) {
-        this.pay_unifiedorder = pay_unifiedorder;
-    }
-
     private String pay_unifiedorder;
 
     public String getCustomsend() {
@@ -40,55 +39,24 @@ public class WeChatProperties {
         this.customsend = customsend;
     }
 
+    public String getTemplatesend() {
+        return templatesend;
+    }
 
     public void setTemplatesend(String templatesend) {
         this.templatesend = templatesend;
     }
 
-    public String getGranttype() {
-        return granttype;
+    public String getSendurl() {
+        return sendurl;
     }
 
-    public void setGranttype(String granttype) {
-        this.granttype = granttype;
-    }
-
-    public String getTicketurl() {
-        return ticketurl;
-    }
-
-    public void setTicketurl(String ticketurl) {
-        this.ticketurl = ticketurl;
-    }
-
-    public String getBasetokenurl() {
-        return basetokenurl;
-    }
-
-    public void setBasetokenurl(String basetokenurl) {
-        this.basetokenurl = basetokenurl;
+    public void setSendurl(String sendurl) {
+        this.sendurl = sendurl;
     }
 
 
-    public String getCodeurl() {
-        return codeurl;
-    }
 
-    public void setCodeurl(String codeurl) {
-        this.codeurl = codeurl;
-    }
-
-    public String getTemplatesend() {
-        return templatesend;
-    }
-
-    public String getAccesstokenurl() {
-        return accesstokenurl;
-    }
-
-    public void setAccesstokenurl(String accesstokenurl) {
-        this.accesstokenurl = accesstokenurl;
-    }
 
     public String getAppid() {
         return appid;
@@ -114,12 +82,36 @@ public class WeChatProperties {
         this.grant_type = grant_type;
     }
 
-    public String getSendurl() {
-        return sendurl;
+    public String getBasetokenurl() {
+        return basetokenurl;
     }
 
-    public void setSendurl(String sendurl) {
-        this.sendurl = sendurl;
+    public void setBasetokenurl(String basetokenurl) {
+        this.basetokenurl = basetokenurl;
+    }
+
+    public String getGranttype() {
+        return granttype;
+    }
+
+    public void setGranttype(String granttype) {
+        this.granttype = granttype;
+    }
+
+    public String getTicketurl() {
+        return ticketurl;
+    }
+
+    public void setTicketurl(String ticketurl) {
+        this.ticketurl = ticketurl;
+    }
+
+    public String getPay_unifiedorder() {
+        return pay_unifiedorder;
+    }
+
+    public void setPay_unifiedorder(String pay_unifiedorder) {
+        this.pay_unifiedorder = pay_unifiedorder;
     }
 
     @Override

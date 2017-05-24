@@ -39,9 +39,9 @@ public class WeChatInfo {
      */
     public String GetWeiXinToken(String code) {
 
-        String tokenurl = weChatProperties.getCodeurl() +
+        String tokenurl = weChatProperties.getTokenurl() +
                 "?appid=" + weChatProperties.getAppid()
-                + "&secret=" + weChatProperties.getSecret()
+                    + "&secret=" + weChatProperties.getSecret()
                 + "&code=" + code
                 + "&grant_type=" + weChatProperties.getGrant_type();
 
