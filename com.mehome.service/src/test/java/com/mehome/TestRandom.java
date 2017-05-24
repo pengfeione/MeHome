@@ -1,5 +1,8 @@
 package com.mehome;
 
+import com.alibaba.fastjson.JSONObject;
+import com.mehome.requestDTO.CompanyWelfareNotice;
+
 import java.text.DecimalFormat;
 
 /**
@@ -10,7 +13,12 @@ public class TestRandom {
         for (int i = 0; i < 1000; i++) {
             System.out.println(Integer.MAX_VALUE);
         }
-
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("notice", "adfa");
+        jsonObject.put("ab", "bc");
+        CompanyWelfareNotice c =
+                JSONObject.parseObject(jsonObject.toJSONString(), CompanyWelfareNotice.class);
+        System.out.println(c);
 
     }
 

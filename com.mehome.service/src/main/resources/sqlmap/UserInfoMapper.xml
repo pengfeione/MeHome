@@ -49,7 +49,7 @@
     <select id="batch_info" parameterType="com.mehome.requestDTO.BatchUserRequestDTO" resultMap="BaseResultMap">
         select
         user_id, user_amount, open_type, nick_name, avatar, sex, real_name, mobile,
-        id_card, open_id, company_id, company_status,company_create_time,company_update_time
+        company_id, company_status
         from user_info
         where user_id IN
         <foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
