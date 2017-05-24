@@ -150,4 +150,18 @@ public class UserController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(userInfoService.selectById(userInfo.getUserId())));
     }
+    /**
+     * 获取用户信息
+     * @param userIds
+     * @return
+     */
+    @PostMapping("/batch_info")
+    @ResponseBody
+    public ResponseEntity<Result> get(@RequestParam("userIds")String userIds) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(userInfoService.batch_info(userIds)));
+    }
 }

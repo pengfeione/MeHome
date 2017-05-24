@@ -49,4 +49,5 @@ public class CompanyWelfareNotice {
     public String toString() {
         return JSONObject.toJSONString(this);
     }
+
 }

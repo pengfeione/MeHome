@@ -18,6 +18,12 @@
         from company_welfare
         where welfare_id = #{welfareId,jdbcType=INTEGER}
     </select>
+    <select id="selectByCompanyId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from company_welfare
+        where company_id = #{companyId,jdbcType=INTEGER}
+    </select>
     <delete id="delete" parameterType="java.lang.Integer">
     delete from company_welfare
     where welfare_id = #{welfareId,jdbcType=INTEGER}

@@ -1,21 +1,22 @@
-package com.mehome.domain;
+package com.mehome.requestDTO;
 
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.Date;
 
-public class CompanyWelfare {
+/**
+ * Created by Administrator on 2017/5/24.
+ */
+public class CompanyWelfareRequestDTO {
     private Integer welfareId;
 
-    private String welfareContent;
-
     private Integer companyId;
+
+    private Integer productId;
 
     private Boolean isSelect;
 
     private Boolean welfareActive;
-
-    private Date updateTime;
 
     public Integer getWelfareId() {
         return welfareId;
@@ -23,14 +24,6 @@ public class CompanyWelfare {
 
     public void setWelfareId(Integer welfareId) {
         this.welfareId = welfareId;
-    }
-
-    public String getWelfareContent() {
-        return welfareContent;
-    }
-
-    public void setWelfareContent(String welfareContent) {
-        this.welfareContent = welfareContent == null ? null : welfareContent.trim();
     }
 
     public Integer getCompanyId() {
@@ -41,28 +34,12 @@ public class CompanyWelfare {
         this.companyId = companyId;
     }
 
-    public Boolean getIsSelect() {
-        return isSelect;
+    public Integer getProductId() {
+        return productId;
     }
 
-    public void setIsSelect(Boolean isSelect) {
-        this.isSelect = isSelect;
-    }
-
-    public Boolean getWelfareActive() {
-        return welfareActive;
-    }
-
-    public void setWelfareActive(Boolean welfareActive) {
-        this.welfareActive = welfareActive;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
     public Boolean getSelect() {
@@ -71,6 +48,14 @@ public class CompanyWelfare {
 
     public void setSelect(Boolean select) {
         isSelect = select;
+    }
+
+    public Boolean getWelfareActive() {
+        return welfareActive;
+    }
+
+    public void setWelfareActive(Boolean welfareActive) {
+        this.welfareActive = welfareActive;
     }
 
     @Override

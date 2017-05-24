@@ -1,6 +1,7 @@
 package com.mehome.dao;
 
 import com.mehome.domain.UserInfo;
+import com.mehome.requestDTO.BatchUserRequestDTO;
 import com.mehome.requestDTO.UserInfoDTO;
 
 import java.util.List;
@@ -26,4 +27,7 @@ public interface UserInfoDao {
 
 
     UserInfo login(UserInfo record);
+
+
+    List<UserInfo> batch_info(BatchUserRequestDTO batchUserRequestDTO);
 }

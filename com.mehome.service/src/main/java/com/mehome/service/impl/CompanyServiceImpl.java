@@ -9,6 +9,7 @@ import com.mehome.enumDTO.UserCompanyEnum;
 import com.mehome.exceptions.InfoException;
 import com.mehome.requestDTO.CompanyDTO;
 import com.mehome.requestDTO.CompanyWelfareNotice;
+import com.mehome.requestDTO.CompanyWelfareRequestDTO;
 import com.mehome.requestDTO.UserInfoDTO;
 import com.mehome.service.iface.ICompanyService;
 import com.mehome.utils.AssertUtils;
@@ -94,5 +95,11 @@ public class CompanyServiceImpl implements ICompanyService {
         companyWelfare.setWelfareContent(companyWelfareNotice.toString());
         companyWelfareDao.insertRequired(companyWelfare);
         return companyWelfare.getWelfareId();
+    }
+
+    @Override
+    public List<CompanyWelfare> list_company_welfare(CompanyWelfareRequestDTO companyWelfare) {
+        AssertUtils.isNotNull(companyWelfare.getCompanyId(), "企业ID不能为空！");
+        return companyWelfareDao.selectByCompanyId(companyWelfare.getCompanyId());
     }
 }

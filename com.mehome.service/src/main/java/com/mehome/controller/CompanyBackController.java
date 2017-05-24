@@ -6,6 +6,7 @@ import com.mehome.domain.CompanyWelfare;
 import com.mehome.enumDTO.RoleEnum;
 import com.mehome.requestDTO.CompanyDTO;
 import com.mehome.requestDTO.CompanyUserListDTO;
+import com.mehome.requestDTO.CompanyWelfareRequestDTO;
 import com.mehome.requestDTO.UserInfoDTO;
 import com.mehome.service.iface.ICompanyService;
 import com.mehome.service.iface.IUserInfoService;
@@ -103,7 +104,7 @@ public class CompanyBackController {
     @Permits(role = {RoleEnum.PLATFORM})
     @PostMapping("/update")
     @ResponseBody
-    public ResponseEntity<Result> updateCompany(CompanyList companyList) {
+    public ResponseEntity<Result> updateCompany(@RequestBody CompanyList companyList) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
@@ -144,4 +145,24 @@ public class CompanyBackController {
                         .build()
                         .content(companyService.add_company_welfare(condition)));
     }
+
+    /**
+     * 添加企业福利
+     *
+     * @param condition
+     * @return
+     */
+    @Permits(role = {RoleEnum.PLATFORM})
+    @PostMapping("/list_company_welfare")
+    @ResponseBody
+    public ResponseEntity<Result> list_company_welfare(@RequestBody CompanyWelfareRequestDTO condition) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result
+                        .build()
+                        .content(companyService.list_company_welfare(condition)));
+    }
+
 }

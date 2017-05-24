@@ -11,6 +11,7 @@ import com.mehome.domain.UserReview;
 import com.mehome.enumDTO.SmsEnum;
 import com.mehome.enumDTO.UserCompanyEnum;
 import com.mehome.exceptions.InfoException;
+import com.mehome.requestDTO.BatchUserRequestDTO;
 import com.mehome.requestDTO.UserApplyCompanyDTO;
 import com.mehome.requestDTO.UserBackPasswordDTO;
 import com.mehome.requestDTO.UserInfoDTO;
@@ -138,6 +139,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
         userInfo.setUserId(record.getUserId());
         userInfo.setMobile(record.getMobile());
         userInfo.setAvatar(record.getAvatar());
+        userInfo.setNickName(record.getNickName());
         return userInfoDao.updateRequired(record);
     }
 
@@ -188,5 +190,27 @@ public class UserInfoServiceImpl implements IUserInfoService {
         userInfo.setCompanyStatus(UserCompanyEnum.WAITING.getKey());
         userInfoDao.updateRequired(userInfo);
         return false;
+    }
+
+    @Override
+    public List<UserInfo> batch_info(String userIds) {
+        if (StringUtils.isNull(userIds)) {
+            return new ArrayList<UserInfo>();
+        }
+        String[] ids = userIds.split(",");
+        if (ids.length < 1) {
+            return new ArrayList<UserInfo>();
+        }
+        BatchUserRequestDTO batchUserRequestDTO = new BatchUserRequestDTO();
+        for (String item : ids) {
+            try {
+                batchUserRequestDTO.addId(Integer.valueOf(item));
+            } catch (NumberFormatException e) {
+            }
+        }
+        if(batchUserRequestDTO.getSize()>0){
+
+        }
+        return userInfoDao.batch_info(batchUserRequestDTO);
     }
 }
