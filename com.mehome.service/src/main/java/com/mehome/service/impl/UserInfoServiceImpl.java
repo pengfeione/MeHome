@@ -1,5 +1,6 @@
 package com.mehome.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mehome.dao.CompanyListDao;
 import com.mehome.dao.SmsRecordDao;
 import com.mehome.dao.UserInfoDao;
@@ -25,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -193,24 +195,40 @@ public class UserInfoServiceImpl implements IUserInfoService {
     }
 
     @Override
-    public List<UserInfo> batch_info(String userIds) {
-        if (StringUtils.isNull(userIds)) {
-            return new ArrayList<UserInfo>();
-        }
-        String[] ids = userIds.split(",");
-        if (ids.length < 1) {
-            return new ArrayList<UserInfo>();
-        }
-        BatchUserRequestDTO batchUserRequestDTO = new BatchUserRequestDTO();
-        for (String item : ids) {
-            try {
-                batchUserRequestDTO.addId(Integer.valueOf(item));
-            } catch (NumberFormatException e) {
+    public Object batch_info(String userIds, String returnType) {
+        List<UserInfo> result = null;
+        if (StringUtils.isNotNull(userIds)) {
+            String[] ids = userIds.split(",");
+            if (ids.length > 0) {
+                BatchUserRequestDTO batchUserRequestDTO = new BatchUserRequestDTO();
+                for (String item : ids) {
+                    try {
+                        batchUserRequestDTO.addId(Integer.valueOf(item));
+                    } catch (NumberFormatException e) {
+                    }
+                }
+                if (batchUserRequestDTO.getSize() > 0) {
+                    result = userInfoDao.batch_info(batchUserRequestDTO);
+                }
             }
         }
-        if(batchUserRequestDTO.getSize()>0){
-
+        if ("list".equals(returnType)) {
+            if (null != result) {
+                return result;
+            } else {
+                return new ArrayList<UserInfo>();
+            }
+        } else {
+            if (null != result) {
+                JSONObject jsonObject = new JSONObject();
+                for (UserInfo item : result
+                        ) {
+                    jsonObject.put(String.valueOf(item.getUserId()), item);
+                }
+                return jsonObject;
+            } else {
+                return new JSONObject();
+            }
         }
-        return userInfoDao.batch_info(batchUserRequestDTO);
     }
 }

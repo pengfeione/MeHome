@@ -86,6 +86,6 @@ public interface IUserInfoService {
     UserInfo selectById(Integer userId);
 
 
-    List<UserInfo> batch_info(String userIds);
+    Object batch_info(String userIds, String returnType);
 
 }
