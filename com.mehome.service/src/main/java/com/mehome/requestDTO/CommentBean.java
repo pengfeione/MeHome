@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.util.StringUtils;
 
 import com.mehome.domain.ProductComment;
+import com.mehome.enumDTO.ScoreEnum;
 import com.mehome.utils.OrderIdUtils;
 import com.mehome.utils.PageMysqlUtil;
 
@@ -42,6 +43,12 @@ public class CommentBean extends PageMysqlUtil{
     private Float convenient;
     
     private Float service;
+    
+    private String comfortDesc;
+    
+    private String convenientDesc;
+    
+    private String serviceDesc;
 
 	public String getCommentId() {
 		return commentId;
@@ -171,6 +178,30 @@ public class CommentBean extends PageMysqlUtil{
 		this.service = service;
 	}
 
+	public String getComfortDesc() {
+		return comfortDesc;
+	}
+
+	public void setComfortDesc(String comfortDesc) {
+		this.comfortDesc = comfortDesc;
+	}
+
+	public String getConvenientDesc() {
+		return convenientDesc;
+	}
+
+	public void setConvenientDesc(String convenientDesc) {
+		this.convenientDesc = convenientDesc;
+	}
+
+	public String getServiceDesc() {
+		return serviceDesc;
+	}
+
+	public void setServiceDesc(String serviceDesc) {
+		this.serviceDesc = serviceDesc;
+	}
+
 	public ProductComment beanToPojo(Boolean addBoolean){
 		ProductComment comment = new ProductComment();
 		comment.setCommentId(addBoolean?OrderIdUtils.getUUID():this.getCommentId());
@@ -212,6 +243,18 @@ public class CommentBean extends PageMysqlUtil{
 		this.setComfort(comment.getComfort());
 		this.setConvenient(comment.getConvenient());
 		this.setService(comment.getService());
+		ScoreEnum[] enums=ScoreEnum.values();
+		for (ScoreEnum scoreEnum : enums) {
+			if(comment.getComfort().intValue()==scoreEnum.getKey()){
+				this.setComfortDesc(scoreEnum.getValue());
+			}
+			if(comment.getConvenient().intValue()==scoreEnum.getKey()){
+				this.setConvenientDesc(scoreEnum.getValue());
+			}
+			if(comment.getService().intValue()==scoreEnum.getKey()){
+				this.setServiceDesc(scoreEnum.getValue());
+			}
+		}
 	}
 	
 }
