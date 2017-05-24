@@ -16,7 +16,7 @@ public class LbsAmapUtils {
 	private static String mapKey="2e174be6175a21db94251aa6c2542d90";
 	
 	/**
-	 * 输入中文地址返回经纬度数组   数组第一个元素为维度   第二个元素为经度
+	 * 输入中文地址返回经纬度数组   数组第一个元素为经度   第二个元素为维度
 	 * @param address
 	 * @return
 	 */
@@ -40,6 +40,18 @@ public class LbsAmapUtils {
 			e.printStackTrace();
 		}
 		return locationArray;
+	}
+	/**
+	 * 格式化
+	 * @param address
+	 * @return
+	 */
+	public static String formatPosition(String address){
+		String[] location=getPosition(address);
+		if(location!=null&&location.length>1){
+			return location[0]+"E,"+location[1]+"N";
+		}
+		return null;
 	}
 	public static void main(String[] args) {
 		String[] location=getPosition("三林路1515号");

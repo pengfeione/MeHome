@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mehome.domain.HouseResource;
 import com.mehome.enumDTO.HouseStatusEnum;
 import com.mehome.utils.DateUtils;
+import com.mehome.utils.LbsAmapUtils;
 import com.mehome.utils.PageMysqlUtil;
 
 import java.util.Arrays;
@@ -242,7 +243,10 @@ public class HouseBean extends PageMysqlUtil {
 		resource.setLeaseHolder(this.getLeaseHolder());
 		resource.setListpic(this.getListpic());
 		resource.setPayType(StringUtils.isEmpty(this.getPayType())&&addBoolean?"{\"payMentNum\":3,\"mortagageNum\":1}":this.getPayType());
-		resource.setPosition(this.getPosition());
+		if(!StringUtils.isEmpty(this.getAddress())){
+			String position=LbsAmapUtils.formatPosition(this.getAddress());
+			resource.setPosition(position);
+		}
 		resource.setRoomArea(this.getRoomArea()==null&&addBoolean?0.00:this.getRoomArea());
 		resource.setRoomRent(this.getRoomRent()==null&&addBoolean?0:this.getRoomRent());
 		resource.setRoomTypeDesc(StringUtils.isEmpty(this.getRoomTypeDesc())&&addBoolean?"{\"room\":0,\"hall\":0,\"toilet\":0}":this.getRoomTypeDesc());

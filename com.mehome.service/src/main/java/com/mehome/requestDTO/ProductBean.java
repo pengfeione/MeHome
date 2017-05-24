@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.util.StringUtils;
 
 import com.mehome.domain.ProductList;
+import com.mehome.utils.LbsAmapUtils;
 import com.mehome.utils.PageMysqlUtil;
 
 /**
@@ -233,7 +234,10 @@ public class ProductBean extends PageMysqlUtil {
 		product.setListpic(this.getListpic());
 		product.setNetRulesUrl(this.getNetRulesUrl());
 		product.setPersonalWelfare(this.getPersonalWelfare());
-		product.setPosition(this.getPosition());
+		if(!StringUtils.isEmpty(this.getAddress())){
+			String position=LbsAmapUtils.formatPosition(this.getAddress());
+			product.setPosition(position);
+		}
 		product.setProductActive(addBoolean?Boolean.TRUE:this.getProductActive());
 		product.setProductDetail(this.getProductDetail());
 		product.setProductName(this.getProductName());
