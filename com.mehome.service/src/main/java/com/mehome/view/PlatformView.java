@@ -37,6 +37,14 @@ public class PlatformView {
         return "platformCompanyList";
     }
 
+
+    @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+    @RequestMapping("/lease.html")
+    public String lease(ModelAndView modelAndView) {
+        return "lease";
+    }
+
+
     @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
     @RequestMapping("/companyinfo.html")
     public String companyEdit(@RequestParam(value = "code", required = false) Integer companyId,
