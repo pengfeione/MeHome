@@ -136,7 +136,7 @@ public class CompanyBackController {
     @Permits(role = {RoleEnum.PLATFORM})
     @PostMapping("/add_company_welfare")
     @ResponseBody
-    public ResponseEntity<Result> add_company_welfare(CompanyWelfare condition) {
+    public ResponseEntity<Result> add_company_welfare(@RequestBody CompanyWelfare condition) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
@@ -144,6 +144,19 @@ public class CompanyBackController {
                 .body(Result
                         .build()
                         .content(companyService.add_company_welfare(condition)));
+    }
+
+    @Permits(role = {RoleEnum.PLATFORM})
+    @PostMapping("/update_company_welfare")
+    @ResponseBody
+    public ResponseEntity<Result> update_company_welfare(@RequestBody CompanyWelfare condition) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result
+                        .build()
+                        .content(companyService.update_company_welfare(condition)));
     }
 
     /**

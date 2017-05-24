@@ -98,6 +98,18 @@ public class CompanyServiceImpl implements ICompanyService {
     }
 
     @Override
+    public int update_company_welfare(CompanyWelfare companyWelfare) {
+        AssertUtils.isNotNull(companyWelfare.getWelfareId(), "企业福利ID不能为空！");
+        CompanyWelfareNotice companyWelfareNotice = JSONObject.parseObject(companyWelfare.getWelfareContent(), CompanyWelfareNotice.class);
+        if (null != companyWelfareNotice) {
+            companyWelfare.setWelfareContent(companyWelfareNotice.toString());
+        } else {
+            companyWelfare.setWelfareContent(JSONObject.toJSONString(new CompanyWelfareNotice()));
+        }
+        return companyWelfareDao.updateRequired(companyWelfare);
+    }
+
+    @Override
     public List<CompanyWelfare> list_company_welfare(CompanyWelfareRequestDTO companyWelfare) {
         AssertUtils.isNotNull(companyWelfare.getCompanyId(), "企业ID不能为空！");
         return companyWelfareDao.selectByCompanyId(companyWelfare.getCompanyId());

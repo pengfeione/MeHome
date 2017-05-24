@@ -45,6 +45,8 @@ public class ExceptionAdviceController {
             }
         } else if (throwable instanceof BadSqlGrammarException) {
             System.out.println(((BadSqlGrammarException) throwable).getMessage());
+        } else if (throwable instanceof com.alibaba.fastjson.JSONException) {
+            msg = "数据格式不正确！";
         } else {
             throwable.printStackTrace();
             msg = throwable.getClass().getName();

@@ -25,6 +25,9 @@ public interface ICompanyService {
 
     public int add_company_welfare(CompanyWelfare companyWelfare);
 
+    public int update_company_welfare(CompanyWelfare companyWelfare);
+
+
     public List<CompanyWelfare> list_company_welfare(CompanyWelfareRequestDTO companyWelfare);
 
 }

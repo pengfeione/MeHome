@@ -22,7 +22,7 @@
         select
         <include refid="Base_Column_List"/>
         from company_welfare
-        where company_id = #{companyId,jdbcType=INTEGER}
+        where company_id = #{companyId,jdbcType=INTEGER} and welfare_active=1
     </select>
     <delete id="delete" parameterType="java.lang.Integer">
     delete from company_welfare
