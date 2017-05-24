@@ -30,6 +30,12 @@ public class ProductComment {
     private String content;
 
     private String formatContent;
+    
+    private Float comfort;
+    
+    private Float convenient;
+    
+    private Float service;
 
     public String getCommentId() {
         return commentId;
@@ -143,7 +149,31 @@ public class ProductComment {
         this.formatContent = formatContent == null ? null : formatContent.trim();
     }
 
-    @Override
+    public Float getComfort() {
+		return comfort;
+	}
+
+	public void setComfort(Float comfort) {
+		this.comfort = comfort;
+	}
+
+	public Float getConvenient() {
+		return convenient;
+	}
+
+	public void setConvenient(Float convenient) {
+		this.convenient = convenient;
+	}
+
+	public Float getService() {
+		return service;
+	}
+
+	public void setService(Float service) {
+		this.service = service;
+	}
+
+	@Override
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -168,7 +198,10 @@ public class ProductComment {
             && (this.getIsActive() == null ? other.getIsActive() == null : this.getIsActive().equals(other.getIsActive()))
             && (this.getListpic() == null ? other.getListpic() == null : this.getListpic().equals(other.getListpic()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
-            && (this.getFormatContent() == null ? other.getFormatContent() == null : this.getFormatContent().equals(other.getFormatContent()));
+            && (this.getFormatContent() == null ? other.getFormatContent() == null : this.getFormatContent().equals(other.getFormatContent()))
+            && (this.getComfort() == null ? other.getComfort() == null : this.getComfort().equals(other.getComfort()))
+        	&& (this.getConvenient() == null ? other.getConvenient() == null : this.getConvenient().equals(other.getConvenient()))
+        	&& (this.getService() == null ? other.getService() == null : this.getService().equals(other.getService()));
     }
 
     @Override
@@ -189,6 +222,9 @@ public class ProductComment {
         result = prime * result + ((getListpic() == null) ? 0 : getListpic().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         result = prime * result + ((getFormatContent() == null) ? 0 : getFormatContent().hashCode());
+        result = prime * result + ((getComfort() == null) ? 0 : getComfort().hashCode());
+        result = prime * result + ((getConvenient() == null) ? 0 : getConvenient().hashCode());
+        result = prime * result + ((getService() == null) ? 0 : getService().hashCode());
         return result;
     }
 }

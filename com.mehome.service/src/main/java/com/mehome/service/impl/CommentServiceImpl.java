@@ -3,6 +3,7 @@ package com.mehome.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,9 +35,16 @@ public class CommentServiceImpl implements ICommentService {
 	}
 
 	@Override
-	public String addComment(CommentBean bean) {
+	public synchronized String addComment(CommentBean bean) {
 		ProductComment comment = null;
 		try {
+			Integer productId=bean.getProductId();
+			if(productId==null){
+				log.error("产品Id未传");
+				return "";
+			}
+			Integer max=ProductCommentDAO.getMaxFloorByProduct(productId);
+			bean.setFloor(max+1);
 			comment = bean.beanToPojo(Boolean.TRUE);
 			ProductCommentDAO.insert(comment);
 		} catch (Exception e) {

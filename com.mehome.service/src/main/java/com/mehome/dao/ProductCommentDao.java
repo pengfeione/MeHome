@@ -22,4 +22,6 @@ public interface ProductCommentDao {
     public List<ProductComment> getListByCondition(CommentBean bean);
     
     Long getSizeByCondition(CommentBean bean);
+    
+    Integer getMaxFloorByProduct(Integer productId);
 }

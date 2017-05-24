@@ -16,10 +16,13 @@
     <result column="listpic" property="listpic" jdbcType="LONGVARCHAR" />
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
     <result column="format_content" property="formatContent" jdbcType="LONGVARCHAR" />
+    <result column="comfort" property="comfort" jdbcType="REAL" />
+    <result column="convenient" property="convenient" jdbcType="REAL" />
+    <result column="service" property="service" jdbcType="REAL" />
   </resultMap>
   <sql id="Base_Column_List" >
     comment_id, product_id, type, replier, is_best, floor, is_admin, from_tag, score, 
-    create_time, is_active,listpic, content, format_content
+    create_time, is_active,listpic, content, format_content,comfort,convenient,service
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -36,12 +39,12 @@
       replier, is_best, floor, 
       is_admin, from_tag, score, create_time, 
       is_active, listpic, content, 
-      format_content)
+      format_content,comfort,convenient,service)
     values (#{commentId,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
       #{replier,jdbcType=VARCHAR}, #{isBest,jdbcType=BIT}, #{floor,jdbcType=INTEGER}, 
       #{isAdmin,jdbcType=BIT}, #{fromTag,jdbcType=VARCHAR}, #{score,jdbcType=REAL}, #{createTime,jdbcType=TIMESTAMP}, 
       #{isActive,jdbcType=BIT}, #{listpic,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}, 
-      #{formatContent,jdbcType=LONGVARCHAR})
+      #{formatContent,jdbcType=LONGVARCHAR}, #{comfort,jdbcType=REAL}, #{convenient,jdbcType=REAL},#{service,jdbcType=REAL})
   </insert>
   <insert id="insertRequired" parameterType="com.mehome.domain.ProductComment" >
     insert into product_comment
@@ -88,6 +91,15 @@
       <if test="formatContent != null" >
         format_content,
       </if>
+      <if test="comfort != null" >
+        comfort,
+      </if>
+      <if test="convenient != null" >
+        convenient,
+      </if>
+      <if test="service != null" >
+        service,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="commentId != null" >
@@ -131,6 +143,15 @@
       </if>
       <if test="formatContent != null" >
         #{formatContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comfort != null" >
+        #{comfort,jdbcType=REAL},
+      </if>
+      <if test="convenient != null" >
+        #{convenient,jdbcType=REAL},
+      </if>
+      <if test="service != null" >
+        #{service,jdbcType=REAL},
       </if>
     </trim>
   </insert>
@@ -176,6 +197,15 @@
       <if test="formatContent != null" >
         format_content = #{formatContent,jdbcType=LONGVARCHAR},
       </if>
+      <if test="comfort != null" >
+        comfort = #{comfort,jdbcType=REAL},
+      </if>
+      <if test="convenient != null" >
+        convenient = #{convenient,jdbcType=REAL},
+      </if>
+      <if test="service != null" >
+        service = #{service,jdbcType=REAL},
+      </if>
     </set>
     where comment_id = #{commentId,jdbcType=VARCHAR}
   </update>
@@ -207,7 +237,10 @@
       from_tag = #{fromTag,jdbcType=VARCHAR},
       score = #{score,jdbcType=REAL},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      is_active = #{isActive,jdbcType=BIT}
+      is_active = #{isActive,jdbcType=BIT},
+      comfort = #{comfort,jdbcType=REAL},
+      convenient = #{convenient,jdbcType=REAL},
+      service = #{service,jdbcType=REAL}
     where comment_id = #{commentId,jdbcType=VARCHAR}
   </update>
   <select id="getListByCondition" parameterType="com.mehome.requestDTO.CommentBean" resultMap="BaseResultMap">
@@ -223,6 +256,14 @@
   </select>
   <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.CommentBean" resultType="java.lang.Long">
     SELECT count(*)
+    FROM product_comment
+    WHERE 1=1
+    <if test="productId != null">
+      AND product_id = #{productId,jdbcType=INTEGER}
+    </if>
+  </select>
+  <select id="getMaxFloorByProduct" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT max(floor)
     FROM product_comment
     WHERE 1=1
     <if test="productId != null">

@@ -36,6 +36,12 @@ public class CommentBean extends PageMysqlUtil{
 	private Float score;
 	
 	private Boolean isActive;
+	
+	private Float comfort;
+    
+    private Float convenient;
+    
+    private Float service;
 
 	public String getCommentId() {
 		return commentId;
@@ -141,6 +147,30 @@ public class CommentBean extends PageMysqlUtil{
 		this.isActive = isActive;
 	}
 
+	public Float getComfort() {
+		return comfort;
+	}
+
+	public void setComfort(Float comfort) {
+		this.comfort = comfort;
+	}
+
+	public Float getConvenient() {
+		return convenient;
+	}
+
+	public void setConvenient(Float convenient) {
+		this.convenient = convenient;
+	}
+
+	public Float getService() {
+		return service;
+	}
+
+	public void setService(Float service) {
+		this.service = service;
+	}
+
 	public ProductComment beanToPojo(Boolean addBoolean){
 		ProductComment comment = new ProductComment();
 		comment.setCommentId(addBoolean?OrderIdUtils.getUUID():this.getCommentId());
@@ -157,6 +187,9 @@ public class CommentBean extends PageMysqlUtil{
 		comment.setReplier(this.getReplier());
 		comment.setScore(this.getScore()==null&&addBoolean?5.0f:this.getScore());
 		comment.setType(StringUtils.isEmpty(this.getType())&&addBoolean?"undefined":this.getType());
+		comment.setComfort(this.getComfort()==null&&addBoolean?5.0f:this.getComfort());
+		comment.setConvenient(this.getConvenient()==null&&addBoolean?5.0f:this.getConvenient());
+		comment.setService(this.getService()==null&&addBoolean?5.0f:this.getService());
 		return comment;
 	}
 
@@ -176,6 +209,9 @@ public class CommentBean extends PageMysqlUtil{
 		this.setReplier(comment.getReplier());
 		this.setScore(comment.getScore());
 		this.setType(comment.getType());
+		this.setComfort(comment.getComfort());
+		this.setConvenient(comment.getConvenient());
+		this.setService(comment.getService());
 	}
 	
 }
