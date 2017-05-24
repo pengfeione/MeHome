@@ -172,4 +172,27 @@
       platform = #{platform,jdbcType=VARCHAR}
     where recommend_id = #{recommendId,jdbcType=INTEGER}
   </update>
+  <select id="getListByCondition" parameterType="com.mehome.requestDTO.RecommendProductBean" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM recommend_product
+    WHERE 1=1
+    <if test="productId != null">
+      AND product_id = #{productId,jdbcType=INTEGER}
+    </if>
+    ORDER BY sort DESC
+    limit #{pageNow},#{pageSize}
+  </select>
+  <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.RecommendProductBean" resultType="java.lang.Long">
+    SELECT count(*)
+    FROM recommend_product
+    WHERE 1=1
+    <if test="productId != null">
+      AND product_id = #{productId,jdbcType=INTEGER}
+    </if>
+  </select>
+  <select id="getMaxSort"  resultType="java.lang.Integer">
+    SELECT max(sort)
+    FROM recommend_product
+  </select>
 </mapper>
