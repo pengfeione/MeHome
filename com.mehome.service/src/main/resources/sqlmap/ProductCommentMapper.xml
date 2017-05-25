@@ -265,9 +265,6 @@
   <select id="getMaxFloorByProduct" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     SELECT max(floor)
     FROM product_comment
-    WHERE 1=1
-    <if test="productId != null">
-      AND product_id = #{productId,jdbcType=INTEGER}
-    </if>
+    WHERE product_id = #{productId,jdbcType=INTEGER}
   </select>
 </mapper>
