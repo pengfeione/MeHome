@@ -178,8 +178,8 @@ var uploader = new plupload.Uploader({
             if (file.percent == 100) {
                 setTimeout(function () {
                     $("#ossfile").css("display", "none");
-                    document.getElementById('logo').setAttribute("src", "http://resource.trancyboy.com/" + get_uploaded_object_name(file.name));
-                }, 2000);
+                    document.getElementById('logo').setAttribute("src", "http://resource.mjiahome.com/" + get_uploaded_object_name(file.name));
+                }, 1000);
             }
         },
         FileUploaded: function (up, file, info) {
