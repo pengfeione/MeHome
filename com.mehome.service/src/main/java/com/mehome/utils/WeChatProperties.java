@@ -15,6 +15,15 @@ public class WeChatProperties {
     private String sendurl;
     private String tokenurl;
 
+    public String getUserinfourl() {
+        return userinfourl;
+    }
+
+    public void setUserinfourl(String userinfourl) {
+        this.userinfourl = userinfourl;
+    }
+
+    private String userinfourl;
     public String getTokenurl() {
         return tokenurl;
     }

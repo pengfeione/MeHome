@@ -54,10 +54,10 @@ public class WeChatInfo {
     public String GetWeixinInfo(String code) {
         String requstDatam = GetWeiXinToken(code);
         WeChatAccessToken accessToken = JSON.parseObject(requstDatam,WeChatAccessToken.class);
-        if (accessToken == null) {
+        if (accessToken.access_token == null) {
             throw new ArgumentException("微信拉取用户数据异常");
         }
-        String userinfoUrl = weChatProperties.getSendurl() +
+        String userinfoUrl = weChatProperties.getUserinfourl() +
                 "?access_token=" + accessToken.getAccess_token()
                 + "&openid=" + accessToken.getOpenid()
                 + "&lang=zh_CN";
