@@ -39,7 +39,7 @@
     <select id="login" parameterType="com.mehome.domain.UserInfo" resultMap="BaseResultMap">
         select
         user_id, user_amount, open_type, nick_name, avatar, sex, real_name, mobile,
-      id_card, open_id, company_id, company_status,company_create_time,company_update_time
+      id_card, open_id, company_id, company_status,company_create_time,company_update_time,update_time
         from user_info
         where
         mobile = #{mobile,jdbcType=VARCHAR}
