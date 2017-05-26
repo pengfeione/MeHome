@@ -32,8 +32,15 @@ public interface IAuthorizeService {
 
     /**
      * 获取管理员的角色
+     *
      * @return
      */
     public AuthorizeAdmin getAdminInfoById(Integer adminId);
+
+    /**
+     * @param companyId
+     * @return
+     */
+    public AuthorizeAdmin getAdminByCompanyId(Integer companyId);
 
 }

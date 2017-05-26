@@ -113,7 +113,8 @@
           #{companyPhone,jdbcType=VARCHAR}, #{companyActive,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP},
           #{position,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertRequired" parameterType="com.mehome.domain.CompanyList">
+    <insert id="insertRequired" parameterType="com.mehome.domain.CompanyList" useGeneratedKeys="true"
+            keyProperty="companyId">
         insert into company_list
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="companyId != null">

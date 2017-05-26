@@ -4,7 +4,7 @@ package com.mehome.enumDTO;
  * Created by Administrator on 2017/5/19.
  */
 public enum InfoOperationEnum {
-    UPDATE("update"), ADD("add");
+        UPDATE("update"), ADD("add");
 
     public String getOperation() {
         return operation;

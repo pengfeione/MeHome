@@ -42,9 +42,19 @@ public class UserInfo {
 
     private Date createTime;
 
+    private String companyName;
 
     private String verifyCode;
 
+
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public String getVerifyCode() {
         return verifyCode;
@@ -56,7 +66,6 @@ public class UserInfo {
 
     public UserInfo() {
     }
-
 
     public Integer getOpenType() {
         return openType;

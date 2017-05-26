@@ -1,10 +1,12 @@
 package com.mehome.service.iface;
 
+import com.mehome.domain.AuthorizeAdmin;
 import com.mehome.domain.CompanyList;
 import com.mehome.domain.CompanyWelfare;
 import com.mehome.requestDTO.CompanyDTO;
 import com.mehome.requestDTO.CompanyWelfareRequestDTO;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -13,6 +15,8 @@ import java.util.List;
 public interface ICompanyService {
 
     public List<CompanyList> listByCondition(CompanyDTO companyDTO);
+
+    public int update_company_admin(HttpSession session, AuthorizeAdmin authorizeAdmin);
 
     public Long countByCondition(CompanyDTO companyDTO);
 

@@ -1,22 +1,28 @@
 package com.mehome.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.TypeUtils;
 import com.mehome.dao.*;
 import com.mehome.domain.AuthorizeAdmin;
 import com.mehome.domain.CompanyList;
 import com.mehome.domain.CompanyWelfare;
+import com.mehome.enumDTO.RoleEnum;
 import com.mehome.enumDTO.UserCompanyEnum;
 import com.mehome.exceptions.InfoException;
 import com.mehome.requestDTO.CompanyDTO;
 import com.mehome.requestDTO.CompanyWelfareNotice;
 import com.mehome.requestDTO.CompanyWelfareRequestDTO;
 import com.mehome.requestDTO.UserInfoDTO;
+import com.mehome.resonpseDTO.AdministratorBean;
 import com.mehome.service.iface.ICompanyService;
 import com.mehome.utils.AssertUtils;
 import com.mehome.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -32,6 +38,8 @@ public class CompanyServiceImpl implements ICompanyService {
     private UserInfoDao userInfoDao;
     @Autowired
     private AuthorizeAdminDao adminDao;
+    @Value("${default_normal_avatar}")
+    private String defaultAvatar;
 
     @Override
     public List<CompanyList> listByCondition(CompanyDTO companyDTO) {
@@ -79,13 +87,15 @@ public class CompanyServiceImpl implements ICompanyService {
 
     @Override
     public int insertRequired(CompanyList record) {
+        record.setCompanyId(null);
         AssertUtils.isNotNull(record.getCompanyName(), "企业名称不能为空！");
         if (StringUtils.isNotNull(record.getAuthCode())) {
             if (null != companyDao.selectByAuthCode(record.getAuthCode())) {
                 throw new InfoException("授权码冲突，请重新填写");
             }
         }
-        return companyDao.insertRequired(record);
+        companyDao.insertRequired(record);
+        return record.getCompanyId();
     }
 
     @Override
@@ -113,5 +123,39 @@ public class CompanyServiceImpl implements ICompanyService {
     public List<CompanyWelfare> list_company_welfare(CompanyWelfareRequestDTO companyWelfare) {
         AssertUtils.isNotNull(companyWelfare.getCompanyId(), "企业ID不能为空！");
         return companyWelfareDao.selectByCompanyId(companyWelfare.getCompanyId());
+    }
+
+    @Override
+    public int update_company_admin(HttpSession session, AuthorizeAdmin authorizeAdmin) {
+        AssertUtils.isNotNull(authorizeAdmin.getCompanyId(), "公司ID不能为空！");
+        AssertUtils.isNotNull(authorizeAdmin.getName(), "管理员账号不能为空！");
+        Object obj = session.getAttribute("user");
+        if (null == obj) {
+            throw new InfoException("您没有权限进行该操作！");
+        }
+        AdministratorBean admin = (AdministratorBean) obj;
+        CompanyList companyList = companyDao.selectById(authorizeAdmin.getCompanyId());
+        if (null == companyList) {
+            throw new InfoException("修改的公司不存在");
+        }
+        AuthorizeAdmin sameCompany = adminDao.selectByCompanyId(authorizeAdmin.getCompanyId());
+        if (null == sameCompany) {
+            AuthorizeAdmin sameNameAdmin = adminDao.selectByName(authorizeAdmin.getName());
+            if (null != sameNameAdmin) {
+                throw new InfoException("账号已存在！");
+            }
+            sameCompany = new AuthorizeAdmin();
+            sameCompany.setCompanyId(authorizeAdmin.getCompanyId());
+            sameCompany.setAvatar(defaultAvatar);
+            sameCompany.setPassword("123854");
+            sameCompany.setNickName(companyList.getCompanyName());
+            sameCompany.setAdminId(admin.getAdminId());
+            sameCompany.setRole(RoleEnum.COMPANY.getRole());
+            sameCompany.setName(authorizeAdmin.getName());
+            adminDao.insertRequired(sameCompany);
+            return sameCompany.getAdminId();
+        } else {
+            throw new InfoException("该公司的管理员已存在！");
+        }
     }
 }

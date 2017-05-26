@@ -1,5 +1,7 @@
 package com.mehome.domain;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.Date;
 
 public class CompanyList {
@@ -30,6 +32,10 @@ public class CompanyList {
     private String position;
 
     private String adminAccount;
+
+
+    public CompanyList() {
+    }
 
     public String getAdminAccount() {
         return adminAccount;
@@ -144,49 +150,7 @@ public class CompanyList {
     }
 
     @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        CompanyList other = (CompanyList) that;
-        return (this.getCompanyId() == null ? other.getCompanyId() == null : this.getCompanyId().equals(other.getCompanyId()))
-                && (this.getRegisterNum() == null ? other.getRegisterNum() == null : this.getRegisterNum().equals(other.getRegisterNum()))
-                && (this.getCompanyName() == null ? other.getCompanyName() == null : this.getCompanyName().equals(other.getCompanyName()))
-                && (this.getLogo() == null ? other.getLogo() == null : this.getLogo().equals(other.getLogo()))
-                && (this.getAuthCode() == null ? other.getAuthCode() == null : this.getAuthCode().equals(other.getAuthCode()))
-                && (this.getCompanyCode() == null ? other.getCompanyCode() == null : this.getCompanyCode().equals(other.getCompanyCode()))
-                && (this.getArtificialPerson() == null ? other.getArtificialPerson() == null : this.getArtificialPerson().equals(other.getArtificialPerson()))
-                && (this.getIdentityCode() == null ? other.getIdentityCode() == null : this.getIdentityCode().equals(other.getIdentityCode()))
-                && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
-                && (this.getCompanyPhone() == null ? other.getCompanyPhone() == null : this.getCompanyPhone().equals(other.getCompanyPhone()))
-                && (this.getCompanyActive() == null ? other.getCompanyActive() == null : this.getCompanyActive().equals(other.getCompanyActive()))
-                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-                && (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()));
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getCompanyId() == null) ? 0 : getCompanyId().hashCode());
-        result = prime * result + ((getRegisterNum() == null) ? 0 : getRegisterNum().hashCode());
-        result = prime * result + ((getCompanyName() == null) ? 0 : getCompanyName().hashCode());
-        result = prime * result + ((getLogo() == null) ? 0 : getLogo().hashCode());
-        result = prime * result + ((getAuthCode() == null) ? 0 : getAuthCode().hashCode());
-        result = prime * result + ((getCompanyCode() == null) ? 0 : getCompanyCode().hashCode());
-        result = prime * result + ((getArtificialPerson() == null) ? 0 : getArtificialPerson().hashCode());
-        result = prime * result + ((getIdentityCode() == null) ? 0 : getIdentityCode().hashCode());
-        result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
-        result = prime * result + ((getCompanyPhone() == null) ? 0 : getCompanyPhone().hashCode());
-        result = prime * result + ((getCompanyActive() == null) ? 0 : getCompanyActive().hashCode());
-        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        result = prime * result + ((getPosition() == null) ? 0 : getPosition().hashCode());
-        return result;
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }

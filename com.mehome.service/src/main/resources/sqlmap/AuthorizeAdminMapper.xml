@@ -28,6 +28,12 @@
         where company_id = #{companyId,jdbcType=INTEGER}
         limit 1
     </select>
+    <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from authorize_admin
+        where name = #{name,jdbcType=VARCHAR}
+    </select>
     <select id="login" resultMap="BaseResultMap" parameterType="com.mehome.domain.AuthorizeAdmin">
         select
         <include refid="Base_Column_List"/>
@@ -39,22 +45,10 @@
     delete from authorize_admin
     where admin_id = #{adminId,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.mehome.domain.AuthorizeAdmin">
-    insert into authorize_admin (admin_id, avatar, nick_name, 
-      name, password, role, 
-      company_id, create_by, create_time
-      )
-    values (#{adminId,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR},password(#{password,jdbcType=VARCHAR}), #{role,jdbcType=VARCHAR},
-      #{companyId,jdbcType=INTEGER}, #{createBy,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-    <insert id="insertRequired" parameterType="com.mehome.domain.AuthorizeAdmin">
+    <insert id="insertRequired" parameterType="com.mehome.domain.AuthorizeAdmin" useGeneratedKeys="true"
+            keyProperty="adminId">
         insert into authorize_admin
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="adminId != null">
-                admin_id,
-            </if>
             <if test="avatar != null">
                 avatar,
             </if>
@@ -76,14 +70,8 @@
             <if test="createBy != null">
                 create_by,
             </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="adminId != null">
-                #{adminId,jdbcType=INTEGER},
-            </if>
             <if test="avatar != null">
                 #{avatar,jdbcType=VARCHAR},
             </if>
@@ -104,9 +92,6 @@
             </if>
             <if test="createBy != null">
                 #{createBy,jdbcType=INTEGER},
-            </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>

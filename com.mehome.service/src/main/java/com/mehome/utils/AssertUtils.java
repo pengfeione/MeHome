@@ -21,6 +21,18 @@ public class AssertUtils {
     }
 
     /**
+     * 若不是空则报异常
+     *
+     * @param object
+     * @param message
+     */
+    public static void isTrue(boolean object, String message) {
+        if (object) {
+            throw new InfoException(message);
+        }
+    }
+
+    /**
      * 若是空
      *
      * @param object

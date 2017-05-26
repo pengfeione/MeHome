@@ -86,4 +86,10 @@ public class AuthorizeServiceImpl implements IAuthorizeService {
         }
         return authorizeAdminDao.selectById(adminId);
     }
+
+    @Override
+    public AuthorizeAdmin getAdminByCompanyId(Integer companyId) {
+        AssertUtils.isNotNull(companyId, "企业ID不能为空！");
+        return authorizeAdminDao.selectByCompanyId(companyId);
+    }
 }

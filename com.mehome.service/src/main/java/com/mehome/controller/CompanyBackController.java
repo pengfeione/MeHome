@@ -1,6 +1,7 @@
 package com.mehome.controller;
 
 import com.mehome.dao.CompanyListDao;
+import com.mehome.domain.AuthorizeAdmin;
 import com.mehome.domain.CompanyList;
 import com.mehome.domain.CompanyWelfare;
 import com.mehome.enumDTO.RoleEnum;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by renhui on 2017/5/8.
@@ -48,6 +51,7 @@ public class CompanyBackController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(userInfoService.listByCondition(requestDto), userInfoService.countByCondition(requestDto)));
     }
+
 
     /**
      * 获取企业认证用户的数量
@@ -117,7 +121,7 @@ public class CompanyBackController {
     @Permits(role = {RoleEnum.PLATFORM})
     @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<Result> addCompany(CompanyList condition) {
+    public ResponseEntity<Result> addCompany(@RequestBody CompanyList condition) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
@@ -178,4 +182,22 @@ public class CompanyBackController {
                         .content(companyService.list_company_welfare(condition)));
     }
 
+    /**
+     * 添加企业福利
+     *
+     * @param authorizeAdmin
+     * @return
+     */
+    @Permits(role = {RoleEnum.PLATFORM})
+    @PostMapping("/update_company_admin")
+    @ResponseBody
+    public ResponseEntity<Result> update_company_admin(HttpSession session, @RequestBody AuthorizeAdmin authorizeAdmin) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result
+                        .build()
+                        .content(companyService.update_company_admin(session, authorizeAdmin)));
+    }
 }

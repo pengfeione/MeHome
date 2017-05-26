@@ -7,7 +7,6 @@ import org.springframework.cache.annotation.Cacheable;
 public interface AuthorizeAdminDao {
     int delete(Integer adminId);
 
-    int insert(AuthorizeAdmin record);
 
     AuthorizeAdmin login(AuthorizeAdmin record);
 
@@ -18,5 +17,9 @@ public interface AuthorizeAdminDao {
     int updateRequired(AuthorizeAdmin record);
 
     AuthorizeAdmin selectByCompanyId(Integer companyId);
+
+
+    AuthorizeAdmin selectByName(String adminName);
+
 
 }

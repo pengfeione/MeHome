@@ -18,6 +18,7 @@ import com.mehome.requestDTO.UserBackPasswordDTO;
 import com.mehome.requestDTO.UserInfoDTO;
 import com.mehome.service.iface.IUserInfoService;
 import com.mehome.utils.AssertUtils;
+import com.mehome.utils.IdcardValidator;
 import com.mehome.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,6 +65,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
         if (StringUtils.isNull(userInfo.getAvatar())) {
             userInfo.setAvatar(defaultAvatar);
         }
+        AssertUtils.isNull(userInfoDao.selectByMobile(userInfo.getMobile()), "该手机号已注册！");
         SmsRecord validSms = smsRecordDao.selectValid(userInfo.getMobile(), SmsEnum.NORMAL_REG.getKey());
         if (null == validSms) {
             throw new InfoException("验证码已失效！");
@@ -72,7 +74,8 @@ public class UserInfoServiceImpl implements IUserInfoService {
                 throw new InfoException("验证码不正确！");
             }
         }
-        AssertUtils.isNull(userInfoDao.selectByMobile(userInfo.getMobile()), "该手机号已注册！");
+
+        userInfo.setCreateTime(Calendar.getInstance().getTime());
         userInfoDao.insertRequired(userInfo);
         return userInfo.getUserId();
     }
@@ -151,12 +154,14 @@ public class UserInfoServiceImpl implements IUserInfoService {
         return userInfoDao.selectById(userId);
     }
 
-    @Transactional
+    @Override
     public boolean applyCompany(UserApplyCompanyDTO userApplyCompanyDTO) {
         AssertUtils.isNotNull(userApplyCompanyDTO.getUserId(), "用户ID不能为空!");
         AssertUtils.isNotNull(userApplyCompanyDTO.getAuthCode(), "授权码不能为空！");
         AssertUtils.isNotNull(userApplyCompanyDTO.getIdCard(), "身份证号不能为空！");
         AssertUtils.isNotNull(userApplyCompanyDTO.getRealName(), "真实姓名不能为空！");
+        AssertUtils.isTrue(!IdcardValidator.isValidatedAllIdCard(userApplyCompanyDTO.getIdCard()), "身份证不合法！");
+
         CompanyList companyList = companyDao.selectByAuthCode(userApplyCompanyDTO.getAuthCode());
         if (null == companyList) {
             throw new InfoException("未找到相关的企业！");
@@ -186,12 +191,15 @@ public class UserInfoServiceImpl implements IUserInfoService {
                 && userInfo.getCompanyId() == companyList.getCompanyId()) {
             throw new InfoException("该企业已经拒绝了您的申请！");
         }
-        UserReview userReview = new UserReview(userApplyCompanyDTO, userInfo, companyList);
-        userReviewDao.insertRequired(userReview);
+
+        userInfo.setPassword(null);//要不密码会再加密
+        userInfo.setRealName(userApplyCompanyDTO.getRealName());
+        userInfo.setIdCard(userApplyCompanyDTO.getIdCard());
         userInfo.setCompanyId(companyList.getCompanyId());
         userInfo.setCompanyStatus(UserCompanyEnum.WAITING.getKey());
-        userInfoDao.updateRequired(userInfo);
-        return false;
+        userInfo.setCompanyUpdateTime(Calendar.getInstance().getTime());
+        userInfo.setCompanyCreateTime(Calendar.getInstance().getTime());
+        return userInfoDao.updateRequired(userInfo) == 1;
     }
 
     @Override
