@@ -1,0 +1,69 @@
+.vmask {
+    width: 90%;
+    background: #fff;
+    position: fixed;
+    left: 50%;
+    margin-left: -45%;
+    top: 30%;
+    z-index: 999;
+    border-radius: 7px;
+    display: none;
+}
+
+.vmask_n {
+    position: relative;
+    min-height: 80px;
+    padding: 10px 0 42px;
+}
+
+.vmask p {
+    height: 20px;
+    line-height: 20px;
+    color: #151515;
+    padding-left: 10px;
+    margin: 5px auto;
+}
+
+.vmask p em {
+    color: #FF6E22;
+}
+
+.vmask span {
+    padding-left: 10px;
+    display: block;
+    max-height: 120px;
+    line-height: 20px;
+    overflow: auto;
+    overflow-x: hidden;
+    width: 94%;
+    margin: 10px auto;
+    word-wrap: break-word;
+    word-break: normal;
+    word-break: break-all;
+}
+
+.vmask .confirm {
+    display: block;
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    color: #FF6E22;
+    border-top: 1px solid #E6E6E6;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 900;
+    background-color: rgba(0, 0, 0, .8);
+}

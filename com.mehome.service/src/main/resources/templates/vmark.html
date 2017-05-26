@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+    <link rel="stylesheet" href="http://resource.mjiahome.com/mj/static/css/vmask.css" type="text/css"/>
+    <script src="http://resource.mjiahome.com/mj/static/oss_js/vmask.js"></script>
+    <script type="application/javascript">
+        var mask = new Mask();
+        mask.show($(".vmask"));
+        mask.hidden($(".vmask"));
+    </script>
+</head>
+<body>
+<input type="button" value="显示"/>
+
+<!--页面上必须放,后台遮罩-->
+<div class="mask" id="mask"></div>
+
+<!--页面上必须放--前台显示-->
+<div class="vmask">
+
+
+    <!--自定义显示内容-->
+    <div class="vmask_n">
+        <p>查看夺宝号<em>3</em>份</p>
+        <span>1000007、1000008、1000009、1000008、1000008、1000009、1000008、1000009、1000008、1000009、1000008、1000009、1000008、1000009、1000008、1000009、1000008、1000009、1000008、1000009、1000008、1000009、1000008、1000009、1000008、1000009、1000008、1000009、1000008、1000009、1000008、1000009、</span>
+        <a class="confirm">关闭</a>
+    </div>
+
+
+</div>
+</body>
+</html>
