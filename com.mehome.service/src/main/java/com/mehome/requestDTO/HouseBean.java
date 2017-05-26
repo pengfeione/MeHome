@@ -61,6 +61,10 @@ public class HouseBean extends PageMysqlUtil {
 	private String leaseHolder;
 	
 	private Integer productId;
+	
+	private Date startTimeDate;
+	
+	private Date endTimeDate;
 
 	public Integer getHouseId() {
 		return houseId;
@@ -228,6 +232,23 @@ public class HouseBean extends PageMysqlUtil {
 
 	public void setProductId(Integer productId) {
 		this.productId = productId;
+	}
+
+	
+	public Date getStartTimeDate() {
+		return startTimeDate;
+	}
+
+	public void setStartTimeDate(Date startTimeDate) {
+		this.startTimeDate = startTimeDate;
+	}
+
+	public Date getEndTimeDate() {
+		return endTimeDate;
+	}
+
+	public void setEndTimeDate(Date endTimeDate) {
+		this.endTimeDate = endTimeDate;
 	}
 
 	public HouseResource beanToPojo(Boolean addBoolean){

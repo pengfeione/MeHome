@@ -417,6 +417,9 @@
     <if test="productName != null" >
       AND product_name like CONCAT('%','${productName}','%' )
     </if>
+    <if test="houseSubject != null" >
+      AND house_subject like CONCAT('%','${houseSubject}','%' )
+    </if>
     <if test="biller != null">
       AND biller = #{biller,jdbcType=VARCHAR}
     </if>
@@ -434,6 +437,12 @@
     </if>
     <if test="payFlow != null">
       AND pay_flow = #{payFlow,jdbcType=INTEGER}
+    </if>
+    <if test="startTimeDate != null">
+      AND start_time >= #{startTimeDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTimeDate != null">
+      AND #{endTimeDate,jdbcType=TIMESTAMP}>=end_time
     </if>
     ORDER BY bill_time DESC
     limit #{pageNow},#{pageSize}
@@ -445,6 +454,9 @@
      <if test="productName != null" >
       AND product_name like CONCAT('%','${productName}','%' )
     </if>
+    <if test="houseSubject != null" >
+      AND house_subject like CONCAT('%','${houseSubject}','%' )
+    </if>
     <if test="biller != null">
       AND biller = #{biller,jdbcType=VARCHAR}
     </if>
@@ -462,6 +474,12 @@
     </if>
     <if test="payFlow != null">
       AND pay_flow = #{payFlow,jdbcType=INTEGER}
+    </if>
+    <if test="startTimeDate != null">
+      AND start_time >= #{startTimeDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTimeDate != null">
+      AND #{endTimeDate,jdbcType=TIMESTAMP}>=end_time
     </if>
   </select>
 </mapper>

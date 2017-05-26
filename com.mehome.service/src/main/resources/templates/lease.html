@@ -392,8 +392,11 @@
         	if(orderStatus==1){
         		operation='<a class="btn btn-xs btn-success btn-rounded" id="orderConfirm">确认订单</a>｜<a class="btn btn-xs btn-success btn-rounded" id="orderCancel">取消订单</a>';
         	}
-        	if(orderStatus==2){
+        	if(orderStatus>=2){
         		operation='<a class="btn btn-xs btn-success btn-rounded" id="updateRentTime">变更租借周期</a>｜<a class="btn btn-xs btn-success btn-rounded" id="holdChoose">选择押金平台托管</a>｜<a class="btn btn-xs btn-success btn-rounded" id="orderCancel">取消订单</a>';
+        	}
+        	if(orderStatus==5){
+        		operation='<a class="btn btn-xs btn-success btn-rounded" id="depositBack">退还押金</a>'
         	}
             var txt =
                 '<tr style="height: 60px;">' +

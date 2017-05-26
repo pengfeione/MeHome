@@ -106,6 +106,10 @@ public class OrderBean extends PageMysqlUtil{
 	 * 供应商收款
 	 */
 	private Integer supplierAmount;
+	
+	private Date startTimeDate;
+	
+	private Date endTimeDate;
 
 	public String getBiller() {
 		return biller;
@@ -433,6 +437,22 @@ public class OrderBean extends PageMysqlUtil{
 
 	public void setPayTypeDesc(String payTypeDesc) {
 		this.payTypeDesc = payTypeDesc;
+	}
+
+	public Date getStartTimeDate() {
+		return startTimeDate;
+	}
+
+	public void setStartTimeDate(Date startTimeDate) {
+		this.startTimeDate = startTimeDate;
+	}
+
+	public Date getEndTimeDate() {
+		return endTimeDate;
+	}
+
+	public void setEndTimeDate(Date endTimeDate) {
+		this.endTimeDate = endTimeDate;
 	}
 
 	public OrderBean(){

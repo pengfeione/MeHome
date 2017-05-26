@@ -320,10 +320,10 @@
       AND status = #{status,jdbcType=INTEGER}
     </if>
     <if test="startTime != null">
-      AND start_time >= #{startTime,jdbcType=TIMESTAMP}
+      AND start_time >= #{startTimeDate,jdbcType=TIMESTAMP}
     </if>
     <if test="endTime != null">
-      AND #{endTime,jdbcType=TIMESTAMP}>=end_time
+      AND #{endTimeDate,jdbcType=TIMESTAMP}>=end_time
     </if>
     <if test="productId != null">
       AND product_id = #{productId,jdbcType=INTEGER}
@@ -347,11 +347,11 @@
     <if test="status != null">
       AND status = #{status,jdbcType=INTEGER}
     </if>
-    <if test="startTime != null">
-      AND start_time >= #{startTime,jdbcType=TIMESTAMP}
+    <if test="startTimeDate != null">
+      AND start_time >= #{startTimeDate,jdbcType=TIMESTAMP}
     </if>
-    <if test="endTime != null">
-      AND #{endTime,jdbcType=TIMESTAMP}>=end_time
+    <if test="endTimeDate != null">
+      AND #{endTimeDate,jdbcType=TIMESTAMP}>=end_time
     </if>
     <if test="productId != null">
       AND product_id = #{productId,jdbcType=INTEGER}
