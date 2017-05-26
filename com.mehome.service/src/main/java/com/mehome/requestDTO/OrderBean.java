@@ -2,6 +2,7 @@ package com.mehome.requestDTO;
 
 import com.mehome.domain.OrderList;
 import com.mehome.enumDTO.OrderStatusEnum;
+import com.mehome.enumDTO.PayTypeEnum;
 import com.mehome.utils.DateUtils;
 import com.mehome.utils.OrderIdUtils;
 import com.mehome.utils.PageMysqlUtil;
@@ -70,6 +71,8 @@ public class OrderBean extends PageMysqlUtil{
 	
 	private String payType;
 	
+	private String payTypeDesc;
+	
 	private String payFlow;
 	
 	private Integer payAmount;
@@ -95,6 +98,14 @@ public class OrderBean extends PageMysqlUtil{
 	private HouseBean house;
 	
 	private String orderStatusDesc;
+	/**
+	 * 平台收款
+	 */
+	private Integer platFormAmount;
+	/**
+	 * 供应商收款
+	 */
+	private Integer supplierAmount;
 
 	public String getBiller() {
 		return biller;
@@ -400,6 +411,30 @@ public class OrderBean extends PageMysqlUtil{
 		this.orderStatusDesc = orderStatusDesc;
 	}
 
+	public Integer getPlatFormAmount() {
+		return platFormAmount;
+	}
+
+	public void setPlatFormAmount(Integer platFormAmount) {
+		this.platFormAmount = platFormAmount;
+	}
+
+	public Integer getSupplierAmount() {
+		return supplierAmount;
+	}
+
+	public void setSupplierAmount(Integer supplierAmount) {
+		this.supplierAmount = supplierAmount;
+	}
+
+	public String getPayTypeDesc() {
+		return payTypeDesc;
+	}
+
+	public void setPayTypeDesc(String payTypeDesc) {
+		this.payTypeDesc = payTypeDesc;
+	}
+
 	public OrderBean(){
 		
 	}
@@ -408,12 +443,12 @@ public class OrderBean extends PageMysqlUtil{
 		this.setBackAmount(order.getBackAmount());
 		this.setBiller(order.getBiller());
 		this.setBillerPhone(order.getBillerPhone());
-		this.setBillTime(order.getBillTime()==null?null:DateUtils.dateToStr(order.getBillTime()));
-		this.setDeposit(order.getDeposit());
+		this.setBillTime(order.getBillTime()==null?"":DateUtils.dateToStr(order.getBillTime()));
+		this.setDeposit(order.getDeposit()==null?0:order.getDeposit());
 		this.setDepositBack(order.getDepositBack());
-		this.setDiscountAmount(order.getDiscountAmount());
-		this.setDiscountRent(order.getDiscountRent());
-		this.setEndTime(order.getEndTime()==null?null:DateUtils.dateToStr(order.getEndTime()));
+		this.setDiscountAmount(order.getDiscountAmount()==null?0:order.getDiscountAmount());
+		this.setDiscountRent(order.getDiscountRent()==null?0:order.getDiscountRent());
+		this.setEndTime(order.getEndTime()==null?"":DateUtils.dateToStr(order.getEndTime()));
 		this.setHouseId(order.getHouseId());
 		this.setHouseSubject(order.getHouseSubject());
 		this.setOrderReason(order.getOrderReason());
@@ -424,24 +459,41 @@ public class OrderBean extends PageMysqlUtil{
 				this.setOrderStatusDesc(orderStatusEnum.getValue());
 			}
 		}
-		this.setOrigAmount(order.getOrigAmount());
-		this.setOrigRent(order.getOrigRent());
-		this.setPayAccount(order.getPayAccount());
-		this.setPayAmount(order.getPayAmount());
+		this.setOrigAmount(order.getOrigAmount()==null?0:order.getOrigAmount());
+		this.setOrigRent(order.getOrigRent()==null?0:order.getOrigRent());
+		this.setPayAccount(order.getPayAccount()==null?"":order.getPayAccount());
+		this.setPayAmount(order.getPayAmount()==null?0:order.getPayAmount());
 		this.setPayer(order.getPayer());
 		this.setPayFlow(order.getPayFlow());
 		this.setPayOnline(order.getPayOnline());
-		this.setPayTime(order.getPayTime()==null?null:DateUtils.dateToStr(order.getPayTime()));
+		this.setPayTime(order.getPayTime()==null?"":DateUtils.dateToStr(order.getPayTime()));
 		this.setPayType(order.getPayType());
+		PayTypeEnum[] payenums=PayTypeEnum.values();
+		for (PayTypeEnum orderStatusEnum : payenums) {
+			if(!StringUtils.isEmpty(order.getPayType())&&order.getPayType().equals(orderStatusEnum.getKey())){
+				this.setPayTypeDesc(orderStatusEnum.getValue());
+			}
+		}
+		if(StringUtils.isEmpty(this.getPayTypeDesc())){
+			this.setPayTypeDesc("");
+		}
 		this.setPlatformHost(order.getPlatformHost());
 		this.setProductId(order.getProductId());
 		this.setProductName(order.getProductName());
-		this.setStartTime(order.getStartTime()==null?null:DateUtils.dateToStr(order.getStartTime()));
+		this.setStartTime(order.getStartTime()==null?"":DateUtils.dateToStr(order.getStartTime()));
 		this.setSupplierId(order.getSupplierId());
 		this.setSupplierName(order.getSupplierName());
 		this.setTenancy(order.getTenancy());
-		this.setUpdateTime(order.getUpdateTime()==null?null:DateUtils.dateToStr(order.getUpdateTime()));
+		this.setUpdateTime(order.getUpdateTime()==null?"":DateUtils.dateToStr(order.getUpdateTime()));
 		this.setOrderId(order.getOrderId());
+		this.setPlatFormAmount(0);
+		this.setSupplierAmount(0);
+		if(order.getOrderStatus().intValue()>=2){
+			if(order.getPlatformHost()){
+				this.setPlatFormAmount(order.getDeposit());
+			}
+			this.setSupplierAmount(order.getDiscountAmount()-order.getDeposit());
+		}
 	}
 	
 	public OrderList beanToPojo(Boolean addBoolean){

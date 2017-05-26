@@ -49,7 +49,7 @@ public class LbsAmapUtils {
 	public static String formatPosition(String address){
 		String[] location=getPosition(address);
 		if(location!=null&&location.length>1){
-			return location[0]+"E,"+location[1]+"N";
+			return location[0]+","+location[1];
 		}
 		return null;
 	}

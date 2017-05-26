@@ -45,7 +45,7 @@
       listpic, detailpic, address, 
       position, product_active, rules, 
       welfare_id, is_welfare, personal_welfare, 
-      has_personal, net_rules_url,floor,create_time,update_time)
+      has_personal, net_rules_url,floor,create_time,update_time,score)
     values (#{productId,jdbcType=INTEGER}, #{supplierId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, 
       #{productName,jdbcType=VARCHAR}, #{productDetail,jdbcType=VARCHAR}, #{productSort,jdbcType=INTEGER}, 
       #{listpic,jdbcType=VARCHAR}, #{detailpic,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 

@@ -1,6 +1,7 @@
 package com.mehome.requestDTO;
 
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -259,7 +260,15 @@ public class ProductBean extends PageMysqlUtil {
 		this.setAreaId(product.getAreaId());
 		this.setBasicList(basicList);
 		this.setCommentList(commentList);
-		this.setDetailpic(StringUtils.isEmpty(product.getDetailpic())?null:Arrays.asList(product.getDetailpic()));
+		if(!StringUtils.isEmpty(product.getDetailpic())&&product.getDetailpic().length()>2){
+			List<String> detailPicList=new ArrayList<String>();
+			String detailPic=product.getDetailpic().substring(1, product.getDetailpic().length()-1);
+			String[] pics=detailPic.split(",");
+			for (String string : pics) {
+				detailPicList.add(string);
+			}
+			this.setDetailpic(detailPicList);
+		}
 		this.setHasPersonal(product.getHasPersonal());
 		this.setHouseList(houseList);
 		this.setIsWelfare(product.getIsWelfare());
