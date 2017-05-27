@@ -43,9 +43,15 @@ public class PlatformView {
 
 
     @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
-    @RequestMapping("/lease.html")
+    @RequestMapping("/order.html")
     public String lease(ModelAndView modelAndView) {
-        return "lease";
+        return "platformOrder";
+    }
+
+    @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+    @RequestMapping("/product.html")
+    public String product(ModelAndView modelAndView) {
+        return "platformProduct";
     }
 
 
