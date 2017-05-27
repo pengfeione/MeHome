@@ -26,11 +26,31 @@ public class UserInfoDTO extends PageMysqlUtil {
 
     private Integer companyStatus;
 
+    private String companyName;
+
     private Date startTime;
 
     private Date endTime;
 
     private String namePhoneKeyWords;
+
+    private List<Integer> companyIds = null;
+
+    public List<Integer> getCompanyIds() {
+        return companyIds;
+    }
+
+    public void setCompanyIds(List<Integer> companyIds) {
+        this.companyIds = companyIds;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public Integer getUserId() {
         return userId;

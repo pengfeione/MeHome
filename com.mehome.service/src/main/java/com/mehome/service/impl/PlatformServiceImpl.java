@@ -8,6 +8,7 @@ import com.mehome.requestDTO.UserInfoDTO;
 import com.mehome.requestDTO.UserRequestDTO;
 import com.mehome.resonpseDTO.UserDTO;
 import com.mehome.service.iface.IPlatformService;
+import com.mehome.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,14 @@ public class PlatformServiceImpl implements IPlatformService {
 
     @Override
     public List<UserInfo> listByCondition(UserInfoDTO userInfoDTO) {
+        if (StringUtils.isNotNull(userInfoDTO.getCompanyName())) {
+            List<Integer> companyIds = companyListDao.listIdsByName(userInfoDTO.getCompanyName());
+            if (null != companyIds && companyIds.size() > 0) {
+                userInfoDTO.setCompanyIds(companyIds);
+            } else {
+                userInfoDTO.setCompanyIds(new ArrayList<Integer>());
+            }
+        }
         //用户ID，用户真实姓名，注册手机号，公司ID
         List<UserInfo> result = userInfoDao.listByCondition(userInfoDTO);
         if (null == result || result.size() <= 0) {

@@ -33,7 +33,7 @@
         where auth_code = #{authCode,jdbcType=VARCHAR}
         limit 1
     </select>
-    <select id="listIdsByName" resultType="java.lang.String" parameterType="map">
+    <select id="listIdsByName" resultType="java.lang.Integer" parameterType="map">
         select
         company_id
         from company_list

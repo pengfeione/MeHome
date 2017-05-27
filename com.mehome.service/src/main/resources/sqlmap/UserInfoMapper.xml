@@ -87,6 +87,12 @@
         <if test="companyId != null">
             and company_id = #{companyId,jdbcType=INTEGER}
         </if>
+        <if test="companyIds != null">
+            and company_id IN
+            <foreach collection="companyIds" separator="," close=")" open="(" index="i" item="item">
+                #{item}
+            </foreach>
+        </if>
         <if test="companyStatus != null">
             and company_status = #{companyStatus,jdbcType=INTEGER}
         </if>
@@ -298,9 +304,6 @@
             </if>
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where user_id = #{userId,jdbcType=INTEGER}

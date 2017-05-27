@@ -28,7 +28,8 @@ public interface CompanyListDao {
 
     int update(CompanyList record);
 
-    List<String> listIdsByName(@Param("name") String name);
+
+    List<Integer> listIdsByName(@Param("name") String name);
 
     List<CompanyList> listByCondition(CompanyDTO companyDTO);
 
