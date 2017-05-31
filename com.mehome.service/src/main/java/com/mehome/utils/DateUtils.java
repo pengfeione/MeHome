@@ -39,4 +39,22 @@ public class DateUtils {
 	public static String dateToStr(Date date){
 		return simpleDateFormat.format(date);
 	}
+	
+	public static Date getDayEnd(Date currentDate,String dateType,Integer num) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		if(("month").equals(dateType)){
+			cal.add(Calendar.MONTH, num);
+		}
+		if(("day").equals(dateType)){
+			cal.add(Calendar.DATE, num);
+		}
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE), 23, 59, 59);
+		cal.set(Calendar.MILLISECOND, 59);
+		return cal.getTime();
+	}
+	public static void main(String[] args) {
+		Date date=getDayEnd(new Date(), "day", 1);
+		System.out.println(DateUtils.dateToStr(date));
+	}
 }

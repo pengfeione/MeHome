@@ -107,9 +107,17 @@ public class OrderBean extends PageMysqlUtil{
 	 */
 	private Integer supplierAmount;
 	
-	private Date startTimeDate;
+	private Date startTimeDateBegin;
 	
-	private Date endTimeDate;
+	private Date startTimeDateEnd;
+	
+	private Date endTimeDateBegin;
+	
+	private Date endTimeDateEnd;
+	
+	private Integer days;
+	
+	private Integer months;
 
 	public String getBiller() {
 		return biller;
@@ -439,20 +447,54 @@ public class OrderBean extends PageMysqlUtil{
 		this.payTypeDesc = payTypeDesc;
 	}
 
-	public Date getStartTimeDate() {
-		return startTimeDate;
+	
+
+	public Date getStartTimeDateBegin() {
+		return startTimeDateBegin;
 	}
 
-	public void setStartTimeDate(Date startTimeDate) {
-		this.startTimeDate = startTimeDate;
+	public void setStartTimeDateBegin(Date startTimeDateBegin) {
+		this.startTimeDateBegin = startTimeDateBegin;
 	}
 
-	public Date getEndTimeDate() {
-		return endTimeDate;
+	public Date getStartTimeDateEnd() {
+		return startTimeDateEnd;
 	}
 
-	public void setEndTimeDate(Date endTimeDate) {
-		this.endTimeDate = endTimeDate;
+	public void setStartTimeDateEnd(Date startTimeDateEnd) {
+		this.startTimeDateEnd = startTimeDateEnd;
+	}
+
+	public Date getEndTimeDateBegin() {
+		return endTimeDateBegin;
+	}
+
+	public void setEndTimeDateBegin(Date endTimeDateBegin) {
+		this.endTimeDateBegin = endTimeDateBegin;
+	}
+
+	public Date getEndTimeDateEnd() {
+		return endTimeDateEnd;
+	}
+
+	public void setEndTimeDateEnd(Date endTimeDateEnd) {
+		this.endTimeDateEnd = endTimeDateEnd;
+	}
+
+	public Integer getDays() {
+		return days;
+	}
+
+	public void setDays(Integer days) {
+		this.days = days;
+	}
+
+	public Integer getMonths() {
+		return months;
+	}
+
+	public void setMonths(Integer months) {
+		this.months = months;
 	}
 
 	public OrderBean(){

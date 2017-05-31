@@ -1,5 +1,8 @@
 package com.mehome.controller;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mehome.requestDTO.OrderBean;
 import com.mehome.service.iface.IOrderService;
+import com.mehome.utils.DateUtils;
 import com.mehome.utils.Result;
 
 @RestController
@@ -32,6 +36,21 @@ public class OrderController {
     @PostMapping("/list")
     @ResponseBody
     public ResponseEntity<Result> list(@RequestBody OrderBean order) {
+    	Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE), 0, 0, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		Date nowDate=cal.getTime();
+		if(order.getDays()!=null){
+			Date endTimeEnd=DateUtils.getDayEnd(new Date(), "day", order.getDays());
+			order.setEndTimeDateBegin(nowDate);
+			order.setEndTimeDateEnd(endTimeEnd);
+		}
+		if(order.getMonths()!=null){
+			Date endTimeEnd=DateUtils.getDayEnd(new Date(), "month", order.getMonths());
+			order.setEndTimeDateBegin(nowDate);
+			order.setEndTimeDateEnd(endTimeEnd);
+		}
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)

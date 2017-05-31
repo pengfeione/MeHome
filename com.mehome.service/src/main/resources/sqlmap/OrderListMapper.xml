@@ -438,11 +438,14 @@
     <if test="payFlow != null">
       AND pay_flow = #{payFlow,jdbcType=INTEGER}
     </if>
-    <if test="startTimeDate != null">
-      AND start_time >= #{startTimeDate,jdbcType=TIMESTAMP}
+    <if test="startTimeDateBegin != null">
+      AND start_time >= #{startTimeDateBegin,jdbcType=TIMESTAMP}
     </if>
-    <if test="endTimeDate != null">
-      AND #{endTimeDate,jdbcType=TIMESTAMP}>=end_time
+    <if test="endTimeDateEnd != null">
+      AND #{endTimeDateEnd,jdbcType=TIMESTAMP}>end_time
+    </if>
+    <if test="endTimeDateBegin != null">
+      AND end_time>=#{endTimeDateBegin,jdbcType=TIMESTAMP}
     </if>
     ORDER BY bill_time DESC
     limit #{pageNow},#{pageSize}
@@ -475,11 +478,14 @@
     <if test="payFlow != null">
       AND pay_flow = #{payFlow,jdbcType=INTEGER}
     </if>
-    <if test="startTimeDate != null">
-      AND start_time >= #{startTimeDate,jdbcType=TIMESTAMP}
+    <if test="startTimeDateBegin != null">
+      AND start_time >= #{startTimeDateBegin,jdbcType=TIMESTAMP}
     </if>
-    <if test="endTimeDate != null">
-      AND #{endTimeDate,jdbcType=TIMESTAMP}>=end_time
+    <if test="endTimeDateEnd != null">
+      AND #{endTimeDateEnd,jdbcType=TIMESTAMP}>end_time
+    </if>
+    <if test="endTimeDateBegin != null">
+      AND end_time>=#{endTimeDateBegin,jdbcType=TIMESTAMP}
     </if>
   </select>
 </mapper>
