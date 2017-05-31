@@ -573,7 +573,7 @@ public class OrderBean extends PageMysqlUtil{
 		order.setEndTime(StringUtils.isEmpty(this.getEndTime())&&addBoolean?date:(StringUtils.isEmpty(this.getEndTime())?null:DateUtils.strToDate(this.getEndTime())));
 		order.setHouseId(this.getHouseId()==null&&addBoolean?0:this.getHouseId());
 		order.setHouseSubject(StringUtils.isEmpty(this.getHouseSubject())&&addBoolean?"房源标题":this.getHouseSubject());
-		order.setOrderId(StringUtils.isEmpty(this.getOrderId())&&addBoolean?OrderIdUtils.getOrderId(order.getBiller()):this.getOrderId());
+		order.setOrderId(StringUtils.isEmpty(this.getOrderId())&&addBoolean?OrderIdUtils.getOrderId(order.getBiller()):(StringUtils.isEmpty(this.getOrderId())?this.getOrderId():this.getOrderId().replace("me", "")));
 		order.setOrderReason(StringUtils.isEmpty(this.getOrderReason())&&addBoolean?"正常交易":this.getOrderReason());
 		order.setOrderStatus(this.getOrderStatus()==null&&addBoolean?OrderStatusEnum.ORDER.getKey():this.getOrderStatus());
 		order.setOrigAmount(this.getOrigAmount()==null&&addBoolean?0:this.getOrigAmount());
@@ -595,6 +595,59 @@ public class OrderBean extends PageMysqlUtil{
 		order.setUpdateTime(date);
 		return order;
 		
+	}
+	
+	public OrderList compareToPojo(){
+		OrderList order=new OrderList();
+		Date date=new Date();
+		if(StringUtils.isNotBlank(this.getAddress()))
+		order.setAddress(this.getAddress());
+		if(this.getBackAmount()!=null)
+		order.setBackAmount(this.getBackAmount());
+		if(StringUtils.isNotBlank(this.getBillerPhone()))
+		order.setBillerPhone(this.getBillerPhone());
+		if(this.getDeposit()!=null)
+		order.setDeposit(this.getDeposit());
+		if(this.getDepositBack()!=null)
+		order.setDepositBack(this.getDepositBack());
+		if(this.getDiscountAmount()!=null)
+		order.setDiscountAmount(this.getDiscountAmount());
+		if(this.getDiscountRent()!=null)
+		order.setDiscountRent(this.getDiscountRent());
+		if(StringUtils.isNotBlank(this.getEndTime()))
+		order.setEndTime(DateUtils.strToDate(this.getEndTime()));
+		if(StringUtils.isNotBlank(this.getOrderId()))
+		order.setOrderId(this.getOrderId());
+		if(StringUtils.isNotBlank(this.getOrderReason()))
+		order.setOrderReason(this.getOrderReason());
+		if(this.getOrderStatus()!=null)
+		order.setOrderStatus(this.getOrderStatus());
+		if(this.getOrigAmount()!=null)
+		order.setOrigAmount(this.getOrigAmount());
+		if(this.getOrigRent()!=null)
+		order.setOrigRent(this.getOrigRent());
+		if(StringUtils.isNotBlank(this.getPayAccount()))
+		order.setPayAccount(this.getPayAccount());
+		if(this.getPayAmount()!=null)
+		order.setPayAmount(this.getPayAmount());
+		if(StringUtils.isNotBlank(this.getPayer()))
+		order.setPayer(this.getPayer());
+		if(StringUtils.isNotBlank(this.getPayFlow()))
+		order.setPayFlow(this.getPayFlow());
+		if(this.getPayOnline()!=null)
+		order.setPayOnline(this.getPayOnline());
+		if(StringUtils.isNotBlank(this.getPayTime()))
+		order.setPayTime(DateUtils.strToDate(this.getPayTime()));
+		if(StringUtils.isNotBlank(this.getPayType()))
+		order.setPayType(this.getPayType());
+		if(this.getPlatformHost()!=null)
+		order.setPlatformHost(this.getPlatformHost());
+		if(StringUtils.isNotBlank(this.getStartTime()))
+		order.setStartTime(DateUtils.strToDate(this.getStartTime()));
+		if(this.getTenancy()!=null)
+		order.setTenancy(this.getTenancy());
+		order.setUpdateTime(date);
+		return order;
 	}
 	
 	public static void main(String[] args) {

@@ -117,17 +117,17 @@ public class OrderServiceImpl implements IOrderService {
 	public synchronized String updateOrder(OrderBean bean) {
 		OrderList order = null;
 		try {
+			OrderList oldOrder = orderListDAO.selectById(bean.getOrderId());
 			if (bean.getOrderStatus() != null) {
-				OrderList oldOrder = orderListDAO.selectById(bean.getOrderId());
-				if (bean.getOrderStatus() <= oldOrder.getOrderStatus()) {
+				if (bean.getOrderStatus().intValue() <= oldOrder.getOrderStatus()) {
 					log.error("订单状态不可前置到之前状态");
 					return Boolean.FALSE.toString();
 				}
-				if (bean.getOrderStatus() == OrderStatusEnum.CONFIRMED.getKey()) {
-					bean = calculateWelfare(bean);
-				}
 			}
-			order = bean.beanToPojo(Boolean.FALSE);
+			if ((bean.getOrderStatus()!=null&&bean.getOrderStatus().intValue() == OrderStatusEnum.CONFIRMED.getKey())||(oldOrder.getOrderStatus().intValue()>1)) {
+				bean = calculateWelfare(bean);
+			}
+			order = bean.compareToPojo();
 			int row = orderListDAO.updateRequired(order);
 		} catch (Exception e) {
 			log.error("更新订单出错:" + e);

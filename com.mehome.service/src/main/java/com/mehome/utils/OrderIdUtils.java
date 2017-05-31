@@ -59,7 +59,8 @@ public class OrderIdUtils {
         return s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24); 
     }
     public static void main(String[] args) {
-    	JSONObject payTypeJson=JSONObject.parseObject(null);
-    	System.out.println(payTypeJson);
+    	String orderId=OrderIdUtils.getOrderId("100000000000000000");
+    	int length=orderId.length();
+    	System.out.println(OrderIdUtils.getOrderId("100000000000000000").substring(2,length));
 	}
 }
