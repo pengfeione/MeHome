@@ -570,7 +570,7 @@ public class OrderBean extends PageMysqlUtil{
 		order.setDepositBack(this.getDepositBack()==null&&addBoolean?Boolean.FALSE:this.getDepositBack());
 		order.setDiscountAmount(this.getDiscountAmount()==null&&addBoolean?0:this.getDiscountAmount());
 		order.setDiscountRent(this.getDiscountRent()==null&&addBoolean?0:this.getDiscountRent());
-		order.setEndTime(StringUtils.isEmpty(this.getEndTime())&&addBoolean?date:(StringUtils.isEmpty(this.getEndTime())?null:DateUtils.strToDate(this.getEndTime())));
+		order.setEndTime(StringUtils.isEmpty(this.getEndTime())&&addBoolean?null:(StringUtils.isEmpty(this.getEndTime())?null:DateUtils.strToDate(this.getEndTime())));
 		order.setHouseId(this.getHouseId()==null&&addBoolean?0:this.getHouseId());
 		order.setHouseSubject(StringUtils.isEmpty(this.getHouseSubject())&&addBoolean?"房源标题":this.getHouseSubject());
 		order.setOrderId(StringUtils.isEmpty(this.getOrderId())&&addBoolean?OrderIdUtils.getOrderId(order.getBiller()):(StringUtils.isEmpty(this.getOrderId())?this.getOrderId():this.getOrderId().replace("me", "")));
@@ -588,7 +588,7 @@ public class OrderBean extends PageMysqlUtil{
 		order.setPlatformHost(this.getPlatformHost()==null?Boolean.FALSE:this.getPlatformHost());
 		order.setProductId(this.getProductId());
 		order.setProductName(this.getProductName());
-		order.setStartTime(StringUtils.isEmpty(this.getStartTime())&&addBoolean?date:(StringUtils.isEmpty(this.getStartTime())?null:DateUtils.strToDate(this.getStartTime())));
+		order.setStartTime(StringUtils.isEmpty(this.getStartTime())&&addBoolean?null:(StringUtils.isEmpty(this.getStartTime())?null:DateUtils.strToDate(this.getStartTime())));
 		order.setSupplierId(this.getSupplierId());
 		order.setSupplierName(this.getSupplierName());
 		order.setTenancy(this.getTenancy()==null?new BigDecimal("0"):this.getTenancy());
@@ -615,7 +615,7 @@ public class OrderBean extends PageMysqlUtil{
 		if(this.getDiscountRent()!=null)
 		order.setDiscountRent(this.getDiscountRent());
 		if(StringUtils.isNotBlank(this.getEndTime()))
-		order.setEndTime(DateUtils.strToDate(this.getEndTime()));
+		order.setEndTime(DateUtils.strToDate(this.getEndTime()+" 00:00:00"));
 		if(StringUtils.isNotBlank(this.getOrderId()))
 		order.setOrderId(this.getOrderId());
 		if(StringUtils.isNotBlank(this.getOrderReason()))
@@ -643,7 +643,7 @@ public class OrderBean extends PageMysqlUtil{
 		if(this.getPlatformHost()!=null)
 		order.setPlatformHost(this.getPlatformHost());
 		if(StringUtils.isNotBlank(this.getStartTime()))
-		order.setStartTime(DateUtils.strToDate(this.getStartTime()));
+		order.setStartTime(DateUtils.strToDate(this.getStartTime()+" 00:00:00"));
 		if(this.getTenancy()!=null)
 		order.setTenancy(this.getTenancy());
 		order.setUpdateTime(date);
