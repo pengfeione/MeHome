@@ -1,5 +1,6 @@
 package com.mehome.controller;
 
+import com.mehome.domain.SupplierList;
 import com.mehome.requestDTO.SupplierRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,5 +65,34 @@ public class SupplierController {
                 .body(Result.build().content(supplierSerive.updateSupplier(bean)));
     }
 
+    /**
+     * @param bean 编辑供应商
+     * @return
+     * @auther renhui
+     */
+    @PostMapping("/edit")
+    @ResponseBody
+    public ResponseEntity<Result> edit(@RequestBody SupplierList bean) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(supplierSerive.updateRequired(bean)));
+    }
 
+    /**
+     * 保存供应商信息
+     *
+     * @param bean
+     * @return
+     */
+    @PostMapping("/save")
+    @ResponseBody
+    public ResponseEntity<Result> save(@RequestBody SupplierList bean) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(supplierSerive.insertRequired(bean)));
+    }
 }

@@ -86,7 +86,6 @@ function calculate_object_name(filename) {
     else if (g_object_name_type == 'random_name') {
         suffix = get_suffix(filename)
         g_object_name = key + timestamp + random_string(10) + suffix;
-        console.log("--->" + g_object_name);
     }
     return ''
 }

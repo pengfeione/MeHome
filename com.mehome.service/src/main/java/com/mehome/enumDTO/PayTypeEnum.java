@@ -6,7 +6,8 @@ public enum PayTypeEnum {
     private String value;
 
     private PayTypeEnum(String key, String value) {
-
+        this.key = key;
+        this.value = value;
     }
 
     public String getKey() {
