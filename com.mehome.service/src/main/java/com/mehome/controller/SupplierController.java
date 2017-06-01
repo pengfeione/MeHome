@@ -1,5 +1,6 @@
 package com.mehome.controller;
 
+import com.mehome.requestDTO.SupplierRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -30,6 +31,17 @@ public class SupplierController {
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(supplierSerive.getListByCondition(bean), supplierSerive.getSizeByCondition(bean)));
+    }
+
+
+    @PostMapping("/lists")
+    @ResponseBody
+    public ResponseEntity<Result> lists(@RequestBody SupplierRequestDTO bean) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(supplierSerive.selectByCondition(bean), supplierSerive.countByCondition(bean)));
     }
 
     @PostMapping("/add")

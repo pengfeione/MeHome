@@ -9,20 +9,20 @@ import java.util.Date;
 public class BasicBean extends PageMysqlUtil {
 
 	private Integer basicId;
-	
+
 	private String pic;
-	
+
 	private String basicName;
-	
+
 	private String basicType;
-	
+
 	private String updateTime;
-	
+
 	private Boolean basicActive;
-	
+
 	private Integer productId;
-	
-	
+
+
 	public Integer getBasicId() {
 		return basicId;
 	}
@@ -102,7 +102,7 @@ public class BasicBean extends PageMysqlUtil {
 		basic.setUpdateTime(new Date());
 		return basic;
 	}
-	
+
 	public BasicBean(BasicFacilities pojo){
 		this.setBasicActive(pojo.getBasicActive());
 		this.setBasicId(pojo.getBasicId());
@@ -111,8 +111,8 @@ public class BasicBean extends PageMysqlUtil {
 		this.setPic(pojo.getPic());
 		this.setUpdateTime(DateUtils.dateToStr(pojo.getUpdateTime()));
 	}
-	
+
 	public BasicBean(){
-		
+
 	}
 }

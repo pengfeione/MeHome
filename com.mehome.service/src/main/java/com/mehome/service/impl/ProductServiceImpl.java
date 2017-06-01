@@ -65,6 +65,12 @@ public class ProductServiceImpl implements IProductService {
         return productBeanList;
     }
 
+
+    @Override
+    public ProductList selectById(Integer productId) {
+        return productListDAO.selectById(productId);
+    }
+
     @Override
     public String addProduct(ProductBean bean) {
         ProductList product = null;

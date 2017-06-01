@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mehome.dao.ProductListDao" >
-  <resultMap id="BaseResultMap" type="com.mehome.domain.ProductList" >
-    <id column="product_id" property="productId" jdbcType="INTEGER" />
-    <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
-    <result column="area_id" property="areaId" jdbcType="INTEGER" />
-    <result column="product_name" property="productName" jdbcType="VARCHAR" />
-    <result column="product_detail" property="productDetail" jdbcType="VARCHAR" />
-    <result column="product_sort" property="productSort" jdbcType="INTEGER" />
-    <result column="listpic" property="listpic" jdbcType="VARCHAR" />
-    <result column="detailpic" property="detailpic" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="position" property="position" jdbcType="VARCHAR" />
-    <result column="product_active" property="productActive" jdbcType="BIT" />
-    <result column="rules" property="rules" jdbcType="VARCHAR" />
-    <result column="welfare_id" property="welfareId" jdbcType="INTEGER" />
-    <result column="is_welfare" property="isWelfare" jdbcType="BIT" />
-    <result column="personal_welfare" property="personalWelfare" jdbcType="VARCHAR" />
-    <result column="has_personal" property="hasPersonal" jdbcType="BIT" />
-    <result column="net_rules_url" property="netRulesUrl" jdbcType="VARCHAR" />
-    <result column="floor" property="floor" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="score" property="score" jdbcType="REAL" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.mehome.dao.ProductListDao">
+    <resultMap id="BaseResultMap" type="com.mehome.domain.ProductList">
+        <id column="product_id" property="productId" jdbcType="INTEGER"/>
+        <result column="supplier_id" property="supplierId" jdbcType="INTEGER"/>
+        <result column="area_id" property="areaId" jdbcType="INTEGER"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        <result column="product_detail" property="productDetail" jdbcType="VARCHAR"/>
+        <result column="product_sort" property="productSort" jdbcType="INTEGER"/>
+        <result column="listpic" property="listpic" jdbcType="VARCHAR"/>
+        <result column="detailpic" property="detailpic" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="position" property="position" jdbcType="VARCHAR"/>
+        <result column="product_active" property="productActive" jdbcType="BIT"/>
+        <result column="rules" property="rules" jdbcType="VARCHAR"/>
+        <result column="welfare_id" property="welfareId" jdbcType="INTEGER"/>
+        <result column="is_welfare" property="isWelfare" jdbcType="BIT"/>
+        <result column="personal_welfare" property="personalWelfare" jdbcType="VARCHAR"/>
+        <result column="has_personal" property="hasPersonal" jdbcType="BIT"/>
+        <result column="net_rules_url" property="netRulesUrl" jdbcType="VARCHAR"/>
+        <result column="floor" property="floor" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="score" property="score" jdbcType="REAL"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     product_id, supplier_id, area_id, product_name, product_detail, product_sort, listpic, 
     detailpic, address, position, product_active, rules, welfare_id, is_welfare, personal_welfare, 
     has_personal, net_rules_url,floor,create_time,update_time,score
   </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from product_list
-    where product_id = #{productId,jdbcType=INTEGER}
-  </select>
-  <delete id="delete" parameterType="java.lang.Integer" >
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from product_list
+        where product_id = #{productId,jdbcType=INTEGER}
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
     delete from product_list
     where product_id = #{productId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.mehome.domain.ProductList" >
+    <insert id="insert" parameterType="com.mehome.domain.ProductList">
     insert into product_list (product_id, supplier_id, area_id, 
       product_name, product_detail, product_sort, 
       listpic, detailpic, address, 
@@ -53,206 +53,206 @@
       #{welfareId,jdbcType=INTEGER}, #{isWelfare,jdbcType=BIT}, #{personalWelfare,jdbcType=VARCHAR}, 
       #{hasPersonal,jdbcType=BIT}, #{netRulesUrl,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{score,jdbcType=REAL})
   </insert>
-  <insert id="insertRequired" parameterType="com.mehome.domain.ProductList" >
-    insert into product_list
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="productId != null" >
-        product_id,
-      </if>
-      <if test="supplierId != null" >
-        supplier_id,
-      </if>
-      <if test="areaId != null" >
-        area_id,
-      </if>
-      <if test="productName != null" >
-        product_name,
-      </if>
-      <if test="productDetail != null" >
-        product_detail,
-      </if>
-      <if test="productSort != null" >
-        product_sort,
-      </if>
-      <if test="listpic != null" >
-        listpic,
-      </if>
-      <if test="detailpic != null" >
-        detailpic,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="position != null" >
-        position,
-      </if>
-      <if test="productActive != null" >
-        product_active,
-      </if>
-      <if test="rules != null" >
-        rules,
-      </if>
-      <if test="welfareId != null" >
-        welfare_id,
-      </if>
-      <if test="isWelfare != null" >
-        is_welfare,
-      </if>
-      <if test="personalWelfare != null" >
-        personal_welfare,
-      </if>
-      <if test="hasPersonal != null" >
-        has_personal,
-      </if>
-      <if test="netRulesUrl != null" >
-        net_rules_url,
-      </if>
-      <if test="floor != null" >
-        floor,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="score != null" >
-        score,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="productId != null" >
-        #{productId,jdbcType=INTEGER},
-      </if>
-      <if test="supplierId != null" >
-        #{supplierId,jdbcType=INTEGER},
-      </if>
-      <if test="areaId != null" >
-        #{areaId,jdbcType=INTEGER},
-      </if>
-      <if test="productName != null" >
-        #{productName,jdbcType=VARCHAR},
-      </if>
-      <if test="productDetail != null" >
-        #{productDetail,jdbcType=VARCHAR},
-      </if>
-      <if test="productSort != null" >
-        #{productSort,jdbcType=INTEGER},
-      </if>
-      <if test="listpic != null" >
-        #{listpic,jdbcType=VARCHAR},
-      </if>
-      <if test="detailpic != null" >
-        #{detailpic,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="position != null" >
-        #{position,jdbcType=VARCHAR},
-      </if>
-      <if test="productActive != null" >
-        #{productActive,jdbcType=BIT},
-      </if>
-      <if test="rules != null" >
-        #{rules,jdbcType=VARCHAR},
-      </if>
-      <if test="welfareId != null" >
-        #{welfareId,jdbcType=INTEGER},
-      </if>
-      <if test="isWelfare != null" >
-        #{isWelfare,jdbcType=BIT},
-      </if>
-      <if test="personalWelfare != null" >
-        #{personalWelfare,jdbcType=VARCHAR},
-      </if>
-      <if test="hasPersonal != null" >
-        #{hasPersonal,jdbcType=BIT},
-      </if>
-      <if test="netRulesUrl != null" >
-        #{netRulesUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="floor != null" >
-        #{floor,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="score != null" >
-        #{score,jdbcType=REAL},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateRequired" parameterType="com.mehome.domain.ProductList" >
-    update product_list
-    <set >
-      <if test="supplierId != null" >
-        supplier_id = #{supplierId,jdbcType=INTEGER},
-      </if>
-      <if test="areaId != null" >
-        area_id = #{areaId,jdbcType=INTEGER},
-      </if>
-      <if test="productName != null" >
-        product_name = #{productName,jdbcType=VARCHAR},
-      </if>
-      <if test="productDetail != null" >
-        product_detail = #{productDetail,jdbcType=VARCHAR},
-      </if>
-      <if test="productSort != null" >
-        product_sort = #{productSort,jdbcType=INTEGER},
-      </if>
-      <if test="listpic != null" >
-        listpic = #{listpic,jdbcType=VARCHAR},
-      </if>
-      <if test="detailpic != null" >
-        detailpic = #{detailpic,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="position != null" >
-        position = #{position,jdbcType=VARCHAR},
-      </if>
-      <if test="productActive != null" >
-        product_active = #{productActive,jdbcType=BIT},
-      </if>
-      <if test="rules != null" >
-        rules = #{rules,jdbcType=VARCHAR},
-      </if>
-      <if test="welfareId != null" >
-        welfare_id = #{welfareId,jdbcType=INTEGER},
-      </if>
-      <if test="isWelfare != null" >
-        is_welfare = #{isWelfare,jdbcType=BIT},
-      </if>
-      <if test="personalWelfare != null" >
-        personal_welfare = #{personalWelfare,jdbcType=VARCHAR},
-      </if>
-      <if test="hasPersonal != null" >
-        has_personal = #{hasPersonal,jdbcType=BIT},
-      </if>
-      <if test="netRulesUrl != null" >
-        net_rules_url = #{netRulesUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="floor != null" >
-        floor = #{floor,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="score != null" >
-        score = #{score,jdbcType=REAL},
-      </if>
-    </set>
-    where product_id = #{productId,jdbcType=INTEGER}
-  </update>
-  <update id="update" parameterType="com.mehome.domain.ProductList" >
+    <insert id="insertRequired" parameterType="com.mehome.domain.ProductList">
+        insert into product_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="supplierId != null">
+                supplier_id,
+            </if>
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="productName != null">
+                product_name,
+            </if>
+            <if test="productDetail != null">
+                product_detail,
+            </if>
+            <if test="productSort != null">
+                product_sort,
+            </if>
+            <if test="listpic != null">
+                listpic,
+            </if>
+            <if test="detailpic != null">
+                detailpic,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="productActive != null">
+                product_active,
+            </if>
+            <if test="rules != null">
+                rules,
+            </if>
+            <if test="welfareId != null">
+                welfare_id,
+            </if>
+            <if test="isWelfare != null">
+                is_welfare,
+            </if>
+            <if test="personalWelfare != null">
+                personal_welfare,
+            </if>
+            <if test="hasPersonal != null">
+                has_personal,
+            </if>
+            <if test="netRulesUrl != null">
+                net_rules_url,
+            </if>
+            <if test="floor != null">
+                floor,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="supplierId != null">
+                #{supplierId,jdbcType=INTEGER},
+            </if>
+            <if test="areaId != null">
+                #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productDetail != null">
+                #{productDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="productSort != null">
+                #{productSort,jdbcType=INTEGER},
+            </if>
+            <if test="listpic != null">
+                #{listpic,jdbcType=VARCHAR},
+            </if>
+            <if test="detailpic != null">
+                #{detailpic,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="productActive != null">
+                #{productActive,jdbcType=BIT},
+            </if>
+            <if test="rules != null">
+                #{rules,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareId != null">
+                #{welfareId,jdbcType=INTEGER},
+            </if>
+            <if test="isWelfare != null">
+                #{isWelfare,jdbcType=BIT},
+            </if>
+            <if test="personalWelfare != null">
+                #{personalWelfare,jdbcType=VARCHAR},
+            </if>
+            <if test="hasPersonal != null">
+                #{hasPersonal,jdbcType=BIT},
+            </if>
+            <if test="netRulesUrl != null">
+                #{netRulesUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="floor != null">
+                #{floor,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=REAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateRequired" parameterType="com.mehome.domain.ProductList">
+        update product_list
+        <set>
+            <if test="supplierId != null">
+                supplier_id = #{supplierId,jdbcType=INTEGER},
+            </if>
+            <if test="areaId != null">
+                area_id = #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="productName != null">
+                product_name = #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productDetail != null">
+                product_detail = #{productDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="productSort != null">
+                product_sort = #{productSort,jdbcType=INTEGER},
+            </if>
+            <if test="listpic != null">
+                listpic = #{listpic,jdbcType=VARCHAR},
+            </if>
+            <if test="detailpic != null">
+                detailpic = #{detailpic,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="productActive != null">
+                product_active = #{productActive,jdbcType=BIT},
+            </if>
+            <if test="rules != null">
+                rules = #{rules,jdbcType=VARCHAR},
+            </if>
+            <if test="welfareId != null">
+                welfare_id = #{welfareId,jdbcType=INTEGER},
+            </if>
+            <if test="isWelfare != null">
+                is_welfare = #{isWelfare,jdbcType=BIT},
+            </if>
+            <if test="personalWelfare != null">
+                personal_welfare = #{personalWelfare,jdbcType=VARCHAR},
+            </if>
+            <if test="hasPersonal != null">
+                has_personal = #{hasPersonal,jdbcType=BIT},
+            </if>
+            <if test="netRulesUrl != null">
+                net_rules_url = #{netRulesUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="floor != null">
+                floor = #{floor,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=REAL},
+            </if>
+        </set>
+        where product_id = #{productId,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="com.mehome.domain.ProductList">
     update product_list
     set supplier_id = #{supplierId,jdbcType=INTEGER},
       area_id = #{areaId,jdbcType=INTEGER},
@@ -276,41 +276,47 @@
       score = #{score,jdbcType=REAL}
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
-  <select id="getListByCondition" parameterType="com.mehome.requestDTO.ProductBean" resultMap="BaseResultMap">
-    SELECT
-    <include refid="Base_Column_List"/>
-    FROM product_list
-    WHERE 1=1
-    <if test="productName != null" >
-      AND product_name like CONCAT('%','${productName}','%' )
-    </if>
-    <if test="areaId != null">
-      AND area_id = #{areaId,jdbcType=INTEGER}
-    </if>
-    <if test="supplierId != null">
-      AND supplier_id = #{supplierId,jdbcType=INTEGER}
-    </if>
-    <if test="productId != null">
-      AND product_id = #{productId,jdbcType=INTEGER}
-    </if>
-    ORDER BY create_time DESC
-    limit #{pageNow},#{pageSize}
-  </select>
-  <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.ProductBean" resultType="java.lang.Long">
-    SELECT count(*)
-    FROM product_list
-    WHERE 1=1
-     <if test="productName != null" >
-      AND product_name like CONCAT('%','${productName}','%' )
-    </if>
-    <if test="areaId != null">
-      AND area_id = #{areaId,jdbcType=INTEGER}
-    </if>
-    <if test="supplierId != null">
-      AND supplier_id = #{supplierId,jdbcType=INTEGER}
-    </if>
-    <if test="productId != null">
-      AND product_id = #{productId,jdbcType=INTEGER}
-    </if>
-  </select>
+    <select id="getListByCondition" parameterType="com.mehome.requestDTO.ProductBean" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM product_list
+        WHERE 1=1
+        <if test="productName != null">
+            AND product_name like CONCAT('%','${productName}','%' )
+        </if>
+        <if test="areaId != null">
+            AND area_id = #{areaId,jdbcType=INTEGER}
+        </if>
+        <if test="supplierId != null">
+            AND supplier_id = #{supplierId,jdbcType=INTEGER}
+        </if>
+        <if test="productId != null">
+            AND product_id = #{productId,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            and create_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and create_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        ORDER BY create_time DESC
+        limit #{pageNow},#{pageSize}
+    </select>
+    <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.ProductBean" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM product_list
+        WHERE 1=1
+        <if test="productName != null">
+            AND product_name like CONCAT('%','${productName}','%' )
+        </if>
+        <if test="areaId != null">
+            AND area_id = #{areaId,jdbcType=INTEGER}
+        </if>
+        <if test="supplierId != null">
+            AND supplier_id = #{supplierId,jdbcType=INTEGER}
+        </if>
+        <if test="productId != null">
+            AND product_id = #{productId,jdbcType=INTEGER}
+        </if>
+    </select>
 </mapper>
