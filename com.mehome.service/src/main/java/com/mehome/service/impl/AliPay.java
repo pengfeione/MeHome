@@ -10,6 +10,7 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.AlipayConstants;
 import com.alipay.api.AlipayMobilePublicMultiMediaClient;
+import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IThirdPay;
@@ -29,6 +30,7 @@ public class AliPay implements IThirdPay {
 		String appId="";
 		String privateKey="";
 		AlipayClient alipayClient = new AlipayMobilePublicMultiMediaClient(serverUrl, appId, privateKey);
+		AlipayClient alipayClientA =  new DefaultAlipayClient(serverUrl, appId, privateKey);
 		AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();
 		alipayRequest.setReturnUrl("http://domain.com/CallBack/return_url.jsp");
 	    alipayRequest.setNotifyUrl("http://domain.com/CallBack/notify_url.jsp");//在公共参数中设置回跳和通知地址
@@ -39,7 +41,7 @@ public class AliPay implements IThirdPay {
 	        "    \"seller_id\":\"2088123456789012\"," +
 	        "    \"product_code\":\"QUICK_WAP_PAY\"" +
 	        "  }");//填充业务参数
-	    String form = alipayClient.pageExecute(alipayRequest).getBody(); //调用SDK生成表单
+	    String form = alipayClientA.pageExecute(alipayRequest).getBody(); //调用SDK生成表单
 	    httpResponse.setContentType("text/html;charset=" + AlipayConstants.CHARSET);
 	    httpResponse.getWriter().write(form);//直接将完整的表单html输出到页面
 	    httpResponse.getWriter().flush();
