@@ -1,0 +1,1 @@
+由于alipay的sdk包在maven上不存在，需要自行将aplipaysdk-1.5.jar放在本地maven库的com\alibaba\alipaysdk\1.5目录下
