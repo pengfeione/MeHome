@@ -1,7 +1,9 @@
 package com.mehome.controller;
 
+import com.mehome.domain.UserInfo;
 import com.mehome.requestDTO.ProductBean;
 import com.mehome.requestDTO.UserBackPasswordDTO;
+import com.mehome.service.iface.IUserInfoService;
 import com.mehome.utils.Result;
 import com.mehome.utils.WeChatInfo;
 import com.mehome.utils.WeChatTokenService;
@@ -22,9 +24,12 @@ public class WeChatController {
     private String cros;
     @Autowired
     private WeChatInfo weChatInfo;
+    @Autowired
+    private IUserInfoService userInfoService;
 
     /**
      * 通过url获取微信code
+     *
      * @param url
      * @return
      */
@@ -41,6 +46,7 @@ public class WeChatController {
 
     /**
      * 通过code获取微信用户信息
+     *
      * @param code
      * @return
      */
@@ -53,5 +59,14 @@ public class WeChatController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(weChatInfo.GetWeixinInfo(code)));
 
+    }
+
+    @RequestMapping("/auth")
+    public ResponseEntity<Result> auth(@RequestParam(value = "code", required = false) String code) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(userInfoService.weChat_register(weChatInfo.GetWeixinInfo(code))));
     }
 }
