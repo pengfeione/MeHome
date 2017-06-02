@@ -128,6 +128,11 @@ public class OrderServiceImpl implements IOrderService {
 				bean = calculateWelfare(bean);
 			}
 			order = bean.compareToPojo();
+			if(order.getStartTime()!=null&&order.getEndTime()!=null){
+				long mills=order.getEndTime().getTime()-order.getStartTime().getTime();
+				long day=mills/(1000*60*60*24);
+				order.setTenancy(new BigDecimal(day));
+			}
 			int row = orderListDAO.updateRequired(order);
 		} catch (Exception e) {
 			log.error("更新订单出错:" + e);
