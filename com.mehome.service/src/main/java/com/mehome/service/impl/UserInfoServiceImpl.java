@@ -5,12 +5,10 @@ import com.mehome.dao.CompanyListDao;
 import com.mehome.dao.SmsRecordDao;
 import com.mehome.dao.UserInfoDao;
 import com.mehome.dao.UserReviewDao;
-import com.mehome.domain.CompanyList;
-import com.mehome.domain.SmsRecord;
-import com.mehome.domain.UserInfo;
-import com.mehome.domain.UserReview;
+import com.mehome.domain.*;
 import com.mehome.enumDTO.SmsEnum;
 import com.mehome.enumDTO.UserCompanyEnum;
+import com.mehome.enumDTO.UserOpenType;
 import com.mehome.exceptions.InfoException;
 import com.mehome.requestDTO.BatchUserRequestDTO;
 import com.mehome.requestDTO.UserApplyCompanyDTO;
@@ -74,10 +72,25 @@ public class UserInfoServiceImpl implements IUserInfoService {
                 throw new InfoException("验证码不正确！");
             }
         }
-
+        userInfo.setOpenType(UserOpenType.MOBILE.getKey());
         userInfo.setCreateTime(Calendar.getInstance().getTime());
         userInfoDao.insertRequired(userInfo);
         return userInfo.getUserId();
+    }
+
+    @Override
+    public UserInfo weChat_register(WeChatUserInfo weChatUserInfo) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setOpenId(weChatUserInfo.getOpenid());
+        userInfo.setOpenType(UserOpenType.WECHAT.getKey());
+        UserInfo existUser = userInfoDao.selectByOpen(userInfo);
+        if (null == existUser) {
+            userInfo.setAvatar(weChatUserInfo.getHeadimgurl());
+            userInfo.setNickName(weChatUserInfo.getNickname());
+            userInfo.setSex(Integer.valueOf(weChatUserInfo.getSex()));
+            userInfoDao.insertRequired(userInfo);
+        }
+        return userInfo;
     }
 
     @Override

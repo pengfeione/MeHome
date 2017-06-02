@@ -1,7 +1,9 @@
 package com.mehome.controller;
 
 import com.mehome.domain.SupplierList;
+import com.mehome.enumDTO.RoleEnum;
 import com.mehome.requestDTO.SupplierRequestDTO;
+import com.mehome.utils.Permits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -35,16 +37,7 @@ public class SupplierController {
     }
 
 
-    @PostMapping("/lists")
-    @ResponseBody
-    public ResponseEntity<Result> lists(@RequestBody SupplierRequestDTO bean) {
-        return ResponseEntity
-                .ok()
-                .header("Access-Control-Allow-Origin", cros)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(supplierSerive.selectByCondition(bean), supplierSerive.countByCondition(bean)));
-    }
-
+    @Permits(role = {RoleEnum.PLATFORM})
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<Result> add(@RequestBody SupplierBean bean) {
@@ -66,10 +59,28 @@ public class SupplierController {
     }
 
     /**
+     * 企业用户列表
+     *
+     * @param bean
+     * @return
+     */
+    @Permits(role = {RoleEnum.PLATFORM})
+    @PostMapping("/lists")
+    @ResponseBody
+    public ResponseEntity<Result> lists(@RequestBody SupplierRequestDTO bean) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(supplierSerive.selectByCondition(bean), supplierSerive.countByCondition(bean)));
+    }
+
+    /**
      * @param bean 编辑供应商
      * @return
      * @auther renhui
      */
+    @Permits(role = {RoleEnum.PLATFORM})
     @PostMapping("/edit")
     @ResponseBody
     public ResponseEntity<Result> edit(@RequestBody SupplierList bean) {
@@ -86,6 +97,7 @@ public class SupplierController {
      * @param bean
      * @return
      */
+    @Permits(role = {RoleEnum.PLATFORM})
     @PostMapping("/save")
     @ResponseBody
     public ResponseEntity<Result> save(@RequestBody SupplierList bean) {

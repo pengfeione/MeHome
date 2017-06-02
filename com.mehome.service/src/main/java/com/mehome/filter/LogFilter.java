@@ -28,7 +28,7 @@ public class LogFilter implements Filter {
 
     static {
         allowDomain.add("http://m.mjiahome.com");
-
+        allowDomain.add("http://www.m.mjiahome.com");
     }
 
     @Override

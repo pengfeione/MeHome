@@ -1,6 +1,7 @@
 package com.mehome.service.iface;
 
 import com.mehome.domain.UserInfo;
+import com.mehome.domain.WeChatUserInfo;
 import com.mehome.requestDTO.UserApplyCompanyDTO;
 import com.mehome.requestDTO.UserBackPasswordDTO;
 import com.mehome.requestDTO.UserInfoDTO;
@@ -42,6 +43,8 @@ public interface IUserInfoService {
      * @return
      */
     public int mobile_register(UserInfo userInfo);
+
+    public UserInfo weChat_register(WeChatUserInfo userInfo);
 
     /**
      * 根据条件查询用户信息

@@ -13,6 +13,10 @@ public interface UserInfoDao {
 
     UserInfo selectById(Integer userId);
 
+
+    UserInfo selectByOpen(UserInfo record);
+
+
     UserInfo selectByMobile(String mobile);
 
     int updateRequired(UserInfo record);

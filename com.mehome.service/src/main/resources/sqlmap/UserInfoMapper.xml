@@ -36,6 +36,13 @@
         from user_info
         where mobile = #{mobile,jdbcType=VARCHAR}
     </select>
+    <select id="selectByOpen" parameterType="com.mehome.domain.UserInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        where open_id = #{openId,jdbcType=VARCHAR}
+        and open_type = #{openType,jdbcType=INTEGER}
+    </select>
     <select id="login" parameterType="com.mehome.domain.UserInfo" resultMap="BaseResultMap">
         select
         user_id, user_amount, open_type, nick_name, avatar, sex, real_name, mobile,
