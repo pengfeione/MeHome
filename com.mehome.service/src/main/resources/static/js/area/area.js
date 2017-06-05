@@ -1,119 +1,38 @@
-jQuery.fn.areaSelector = function (argument) {
+jQuery.fn.areaSelector = function (argument, idHidden) {
     var areaData; //默认地区信息
     var thisId = $(this).attr("id");
+    var inputId = idHidden;
     var contentId = thisId + 'AreaContent';
     var menuId = thisId + 'AreaMenu';
     var regionCode;
+    var regionId;
     var cityCode;
+    var cityId;
     var theRegion;
+    var theId;
+
+
     var theCity;
     if (argument) {
         areaData = argument;
     } else {
         console.error('未传入区域参数');
     }
-    console.log("createteateete1");
     //input框点击事件
     $(this).on('click', function () {
-        console.log(contentId + '');
         $("#" + contentId).toggleClass('isBlock');
     })
-    createAreaContent();
-
-    //初始化地区选择框
-    function createAreaContent() {
-        var html = '';
-        html += ' <div class="area_content" id="' + contentId + '">';
-        html += '<div class="area_menu">';
-        html += '<ul>';
-        html += '<li class="isClick">省份</li>';
-        html += '<li>城市</li>';
-        html += '<li>县区</li>';
-        html += ' </ul>';
-        html += '</div>';
-
-        html += '<div class="area_data_content">';
-
-        html += '<div class="area_data data_province isBlock">';
-        html += '	<div class="data_Part part_one">';
-        html += ' 	<a class="part_type">A-G</a>';
-        html += ' 	<ul></ul>';
-        html += ' </div>';
-        html += ' <div class="data_Part part_two">';
-        html += ' 	<a class="part_type">H-N</a>';
-        html += ' 	<ul>';
-        html += '	</ul>';
-        html += ' </div>';
-        html += ' <div class="data_Part part_three">';
-        html += ' 	<a class="part_type">O-U</a>';
-        html += ' 	<ul>';
-        html += ' 	</ul>';
-        html += ' </div>';
-        html += ' <div class="data_Part part_four">';
-        html += '	<a class="part_type part_four">V-Z</a>';
-        html += '	<ul>';
-        html += '	</ul>';
-        html += ' </div>';
-        html += '</div>  ';
-
-
-        html += '<div class="area_data data_region">';
-        html += '	<div class="data_Part part_one">';
-        html += ' 	<a class="part_type">A-G</a>';
-        html += ' 	<ul></ul>';
-        html += ' </div>';
-        html += ' <div class="data_Part part_two">';
-        html += ' 	<a class="part_type">H-N</a>';
-        html += ' 	<ul>';
-        html += '	</ul>';
-        html += ' </div>';
-        html += ' <div class="data_Part part_three">';
-        html += ' 	<a class="part_type">O-U</a>';
-        html += ' 	<ul>';
-        html += ' 	</ul>';
-        html += ' </div>';
-        html += ' <div class="data_Part part_four">';
-        html += '	<a class="part_type part_four">V-Z</a>';
-        html += '	<ul>';
-        html += '	</ul>';
-        html += ' </div>';
-        html += '</div>';
-
-        html += '<div class="area_data data_city">';
-        html += '	<div class="data_Part part_one">';
-        html += ' 	<a class="part_type">A-G</a>';
-        html += ' 	<ul></ul>';
-        html += ' </div>';
-        html += ' <div class="data_Part part_two">';
-        html += ' 	<a class="part_type">H-N</a>';
-        html += ' 	<ul>';
-        html += '	</ul>';
-        html += ' </div>';
-        html += ' <div class="data_Part part_three">';
-        html += ' 	<a class="part_type">O-U</a>';
-        html += ' 	<ul>';
-        html += ' 	</ul>';
-        html += ' </div>';
-        html += ' <div class="data_Part part_four">';
-        html += '	<a class="part_type part_four">V-Z</a>';
-        html += '	<ul>';
-        html += '	</ul>';
-        html += ' </div>';
-        html += '</div>';
-
-        html += '</div></div>';
-        html += '</div>';
-        $('body').append(html);
-        setCoordinate();
-        createProvince()
-    }
+    setCoordinate();
+    createProvince();
 
     //设置html位置
     function setCoordinate() {
         var offsetX = $("#" + thisId).offset().top;
         var offsetY = $("#" + thisId).offset().left;
-        console.log(offsetX + ":" + offsetY);
-        $("#" + contentId).offset({top: offsetX + 34, left: offsetY});
+        $("#" + contentId).offset({
+            top: offsetX - $("#" + thisId).parent().innerHeight() / 2,
+            left: offsetY - $("#" + thisId).parent().innerWidth() / 2
+        });
     }
 
     //切换页签
@@ -128,11 +47,13 @@ jQuery.fn.areaSelector = function (argument) {
 
         $('#' + contentId + ' .data_province li').on('click', function () {
             regionCode = $(this).find('input').val();
-            console.log(regionCode);
             createRegion(regionCode);
             $('#' + contentId + ' .area_menu ul li:nth-child(2)').click();
             theRegion = $(this).children('a').text();
             $('#' + thisId).val(theRegion);
+            regionId = $(this).children('a').children('input').val();
+            $('#' + inputId).html(regionId);
+
         })
 
         $('#' + contentId + ' .data_region li').on('click', function () {
@@ -141,17 +62,20 @@ jQuery.fn.areaSelector = function (argument) {
             $('#' + contentId + ' .area_menu ul li:nth-child(3)').click();
             theCity = $(this).children('a').text();
             $('#' + thisId).val(theRegion + ' / ' + theCity);
+            cityId = $(this).children('a').children('input').val();
+            $('#' + inputId).html(regionId + cityId);
         })
 
         $('#' + contentId + ' .data_city li').on('click', function () {
             $("#" + contentId).toggleClass('isBlock');
             $('#' + thisId).val(theRegion + ' / ' + theCity + ' / ' + $(this).children('a').text());
+            $('#' + inputId).html(regionId + cityId + $(this).children('a').children('input').val());
         })
     }
 
     //创建省份
     function createProvince() {
-        console.log("createProvince");
+
         var provinceDomPartOne = '';
         var provinceDomPartTwo = '';
         var provinceDomPartThree = '';
@@ -207,7 +131,6 @@ jQuery.fn.areaSelector = function (argument) {
 
     //创建市
     function createRegion(regionCode) {
-        console.log("createRegion");
         var regionDomPartOne = '';
         var regionDomPartTwo = '';
         var regionDomPartThree = '';
@@ -269,7 +192,6 @@ jQuery.fn.areaSelector = function (argument) {
 
     //创建县区
     function createCity(cityCode) {
-        console.log("createCity");
         var cityDomPartOne = '';
         var cityDomPartTwo = '';
         var cityDomPartThree = '';

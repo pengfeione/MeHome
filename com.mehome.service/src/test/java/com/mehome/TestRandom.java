@@ -20,6 +20,11 @@ public class TestRandom {
                 JSONObject.parseObject(jsonObject.toJSONString(), CompanyWelfareNotice.class);
         System.out.println(c);
 
+
+
+
+
+
     }
 
     public static int getRandNum(int min, int max) {

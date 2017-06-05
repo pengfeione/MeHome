@@ -125,12 +125,10 @@ public class PlatformView {
                     return "404";
                 } else {
                     model.addAttribute("update", true);
-                    model.addAttribute("productInfo", productInfo);
                 }
             }
         } else if (InfoOperationEnum.ADD.getOperation().equals(operation)) {
             model.addAttribute("update", false);
-            model.addAttribute("productInfo", new ProductList());
         } else {
             return "404";
         }

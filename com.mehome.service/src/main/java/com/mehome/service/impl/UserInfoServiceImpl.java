@@ -89,8 +89,10 @@ public class UserInfoServiceImpl implements IUserInfoService {
             userInfo.setNickName(weChatUserInfo.getNickname());
             userInfo.setSex(Integer.valueOf(weChatUserInfo.getSex()));
             userInfoDao.insertRequired(userInfo);
+            return userInfo;
+        } else {
+            return existUser;
         }
-        return userInfo;
     }
 
     @Override
