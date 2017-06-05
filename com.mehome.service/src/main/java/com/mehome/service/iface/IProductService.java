@@ -15,5 +15,5 @@ public interface IProductService {
 
     public Long getSizeByCondition(ProductBean bean);
 
-    public String updateProduct(ProductBean bean);
+    public String updateProduct(ProductList bean);
 }

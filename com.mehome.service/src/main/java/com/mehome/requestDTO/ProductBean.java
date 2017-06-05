@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.util.StringUtils;
 
 import com.mehome.domain.ProductList;
@@ -28,6 +29,12 @@ public class ProductBean extends PageMysqlUtil {
     private String supplierName;
 
     private Integer areaId;
+
+
+    private Integer areaProvince;
+    private Integer areaRegion;
+    private Integer areaCity;
+    private String areaName;
 
     private Boolean productActive;
 
@@ -86,7 +93,37 @@ public class ProductBean extends PageMysqlUtil {
 
     private Date endTime;
 
+    public Integer getAreaProvince() {
+        return areaProvince;
+    }
 
+    public void setAreaProvince(Integer areaProvince) {
+        this.areaProvince = areaProvince;
+    }
+
+    public Integer getAreaRegion() {
+        return areaRegion;
+    }
+
+    public void setAreaRegion(Integer areaRegion) {
+        this.areaRegion = areaRegion;
+    }
+
+    public Integer getAreaCity() {
+        return areaCity;
+    }
+
+    public void setAreaCity(Integer areaCity) {
+        this.areaCity = areaCity;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
 
     public Date getStartTime() {
         return startTime;
@@ -302,7 +339,11 @@ public class ProductBean extends PageMysqlUtil {
         product.setProductId(this.getProductId());
         product.setAddress(this.getAddress());
         product.setAreaId(this.getAreaId());
-        product.setDetailpic(this.getDetailpic() == null && addBoolean ? null : this.getDetailpic().toString());
+        product.setAreaProvince(this.getAreaProvince());
+        product.setAreaRegion(this.getAreaRegion());
+        product.setAreaCity(this.getAreaCity());
+        product.setAreaName(this.getAreaName());
+        product.setDetailpic(this.getDetailpic() == null && addBoolean ? null : JSONObject.toJSONString(this.getDetailpic()));
         product.setHasPersonal(this.getHasPersonal() == null && addBoolean ? Boolean.TRUE : this.getHasPersonal());
         if (this.getWelfareList() != null && this.getWelfareList().size() > 0) {
             product.setIsWelfare(Boolean.TRUE);
@@ -338,6 +379,10 @@ public class ProductBean extends PageMysqlUtil {
     public ProductBean(ProductList product, List<HouseBean> houseList, List<BasicBean> basicList, List<CommentBean> commentList, List<Integer> welfareList) {
         this.setAddress(product.getAddress());
         this.setAreaId(product.getAreaId());
+        this.setAreaName(product.getAreaName());
+        this.setAreaProvince(product.getAreaProvince());
+        this.setAreaRegion(product.getAreaRegion());
+        this.setAreaCity(product.getAreaCity());
         this.setBasicList(basicList);
         this.setCommentList(commentList);
         if (!StringUtils.isEmpty(product.getDetailpic()) && product.getDetailpic().length() > 2) {

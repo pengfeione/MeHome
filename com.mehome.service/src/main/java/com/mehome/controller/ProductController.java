@@ -1,5 +1,7 @@
 package com.mehome.controller;
 
+import com.alipay.api.domain.Product;
+import com.mehome.domain.ProductList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -46,7 +48,7 @@ public class ProductController {
 
     @PostMapping("/update")
     @ResponseBody
-    public ResponseEntity<Result> update(@RequestBody ProductBean bean) {
+    public ResponseEntity<Result> update(@RequestBody ProductList bean) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)

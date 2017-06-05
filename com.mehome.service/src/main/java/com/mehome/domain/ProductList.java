@@ -9,6 +9,11 @@ public class ProductList {
 
     private Integer areaId;
 
+    private Integer areaProvince;
+    private Integer areaRegion;
+    private Integer areaCity;
+    private String areaName;
+
     private String productName;
 
     private String productDetail;
@@ -36,14 +41,46 @@ public class ProductList {
     private Boolean hasPersonal;
 
     private String netRulesUrl;
-    
+
     private Integer floor;
-    
+
     private Date createTime;
-    
+
     private Date updateTime;
-    
+
     private Float score;
+
+    public Integer getAreaProvince() {
+        return areaProvince;
+    }
+
+    public void setAreaProvince(Integer areaProvince) {
+        this.areaProvince = areaProvince;
+    }
+
+    public Integer getAreaRegion() {
+        return areaRegion;
+    }
+
+    public void setAreaRegion(Integer areaRegion) {
+        this.areaRegion = areaRegion;
+    }
+
+    public Integer getAreaCity() {
+        return areaCity;
+    }
+
+    public void setAreaCity(Integer areaCity) {
+        this.areaCity = areaCity;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
 
     public Integer getProductId() {
         return productId;
@@ -181,40 +218,40 @@ public class ProductList {
         this.netRulesUrl = netRulesUrl == null ? null : netRulesUrl.trim();
     }
 
-    
+
     public Integer getFloor() {
-		return floor;
-	}
+        return floor;
+    }
 
-	public void setFloor(Integer floor) {
-		this.floor = floor;
-	}
+    public void setFloor(Integer floor) {
+        this.floor = floor;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	public Date getUpdateTime() {
-		return updateTime;
-	}
+    public Date getUpdateTime() {
+        return updateTime;
+    }
 
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
-	public Float getScore() {
-		return score;
-	}
+    public Float getScore() {
+        return score;
+    }
 
-	public void setScore(Float score) {
-		this.score = score;
-	}
+    public void setScore(Float score) {
+        this.score = score;
+    }
 
-	@Override
+    @Override
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -227,25 +264,25 @@ public class ProductList {
         }
         ProductList other = (ProductList) that;
         return (this.getProductId() == null ? other.getProductId() == null : this.getProductId().equals(other.getProductId()))
-            && (this.getSupplierId() == null ? other.getSupplierId() == null : this.getSupplierId().equals(other.getSupplierId()))
-            && (this.getAreaId() == null ? other.getAreaId() == null : this.getAreaId().equals(other.getAreaId()))
-            && (this.getProductName() == null ? other.getProductName() == null : this.getProductName().equals(other.getProductName()))
-            && (this.getProductDetail() == null ? other.getProductDetail() == null : this.getProductDetail().equals(other.getProductDetail()))
-            && (this.getProductSort() == null ? other.getProductSort() == null : this.getProductSort().equals(other.getProductSort()))
-            && (this.getListpic() == null ? other.getListpic() == null : this.getListpic().equals(other.getListpic()))
-            && (this.getDetailpic() == null ? other.getDetailpic() == null : this.getDetailpic().equals(other.getDetailpic()))
-            && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
-            && (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()))
-            && (this.getProductActive() == null ? other.getProductActive() == null : this.getProductActive().equals(other.getProductActive()))
-            && (this.getRules() == null ? other.getRules() == null : this.getRules().equals(other.getRules()))
-            && (this.getWelfareId() == null ? other.getWelfareId() == null : this.getWelfareId().equals(other.getWelfareId()))
-            && (this.getIsWelfare() == null ? other.getIsWelfare() == null : this.getIsWelfare().equals(other.getIsWelfare()))
-            && (this.getPersonalWelfare() == null ? other.getPersonalWelfare() == null : this.getPersonalWelfare().equals(other.getPersonalWelfare()))
-            && (this.getHasPersonal() == null ? other.getHasPersonal() == null : this.getHasPersonal().equals(other.getHasPersonal()))
-            && (this.getNetRulesUrl() == null ? other.getNetRulesUrl() == null : this.getNetRulesUrl().equals(other.getNetRulesUrl()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getScore() == null ? other.getScore() == null : this.getScore().equals(other.getScore()));
+                && (this.getSupplierId() == null ? other.getSupplierId() == null : this.getSupplierId().equals(other.getSupplierId()))
+                && (this.getAreaId() == null ? other.getAreaId() == null : this.getAreaId().equals(other.getAreaId()))
+                && (this.getProductName() == null ? other.getProductName() == null : this.getProductName().equals(other.getProductName()))
+                && (this.getProductDetail() == null ? other.getProductDetail() == null : this.getProductDetail().equals(other.getProductDetail()))
+                && (this.getProductSort() == null ? other.getProductSort() == null : this.getProductSort().equals(other.getProductSort()))
+                && (this.getListpic() == null ? other.getListpic() == null : this.getListpic().equals(other.getListpic()))
+                && (this.getDetailpic() == null ? other.getDetailpic() == null : this.getDetailpic().equals(other.getDetailpic()))
+                && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
+                && (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()))
+                && (this.getProductActive() == null ? other.getProductActive() == null : this.getProductActive().equals(other.getProductActive()))
+                && (this.getRules() == null ? other.getRules() == null : this.getRules().equals(other.getRules()))
+                && (this.getWelfareId() == null ? other.getWelfareId() == null : this.getWelfareId().equals(other.getWelfareId()))
+                && (this.getIsWelfare() == null ? other.getIsWelfare() == null : this.getIsWelfare().equals(other.getIsWelfare()))
+                && (this.getPersonalWelfare() == null ? other.getPersonalWelfare() == null : this.getPersonalWelfare().equals(other.getPersonalWelfare()))
+                && (this.getHasPersonal() == null ? other.getHasPersonal() == null : this.getHasPersonal().equals(other.getHasPersonal()))
+                && (this.getNetRulesUrl() == null ? other.getNetRulesUrl() == null : this.getNetRulesUrl().equals(other.getNetRulesUrl()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+                && (this.getScore() == null ? other.getScore() == null : this.getScore().equals(other.getScore()));
     }
 
     @Override

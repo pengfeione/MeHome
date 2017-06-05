@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mehome.dao.SupplierListDao;
 import com.mehome.domain.SupplierList;
+import com.mehome.utils.AssertUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,16 +91,14 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public String updateProduct(ProductBean bean) {
-        ProductList product = null;
+    public String updateProduct(ProductList bean) {
+        AssertUtils.isNotNull(bean.getProductId(), "更新标识未知");
         try {
-            product = bean.beanToPojo(Boolean.FALSE);
-            int row = productListDAO.updateRequired(product);
+            int row = productListDAO.updateRequired(bean);
         } catch (Exception e) {
             log.error("更新产品出错:" + e);
             return Boolean.FALSE.toString();
         }
         return Boolean.TRUE.toString();
     }
-
 }

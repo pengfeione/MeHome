@@ -32,16 +32,16 @@ public class ProductView {
 		return mav;
 	}
 	
-	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
-    @PostMapping(path = "/update")
-	public ModelAndView update(@RequestBody ProductBean product){
-		ModelAndView mav=new ModelAndView();
-		String ret=productService.updateProduct(product);
-		mav.setViewName("product");
-		mav.addObject("updateRet", ret);
-		return mav;
-	}
-	
+//	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+//    @PostMapping(path = "/update")
+//	public ModelAndView update(@RequestBody ProductBean product){
+//		ModelAndView mav=new ModelAndView();
+//		String ret=productService.updateProduct(product);
+//		mav.setViewName("product");
+//		mav.addObject("updateRet", ret);
+//		return mav;
+//	}
+//
 	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
     @PostMapping(path = "/add")
 	public ModelAndView add(@RequestBody ProductBean product){

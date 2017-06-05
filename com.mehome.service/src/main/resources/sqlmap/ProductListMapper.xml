@@ -5,6 +5,10 @@
         <id column="product_id" property="productId" jdbcType="INTEGER"/>
         <result column="supplier_id" property="supplierId" jdbcType="INTEGER"/>
         <result column="area_id" property="areaId" jdbcType="INTEGER"/>
+        <result column="area_province" property="areaProvince" jdbcType="INTEGER"/>
+        <result column="area_region" property="areaRegion" jdbcType="INTEGER"/>
+        <result column="area_city" property="areaCity" jdbcType="INTEGER"/>
+        <result column="area_name" property="areaName" jdbcType="VARCHAR"/>
         <result column="product_name" property="productName" jdbcType="VARCHAR"/>
         <result column="product_detail" property="productDetail" jdbcType="VARCHAR"/>
         <result column="product_sort" property="productSort" jdbcType="INTEGER"/>
@@ -24,8 +28,8 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="score" property="score" jdbcType="REAL"/>
     </resultMap>
-    <sql id="Base_Column_List">
-    product_id, supplier_id, area_id, product_name, product_detail, product_sort, listpic, 
+     <sql id="Base_Column_List">
+    product_id, supplier_id, area_id,area_province,area_region,area_city, area_name,product_name, product_detail, product_sort, listpic,
     detailpic, address, position, product_active, rules, welfare_id, is_welfare, personal_welfare, 
     has_personal, net_rules_url,floor,create_time,update_time,score
   </sql>
@@ -40,13 +44,14 @@
     where product_id = #{productId,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.mehome.domain.ProductList">
-    insert into product_list (product_id, supplier_id, area_id, 
+    insert into product_list (product_id, supplier_id, area_id, area_province,area_region,area_city, area_name,
       product_name, product_detail, product_sort, 
       listpic, detailpic, address, 
       position, product_active, rules, 
       welfare_id, is_welfare, personal_welfare, 
       has_personal, net_rules_url,floor,create_time,update_time,score)
-    values (#{productId,jdbcType=INTEGER}, #{supplierId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, 
+    values (#{productId,jdbcType=INTEGER}, #{supplierId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER},
+      #{areaProvince,jdbcType=INTEGER},#{areaRegion,jdbcType=INTEGER},#{areaCity,jdbcType=INTEGER},#{areaName,jdbcType=VARCHAR},
       #{productName,jdbcType=VARCHAR}, #{productDetail,jdbcType=VARCHAR}, #{productSort,jdbcType=INTEGER}, 
       #{listpic,jdbcType=VARCHAR}, #{detailpic,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{position,jdbcType=VARCHAR}, #{productActive,jdbcType=BIT}, #{rules,jdbcType=VARCHAR}, 
@@ -64,6 +69,18 @@
             </if>
             <if test="areaId != null">
                 area_id,
+            </if>
+            <if test="areaProvince != null">
+                area_province,
+            </if>
+            <if test="areaRegion != null">
+                area_region,
+            </if>
+            <if test="areaCity != null">
+                area_city,
+            </if>
+            <if test="areaName != null">
+                area_name,
             </if>
             <if test="productName != null">
                 product_name,
@@ -130,6 +147,18 @@
             <if test="areaId != null">
                 #{areaId,jdbcType=INTEGER},
             </if>
+            <if test="areaProvince != null">
+                #{areaProvince,jdbcType=INTEGER},
+            </if>
+            <if test="areaRegion != null">
+                #{areaRegion,jdbcType=INTEGER},
+            </if>
+            <if test="areaCity != null">
+                #{areaCity,jdbcType=INTEGER},
+            </if>
+            <if test="areaName != null">
+                #{areaName,jdbcType=VARCHAR},
+            </if>
             <if test="productName != null">
                 #{productName,jdbcType=VARCHAR},
             </if>
@@ -195,6 +224,18 @@
             <if test="areaId != null">
                 area_id = #{areaId,jdbcType=INTEGER},
             </if>
+            <if test="areaProvince != null">
+                area_province = #{areaProvince,jdbcType=INTEGER},
+            </if>
+            <if test="areaRegion != null">
+                area_region = #{areaRegion,jdbcType=INTEGER},
+            </if>
+            <if test="areaCity != null">
+                area_city = #{areaCity,jdbcType=INTEGER},
+            </if>
+            <if test="areaName != null">
+                area_name = #{areaName,jdbcType=VARCHAR},
+            </if>
             <if test="productName != null">
                 product_name = #{productName,jdbcType=VARCHAR},
             </if>
@@ -256,6 +297,10 @@
     update product_list
     set supplier_id = #{supplierId,jdbcType=INTEGER},
       area_id = #{areaId,jdbcType=INTEGER},
+      area_province = #{areaProvince,jdbcType=INTEGER},
+      area_region = #{areaRegion,jdbcType=INTEGER},
+      area_city = #{areaCity,jdbcType=INTEGER},
+      area_name = #{areaName,jdbcType=VARCHAR},
       product_name = #{productName,jdbcType=VARCHAR},
       product_detail = #{productDetail,jdbcType=VARCHAR},
       product_sort = #{productSort,jdbcType=INTEGER},
