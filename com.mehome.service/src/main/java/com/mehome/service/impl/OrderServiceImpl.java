@@ -215,15 +215,16 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Override
 	public String refundOrder(OrderBean bean) {
-		if (bean.getOrderStatus() == null||(bean.getOrderStatus()!=null&&bean.getOrderStatus().intValue()!=OrderStatusEnum.CANCEL.getKey())) {
-			log.error("当前订单状态下不可进行退款操作");
-			return Boolean.FALSE.toString();
-		}
-		if (StringUtils.isEmpty(bean.getOrderId())){
+		String orderId = bean.getOrderId();
+		if (StringUtils.isEmpty(orderId)){
 			log.error("订单号未传");
 			return Boolean.FALSE.toString();
 		}
-		OrderList order = orderListDAO.selectById(bean.getOrderId());
+		OrderList order = orderListDAO.selectById(orderId);
+		if (order.getOrderStatus() == null||(order.getOrderStatus()!=null&&order.getOrderStatus().intValue()!=OrderStatusEnum.CANCEL.getKey())) {
+			log.error("当前订单状态下不可进行退款操作");
+			return Boolean.FALSE.toString();
+		}
 		if(order!=null&&order.getPlatformHost()){
 			String uid=order.getBiller();
 			Integer deposit=order.getDeposit();
