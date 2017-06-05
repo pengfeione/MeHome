@@ -415,7 +415,7 @@
     FROM order_list
     WHERE 1=1
     <if test="orderId != null">
-      AND orderId = #{orderId,jdbcType=VARCHAR}
+      AND order_id = #{orderId,jdbcType=VARCHAR}
     </if>
     <if test="productName != null" >
       AND product_name like CONCAT('%','${productName}','%' )
@@ -458,7 +458,7 @@
     FROM order_list
     WHERE 1=1
     <if test="orderId != null">
-      AND orderId = #{orderId,jdbcType=VARCHAR}
+      AND order_id = #{orderId,jdbcType=VARCHAR}
     </if>
     <if test="productName != null" >
       AND product_name like CONCAT('%','${productName}','%' )
