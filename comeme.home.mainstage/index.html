@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
-<base href="http://me.trancyboy.com/iweb/"/>
+<base href="http://m.mjiahome.com/"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
@@ -24,10 +24,10 @@
     	<!-- header -->
     	<header class="bannerIndex">
             <div class="swiper-container">
-                <div class="swiper-wrapper">
+                <div class="swiper-wrapper" id="div_swiper">
+                    <!--<div class="swiper-slide"><img src="img/test/test1.jpg" /></div>
                     <div class="swiper-slide"><img src="img/test/test1.jpg" /></div>
-                    <div class="swiper-slide"><img src="img/test/test1.jpg" /></div>
-                    <div class="swiper-slide"><img src="img/test/test1.jpg" /></div>
+                    <div class="swiper-slide"><img src="img/test/test1.jpg" /></div>-->
                 </div>
             </div>
         </header>
@@ -66,20 +66,22 @@
 	$(function()
 	{
 		var data = [
-			{'id': 1, 'value': '黄浦区'},
-			{'id': 2,'value': '徐汇区'},
-			{'id': 3,'value': '长宁区'},
-			{'id': 4,'value': '静安区'},
-			{'id': 5,'value': '闸北区'},
-			{'id': 6,'value': '虹口区'},
-			{'id': 7,'value': '宝山区'},
-			{'id': 8,'value': '奉贤区'},
-			{'id': 9,'value': '嘉定区'},
-			{'id': 10,'value': '闵行区'},
-			{'id': 11,'value': '松江区'},
-			{'id': 12,'value': '金山区'},
-			{'id': 13,'value': '青浦区'},
-			{'id': 14,'value': '浦东新区'}
+			{'id': 310101, 'value': '黄浦区'},
+			{'id': 310104,'value': '徐汇区'},
+			{'id': 310105,'value': '长宁区'},
+			{'id': 310106,'value': '静安区'},
+			{'id': 310107,'value': '普陀区'},
+			{'id': 310109,'value': '虹口区'},
+			{'id': 310110,'value': '杨浦区'},
+			{'id': 310115,'value': '浦东新区'},
+			{'id': 310112,'value': '闵行区'},
+			{'id': 310113,'value': '宝山区'},
+			{'id': 310114,'value': '嘉定区'},
+			{'id': 310116,'value': '金山区'},
+			{'id': 310117,'value': '松江区'},
+			{'id': 310118,'value': '青浦区'},
+			{'id': 310120,'value': '奉贤区'},
+			{'id': 310130,'value': '崇明区'}
 		];
 		
 		$("#search").on("click","span",function(event)
@@ -104,11 +106,33 @@
 		});
 		
 		util = new Util();
-		//加载轮播 图片
 		
-		//加载产品信息
-		loadProductList();
+		//是否微信登录
+		is_weixin();
 	});
+	
+	//加载轮播图片
+	function loadImages(){
+		var url = util.baseUrl + '/recommend/list';
+		var param ='{}';
+		var contentType = "application/json";
+		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+			util.logResult(data);
+			$.each(data.result,function(index,imgInfo){
+				var img_html = '<div class="swiper-slide" onclick="gotoProduct('+imgInfo.productId+');"><img src="'+imgInfo.img+'" /></div>';
+				$('#div_swiper').append(img_html);
+			});
+			
+			var swiper = new Swiper('.swiper-container', {
+				paginationClickable: true, //此参数设置为true时，点击分页器的指示点分页器会控制Swiper切换。
+				spaceBetween: 10,
+				centeredSlides: true,
+				autoplay: 5000,
+				loop:true,
+				autoplayDisableOnInteraction : false  //播放完毕后
+			});
+		});
+	}
 	
 	//加载产品信息 ul_product 
 	function loadProductList(){
@@ -121,7 +145,7 @@
 				var detailpic = productInfo.detailpic;
 				var html_str = '<li>'
 							 + '	<a href="apartmentdetail.html?productId='+productInfo.productId+'">'
-							 + '		<img src="'+detailpic[0]+'" />'
+							 + '		<img src="'+productInfo.listpic+'" />'
 							 + '		<h3>'+productInfo.productName+'</h3>'
 							 + '		<em></em><span>老牌英伦风格，顶级配置</span>'
 							 + ' 	</a>'
@@ -156,14 +180,79 @@
 	//跳到个人页面
 	function gotoME(){
 		//判断用户是否登录
-		var uid = util.getCookie("userId");
-		util.logResult(uid);
+		var userInfo = util.getCookie("userInfo");
+//		var userInfoJson = eval('(' + userInfo + ')');
+//		util.logResult(userInfoJson.userId); 
 		//如果登录跳转到个人中心,否则跳转到登录页面
-		if(uid != null && uid != ''){
+		if(userInfo != null && userInfo != ''){
 			window.location.href='my.html';
 		}else{
 			window.location.href='login.html';
 		}
+	}
+	
+	//跳到产品页面
+	function gotoProduct(productId){
+		window.location.href='apartmentdetail.html?productId='+productId;
+	}
+	
+	//刷新个人信息
+	function flushUerInfo(){
+		var userInfo = util.getCookie("userInfo");
+		if(userInfo != null && userInfo != ''){
+			var userInfoJson = eval('(' + userInfo + ')');
+			util.logResult(userInfoJson);
+			var userId = userInfoJson.userId;
+			var updateTime = userInfoJson.updateTime;
+			var url = util.baseUrl + '/usr/get'; 
+			var param ='{"userId": '+userId+'}';
+			var contentType = "application/json";
+			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+				var result = data.result;
+				if(result == null || result == undefined){
+					util.setCookie("userInfo", '');
+				}
+				var newUpdateTime = result.updateTime;
+				util.logResult(newUpdateTime+' '+updateTime);
+				if(newUpdateTime != updateTime){
+					util.setCookie("userInfo", '');
+				}
+				
+			});
+		}
+	}
+	
+	//判断是否微信浏览器
+	function is_weixin(){
+		var ua = navigator.userAgent.toLowerCase();
+		if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			var oUserInfo= util.getCookie("userInfo");
+			if(oUserInfo == null || oUserInfo == ''){
+				var code = util.getUrlParam('code');
+				if(code == null){
+					window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5facc949399aaefa&redirect_uri=http://m.mjiahome.com/index.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect?v="+(new Date().getTime());
+				}else{
+					var url = util.baseUrl + '/wechat/auth?code='+code; 
+					util.requestRemoteDataJson(url,null,function(data){
+						util.logResult(data);
+						var userInfo = data.result;
+						util.logResult(JSON.stringify(userInfo));
+						util.setCookie("userInfo", JSON.stringify(userInfo));
+					});
+				}
+			}
+			//加载轮播 图片
+			loadImages();
+			//加载产品信息
+			loadProductList();
+		}else{
+			//加载轮播 图片
+			loadImages();
+			//加载产品信息
+			loadProductList();
+			//刷新个人信息
+			flushUerInfo();
+	 	}
 	}
 </script>
 

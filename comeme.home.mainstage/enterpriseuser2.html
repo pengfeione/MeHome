@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+<!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
+<base href="http://m.mjiahome.com/"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name = "format-detection" content="telephone=no">
+<meta name="viewport"  content="width=device-width,user-scalable=no">
+<title>Me+企业用户认证</title>
+<meta name="keywords" content="ME+">
+<meta name="description" content="ME+">
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<link rel="stylesheet" type="text/css" href="css/common.css" />
+<link rel="stylesheet" type="text/css" href="css/loginshare.css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/loginshare.js"></script>
+<script src="js/util.js"></script>
+</head>
+<body>
+    
+    <div class="wrap">
+    
+    	<!-- header -->
+    	<header class="editInfo">--请提交您的个人信息，并等待企业审核--</header>
+        
+        <section>
+        	<div class="loginList edit">
+            	<ul>
+                	<li><span>授权码<i>*</i></span>
+                		<input type="text" value="" class="text" id="auth_code"/>
+                	</li>
+                    <li><span>姓名<i>*</i></span>
+                    	<input type="text" value="" class="text" id="user_name"/>
+                    </li>
+                    <li><span>身份证号<i>*</i></span>
+                    	<input type="text" value="" class="text" id="id_card"/>
+                    </li>
+                </ul>
+                <a class="btn btnSubmit" onclick="submitAuth();">提交</a>
+            </div>
+        </section>
+    </div>
+    
+    <!-- 提交成功等待企业审核 -->
+    <div class="pop popSuccess" id="div_popSuccess">
+    	<em class="iconSuccess"></em>
+    	<span id="span_pop">提交成功<br>等待企业审核</span>
+    </div>
+</body>
+<script type="text/javascript">
+	var util;
+	var isSubmit = 0;
+	//页面初始化
+	$(function(){
+		util = new Util();
+	});
+	
+	//申请企业用户
+	function submitAuth(){
+		if(isSubmit == 0){
+			isSubmit = 1;
+			var userInfo = util.getCookie("userInfo");
+			var userInfoJson = eval('(' + userInfo + ')');
+			util.logResult(userInfoJson.userId); 
+			var userId = userInfoJson.userId;
+			var authCode = $('#auth_code').val();
+			var realName = $('#user_name').val();
+			var idCard = $('#id_card').val();
+			if(userId == null || userId == ''){
+					$('#span_pop').html('请先登录!');
+					$( '#div_popSuccess' ).fadeIn();
+					setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+					isSubmit = 0
+					return false;
+			 }
+			if(authCode == null || authCode == ''){
+				$('#span_pop').html('请输入授权码!');
+				$( '#div_popSuccess' ).fadeIn();
+				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+				isSubmit = 0
+				return false;
+			}
+			if(realName == null || realName == ''){
+				$('#span_pop').html('请输入姓名!');
+				$( '#div_popSuccess' ).fadeIn();
+				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+				isSubmit = 0
+				return false;
+			}
+			 var res= util.identityCodeValid(idCard);
+			 if(!res){
+			 	isSubmit = 0
+			 	return false;
+			 }
+			 var url = util.baseUrl + '/usr/apply_company';
+			 var param ='{"userId": '+userId+',"authCode":"'+authCode+'","realName":"'+realName+'","idCard":'+idCard+'}';
+			 var contentType = "application/json";
+			 util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+					util.logResult(data); 
+					var code = data.code;
+					if(code == 0){
+						$('#div_popSuccess').fadeIn();
+						setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+							window.location.href="my.html";
+							}, ( 1 * 1000 ) );
+					}else{
+						$('#span_pop').html('提交失败!');
+						$('#div_popSuccess').fadeIn();
+						setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+							}, ( 1 * 1000 ) );
+						isSubmit = 0
+					}
+			 });
+		 }
+	}
+	
+</script>
+</html>

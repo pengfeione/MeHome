@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
-<base href="http://me.trancyboy.com/iweb/"/>
+<base href="http://m.mjiahome.com/"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
@@ -26,9 +26,15 @@
         <section>
         	<div class="loginList edit">
             	<ul>
-                	<li><span>授权码<i>*</i></span><input type="text" value="" class="text" /></li>
-                    <li><span>姓名<i>*</i></span><input type="text" value="" class="text" /></li>
-                    <li><span>身份证号<i>*</i></span><input type="text" value="" class="text" /></li>
+                	<li><span>授权码<i>*</i></span>
+                		<input type="text" value="" class="text" id="auth_code"/>
+                	</li>
+                    <li><span>姓名<i>*</i></span>
+                    	<input type="text" value="" class="text" id="user_name"/>
+                    </li>
+                    <li><span>身份证号<i>*</i></span>
+                    	<input type="text" value="" class="text" id="id_card"/>
+                    </li>
                 </ul>
                 <a class="btn btnSubmit" onclick="submitAuth();">提交</a>
                 <a class="btnGoto" onclick="gotoNext();">暂不申请，跳过</a>
@@ -52,9 +58,37 @@
 	
 	//申请企业用户
 	function submitAuth(){
-		$('#div_enter').fadeIn();
-		$('#span_success').html('该功能尚在开发...');
-		setTimeout( function(){$( '#div_enter' ).fadeOut();}, ( 1 * 1000 ) );
+		isSubmit = 1;
+		 var userId = util.getUrlParam('userId');
+		 var authCode = $('#auth_code').val();
+		 var realName = $('#user_name').val();
+		 var idCard = $('#id_card').val();
+		 var res= util.identityCodeValid(idCard);
+		 if(!res){
+		 	isSubmit = 0
+		 	return false;
+		 }
+		 var url = util.baseUrl + '/usr/apply_company';
+		 var param ='{"userId": '+userId+',"authCode":"'+authCode+'","realName":"'+realName+'","idCard":'+idCard+'}';
+		 var contentType = "application/json";
+		 util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+				util.logResult(data); 
+				var code = data.code;
+				if(code == 0){
+					$('#div_enter').fadeIn();
+					setTimeout( function(){$( '#div_enter' ).fadeOut();
+						window.location.href="login.html";
+						}, ( 1 * 1000 ) );
+				}else{
+					$('#span_success').html('提交失败!');
+					$('#div_enter').fadeIn();
+					setTimeout( function(){$( '#div_enter' ).fadeOut();
+						}, ( 1 * 1000 ) );
+					isSubmit = 0
+				}
+		 });
+		 
+		 
 	}
 	
 	//暂不申请

@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
-<base href="http://me.trancyboy.com/iweb/"/>
+<base href="http://m.mjiahome.com/"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
@@ -41,6 +41,11 @@
             </div>
         </section>
     </div>
+    
+    <div class="pop popFail" id="div_register_fail">
+    	<em class="iconFail"></em>
+    	<span class="registerSuccess" id="registerFail">验证码错误</span>
+    </div>
 
 </body>
 <script type="text/javascript">
@@ -56,14 +61,18 @@
 		if(isSubmit == 0){
 			var mobile = $('#mobile').val();
 			if(mobile == ''){
-				alert('请输入手机号码!');
+				$('#registerFail').html('请输入手机号码!');
+				$('#div_register_fail').fadeIn();
+				setTimeout( function(){$( '#div_register_fail' ).fadeOut();}, ( 1 * 1000 ) );
 				$('#mobile').focus();
 				isSubmit = 0;
 				return false;
 			}
 			var pwd = $('#pwd').val();
 			if(pwd == ''){
-				alert('请输入密码!');
+				$('#registerFail').html('请输入密码!');
+				$('#div_register_fail').fadeIn();
+				setTimeout( function(){$( '#div_register_fail' ).fadeOut();}, ( 1 * 1000 ) );
 				$('#pwd').select();
 				isSubmit = 0;
 				return false;
@@ -77,11 +86,17 @@
 				var errorCode = data.code;
 				util.logResult(errorCode); 
 				if(errorCode == 0){
-					util.setCookie("userId", mobile);
-					var uid = util.getCookie("userId");
+					var userInfo = data.result;
+					util.logResult(JSON.stringify(userInfo));
+					util.setCookie("userInfo", JSON.stringify(userInfo));
+//					var result = util.getCookie("userInfo");
+//					var userInfoJson = eval('(' + result + ')');
+//					util.logResult(userInfoJson.userId); 
 					window.location.href="my.html";
 				}else{
-					alert('登录失败!');
+					$('#registerFail').html('登录失败!');
+					$('#div_register_fail').fadeIn();
+					setTimeout( function(){$( '#div_register_fail' ).fadeOut();}, ( 1 * 1000 ) );
 					isSubmit = 0;
 				}
 			});

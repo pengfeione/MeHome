@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
-<base href="http://me.trancyboy.com/iweb/"/>
+<base href="http://m.mjiahome.com/"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
@@ -15,88 +15,97 @@
 <link rel="stylesheet" type="text/css" href="css/order.css" />
 <script src="js/jquery.min.js"></script>
 <script src="js/swiper.min.js"></script>
+<script src="js/util.js"></script>
 </head>
 <body>
-    
     <div class="wrap">
-    	
         <div class="order">
-        	<ul class="orderList">
-            	<li>
-                	<a href="#">
-                    	<span class="orderTop">
-                        	<img src="img/test/test3.jpg" />
-                            <h3>Ascott商务服务中心</h3>
-                            <em>1000元／月</em>
-                            <i>A栋-1010室1室0厅1卫 25㎡</i>
-                        </span>
-                        <span class="orderLine"><i class="orderLt"></i><i class="orderRt"></i></span>
-                        <span class="orderState"><i></i><em>新预约</em><i></i></span>
-                    </a>
-                </li>
-                <li>
-                	<a href="#">
-                    	<span class="orderTop">
-                        	<img src="img/test/test3.jpg" />
-                            <h3>Ascott商务服务中心</h3>
-                            <em>1000元／月</em>
-                            <i>A栋-1010室1室0厅1卫 25㎡</i>
-                        </span>
-                        <span class="orderLine"><i class="orderLt"></i><i class="orderRt"></i></span>
-                        <span class="orderState"><i></i><em>确认中</em><i></i></span>
-                    </a>
-                </li>
-                <li>
-                	<a href="#">
-                    	<span class="orderTop">
-                        	<img src="img/test/test3.jpg" />
-                            <h3>Ascott商务服务中心</h3>
-                            <em>1000元／月</em>
-                            <i>A栋-1010室1室0厅1卫 25㎡</i>
-                        </span>
-                        <span class="orderLine"><i class="orderLt"></i><i class="orderRt"></i></span>
-                        <span class="orderState"><i></i><em>已确认</em><i></i></span>
-                    </a>
-                </li>
-                <li>
-                	<a href="#">
-                    	<span class="orderTop">
-                        	<img src="img/test/test3.jpg" />
-                            <h3>Ascott商务服务中心</h3>
-                            <em>1000元／月</em>
-                            <i>A栋-1010室1室0厅1卫 25㎡</i>
-                        </span>
-                        <span class="orderLine"><i class="orderLt"></i><i class="orderRt"></i></span>
-                        <span class="orderState"><i></i><em>已入住</em><i></i></span>
-                    </a>
-                </li>
-                <li>
-                	<a href="#">
-                    	<span class="orderTop">
-                        	<img src="img/test/test3.jpg" />
-                            <h3>Ascott商务服务中心</h3>
-                            <em>1000元／月</em>
-                            <i>A栋-1010室1室0厅1卫 25㎡</i>
-                        </span>
-                        <span class="orderLine"><i class="orderLt"></i><i class="orderRt"></i></span>
-                        <span class="orderState"><i></i><em>已结束</em><i></i></span>
-                    </a>
-                </li>
-                <li class="cancelEnd">
-                	<a href="#">
-                    	<span class="orderTop">
-                        	<img src="img/test/test3.jpg" />
-                            <h3>Ascott商务服务中心</h3>
-                            <em>1000元／月</em>
-                            <i>A栋-1010室1室0厅1卫 25㎡</i>
-                        </span>
-                        <span class="orderLine"><i class="orderLt"></i><i class="orderRt"></i></span>
-                        <span class="orderState"><i></i><em>已取消</em><i></i></span>
-                    </a>
-                </li>
+        	<ul class="orderList" >
             </ul>
         </div>
-        
     </div>
 </body>
+
+<script language="JavaScript">
+	var h = $(window).height();
+	$(".wrap").css("height",h);
+	
+	var hasMore=true;
+	var tempPageIndex = 2;
+	
+	var util = new Util();
+	var userInfo = util.getCookie("userInfo");
+	var userInfoJson = eval('(' + userInfo + ')');
+	var uid = userInfoJson.userId;
+	OrderList();
+	function OrderList(pageIndexVal) {
+		if(uid == "" || uid == null){
+			return false;
+		}
+		var url = util.baseUrl + "/order/list";
+		var pageIndex = pageIndexVal;
+		if(pageIndex == undefined || pageIndex == ""){
+			pageIndex = 1;
+		}
+		var topicDetailParam = '{"biller":'+uid+',"pageSize":10,"pageNow":'+pageIndex+'}';
+		if(hasMore){
+			var contentType = "application/json";
+			util.requestRemoteDataJsonPost(url, topicDetailParam,contentType, function(data) {
+			console.log("订单列表：" + JSON.stringify(data));
+			util.logResult(data); 
+			var totalCount = data.totalCount;
+			if(pageIndex*10>=totalCount){
+				hasMore=false;
+			}
+			if(data.code == 0 && data.result != ''){
+				var orders = data.result;
+				var html = '';
+				for(var i = 0 ; i < orders.length ; i++){
+					var img = orders[i].house.listpic;
+					var subject = orders[i].house.subject;
+					var productName= orders[i].productName;
+					var rent = orders[i].house.roomRent/100+"元／月";
+					var address = orders[i].house.address;
+					var roomTypeDesc = orders[i].house.roomTypeDesc;
+					var rommArea = orders[i].house.roomArea;
+					var roomType=eval('(' + roomTypeDesc + ')');
+					var status= orders[i].orderStatus;
+					var statusDesc=orders[i].orderStatusDesc;
+					var orderId=orders[i].orderId;
+					var liType='';
+					var href='orderdetail.html?orderId='+orderId;
+					if(status==5){
+						liType='cancelEnd';
+						href='#';
+					}
+					address=address+roomType.room+"室"+roomType.hall+"厅"+roomType.toilet+"卫"+rommArea+"㎡";
+					  html += '<li class="'+liType+'"><a href="'+href+'"><span class="orderTop">'
+							+ '<img src="'+img+'" />'
+							+ '<h3>'+productName+'</h3>'
+							+ '<em>'+rent+'</em>'
+							+ '<i>' + address + '</i></span>'
+							+ '<span class="orderLine"><i class="orderLt"></i><i class="orderRt"></i></span>'
+							+ '<span class="orderState"><i></i><em>'+statusDesc+'</em><i></i></span>'
+							+ '</a></li>'
+				}
+				$('.orderList').append(html);
+			}
+		});
+		}
+	}
+	
+	$(function(){
+		var sTop=0;
+		$(window).on('scroll',function(){
+			sTop=$(window).scrollTop();
+			if(sTop>=$(".order").get(0).offsetHeight-$(".wrap").height())
+			{
+				OrderList(tempPageIndex);
+				tempPageIndex++;
+			}
+		});
+	})
+
+
+</script>
 </html>

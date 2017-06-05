@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
-<base href="http://me.trancyboy.com/iweb/"/>
+<base href="http://m.mjiahome.com/"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
@@ -13,6 +13,9 @@
 <link rel="stylesheet" type="text/css" href="css/base.css" />
 <link rel="stylesheet" type="text/css" href="css/common.css" />
 <link rel="stylesheet" type="text/css" href="css/detail.css" />
+<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css?v=1.0?v=1.0" />
+<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=c0fa8f5562c420a8d94038427bd9bdc0&plugin=AMap.ToolBar"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/swiper.min.js"></script>
 <script src="js/detail.js"></script>
@@ -25,23 +28,25 @@
     	<!-- apartmenInfo -->
     	<div class="apartmentInfo">
             <div class="apartTop">
-                <span class="apartImg"><a><img src="img/test/test1.jpg"><i>5张</i></a></span>
+                <span class="apartImg"><a><img id="img_head" src="img/test/test1.jpg" onclick="showLargeImg();"><i id='i_num'>5张</i></a></span>
                 <h3>Ascott商务服务中心</h3>
                 <span class="apartStar"><i class="curr"></i><i class="curr"></i><i class="curr"></i><i></i><i></i><em>4.0</em></span>
                 <span class="apartTag"><i class="tagGw">购物</i><i class="tagJt">交通</i><i class="tagCy">餐饮</i><i class="tagYl">娱乐</i></span>
-                <a class="btnHouseRule"></a>
+                <a class="btnHouseRule" onclick="showRule();"></a>
             </div>
             <ul class="mapInfo">
-                <li class="apartAddress"><i></i><label id="l_address">上海市浦东新区福山路82号</label></li>
-                <li><i class="iconCar"></i>交通：1.地铁2号线转5号线步行15分钟 2地铁2号线转5号步行15分钟.3.地铁2号线转5号线步行15分钟</li>
+            	<a onclick="showMap();">
+                	<li class="apartAddress"><i></i><label id="l_address">上海市浦东新区福山路82号</label></li>
+                </a>
+                <li ><i class="iconCar"></i>交通：1.地铁2号线转5号线步行15分钟 2地铁2号线转5号步行15分钟.3.地铁2号线转5号线步行15分钟</li>
             </ul>
         </div>
 
         <div class="apartFl">
             <h3><em>个人用户福利</em><a class="btnShow">展开<i></i></a></h3>
-            <div class="apartFlcont" id="div_welfare">1. 个人用户福利个人用户福利个人用户福利个人用户福利个人个人用户福利；2. 个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；</div>        </div>
+            <div class="apartFlcont" id="div_welfare">1. 个人用户福利个人用户福利个人用户福利个人用户福利个人个人用户福利；2. 个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；</div>        
         </div>
-        <span class="apartLogin">企业用户福利多多，<a href="#">立即登陆</a></span>
+        <span class="apartLogin" id="span_apartLogin">企业用户福利多多，<a href="login.html">立即登陆</a></span>
 
         <!-- 评价 -->
         <div class="houseStyle">
@@ -52,81 +57,28 @@
             <div class="houseBox">
                 <div class="houseSection" id="div_house">
                     <ul class="apartList" id="ul_house">
-                        <!--<li>
-                            <img src="img/test/test1.jpg" />
-                            <h3 class="hi">A栋-1010室</h3>
-                            <span class="ht">1室1厅1卫 25m2</span>
-                            <span class="hm">1000元／月</span>
-                            <a href="#" class="btnApart btnYya">预约</a>
-                        </li>
-                        <li>
-                            <img src="img/test/test1.jpg" />
-                            <h3 class="hi">A栋-1010室</h3>
-                            <span class="ht">1室1厅1卫 25m2</span>
-                            <span class="hm">1000元／月</span>
-                            <a href="#" class="btnApart btnYya">预约</a>
-                        </li>
-                        <li>
-                            <img src="img/test/test1.jpg" />
-                            <h3 class="hi">A栋-1010室</h3>
-                            <span class="ht">1室1厅1卫 25m2</span>
-                            <span class="hm">1000元／月</span>
-                            <a href="#" class="btnApart btnYjc">已借出</a>
-                        </li>
-                        <li>
-                            <img src="img/test/test1.jpg" />
-                            <h3 class="hi">A栋-1010室</h3>
-                            <span class="ht">1室1厅1卫 25m2</span>
-                            <span class="hm">1000元／月</span>
-                            <a href="#" class="btnApart btnYjc">已借出</a>
-                        </li>-->
                     </ul>
                 </div>
                 <div class="houseSection" style="display: none;"  id="div_common">
                     <ul class="commonList"  id="ul_common">
-                    	<li>
-                        	<img src="img/test/test4.jpg" />
-                            <h3>用户名</h3>
-                            <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
-                        </li>
-                        <li>
-                        	<img src="img/test/test4.jpg" />
-                            <h3>用户名</h3>
-                            <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
-                        </li>
-                        <li>
-                        	<img src="img/test/test4.jpg" />
-                            <h3>用户名</h3>
-                            <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
-                        </li>
-                        <li>
-                        	<img src="img/test/test4.jpg" />
-                            <h3>用户名</h3>
-                            <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
-                        </li>
-                        <li>
-                        	<img src="img/test/test4.jpg" />
-                            <h3>用户名</h3>
-                            <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
-                        </li>
                     </ul>
-                    <span class="listEnd">亲已经到底了哦~</span>
+                    <span class="listEnd" id="listEnd" style="display: none;">亲已经到底了哦~</span>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- show large image -->
-    <div class="showLargeImg">
+    <div class="showLargeImg" id="showLargeImg">
     	<div class="showLargeImageWrap">
-            <a class="showClose"></a>
+            <a class="showClose" id="showClose"></a>
             <div class="swiper-container" id="showImage">
-                <div class="swiper-wrapper">
+                <div class="swiper-wrapper" id="div_swiper">
+                    <!--<div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
                     <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
                     <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
                     <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
-                    <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
-                    <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
+                    <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>-->
                 </div>
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
@@ -135,7 +87,7 @@
     </div>
 
 	<!-- houseRule -->
-    <div class="houseRule">
+    <div class="houseRule" id="houseRule" onclick="hideRule();">
         <div class="houseWrap">
             <a class="showClose"></a>
         	<h3>房屋守则</h3>
@@ -153,11 +105,20 @@
     </div>
 
     <div class="mask"></div>
+    
+    <div id="mapContainer"  style="display: none;"></div>
+    <input type="hidden" name="longitude" id="longitude" value=""/>
+    <input type="hidden" name="latitude" id="latitude" value=""/>
 
 </body>
 <script type="text/javascript">
 	var util;
 	var isSubmit = 0;
+	var h = $(window).height();
+	$(".wrap").css("height",h);
+	var hasMore=true;
+	var tempPageIndex = 2;
+	var sTop=0;
 	//页面初始化
 	$(function(){
 		util = new Util();
@@ -166,6 +127,23 @@
 		loadProductDetail();
 		//加载房屋列表
 		loadHouseList();
+		//加载评论列表
+		loadCommonList();
+		//刷新个人信息
+//		flushUerInfo();
+
+		var userInfo = util.getCookie("userInfo");
+		if(userInfo != null && userInfo != ''){
+			$('#span_apartLogin').hide();
+		}
+		$(window).on('scroll',function(){
+			sTop=$(window).scrollTop();
+			if(sTop>=$(".houseSection").get(0).offsetHeight-$(".wrap").height())
+			{
+				loadCommonList(tempPageIndex);
+				tempPageIndex++;
+			}
+		});
 	});
 	
 	//加载产品详细
@@ -179,11 +157,22 @@
 			$.each(data.result,function(index,productInfo){
 				if(index == 0){
 					$('#l_address').html(productInfo.address);
+					var position = productInfo.position;
+					var positions = position.split(',');
+					$('#longitude').val(positions[0]);
+					$('#latitude').val(positions[1]);
+					var detailpic = productInfo.detailpic;
 					var personalWelfare = eval('(' + productInfo.personalWelfare + ')');
 					util.logResult(personalWelfare.notice);
 					var welfareStr = personalWelfare.notice+',优惠'+personalWelfare.remitPercent
 									+'%,押'+personalWelfare.mortagageNum+'付'+personalWelfare.payMentNum;
 					$('#div_welfare').html(welfareStr);
+					$('#i_num').html(detailpic.length+'张');
+					$('#img_head').attr('src',productInfo.listpic);
+					for(var i=0;i<detailpic.length;i++){
+						var img_html = '<div class="swiper-slide" onclick="hideLargeImg();"><img src="'+detailpic[i]+'" /></div>';
+						$('#div_swiper').append(img_html);
+					}
 				}
 			});
 		});
@@ -200,24 +189,75 @@
 			$.each(data.result,function(index,houseInfo){
 				 var roomTypeDesc = eval('(' + houseInfo.roomTypeDesc + ')');
 				 var room_type_des =  roomTypeDesc.room +'室'+roomTypeDesc.hall+'厅'+roomTypeDesc.toilet+'卫';
+				 var li_html = '';
 				 var room_status_str = '';
-				 if(houseInfo.status == 1){
+				 if(houseInfo.status == 1){showMap
+				 	li_html = '<li onclick="gotoHouseDetail('+houseInfo.houseId+','+houseInfo.productId+');">';
 				 	room_status_str = '<a href="#" class="btnApart btnYya">预约</a>';
 				 }else if(houseInfo.status == 2){
+				 	li_html = '<li>';
 				 	room_status_str = '<a href="#" class="btnApart btnYjc">已借出</a>';
 				 }else if(houseInfo.status == 3){
+				 	li_html = '<li>';
 				 	room_status_str = '<a href="#" class="btnApart btnYjc">已下线</a>';
 				 }
-				 var house_html = '<li>'
+				 var house_html = li_html
 				 				+ '	<img src="img/test/test1.jpg" />'
 				 				+ '	<h3 class="hi">'+houseInfo.subject+'</h3>'
-				 				+ '	<span class="ht">'+room_type_des+' '+houseInfo.roomArea+'25m2</span>'
+				 				+ '	<span class="ht">'+room_type_des+' '+houseInfo.roomArea+'㎡</span>'
 				 				+ '	<span class="hm">'+houseInfo.roomRent+'／月</span>'
 				 				+ room_status_str
 				 				+'</li>';
 				 $('#ul_house').append(house_html);
+				 $('#div_house').show();
 			});
 		});
+	}
+	
+	//加载评论列表
+	function loadCommonList(pageIndexVal){
+		var pageIndex = pageIndexVal;
+		if(pageIndex == undefined || pageIndex == ""){
+			pageIndex = 1;
+		}
+		var productId = util.getUrlParam('productId');
+		var url = util.baseUrl + '/comment/list';
+		var param ='{"productId": '+productId+',"pageSize":10,"pageNow":'+pageIndex+'}';
+		var contentType = "application/json";
+		var userIds = '';
+		var userInfos;
+		if(hasMore){
+			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+				util.logResult(data); 
+				var totalCount = data.totalCount;
+				if(pageIndex*10>=totalCount){
+					hasMore=false;
+				}
+				$.each(data.result,function(index,commentInfo){
+					userIds += commentInfo.replier+',';
+				});
+				userIds = userIds.substring(0,userIds.length-1)
+				util.logResult(userIds);
+				userInfos = getUserBatch(userIds);
+	            $.each(data.result,function(index,commentInfo){
+	            	var replier = commentInfo.replier;
+	            	var userInfo = userInfos[replier];
+	            	var userInfo1 = JSON.stringify(userInfo) ;
+	            	var userInfoJson = eval('(' + userInfo1 + ')');
+	            	var avatar = '';
+	            	if(userInfos[replier] != undefined && userInfoJson.avatar != undefined){
+	            		avatar = userInfoJson.avatar;
+	            	}
+	            	nickName = (userInfos[replier] != undefined && userInfoJson.nickName != undefined)?userInfoJson.nickName:'';
+	            	var comment_html = '<li>'
+	            					  +' <img src="'+avatar+'" />'
+	            					  +' <h3>'+nickName+'</h3>'
+	            					  +' <span>'+commentInfo.formatContent+'</span>'
+	            					  +' </li>';
+	            		$('#ul_common').append(comment_html);
+	            });
+			});
+		}
 	}
 	
 	
@@ -236,5 +276,94 @@
 		}
 	}
 	
+	//进入房间详情页面
+	function gotoHouseDetail(houseId,productId){
+		window.location.href="housedetail.html?houseId="+houseId+"&productId="+productId;
+	}
+	
+	//批量获取用户信息 
+	function getUserBatch(userIds){
+		var url = util.baseUrl + '/usr/batch_info?userIds='+userIds+'&returnType=map';
+		var result = {};
+		util.sendRequest(url, null, "post", false, function(data) {
+			var dataJson = eval('(' + JSON.stringify(data) + ')');
+			result = dataJson.result;
+		});
+		return result;
+	}
+	
+	//展示地图
+	function showMap(){
+		var address = $('#l_address').html();
+		var longitude = $('#longitude').val();
+		var latitude = $('#latitude').val();
+		map = new AMap.Map("mapContainer", {
+            zoom: 18,
+            center:[longitude,latitude]
+        });
+        marker = new AMap.Marker({
+            map:map,
+            position:[longitude,latitude]
+        });
+		marker.markOnAMAP({
+            name:address,
+            position:marker.getPosition()
+        });
+	}
+	
+	//展示规则 
+	function showRule(){
+		$('#houseRule').fadeIn();
+	}
+	
+	//隐藏规则
+	function hideRule(){
+		$('#houseRule').fadeOut();
+	}
+	
+	//展示大图
+	function showLargeImg(){
+		$('#showLargeImg').show();
+		$('#showClose').show();
+		var swiper = new Swiper('#showImage', {
+			prevButton:'.swiper-button-prev',
+			nextButton:'.swiper-button-next',
+			spaceBetween: 10,
+			centeredSlides: true,
+			loop:true,
+			autoplayDisableOnInteraction : false  //播放完毕后
+		});
+	}
+	
+	//隐藏大图
+	function hideLargeImg(){
+		$('#showLargeImg').hide();
+	}
+	
+	//刷新个人信息
+	function flushUerInfo(){
+		var userInfo = util.getCookie("userInfo");
+		if(userInfo != null && userInfo != ''){
+			var userInfoJson = eval('(' + userInfo + ')');
+			util.logResult(userInfoJson);
+			var userId = userInfoJson.userId;
+			var updateTime = userInfoJson.updateTime;
+			var url = util.baseUrl + '/usr/get'; 
+			var param ='{"userId": '+userId+'}';
+			var contentType = "application/json";
+			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+				var result = data.result;
+				if(result == null || result == undefined){
+					util.setCookie("userInfo", '');
+				}
+				var newUpdateTime = result.updateTime;
+				util.logResult(newUpdateTime+' '+updateTime);
+				if(newUpdateTime != updateTime){
+					util.setCookie("userInfo", '');
+				}
+				
+			});
+		}
+	}
 </script>
 </html>

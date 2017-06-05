@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
-<base href="http://me.trancyboy.com/iweb/"/>
+<base href="http://m.mjiahome.com/"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
@@ -122,7 +122,9 @@
 			isSubmit = 1;
 			var mobile = $('#mobile').val();
 			if(mobile == ''){
-				alert('请输入手机号码!');
+				$('#registerFail').html('请输入手机号码!');
+				$('#div_register_fail').fadeIn();
+				setTimeout( function(){$( '#div_register_fail' ).fadeOut();}, ( 1 * 1000 ) );
 				$('#mobile').focus();
 				isSubmit = 0;
 				return false;
@@ -130,14 +132,18 @@
 			var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
 			if(!myreg.test(mobile)) 
 			{ 
-			    alert('请输入有效的手机号码！'); 
+			    $('#registerFail').html('请输入有效的手机号码！');
+				$('#div_register_fail').fadeIn();
+				setTimeout( function(){$( '#div_register_fail' ).fadeOut();}, ( 1 * 1000 ) );
 			    $('#mobile').select();
 			    isSubmit = 0;
 			    return false;
 			}
 			var code = $('#in_code').val();
 			if(code == ''){
-				alert('请获取并输入验证码!');
+				$('#registerFail').html('请获取并输入验证码!');
+				$('#div_register_fail').fadeIn();
+				setTimeout( function(){$( '#div_register_fail' ).fadeOut();}, ( 1 * 1000 ) );
 				$('#in_code').focus();
 				isSubmit = 0;
 				return false;
@@ -145,29 +151,34 @@
 			var patrn=/^(\w){6,20}$/;  
 			var pwd = $('#pwd').val();
 			if(pwd == ''){
-				alert('请输入密码!');
+				$('#registerFail').html('请输入密码!');
+				$('#div_register_fail').fadeIn();
+				setTimeout( function(){$( '#div_register_fail' ).fadeOut();}, ( 1 * 1000 ) );
 				$('#pwd').select();
 				isSubmit = 0;
 				return false;
 			}
 			if (!patrn.exec(pwd)){
-				alert('只能输入6-20个字母、数字、下划线 !');
+				$('#registerFail').html('只能输入6-20个字母、数字、下划线 !');
+				$('#div_register_fail').fadeIn();
+				setTimeout( function(){$( '#div_register_fail' ).fadeOut();}, ( 1 * 1000 ) );
 				$('#pwd').select();
 				isSubmit = 0;
 				return false;
 			}
 			
 			var url = util.baseUrl + '/usr/mobile_register';
-			var param ='{"mobile": '+mobile+',"password":'+pwd+',"verifyCode":'+code+'}';
+			var param ='{"mobile": '+mobile+',"password":'+pwd+',"verifyCode":"'+code+'"}';
 			var contentType = "application/json";
 			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 				util.logResult(data); 
 				var errorCode = data.code;
 				util.logResult(errorCode); 
 				if(errorCode == 0){
+					var userId = data.result;
 					$('#div_register_res').fadeIn();
 					setTimeout( function(){$( '#div_register_res' ).fadeOut();
-						window.location.href="enterpriseuser.html";
+						window.location.href="enterpriseuser.html?userId="+userId;
 						}, ( 1 * 1000 ) );
 				}else{
 					$('#registerFail').html(data.msg);

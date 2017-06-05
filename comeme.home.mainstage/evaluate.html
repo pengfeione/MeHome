@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
-<base href="http://me.trancyboy.com/iweb/"/>
+<base href="http://m.mjiahome.com/"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name = "format-detection" content="telephone=no">
 <meta name="viewport"  content="width=device-width,user-scalable=no">
@@ -16,12 +16,9 @@
 <script src="js/jquery.min.js"></script>
 </head>
 <body>
-    
     <div class="wrap">
-        
         <!-- section -->
         <section class="section">
-        	
             <ul class="service">
             	<li>
                 	<span class="ssd">舒适度</span>
@@ -33,6 +30,7 @@
                         <dd data-state="非常满意"></dd>
                     </dl>
                     <span class="ssdResult">非常不满意</span>
+                    <input type="hidden" value="1" id="comfort" />
                 </li>
                 <li>
                 	<span class="ssd">便捷度</span>
@@ -44,6 +42,7 @@
                         <dd data-state="非常满意"></dd>
                     </dl>
                     <span class="ssdResult">一般</span>
+                    <input type="hidden" value="3" id="convenient" />
                 </li>
                 <li>
                 	<span class="ssd">服务度</span>
@@ -55,58 +54,35 @@
                         <dd class="ssdSelect" data-state="非常满意"></dd>
                     </dl>
                     <span class="ssdResult">非常满意</span>
+                    <input type="hidden" value="5" id="service" />
                 </li>
             </ul>
             
             <div class="evaTextarea">
-            	<textarea class="textarea">说点什么吧</textarea>
-            	<div class="btnFb"><a href="#" class="btn">发布</a></div>
+            	<textarea class="textarea" id="area_content"
+            		onclick="clearContent();">说点什么吧</textarea>
+            	<div class="btnFb"><a onclick="submitComment();" class="btn">发布</a></div>
         	</div>
             
         	<div class="common">
             	<h2>历史评价</h2>
-                <ul class="commonList">
-                	<li>
-                    	<img src="img/test/test4.jpg" />
-                        <h3>用户名</h3>
-                        <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
-                    </li>
-                    <li>
-                    	<img src="img/test/test4.jpg" />
-                        <h3>用户名</h3>
-                        <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
-                    </li>
-                    <li>
-                    	<img src="img/test/test4.jpg" />
-                        <h3>用户名</h3>
-                        <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
-                    </li>
-                    <li>
-                    	<img src="img/test/test4.jpg" />
-                        <h3>用户名</h3>
-                        <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
-                    </li>
-                    <li>
-                    	<img src="img/test/test4.jpg" />
-                        <h3>用户名</h3>
-                        <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
-                    </li>
+                <ul class="commonList" id="ul_common">
                 </ul>
             </div>	
         </section>
         
         <!-- footer -->
-        <footer class="footer">
+        <!--<footer class="footer">
         	<a href="#" class="curr">发现</a>
             <a href="#">我的</a>
-        </footer>
+        </footer>-->
         
     </div>
     
     <!-- 评价成功 -->
-    <div class="pop popEva">
+    <div class="pop popEva" id="div_popSuccess">
     	<em class="iconSuccess"></em>
-    	<span>评价成功</span>
+    	<span id="span_commonet">评价成功</span>
     </div>
     
 <script src="js/jquery.min.js"></script>
@@ -124,6 +100,14 @@ $(function()
 			{
 				aDd.eq(i).addClass("ssdSelect");
 			}
+			var obj = $(this).parent().parent().find('.ssd');
+			if(obj.html() == '舒适度'){
+				$('#comfort').val($(this).index()+1);
+			}else if(obj.html() == '便捷度'){
+				$('#convenient').val($(this).index()+1);
+			}else if(obj.html() == '服务度'){
+				$('#service').val($(this).index()+1);
+			}
 			_this.find(".ssdResult").html($(this).attr("data-state"));
 		})
 	});
@@ -134,9 +118,166 @@ $(function()
 <script type="text/javascript">
 	var util;
 	var isSubmit = 0;
+	var h = $(window).height();
+	$(".wrap").css("height",h);
+	var hasMore=true;
+	var tempPageIndex = 2;
+	var sTop=0;
 	//页面初始化
 	$(function(){
 		util = new Util();
+		//加载用户信息
+		loadUserInfo();
+		//加载评论列表
+		loadCommonList();
+		//刷新个人信息
+		flushUerInfo();
+		$(window).on('scroll',function(){
+			sTop=$(window).scrollTop();
+			if(sTop>=$(".common").get(0).offsetHeight-$(".wrap").height())
+			{
+				loadCommonList(tempPageIndex);
+				tempPageIndex++;
+			}
+		});
 	});
+	
+	//加载用户信息
+	function loadUserInfo(){
+		var userInfo = util.getCookie("userInfo");
+		var userInfoJson = eval('(' + userInfo + ')');
+		util.logResult(userInfoJson); 
+	}
+	
+	//加载评论列表
+	function loadCommonList(pageIndexVal){
+		var pageIndex = pageIndexVal;
+		if(pageIndex == undefined || pageIndex == ""){
+			pageIndex = 1;
+		}
+		var productId = util.getUrlParam('productId');
+		var url = util.baseUrl + '/comment/list';
+		var param ='{"productId": '+productId+'},"pageSize":10,"pageNow":'+pageIndex+'}';
+		var contentType = "application/json";
+		var userIds = '';
+		var userInfos;
+		if(hasMore){
+			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+				$('#ul_common').html('');
+				util.logResult(data); 
+				var totalCount = data.totalCount;
+				if(pageIndex*10>=totalCount){
+					hasMore=false;
+				}
+				$.each(data.result,function(index,commentInfo){
+					userIds += commentInfo.replier+',';
+				});
+				userIds = userIds.substring(0,userIds.length-1)
+				util.logResult(userIds);
+				userInfos = getUserBatch(userIds);
+	            $.each(data.result,function(index,commentInfo){
+	            	var replier = commentInfo.replier;
+	            	var userInfo = userInfos[replier];
+	            	var userInfo1 = JSON.stringify(userInfo) ;
+	            	var userInfoJson = eval('(' + userInfo1 + ')');
+	            	var comment_html = '<li>'
+	            					  +' <img src="'+userInfoJson.avatar+'" />'
+	            					  +' <h3>'+userInfoJson.nickName+'</h3>'
+	            					  +' <span>'+commentInfo.formatContent+'</span>'
+	            					  +' </li>';
+	            		$('#ul_common').append(comment_html);
+	            });
+			});
+		}
+	}
+	
+	//清除文本框提示信息
+	function clearContent(){
+		var content = $('#area_content').val();
+		if(content == '说点什么吧'){
+			$('#area_content').val('');
+			$('#area_content').css('color','black');
+		}
+	}
+	
+	//发布评价
+	function submitComment(){
+		flushUerInfo();
+		var userInfo = util.getCookie("userInfo");
+		if(userInfo == null || userInfo == ''){
+			$('#span_commonet').html('请先登录!');
+			$( '#div_popSuccess' ).fadeIn();
+			setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+			return false;
+		}
+		var userInfoJson = eval('(' + userInfo + ')');
+		var userId = userInfoJson.userId;
+		var content = $('#area_content').val();
+		if(content == '说点什么吧'){
+			content = '';
+		}
+		var comfort = $('#comfort').val();
+		var convenient = $('#convenient').val();
+		var service = $('#service').val();
+		var productId = util.getUrlParam('productId');
+		var url = util.baseUrl + '/comment/add';
+		var param ='{"type":"product","replier":'+userId+',"formatContent":"'+content
+				  +'","comfort":'+comfort+',"convenient":'+convenient+',"service":'+service+',"productId":'+productId+'}';
+		var contentType = "application/json";
+		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+			util.logResult(data);
+			var code = data.code;
+			if(code == 0){
+				$('#div_popSuccess').fadeIn();
+				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+					}, ( 1 * 1000 ) );
+				$('#area_content').val('说点什么吧');
+			    $('#area_content').css('color','gray');
+			    loadCommonList();
+			}else{
+				$('#span_commonet').html('评论失败!');
+				$('#div_popSuccess').fadeIn();
+				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+					}, ( 1 * 1000 ) );
+			}
+		});
+	}
+	
+	//批量获取用户信息 
+	function getUserBatch(userIds){
+		var url = util.baseUrl + '/usr/batch_info?userIds='+userIds+'&returnType=map';
+		var result = {};
+		util.sendRequest(url, null, "post", false, function(data) {
+			var dataJson = eval('(' + JSON.stringify(data) + ')');
+			result = dataJson.result;
+		});
+		return result;
+	}
+	
+	//刷新个人信息
+	function flushUerInfo(){
+		var userInfo = util.getCookie("userInfo");
+		if(userInfo != null && userInfo != ''){
+			var userInfoJson = eval('(' + userInfo + ')');
+			util.logResult(userInfoJson);
+			var userId = userInfoJson.userId;
+			var updateTime = userInfoJson.updateTime;
+			var url = util.baseUrl + '/usr/get'; 
+			var param ='{"userId": '+userId+'}';
+			var contentType = "application/json";
+			util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+				var result = data.result;
+				if(result == null || result == undefined){
+					util.setCookie("userInfo", '');
+				}
+				var newUpdateTime = result.updateTime;
+				util.logResult(newUpdateTime+' '+updateTime);
+				if(newUpdateTime != updateTime){
+					util.setCookie("userInfo", '');
+				}
+				
+			});
+		}
+	}
 </script>
 </html>
