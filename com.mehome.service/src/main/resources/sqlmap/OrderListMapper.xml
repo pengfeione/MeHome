@@ -414,6 +414,9 @@
     <include refid="Base_Column_List"/>
     FROM order_list
     WHERE 1=1
+    <if test="orderId != null">
+      AND orderId = #{orderId,jdbcType=VARCHAR}
+    </if>
     <if test="productName != null" >
       AND product_name like CONCAT('%','${productName}','%' )
     </if>
@@ -454,7 +457,10 @@
     SELECT count(*)
     FROM order_list
     WHERE 1=1
-     <if test="productName != null" >
+    <if test="orderId != null">
+      AND orderId = #{orderId,jdbcType=VARCHAR}
+    </if>
+    <if test="productName != null" >
       AND product_name like CONCAT('%','${productName}','%' )
     </if>
     <if test="houseSubject != null" >
