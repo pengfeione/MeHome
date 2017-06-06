@@ -125,13 +125,25 @@ public class OrderServiceImpl implements IOrderService {
 				}
 			}
 			if ((bean.getOrderStatus()!=null&&bean.getOrderStatus().intValue() == OrderStatusEnum.CONFIRMED.getKey())||(oldOrder.getOrderStatus().intValue()>1)) {
-				bean = calculateWelfare(bean);
+				bean = calculateWelfare(bean,null);
 			}
 			order = bean.compareToPojo();
 			if(order.getStartTime()!=null&&order.getEndTime()!=null){
-				long mills=order.getEndTime().getTime()-order.getStartTime().getTime();
-				long day=mills/(1000*60*60*24);
+				Long mills=order.getEndTime().getTime()-order.getStartTime().getTime();
+				Long day=mills/(1000*60*60*24);
 				order.setTenancy(new BigDecimal(day));
+				//TODO 根据租赁期重新计算房租 未满月按满月算
+				Double dividedDouble=day/31.00;
+				Long dividedLong=day/31;
+				Long calculateMonth=dividedLong;
+				if(dividedDouble>dividedLong){
+					calculateMonth=dividedLong+1;
+				}
+				bean = calculateWelfare(bean,calculateMonth.intValue());
+				order.setOrigRent(bean.getOrigRent());
+				order.setOrigAmount(bean.getOrigAmount());
+				order.setDiscountRent(bean.getDiscountRent());
+				order.setDiscountAmount(bean.getDiscountAmount());
 			}
 			int row = orderListDAO.updateRequired(order);
 		} catch (Exception e) {
@@ -142,7 +154,7 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public OrderBean calculateWelfare(OrderBean bean) {
+	public OrderBean calculateWelfare(OrderBean bean,Integer calculateMonth) {
 		// TODO Auto-generated method stub
 		String orderId = bean.getOrderId();
 		OrderList order = orderListDAO.selectById(orderId);
@@ -200,6 +212,9 @@ public class OrderServiceImpl implements IOrderService {
 				percent = percent - supplierPercent;
 			}
 			Integer deposit = (int) (house.getRoomRent() * mortagageNum * percent);
+			if(calculateMonth!=null){
+				payMentNum=calculateMonth;
+			}
 			Double discountRent = house.getRoomRent() * payMentNum * (1 - remitPercent * 0.01);
 			bean.setDeposit(deposit);
 			bean.setHouseSubject(house.getSubject());
@@ -252,8 +267,9 @@ public class OrderServiceImpl implements IOrderService {
 	}
 	
 	public static void main(String[] args) {
-		JSONObject payJson=JSONObject.parseObject("dsdcscscs");
-		System.out.println(payJson);
+		double i=31.00;
+		int a=31;
+		System.out.println(a==i);
 	}
 
 }

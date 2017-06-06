@@ -20,7 +20,7 @@ public interface IOrderService {
 	 * @param bean
 	 * @return
 	 */
-	public OrderBean calculateWelfare(OrderBean bean);
+	public OrderBean calculateWelfare(OrderBean bean,Integer calculateMonth);
 	
 	public String refundOrder(OrderBean bean);
 	
