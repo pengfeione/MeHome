@@ -49,6 +49,8 @@ public class CommentBean extends PageMysqlUtil{
     private String convenientDesc;
     
     private String serviceDesc;
+    
+    private Boolean isCheck;
 
 	public String getCommentId() {
 		return commentId;
@@ -202,6 +204,14 @@ public class CommentBean extends PageMysqlUtil{
 		this.serviceDesc = serviceDesc;
 	}
 
+	public Boolean getIsCheck() {
+		return isCheck;
+	}
+
+	public void setIsCheck(Boolean isCheck) {
+		this.isCheck = isCheck;
+	}
+
 	public ProductComment beanToPojo(Boolean addBoolean){
 		ProductComment comment = new ProductComment();
 		comment.setCommentId(addBoolean?OrderIdUtils.getUUID():this.getCommentId());
@@ -213,6 +223,7 @@ public class CommentBean extends PageMysqlUtil{
 		comment.setIsActive(addBoolean?Boolean.TRUE:this.getIsActive());
 		comment.setIsAdmin(this.getIsAdmin()==null&&addBoolean?Boolean.FALSE:this.getIsAdmin());
 		comment.setIsBest(this.getIsBest()==null&&addBoolean?Boolean.FALSE:this.getIsBest());
+		comment.setIsCheck(this.getIsCheck()==null&&addBoolean?Boolean.FALSE:this.getIsCheck());
 		comment.setListpic(this.getListpic());
 		comment.setProductId(this.getProductId());
 		comment.setReplier(this.getReplier());
@@ -235,6 +246,7 @@ public class CommentBean extends PageMysqlUtil{
 		this.setFromTag(comment.getFromTag());
 		this.setIsAdmin(comment.getIsAdmin());
 		this.setIsBest(comment.getIsBest());
+		this.setIsCheck(comment.getIsCheck());
 		this.setListpic(comment.getListpic());
 		this.setProductId(comment.getProductId());
 		this.setReplier(comment.getReplier());
