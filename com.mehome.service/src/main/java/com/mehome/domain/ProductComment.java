@@ -36,6 +36,8 @@ public class ProductComment {
     private Float convenient;
     
     private Float service;
+    
+    private Boolean isCheck;
 
     public String getCommentId() {
         return commentId;
@@ -173,6 +175,14 @@ public class ProductComment {
 		this.service = service;
 	}
 
+	public Boolean getIsCheck() {
+		return isCheck;
+	}
+
+	public void setIsCheck(Boolean isCheck) {
+		this.isCheck = isCheck;
+	}
+
 	@Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -201,7 +211,8 @@ public class ProductComment {
             && (this.getFormatContent() == null ? other.getFormatContent() == null : this.getFormatContent().equals(other.getFormatContent()))
             && (this.getComfort() == null ? other.getComfort() == null : this.getComfort().equals(other.getComfort()))
         	&& (this.getConvenient() == null ? other.getConvenient() == null : this.getConvenient().equals(other.getConvenient()))
-        	&& (this.getService() == null ? other.getService() == null : this.getService().equals(other.getService()));
+        	&& (this.getService() == null ? other.getService() == null : this.getService().equals(other.getService()))
+        	&& (this.getIsCheck() == null ? other.getIsCheck() == null : this.getIsCheck().equals(other.getIsCheck()));
     }
 
     @Override
@@ -225,6 +236,7 @@ public class ProductComment {
         result = prime * result + ((getComfort() == null) ? 0 : getComfort().hashCode());
         result = prime * result + ((getConvenient() == null) ? 0 : getConvenient().hashCode());
         result = prime * result + ((getService() == null) ? 0 : getService().hashCode());
+        result = prime * result + ((getIsCheck() == null) ? 0 : getIsCheck().hashCode());
         return result;
     }
 }
