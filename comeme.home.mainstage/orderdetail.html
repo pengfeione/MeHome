@@ -259,45 +259,17 @@
 								address=address+roomType.room+"室"+roomType.hall+"厅"+roomType.toilet+"卫"+house.roomArea+"㎡";
 								var orderdetail='<ul class="orderList"><li><div class="boxList"><span class="orderTop"><section class="'+sectionType+'"></section> <img src="'+img+'" /><h3>'+productName+'</h3> <em>'+rent+'元／月<section class="iconYj">押一付三</section></em> <i>'+address+'</i></span> <span class="'+orderLineType+'"><i class="orderLt"></i><i class="orderRt"></i></span> <a class="orderTel"><em class="iconTel"></em>客服电话：021-83844848<i class="iconMore"></i></a></div></li></ul>';
 								$('.wrap').append(orderdetail).append(rentInfo).append(depositHtml).append(pj);
+								loadScript("js/orderdetail.js");
 							}
 						});
 
 	}
-	$("#next").click(function() {
-		$("#hold_choose").fadeOut();
-		$("#pay_choose").fadeIn();
-	});
-	$("#pay_close").click(function() {
-		$("#pay_choose").fadeOut();
-	});
-	$("#next_close").click(function() {
-		$("#hold_choose").fadeOut();
-	});
-	$("#confirm").click(function() {
-		$("#hold_choose").fadeIn();
-	});
-	$("#already_deposit").click(function() {
-		if ($("#already_deposit").attr("class") == "depositInit") {
-			$("#hold_choose").fadeIn();
-		} else {
-			$("#order_offline").fadeIn();
-		}
-	});
-	$("#offline_cancel").click(function() {
-		$("#order_offline").fadeOut();
-	});
-	$("#offline_sure").click(function() {
-		$("#order_offline").fadeOut();
-		$("#already_deposit").attr("class", "depositInit");
-		//alert($("#already_deposit").attr("class"));
-		$("#em").hide();
-
-	});
-	$("#pay").click(function() {
-		$("#pay_choose").fadeOut();
-		$("#already_deposit").attr("class", "depositSelect");
-	});
-	
+	function loadScript(url) {
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = url;
+		document.body.appendChild(script);
+	}
 	//跳转到评价页面
 	function goCommon(productId){
 		window.location.href='evaluate.html?productId='+productId;
