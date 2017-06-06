@@ -16,6 +16,7 @@ import com.mehome.requestDTO.UserInfoDTO;
 import com.mehome.resonpseDTO.AdministratorBean;
 import com.mehome.service.iface.ICompanyService;
 import com.mehome.utils.AssertUtils;
+import com.mehome.utils.RandomUtils;
 import com.mehome.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Administrator on 2017/5/16.
@@ -55,6 +57,7 @@ public class CompanyServiceImpl implements ICompanyService {
                     item.setRegisterNum(0);
                 } else {
                     item.setRegisterNum(authNum.intValue());
+                    item.setPassword(authorizeAdmin.getPassword());
                 }
                 if (null == authorizeAdmin) {
                     item.setAdminAccount("");
@@ -147,7 +150,7 @@ public class CompanyServiceImpl implements ICompanyService {
             sameCompany = new AuthorizeAdmin();
             sameCompany.setCompanyId(authorizeAdmin.getCompanyId());
             sameCompany.setAvatar(defaultAvatar);
-            sameCompany.setPassword("123854");
+            sameCompany.setPassword(RandomUtils.password(6));
             sameCompany.setNickName(companyList.getCompanyName());
             sameCompany.setAdminId(admin.getAdminId());
             sameCompany.setRole(RoleEnum.COMPANY.getRole());

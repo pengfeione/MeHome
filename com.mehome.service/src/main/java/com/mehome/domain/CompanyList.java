@@ -33,6 +33,15 @@ public class CompanyList {
 
     private String adminAccount;
 
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public CompanyList() {
     }
