@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mehome.dao.ProductRelationWelfareDao">
+    <resultMap id="BaseResultMap" type="com.mehome.domain.ProductRelationWelfare">
+        <id column="welfare_id" property="welfareId" jdbcType="INTEGER"/>
+        <id column="product_id" property="productId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="ProductCompanyWelfareMap" type="com.mehome.resonpseDTO.ProductCompanyWelfare">
+        <id column="company_id" property="companyId" jdbcType="INTEGER"/>
+        <result column="welfare_content" property="content" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+      welfare_id, product_id, create_time
+    </sql>
+    <select id="listWelfareByProductId" resultMap="ProductCompanyWelfareMap" parameterType="map">
+        select company_welfare.company_id as company_id ,welfare_content, welfare.create_time as create_time
+        from (select welfare_id,create_time
+        from  product_relation_welfare
+        where  product_id= #{productId,jdbcType=INTEGER}) welfare left join company_welfare
+        on welfare. welfare_id=company_welfare.welfare_id;
+    </select>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from product_relation_welfare
+        where welfare_id = #{welfareId,jdbcType=INTEGER}
+        and product_id = #{productId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByProductId" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from product_relation_welfare
+        where product_id = #{productId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="delete" parameterType="map">
+    delete from product_relation_welfare
+    where welfare_id = #{welfareId,jdbcType=INTEGER}
+      and product_id = #{productId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.mehome.domain.ProductRelationWelfare">
+    insert into product_relation_welfare (welfare_id, product_id, create_time
+      )
+    values (#{welfareId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertRequired" parameterType="com.mehome.domain.ProductRelationWelfare">
+        insert into product_relation_welfare
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="welfareId != null">
+                welfare_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="welfareId != null">
+                #{welfareId,jdbcType=INTEGER},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateRequired" parameterType="com.mehome.domain.ProductRelationWelfare">
+        update product_relation_welfare
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where welfare_id = #{welfareId,jdbcType=INTEGER}
+        and product_id = #{productId,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="com.mehome.domain.ProductRelationWelfare">
+    update product_relation_welfare
+    set create_time = #{createTime,jdbcType=TIMESTAMP}
+    where welfare_id = #{welfareId,jdbcType=INTEGER}
+      and product_id = #{productId,jdbcType=INTEGER}
+  </update>
+</mapper>
