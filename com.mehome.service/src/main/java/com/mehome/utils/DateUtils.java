@@ -53,6 +53,15 @@ public class DateUtils {
 		cal.set(Calendar.MILLISECOND, 59);
 		return cal.getTime();
 	}
+	
+	public static Date getToDayStart(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+				cal.get(Calendar.DATE), 0, 0, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTime();
+	}
 	public static void main(String[] args) {
 		Date date=getDayEnd(new Date(), "day", 1);
 		System.out.println(DateUtils.dateToStr(date));
