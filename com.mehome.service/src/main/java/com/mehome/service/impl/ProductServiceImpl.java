@@ -3,19 +3,17 @@ package com.mehome.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mehome.dao.SupplierListDao;
-import com.mehome.domain.SupplierList;
+import com.alibaba.fastjson.JSON;
+import com.mehome.dao.*;
+import com.mehome.domain.*;
+import com.mehome.exceptions.InfoException;
+import com.mehome.requestDTO.CompanyWelfareNotice;
+import com.mehome.resonpseDTO.ProductCompanyWelfare;
 import com.mehome.utils.AssertUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mehome.dao.BasicFacilitiesDao;
-import com.mehome.dao.ProductListDao;
-import com.mehome.dao.ProductRalationBasicDao;
-import com.mehome.domain.BasicFacilities;
-import com.mehome.domain.ProductList;
-import com.mehome.domain.ProductRalationBasic;
 import com.mehome.requestDTO.BasicBean;
 import com.mehome.requestDTO.ProductBean;
 import com.mehome.service.iface.IProductService;
@@ -31,6 +29,12 @@ public class ProductServiceImpl implements IProductService {
     private ProductRalationBasicDao productRalationBasicDAO;
     @Autowired
     private BasicFacilitiesDao basicFacilitiesDAO;
+    @Autowired
+    private ProductRelationWelfareDao productRelationWelfareDao;
+    @Autowired
+    private CompanyListDao companyListDao;
+    @Autowired
+    private CompanyWelfareDao companyWelfareDao;
 
     @Override
     public List<ProductBean> getListByCondition(ProductBean bean) {
@@ -100,5 +104,80 @@ public class ProductServiceImpl implements IProductService {
             return Boolean.FALSE.toString();
         }
         return Boolean.TRUE.toString();
+    }
+
+    /**
+     * @param welfare
+     * @param productId
+     * @return
+     */
+    @Override
+    public int updateWelfare(CompanyWelfareNotice welfare, Integer productId) {
+        if (welfare.getRemitPercent() < 0 || welfare.getRemitPercent() > 100) {
+            throw new InfoException("房租减免必须在（0~100）%");
+        }
+        if (welfare.getMortagageNum() < 0) {
+            throw new InfoException("首次支付押金的月数必须大于0");
+        }
+        if (welfare.getPayMentNum() < 0) {
+            throw new InfoException("首次支付支付的月数必须大于0");
+        }
+        ProductList product = productListDAO.selectById(productId);
+        AssertUtils.isNotNull(product, "更新的产品标识非法！");
+        ProductList persistentProduct = new ProductList();
+        persistentProduct.setProductId(product.getProductId());
+        persistentProduct.setHasPersonal(true);
+        persistentProduct.setPersonalWelfare(JSON.toJSONString(welfare));
+        return productListDAO.updateRequired(persistentProduct);
+    }
+
+    @Override
+    public int removeWelfare(Integer productId) {
+        ProductList product = productListDAO.selectById(productId);
+        AssertUtils.isNotNull(product, "更新的产品标识非法！");
+        ProductList persistentProduct = new ProductList();
+        persistentProduct.setProductId(product.getProductId());
+        persistentProduct.setHasPersonal(false);
+        return productListDAO.updateRequired(persistentProduct);
+    }
+
+    @Override
+    public List<ProductCompanyWelfare> listCompanyWelfare(Integer productId) {
+        AssertUtils.isNotNull(productId, "产品标识未知！");
+        List<ProductCompanyWelfare> productCompanyWelfare = productRelationWelfareDao.listWelfareByProductId(productId);
+        for (ProductCompanyWelfare welfare : productCompanyWelfare) {
+            CompanyList companyList = companyListDao.selectById(welfare.getCompanyId());
+            if (null != companyList) {
+                welfare.setCompanyName(companyList.getCompanyName());
+            }
+            welfare.setProductId(productId);
+        }
+        return productCompanyWelfare;
+    }
+
+    @Override
+    public int addCompanyWelfare(Integer productId, Integer companyWelfareId) {
+        AssertUtils.isNotNull(productId, "企业标识未知！");
+        AssertUtils.isNotNull(companyWelfareId, "企业福利标识未知！");
+        AssertUtils.isNotNull(productListDAO.selectById(productId), "产品ID未找到！");
+        AssertUtils.isNotNull(companyWelfareDao.selectById(companyWelfareId), "企业福利ID未找到！");
+        if (null != productRelationWelfareDao.selectById(companyWelfareId, productId)) {
+            return 1;
+        }
+        ProductRelationWelfare welfare = new ProductRelationWelfare();
+        welfare.setProductId(productId);
+        welfare.setWelfareId(companyWelfareId);
+        productRelationWelfareDao.insertRequired(welfare);
+        return 1;
+    }
+
+    @Override
+    public int deleteCompanyWelfare(Integer productId, Integer companyWelfareId) {
+        AssertUtils.isNotNull(productId, "企业标识未知！");
+        AssertUtils.isNotNull(companyWelfareId, "企业福利标识未知！");
+        AssertUtils.isNotNull(productListDAO.selectById(productId), "产品ID未找到！");
+        AssertUtils.isNotNull(companyWelfareDao.selectById(companyWelfareId), "企业福利ID未找到！");
+        productRelationWelfareDao.delete(companyWelfareId, productId);
+        return 1;
     }
 }

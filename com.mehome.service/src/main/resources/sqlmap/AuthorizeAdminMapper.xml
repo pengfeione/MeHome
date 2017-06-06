@@ -39,7 +39,7 @@
         <include refid="Base_Column_List"/>
         from authorize_admin
         where name = #{name,jdbcType=VARCHAR}
-        and password=password(#{password,jdbcType=VARCHAR})
+        and password=#{password,jdbcType=VARCHAR}
     </select>
     <delete id="delete" parameterType="java.lang.Integer">
     delete from authorize_admin

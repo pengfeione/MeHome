@@ -1,16 +1,16 @@
 package com.mehome.controller;
 
 import com.alipay.api.domain.Product;
+import com.mehome.domain.CompanyWelfare;
 import com.mehome.domain.ProductList;
+import com.mehome.enumDTO.RoleEnum;
+import com.mehome.requestDTO.CompanyWelfareNotice;
+import com.mehome.utils.Permits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.mehome.requestDTO.HouseBean;
 import com.mehome.requestDTO.ProductBean;
@@ -56,4 +56,53 @@ public class ProductController {
                 .body(Result.build().content(productService.updateProduct(bean)));
     }
 
+    @PostMapping("/update_welfare")
+    @ResponseBody
+    public ResponseEntity<Result> updateWelfare(@RequestBody CompanyWelfareNotice welfare, @RequestParam("productId") Integer productId) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(productService.updateWelfare(welfare, productId)));
+    }
+
+    @PostMapping("/remove_welfare")
+    @ResponseBody
+    public ResponseEntity<Result> removeWelfare(@RequestParam("productId") Integer productId) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(productService.removeWelfare(productId)));
+    }
+
+    @PostMapping("/list_company_welfare")
+    @ResponseBody
+    public ResponseEntity<Result> listCompanyWelfare(@RequestParam("productId") Integer productId) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(productService.listCompanyWelfare(productId)));
+    }
+
+    @PostMapping("/add_company_welfare")
+    @ResponseBody
+    public ResponseEntity<Result> addCompanyWelfare(@RequestParam("productId") Integer productId, @RequestParam("companyWelfareId") Integer companyWelfareId) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(productService.removeWelfare(productId)));
+    }
+
+    @PostMapping("/delete_company_welfare")
+    @ResponseBody
+    public ResponseEntity<Result> deleteCompanyWelfare(@RequestParam("productId") Integer productId, @RequestParam("companyWelfareId") Integer companyWelfareId) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(productService.removeWelfare(productId)));
+    }
 }
