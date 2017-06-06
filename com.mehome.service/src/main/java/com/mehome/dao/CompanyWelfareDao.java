@@ -13,8 +13,10 @@ public interface CompanyWelfareDao {
 
     CompanyWelfare selectById(Integer welfareId);
 
-
     List<CompanyWelfare> selectByCompanyId(Integer companyId);
+
+
+    List<CompanyWelfare> listUnSelected();
 
     int updateRequired(CompanyWelfare record);
 

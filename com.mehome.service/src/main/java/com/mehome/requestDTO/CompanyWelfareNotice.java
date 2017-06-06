@@ -6,11 +6,19 @@ import com.alibaba.fastjson.JSONObject;
  * Created by Administrator on 2017/5/22.
  */
 public class CompanyWelfareNotice {
-
+    private String name;
     private String notice = "";//公告
     private Integer remitPercent = 0;//房租减免百分比
     private Integer payMentNum = 0;//房租压的月数
     private Integer mortagageNum = 0;//房租支付的月数
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getNotice() {
         return notice;

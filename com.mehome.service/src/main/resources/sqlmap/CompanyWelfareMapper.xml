@@ -24,6 +24,12 @@
         from company_welfare
         where company_id = #{companyId,jdbcType=INTEGER} and welfare_active=1
     </select>
+    <select id="listUnSelected" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from company_welfare
+        where is_select=0
+    </select>
     <delete id="delete" parameterType="java.lang.Integer">
     delete from company_welfare
     where welfare_id = #{welfareId,jdbcType=INTEGER}

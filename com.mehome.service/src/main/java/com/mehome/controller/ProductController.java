@@ -78,7 +78,7 @@ public class ProductController {
 
     @PostMapping("/list_company_welfare")
     @ResponseBody
-    public ResponseEntity<Result> listCompanyWelfare(@RequestParam("productId") Integer productId) {
+    public ResponseEntity<Result> listCompanyWelfare(@RequestParam(value = "productId", required = false) Integer productId) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
@@ -93,7 +93,7 @@ public class ProductController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(productService.removeWelfare(productId)));
+                .body(Result.build().content(productService.addCompanyWelfare(productId, companyWelfareId)));
     }
 
     @PostMapping("/delete_company_welfare")
@@ -103,6 +103,6 @@ public class ProductController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(productService.removeWelfare(productId)));
+                .body(Result.build().content(productService.deleteCompanyWelfare(productId, companyWelfareId)));
     }
 }

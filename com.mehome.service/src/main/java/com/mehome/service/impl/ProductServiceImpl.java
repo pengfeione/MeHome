@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.mehome.requestDTO.BasicBean;
 import com.mehome.requestDTO.ProductBean;
 import com.mehome.service.iface.IProductService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("IProductService")
 public class ProductServiceImpl implements IProductService {
@@ -143,19 +144,37 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<ProductCompanyWelfare> listCompanyWelfare(Integer productId) {
-        AssertUtils.isNotNull(productId, "产品标识未知！");
-        List<ProductCompanyWelfare> productCompanyWelfare = productRelationWelfareDao.listWelfareByProductId(productId);
-        for (ProductCompanyWelfare welfare : productCompanyWelfare) {
-            CompanyList companyList = companyListDao.selectById(welfare.getCompanyId());
-            if (null != companyList) {
-                welfare.setCompanyName(companyList.getCompanyName());
+        if (null != productId) {
+            //查询该产品的关联的企业福利
+            List<ProductCompanyWelfare> productCompanyWelfare = productRelationWelfareDao.listWelfareByProductId(productId);
+            for (ProductCompanyWelfare welfare : productCompanyWelfare) {
+                CompanyList companyList = companyListDao.selectById(welfare.getCompanyId());
+                if (null != companyList) {
+                    welfare.setCompanyName(companyList.getCompanyName());
+                }
+                welfare.setProductId(productId);
             }
-            welfare.setProductId(productId);
+            return productCompanyWelfare;
+        } else {
+            List<ProductCompanyWelfare> result = new ArrayList<ProductCompanyWelfare>();
+            //查询为未关联的企业福利
+            List<CompanyWelfare> welfareList = companyWelfareDao.listUnSelected();
+            for (CompanyWelfare item : welfareList) {
+                ProductCompanyWelfare itemResult = new ProductCompanyWelfare();
+                itemResult.setCompanyId(item.getCompanyId());
+                CompanyList companyList = companyListDao.selectById(item.getCompanyId());
+                if (null != companyList) {
+                    itemResult.setCompanyName(companyList.getCompanyName());
+                }
+                itemResult.setContent(item.getWelfareContent());
+                itemResult.setCreateTime(item.getUpdateTime());
+                result.add(itemResult);
+            }
+            return result;
         }
-        return productCompanyWelfare;
     }
 
-    @Override
+    @Transactional
     public int addCompanyWelfare(Integer productId, Integer companyWelfareId) {
         AssertUtils.isNotNull(productId, "企业标识未知！");
         AssertUtils.isNotNull(companyWelfareId, "企业福利标识未知！");
@@ -168,6 +187,12 @@ public class ProductServiceImpl implements IProductService {
         welfare.setProductId(productId);
         welfare.setWelfareId(companyWelfareId);
         productRelationWelfareDao.insertRequired(welfare);
+
+        CompanyWelfare record = new CompanyWelfare();
+        record.setWelfareId(companyWelfareId);
+        record.setIsSelect(true);
+        companyWelfareDao.updateRequired(record);
+
         return 1;
     }
 
