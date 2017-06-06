@@ -19,10 +19,11 @@
     <result column="comfort" property="comfort" jdbcType="REAL" />
     <result column="convenient" property="convenient" jdbcType="REAL" />
     <result column="service" property="service" jdbcType="REAL" />
+    <result column="is_check" property="isCheck" jdbcType="BIT" />
   </resultMap>
   <sql id="Base_Column_List" >
     comment_id, product_id, type, replier, is_best, floor, is_admin, from_tag, score, 
-    create_time, is_active,listpic, content, format_content,comfort,convenient,service
+    create_time, is_active,listpic, content, format_content,comfort,convenient,service,is_check
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -39,12 +40,12 @@
       replier, is_best, floor, 
       is_admin, from_tag, score, create_time, 
       is_active, listpic, content, 
-      format_content,comfort,convenient,service)
+      format_content,comfort,convenient,service,is_check)
     values (#{commentId,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
       #{replier,jdbcType=VARCHAR}, #{isBest,jdbcType=BIT}, #{floor,jdbcType=INTEGER}, 
       #{isAdmin,jdbcType=BIT}, #{fromTag,jdbcType=VARCHAR}, #{score,jdbcType=REAL}, #{createTime,jdbcType=TIMESTAMP}, 
       #{isActive,jdbcType=BIT}, #{listpic,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}, 
-      #{formatContent,jdbcType=LONGVARCHAR}, #{comfort,jdbcType=REAL}, #{convenient,jdbcType=REAL},#{service,jdbcType=REAL})
+      #{formatContent,jdbcType=LONGVARCHAR}, #{comfort,jdbcType=REAL}, #{convenient,jdbcType=REAL},#{service,jdbcType=REAL},#{isCheck,jdbcType=BIT})
   </insert>
   <insert id="insertRequired" parameterType="com.mehome.domain.ProductComment" >
     insert into product_comment
@@ -100,6 +101,9 @@
       <if test="service != null" >
         service,
       </if>
+      <if test="isCheck != null" >
+        is_check,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="commentId != null" >
@@ -152,6 +156,9 @@
       </if>
       <if test="service != null" >
         #{service,jdbcType=REAL},
+      </if>
+      <if test="isCheck != null" >
+        #{isCheck,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -206,6 +213,9 @@
       <if test="service != null" >
         service = #{service,jdbcType=REAL},
       </if>
+      <if test="isCheck != null" >
+        is_check = #{isCheck,jdbcType=BIT},
+      </if>
     </set>
     where comment_id = #{commentId,jdbcType=VARCHAR}
   </update>
@@ -240,7 +250,8 @@
       is_active = #{isActive,jdbcType=BIT},
       comfort = #{comfort,jdbcType=REAL},
       convenient = #{convenient,jdbcType=REAL},
-      service = #{service,jdbcType=REAL}
+      service = #{service,jdbcType=REAL},
+      is_Check = #{isCheck,jdbcType=BIT}
     where comment_id = #{commentId,jdbcType=VARCHAR}
   </update>
   <select id="getListByCondition" parameterType="com.mehome.requestDTO.CommentBean" resultMap="BaseResultMap">
@@ -251,6 +262,9 @@
     <if test="productId != null">
       AND product_id = #{productId,jdbcType=INTEGER}
     </if>
+    <if test="isCheck != null">
+      AND is_check = #{isCheck,jdbcType=INTEGER}
+    </if>
     ORDER BY create_time DESC
     limit #{pageNow},#{pageSize}
   </select>
@@ -260,6 +274,9 @@
     WHERE 1=1
     <if test="productId != null">
       AND product_id = #{productId,jdbcType=INTEGER}
+    </if>
+    <if test="isCheck != null">
+      AND is_check = #{isCheck,jdbcType=INTEGER}
     </if>
   </select>
   <select id="getMaxFloorByProduct" parameterType="java.lang.Integer" resultType="java.lang.Integer">
