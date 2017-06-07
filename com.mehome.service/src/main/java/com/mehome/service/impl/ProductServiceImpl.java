@@ -10,6 +10,7 @@ import com.mehome.dao.*;
 import com.mehome.domain.*;
 import com.mehome.exceptions.InfoException;
 import com.mehome.requestDTO.CompanyWelfareNotice;
+import com.mehome.requestDTO.ProductCompanyWelfareDTO;
 import com.mehome.resonpseDTO.ProductCompanyWelfare;
 import com.mehome.utils.AssertUtils;
 import org.apache.log4j.Logger;
@@ -145,22 +146,24 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<ProductCompanyWelfare> listCompanyWelfare(Integer productId) {
-        if (null != productId) {
+    public List<ProductCompanyWelfare> listCompanyWelfare(ProductCompanyWelfareDTO productCompanyWelfareDTO) {
+        if (null != productCompanyWelfareDTO.getProductId()) {
+            //列出已添加企业福利
             //查询该产品的关联的企业福利
-            List<ProductCompanyWelfare> productCompanyWelfare = productRelationWelfareDao.listWelfareByProductId(productId);
+            List<ProductCompanyWelfare> productCompanyWelfare = productRelationWelfareDao.listWelfareByProductId(productCompanyWelfareDTO);
             for (ProductCompanyWelfare welfare : productCompanyWelfare) {
                 CompanyList companyList = companyListDao.selectById(welfare.getCompanyId());
                 if (null != companyList) {
                     welfare.setCompanyName(companyList.getCompanyName());
                 }
-                welfare.setProductId(productId);
+                welfare.setProductId(productCompanyWelfareDTO.getProductId());
             }
             return productCompanyWelfare;
         } else {
+            //列出要添加的企业福利
             List<ProductCompanyWelfare> result = new ArrayList<ProductCompanyWelfare>();
             //查询为未关联的企业福利
-            List<CompanyWelfare> welfareList = companyWelfareDao.listUnSelected();
+            List<CompanyWelfare> welfareList = companyWelfareDao.listUnSelected(productCompanyWelfareDTO);
             for (CompanyWelfare item : welfareList) {
                 ProductCompanyWelfare itemResult = new ProductCompanyWelfare();
                 itemResult.setCompanyId(item.getCompanyId());
@@ -174,6 +177,21 @@ public class ProductServiceImpl implements IProductService {
                 result.add(itemResult);
             }
             return result;
+        }
+    }
+
+    @Override
+    public Long countCompanyWelfare(ProductCompanyWelfareDTO productCompanyWelfareDTO) {
+        Long count = 0l;
+        if (null != productCompanyWelfareDTO.getProductId()) {
+            count = productRelationWelfareDao.countWelfareByProductId(productCompanyWelfareDTO);
+        } else {
+            count = companyWelfareDao.countUnSelected();
+        }
+        if (null == count) {
+            return 0l;
+        } else {
+            return count;
         }
     }
 
@@ -209,30 +227,35 @@ public class ProductServiceImpl implements IProductService {
         }
     }
 
-    @Override
-    public int deleteCompanyWelfare(Integer productId, Integer companyWelfareId) {
+    @Transactional
+    public int deleteCompanyWelfare(Integer productId, String companyWelfareIds) {
         AssertUtils.isNotNull(productId, "企业标识未知！");
-        AssertUtils.isNotNull(companyWelfareId, "企业福利标识未知！");
+        AssertUtils.isNotNull(companyWelfareIds, "企业福利标识未知！");
         AssertUtils.isNotNull(productListDAO.selectById(productId), "产品ID未找到！");
-        AssertUtils.isNotNull(companyWelfareDao.selectById(companyWelfareId), "企业福利ID未找到！");
-        productRelationWelfareDao.delete(companyWelfareId, productId);
+        String[] args = companyWelfareIds.split(",");
+        List<String> list = new ArrayList<String>();
+        Collections.addAll(list, args);
+        if (list.size() > 0) {
+            productRelationWelfareDao.deleteBatch(list, productId);
+            companyWelfareDao.updateBatchUnSelectStatus(list);
+        }
         return 1;
     }
 
 
-	@Override
-	public List<BasicFacilities> getBasicList(Integer productId) {
-		 BasicBean basic = new BasicBean();
-         basic.setProductId(productId);
-         List<ProductRalationBasic> relationList = productRalationBasicDAO.getListByCondition(basic);
-         List<BasicFacilities> basicList = new ArrayList<BasicFacilities>();
-         if (relationList != null && relationList.size() > 0) {
-             for (ProductRalationBasic productRalationBasic : relationList) {
-                 Integer basicId = productRalationBasic.getBasicId();
-                 BasicFacilities basicObj = basicFacilitiesDAO.selectById(basicId);
-                 basicList.add(basicObj);
-             }
-         }
-		return basicList;
-	}
+    @Override
+    public List<BasicFacilities> getBasicList(Integer productId) {
+        BasicBean basic = new BasicBean();
+        basic.setProductId(productId);
+        List<ProductRalationBasic> relationList = productRalationBasicDAO.getListByCondition(basic);
+        List<BasicFacilities> basicList = new ArrayList<BasicFacilities>();
+        if (relationList != null && relationList.size() > 0) {
+            for (ProductRalationBasic productRalationBasic : relationList) {
+                Integer basicId = productRalationBasic.getBasicId();
+                BasicFacilities basicObj = basicFacilitiesDAO.selectById(basicId);
+                basicList.add(basicObj);
+            }
+        }
+        return basicList;
+    }
 }

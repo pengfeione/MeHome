@@ -33,9 +33,20 @@
         from company_welfare
         where company_id = #{companyId,jdbcType=INTEGER} and welfare_active=1
     </select>
-    <select id="listUnSelected" resultMap="BaseResultMap">
+    <select id="listUnSelected" resultMap="BaseResultMap"
+            parameterType="com.mehome.requestDTO.ProductCompanyWelfareDTO">
         select
         <include refid="Base_Column_List"/>
+        from company_welfare
+        where is_select=0
+        <if test="pageNow !=null and pageSize !=null">
+            limit #{pageNow},#{pageSize}
+        </if>
+    </select>
+    <select id="countUnSelected" resultType="java.lang.Long"
+            parameterType="com.mehome.requestDTO.ProductCompanyWelfareDTO">
+        select
+        count(welfare_id)
         from company_welfare
         where is_select=0
     </select>
@@ -120,6 +131,15 @@
         update company_welfare
         set
         is_select = 1
+        where welfare_id IN
+        <foreach collection="welfareIds" separator="," item="item" index="index" open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+    <update id="updateBatchUnSelectStatus" parameterType="map">
+        update company_welfare
+        set
+        is_select = 0
         where welfare_id IN
         <foreach collection="welfareIds" separator="," item="item" index="index" open="(" close=")">
             #{item}

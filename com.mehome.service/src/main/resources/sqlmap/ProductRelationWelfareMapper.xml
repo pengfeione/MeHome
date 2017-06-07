@@ -15,12 +15,23 @@
     <sql id="Base_Column_List">
       welfare_id, product_id, create_time
     </sql>
-    <select id="listWelfareByProductId" resultMap="ProductCompanyWelfareMap" parameterType="map">
-        select company_welfare.company_id as company_id ,welfare_content, welfare.create_time as create_time,welfare.welfare_id as welfareId
+    <select id="listWelfareByProductId" resultMap="ProductCompanyWelfareMap"
+            parameterType="com.mehome.requestDTO.ProductCompanyWelfareDTO">
+        select company_welfare.company_id as company_id ,welfare_content, welfare.create_time as
+        create_time,welfare.welfare_id as welfareId
         from (select welfare_id,create_time
+        from product_relation_welfare
+        where product_id= #{productId,jdbcType=INTEGER}) welfare left join company_welfare
+        on welfare. welfare_id=company_welfare.welfare_id
+        <if test="pageNow !=null and pageSize !=null">
+            limit #{pageNow},#{pageSize}
+        </if>
+    </select>
+    <select id="countWelfareByProductId" resultType="java.lang.Long"
+            parameterType="com.mehome.requestDTO.ProductCompanyWelfareDTO">
+        select count(welfare_id)
         from  product_relation_welfare
-        where  product_id= #{productId,jdbcType=INTEGER}) welfare left join company_welfare
-        on welfare. welfare_id=company_welfare.welfare_id;
+        where  product_id= #{productId,jdbcType=INTEGER}
     </select>
     <select id="selectById" resultMap="BaseResultMap" parameterType="map">
         select
@@ -48,12 +59,18 @@
       )
   </insert>
     <insert id="insertBatch" parameterType="map">
-        insert into product_relation_welfare (welfare_id, product_id  )
+        insert into product_relation_welfare (welfare_id, product_id )
         values
-        <foreach collection="welfareIds" item="item" index="index" separator="," >
+        <foreach collection="welfareIds" item="item" index="index" separator=",">
             (#{item}, #{productId,jdbcType=INTEGER})
         </foreach>
     </insert>
+    <delete id="deleteBatch" parameterType="map">
+        delete from product_relation_welfare where product_id = #{productId,jdbcType=INTEGER} and welfare_id IN
+        <foreach collection="welfareIds" item="item" index="index" separator="," close=")" open="(">
+            #{item}
+        </foreach>
+    </delete>
     <insert id="insertRequired" parameterType="com.mehome.domain.ProductRelationWelfare">
         insert into product_relation_welfare
         <trim prefix="(" suffix=")" suffixOverrides=",">
