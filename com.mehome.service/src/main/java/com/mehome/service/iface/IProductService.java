@@ -28,7 +28,7 @@ public interface IProductService {
 
     public List<ProductCompanyWelfare> listCompanyWelfare(Integer productId);
 
-    public int addCompanyWelfare(@Param("productId") Integer productId, @Param("companyWelfareId") Integer companyWelfareId);
+    public int addCompanyWelfare(Integer productId, String companyWelfareIds);
 
-    public int deleteCompanyWelfare(@Param("productId") Integer productId, @Param("companyWelfareId") Integer companyWelfareId);
+    public int deleteCompanyWelfare(Integer productId, Integer companyWelfareId);
 }

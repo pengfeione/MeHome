@@ -1,6 +1,8 @@
 package com.mehome.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
@@ -166,6 +168,7 @@ public class ProductServiceImpl implements IProductService {
                 if (null != companyList) {
                     itemResult.setCompanyName(companyList.getCompanyName());
                 }
+                itemResult.setWelfareId(item.getWelfareId());
                 itemResult.setContent(item.getWelfareContent());
                 itemResult.setCreateTime(item.getUpdateTime());
                 result.add(itemResult);
@@ -175,25 +178,35 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Transactional
-    public int addCompanyWelfare(Integer productId, Integer companyWelfareId) {
+    public int addCompanyWelfare(Integer productId, String companyWelfareIds) {
         AssertUtils.isNotNull(productId, "企业标识未知！");
-        AssertUtils.isNotNull(companyWelfareId, "企业福利标识未知！");
+        AssertUtils.isNotNull(companyWelfareIds, "企业福利标识未知！");
         AssertUtils.isNotNull(productListDAO.selectById(productId), "产品ID未找到！");
-        AssertUtils.isNotNull(companyWelfareDao.selectById(companyWelfareId), "企业福利ID未找到！");
-        if (null != productRelationWelfareDao.selectById(companyWelfareId, productId)) {
-            return 1;
+        String[] companyWelfareIdArr = companyWelfareIds.split(",");
+        List<String> validWelfareIdList = new ArrayList<String>();
+        if (companyWelfareIdArr.length > 0) {
+            Collections.addAll(validWelfareIdList, companyWelfareIdArr);
+            List<String> validFinalWelfareIdList = companyWelfareDao.selectByIds(validWelfareIdList);
+            if (validFinalWelfareIdList.size() > 0) {
+                Iterator<String> iterator = validFinalWelfareIdList.iterator();
+                while (iterator.hasNext()) {
+                    if (null != productRelationWelfareDao.selectById(Integer.valueOf(iterator.next()), productId)) {
+                        iterator.remove();
+                    }
+                }
+                if (validFinalWelfareIdList.size() > 0) {
+                    productRelationWelfareDao.insertBatch(validFinalWelfareIdList, productId);
+                    companyWelfareDao.updateBatchSelectedStatus(validFinalWelfareIdList);
+                } else {
+                    return 0;
+                }
+                return validFinalWelfareIdList.size();
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
         }
-        ProductRelationWelfare welfare = new ProductRelationWelfare();
-        welfare.setProductId(productId);
-        welfare.setWelfareId(companyWelfareId);
-        productRelationWelfareDao.insertRequired(welfare);
-
-        CompanyWelfare record = new CompanyWelfare();
-        record.setWelfareId(companyWelfareId);
-        record.setIsSelect(true);
-        companyWelfareDao.updateRequired(record);
-
-        return 1;
     }
 
     @Override

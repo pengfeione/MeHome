@@ -14,6 +14,9 @@ public interface ProductRelationWelfareDao {
 
     int insertRequired(ProductRelationWelfare record);
 
+
+    int insertBatch(@Param("welfareIds") List<String> welfareIds, @Param("productId") Integer productId);
+
     ProductRelationWelfare selectById(@Param("welfareId") Integer welfareId, @Param("productId") Integer productId);
 
     List<ProductRelationWelfare> selectByProductId(@Param("productId") Integer productId);

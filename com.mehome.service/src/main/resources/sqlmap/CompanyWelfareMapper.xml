@@ -18,6 +18,15 @@
         from company_welfare
         where welfare_id = #{welfareId,jdbcType=INTEGER}
     </select>
+    <select id="selectByIds" resultType="java.lang.String" parameterType="map">
+        select
+        concat(welfare_id,'')
+        from company_welfare
+        where welfare_id IN
+        <foreach collection="welfareIds" close=")" open="(" index="index" item="item" separator=",">
+            #{item}
+        </foreach>
+    </select>
     <select id="selectByCompanyId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -106,6 +115,15 @@
             </if>
         </set>
         where welfare_id = #{welfareId,jdbcType=INTEGER}
+    </update>
+    <update id="updateBatchSelectedStatus" parameterType="map">
+        update company_welfare
+        set
+        is_select = 1
+        where welfare_id IN
+        <foreach collection="welfareIds" separator="," item="item" index="index" open="(" close=")">
+            #{item}
+        </foreach>
     </update>
     <update id="update" parameterType="com.mehome.domain.CompanyWelfare">
     update company_welfare

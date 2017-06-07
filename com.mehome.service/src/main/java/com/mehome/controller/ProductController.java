@@ -88,12 +88,12 @@ public class ProductController {
 
     @PostMapping("/add_company_welfare")
     @ResponseBody
-    public ResponseEntity<Result> addCompanyWelfare(@RequestParam("productId") Integer productId, @RequestParam("companyWelfareId") Integer companyWelfareId) {
+    public ResponseEntity<Result> addCompanyWelfare(@RequestParam("productId") Integer productId, @RequestParam("companyWelfareIds") String  companyWelfareIds) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(productService.addCompanyWelfare(productId, companyWelfareId)));
+                .body(Result.build().content(productService.addCompanyWelfare(productId, companyWelfareIds)));
     }
 
     @PostMapping("/delete_company_welfare")

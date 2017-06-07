@@ -5,11 +5,20 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.Date;
 
 public class ProductCompanyWelfare {
+    private Integer welfareId;
     private Integer companyId;
     private Integer productId;
     private String content;
     private String companyName;
     private Date createTime;
+
+    public Integer getWelfareId() {
+        return welfareId;
+    }
+
+    public void setWelfareId(Integer welfareId) {
+        this.welfareId = welfareId;
+    }
 
     public Integer getCompanyId() {
         return companyId;
