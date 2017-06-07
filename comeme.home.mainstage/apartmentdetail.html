@@ -222,7 +222,7 @@
 		}
 		var productId = util.getUrlParam('productId');
 		var url = util.baseUrl + '/comment/list';
-		var param ='{"productId": '+productId+',"pageSize":10,"pageNow":'+pageIndex+'}';
+		var param ='{"productId": '+productId+',"isCheck":true,"pageSize":10,"pageNow":'+pageIndex+'}';
 		var contentType = "application/json";
 		var userIds = '';
 		var userInfos;
