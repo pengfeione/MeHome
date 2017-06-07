@@ -2,6 +2,7 @@ package com.mehome.service.iface;
 
 import java.util.List;
 
+import com.mehome.domain.BasicFacilities;
 import com.mehome.domain.CompanyWelfare;
 import com.mehome.domain.ProductList;
 import com.mehome.requestDTO.CompanyWelfareNotice;
@@ -31,4 +32,6 @@ public interface IProductService {
     public int addCompanyWelfare(Integer productId, String companyWelfareIds);
 
     public int deleteCompanyWelfare(Integer productId, Integer companyWelfareId);
+    
+    public List<BasicFacilities> getBasicList(Integer productId);
 }

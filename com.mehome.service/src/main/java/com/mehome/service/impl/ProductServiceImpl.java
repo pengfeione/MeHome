@@ -218,4 +218,21 @@ public class ProductServiceImpl implements IProductService {
         productRelationWelfareDao.delete(companyWelfareId, productId);
         return 1;
     }
+
+
+	@Override
+	public List<BasicFacilities> getBasicList(Integer productId) {
+		 BasicBean basic = new BasicBean();
+         basic.setProductId(productId);
+         List<ProductRalationBasic> relationList = productRalationBasicDAO.getListByCondition(basic);
+         List<BasicFacilities> basicList = new ArrayList<BasicFacilities>();
+         if (relationList != null && relationList.size() > 0) {
+             for (ProductRalationBasic productRalationBasic : relationList) {
+                 Integer basicId = productRalationBasic.getBasicId();
+                 BasicFacilities basicObj = basicFacilitiesDAO.selectById(basicId);
+                 basicList.add(basicObj);
+             }
+         }
+		return basicList;
+	}
 }

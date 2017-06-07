@@ -34,6 +34,7 @@ import com.mehome.requestDTO.OrderBean;
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IOrderService;
 import com.mehome.service.iface.IThirdPay;
+import com.mehome.utils.DateUtils;
 import com.mehome.utils.OrderIdUtils;
 import com.mehome.utils.PropertiesUtil;
 import com.mehome.utils.SpringContextUtil;
@@ -267,9 +268,12 @@ public class OrderServiceImpl implements IOrderService {
 	}
 	
 	public static void main(String[] args) {
-		double i=31.00;
-		int a=31;
-		System.out.println(a==i);
+		Date date=new Date();
+		Date a=DateUtils.getToDayStart(date);
+		String dateStr="2017-6-6 00:00:01";
+		Date b=DateUtils.strToDate(dateStr);
+		System.out.println(a.compareTo(b));
+		
 	}
 
 }

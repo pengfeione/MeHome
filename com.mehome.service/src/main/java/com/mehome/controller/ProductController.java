@@ -105,4 +105,14 @@ public class ProductController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(productService.deleteCompanyWelfare(productId, companyWelfareId)));
     }
+    
+    @PostMapping("/list_basic")
+    @ResponseBody
+    public ResponseEntity<Result> listBasic(@RequestParam("productId") Integer productId) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(productService.getBasicList(productId)));
+    }
 }

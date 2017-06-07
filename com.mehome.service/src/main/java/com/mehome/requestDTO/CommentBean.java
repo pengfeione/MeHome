@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 
 import com.mehome.domain.ProductComment;
 import com.mehome.enumDTO.ScoreEnum;
+import com.mehome.utils.DateUtils;
 import com.mehome.utils.OrderIdUtils;
 import com.mehome.utils.PageMysqlUtil;
 
@@ -51,6 +52,8 @@ public class CommentBean extends PageMysqlUtil{
     private String serviceDesc;
     
     private Boolean isCheck;
+    
+    private String createTime;
 
 	public String getCommentId() {
 		return commentId;
@@ -212,6 +215,14 @@ public class CommentBean extends PageMysqlUtil{
 		this.isCheck = isCheck;
 	}
 
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
 	public ProductComment beanToPojo(Boolean addBoolean){
 		ProductComment comment = new ProductComment();
 		comment.setCommentId(addBoolean?OrderIdUtils.getUUID():this.getCommentId());
@@ -255,6 +266,7 @@ public class CommentBean extends PageMysqlUtil{
 		this.setComfort(comment.getComfort());
 		this.setConvenient(comment.getConvenient());
 		this.setService(comment.getService());
+		this.setCreateTime(DateUtils.dateToStr(comment.getCreateTime()));
 		ScoreEnum[] enums=ScoreEnum.values();
 		for (ScoreEnum scoreEnum : enums) {
 			if(comment.getComfort().intValue()==scoreEnum.getKey()){
