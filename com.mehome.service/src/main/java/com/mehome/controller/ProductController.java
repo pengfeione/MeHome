@@ -39,7 +39,7 @@ public class ProductController {
 
     @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<Result> add(@RequestBody ProductBean bean) {
+    public ResponseEntity<Result> add(@RequestBody ProductList bean) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)

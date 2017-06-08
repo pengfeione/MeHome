@@ -42,14 +42,14 @@ public class ProductView {
 //		return mav;
 //	}
 //
-	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
-    @PostMapping(path = "/add")
-	public ModelAndView add(@RequestBody ProductBean product){
-		ModelAndView mav=new ModelAndView();
-		String ret=productService.addProduct(product);
-		mav.setViewName("product");
-		mav.addObject("addRet", ret);
-		return mav;
-	}
+//	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+//    @PostMapping(path = "/add")
+//	public ModelAndView add(@RequestBody ProductBean product){
+//		ModelAndView mav=new ModelAndView();
+//		String ret=productService.addProduct(product);
+//		mav.setViewName("product");
+//		mav.addObject("addRet", ret);
+//		return mav;
+//	}
 	
 }

@@ -118,16 +118,15 @@ function set_upload_param(up, filename, ret) {
     });
     up.start();
 }
-
 /**
  *
  * @param triggerId
  * @param callback(fileSize,fileName,propgress,call)
  */
-function bindUpload(triggerId) {
+function bindUpload(param) {
     var uploader = new plupload.Uploader({
         runtimes: 'html5,flash,silverlight,html4',
-        browse_button: '' + triggerId,
+        browse_button: '' + param.id,
         multi_selection: false,
         // container: document.getElementById(''+triggerId),
         url: 'http://oss.aliyuncs.com',
@@ -143,6 +142,7 @@ function bindUpload(triggerId) {
                 plupload.each(files, function (file) {
                     console.log(file.id + ":" + file.name + ":" + plupload.formatSize(file.size));
                     // add(file);
+
                 });
             },
             BeforeUpload: function (up, file) {
@@ -156,8 +156,7 @@ function bindUpload(triggerId) {
             FileUploaded: function (up, file, info) {
                 if (info.status == 200) {
                     console.log('upload to oss success, object name:' + get_uploaded_object_name(file.name));
-                    fileUpload("http://resource.mjiahome.com/" + get_uploaded_object_name(file.name));
-                    //success;
+                    param.finish("http://resource.mjiahome.com/" + get_uploaded_object_name(file.name));
                     console.log('aaaaaa');
                 } else {
                     console.log(info.response);

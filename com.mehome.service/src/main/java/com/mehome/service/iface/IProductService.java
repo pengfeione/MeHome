@@ -18,7 +18,7 @@ public interface IProductService {
 
     public ProductList selectById(Integer productId);
 
-    public String addProduct(ProductBean bean);
+    public String addProduct(ProductList bean);
 
     public Long getSizeByCondition(ProductBean bean);
 

@@ -38,7 +38,7 @@ public class ProductBean extends PageMysqlUtil {
 
     private Boolean productActive;
 
-    private Integer productSort;
+    private Float productSort;
     /**
      * 是否有个人福利
      */
@@ -88,10 +88,47 @@ public class ProductBean extends PageMysqlUtil {
 
     private Integer floor;
 
+    private String shopping;//购物
+    private String transport;//交通
+    private String delicacy;//美食
+    private String entertainment;//娱乐
+
 
     private Date startTime;
 
     private Date endTime;
+
+    public String getShopping() {
+        return shopping;
+    }
+
+    public void setShopping(String shopping) {
+        this.shopping = shopping;
+    }
+
+    public String getTransport() {
+        return transport;
+    }
+
+    public void setTransport(String transport) {
+        this.transport = transport;
+    }
+
+    public String getDelicacy() {
+        return delicacy;
+    }
+
+    public void setDelicacy(String delicacy) {
+        this.delicacy = delicacy;
+    }
+
+    public String getEntertainment() {
+        return entertainment;
+    }
+
+    public void setEntertainment(String entertainment) {
+        this.entertainment = entertainment;
+    }
 
     public Integer getAreaProvince() {
         return areaProvince;
@@ -189,11 +226,11 @@ public class ProductBean extends PageMysqlUtil {
         this.productActive = productActive;
     }
 
-    public Integer getProductSort() {
+    public Float getProductSort() {
         return productSort;
     }
 
-    public void setProductSort(Integer productSort) {
+    public void setProductSort(Float productSort) {
         this.productSort = productSort;
     }
 
@@ -408,6 +445,10 @@ public class ProductBean extends PageMysqlUtil {
         this.setRules(product.getRules());
         this.setSupplierId(product.getSupplierId());
         this.setWelfareList(welfareList);
+        this.setTransport(product.getTransport());
+        this.setDelicacy(product.getDelicacy());
+        this.setShopping(product.getShopping());
+        this.setEntertainment(product.getEntertainment());
         //
         this.setProductId(product.getProductId());
     }

@@ -18,7 +18,7 @@ public class ProductList {
 
     private String productDetail;
 
-    private Integer productSort;
+    private Float productSort;
 
     private String listpic;
 
@@ -49,6 +49,44 @@ public class ProductList {
     private Date updateTime;
 
     private Float score;
+
+    private String shopping;//购物
+    private String transport;//交通
+    private String delicacy;//美食
+    private String entertainment;//娱乐
+
+
+    public String getShopping() {
+        return shopping;
+    }
+
+    public void setShopping(String shopping) {
+        this.shopping = shopping;
+    }
+
+    public String getTransport() {
+        return transport;
+    }
+
+    public void setTransport(String transport) {
+        this.transport = transport;
+    }
+
+    public String getDelicacy() {
+        return delicacy;
+    }
+
+    public void setDelicacy(String delicacy) {
+        this.delicacy = delicacy;
+    }
+
+    public String getEntertainment() {
+        return entertainment;
+    }
+
+    public void setEntertainment(String entertainment) {
+        this.entertainment = entertainment;
+    }
 
     public Integer getAreaProvince() {
         return areaProvince;
@@ -122,11 +160,11 @@ public class ProductList {
         this.productDetail = productDetail == null ? null : productDetail.trim();
     }
 
-    public Integer getProductSort() {
+    public Float getProductSort() {
         return productSort;
     }
 
-    public void setProductSort(Integer productSort) {
+    public void setProductSort(Float productSort) {
         this.productSort = productSort;
     }
 

@@ -81,23 +81,15 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public String addProduct(ProductBean bean) {
-        ProductList product = null;
-        try {
-            product = bean.beanToPojo(Boolean.TRUE);
-            productListDAO.insert(product);
-        } catch (Exception e) {
-            log.error("加入产品出错:" + e);
-        }
-        return product.getProductId() == null ? "" : product.getProductId().toString();
+    public String addProduct(ProductList bean) {
+        productListDAO.insertRequired(bean);
+        return bean.getProductId() == null ? "" : bean.getProductId().toString();
     }
-
     @Override
     public Long getSizeByCondition(ProductBean bean) {
         Long size = productListDAO.getSizeByCondition(bean);
         return size;
     }
-
     @Override
     public String updateProduct(ProductList bean) {
         AssertUtils.isNotNull(bean.getProductId(), "更新标识未知");

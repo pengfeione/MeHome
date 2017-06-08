@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -66,8 +67,14 @@ public class WeChatInfo {
                 + "&openid=" + accessToken.getOpenid()
                 + "&lang=zh_CN";
         //返回用户给到 h5
-        return JSONObject.parseObject(restTemplate.getForObject(userinfoUrl, String.class), WeChatUserInfo.class);
+        try {
+            return JSONObject.parseObject(new String(restTemplate.getForObject(userinfoUrl, String.class).getBytes("ISO-8859-1"), "UTF-8"), WeChatUserInfo.class);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return new WeChatUserInfo();
+        }
     }
+
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 

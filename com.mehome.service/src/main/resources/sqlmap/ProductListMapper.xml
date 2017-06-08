@@ -11,7 +11,7 @@
         <result column="area_name" property="areaName" jdbcType="VARCHAR"/>
         <result column="product_name" property="productName" jdbcType="VARCHAR"/>
         <result column="product_detail" property="productDetail" jdbcType="VARCHAR"/>
-        <result column="product_sort" property="productSort" jdbcType="INTEGER"/>
+        <result column="product_sort" property="productSort" jdbcType="REAL"/>
         <result column="listpic" property="listpic" jdbcType="VARCHAR"/>
         <result column="detailpic" property="detailpic" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
@@ -27,11 +27,15 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="score" property="score" jdbcType="REAL"/>
+        <result column="shopping" property="shopping" jdbcType="VARCHAR"/>
+        <result column="transport" property="transport" jdbcType="VARCHAR"/>
+        <result column="delicacy" property="delicacy" jdbcType="VARCHAR"/>
+        <result column="entertainment" property="entertainment" jdbcType="VARCHAR"/>
     </resultMap>
-     <sql id="Base_Column_List">
+    <sql id="Base_Column_List">
     product_id, supplier_id, area_id,area_province,area_region,area_city, area_name,product_name, product_detail, product_sort, listpic,
     detailpic, address, position, product_active, rules, welfare_id, is_welfare, personal_welfare, 
-    has_personal, net_rules_url,floor,create_time,update_time,score
+    has_personal, net_rules_url,floor,create_time,update_time,score,shopping,transport,delicacy,entertainment
   </sql>
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -43,22 +47,23 @@
     delete from product_list
     where product_id = #{productId,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.mehome.domain.ProductList">
+    <insert id="insert" parameterType="com.mehome.domain.ProductList" useGeneratedKeys="true" keyProperty="productId">
     insert into product_list (product_id, supplier_id, area_id, area_province,area_region,area_city, area_name,
       product_name, product_detail, product_sort, 
       listpic, detailpic, address, 
       position, product_active, rules, 
-      welfare_id, is_welfare, personal_welfare, 
-      has_personal, net_rules_url,floor,create_time,update_time,score)
+      welfare_id, is_welfare, personal_welfare,shopping,
+      has_personal, net_rules_url,floor,create_time,update_time,score,transport,delicacy,entertainment)
     values (#{productId,jdbcType=INTEGER}, #{supplierId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER},
       #{areaProvince,jdbcType=INTEGER},#{areaRegion,jdbcType=INTEGER},#{areaCity,jdbcType=INTEGER},#{areaName,jdbcType=VARCHAR},
-      #{productName,jdbcType=VARCHAR}, #{productDetail,jdbcType=VARCHAR}, #{productSort,jdbcType=INTEGER}, 
+      #{productName,jdbcType=VARCHAR}, #{productDetail,jdbcType=VARCHAR}, #{productSort,jdbcType=REAL},
       #{listpic,jdbcType=VARCHAR}, #{detailpic,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{position,jdbcType=VARCHAR}, #{productActive,jdbcType=BIT}, #{rules,jdbcType=VARCHAR}, 
       #{welfareId,jdbcType=INTEGER}, #{isWelfare,jdbcType=BIT}, #{personalWelfare,jdbcType=VARCHAR}, 
-      #{hasPersonal,jdbcType=BIT}, #{netRulesUrl,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{score,jdbcType=REAL})
+      #{hasPersonal,jdbcType=BIT}, #{netRulesUrl,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{score,jdbcType=REAL},#{shopping,jdbcType=VARCHAR},#{transport,jdbcType=VARCHAR},#{delicacy,jdbcType=VARCHAR},#{entertainment,jdbcType=VARCHAR})
   </insert>
-    <insert id="insertRequired" parameterType="com.mehome.domain.ProductList">
+    <insert id="insertRequired" parameterType="com.mehome.domain.ProductList" useGeneratedKeys="true" keyProperty="productId">
         insert into product_list
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="productId != null">
@@ -136,6 +141,18 @@
             <if test="score != null">
                 score,
             </if>
+            <if test="shopping != null">
+                shopping,
+            </if>
+            <if test="transport != null">
+                transport,
+            </if>
+            <if test="delicacy != null">
+                delicacy,
+            </if>
+            <if test="entertainment != null">
+                entertainment,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="productId != null">
@@ -166,7 +183,7 @@
                 #{productDetail,jdbcType=VARCHAR},
             </if>
             <if test="productSort != null">
-                #{productSort,jdbcType=INTEGER},
+                #{productSort,jdbcType=REAL},
             </if>
             <if test="listpic != null">
                 #{listpic,jdbcType=VARCHAR},
@@ -213,6 +230,18 @@
             <if test="score != null">
                 #{score,jdbcType=REAL},
             </if>
+            <if test="shopping != null">
+                #{shopping,jdbcType=VARCHAR},
+            </if>
+            <if test="transport != null">
+                #{transport,jdbcType=VARCHAR},
+            </if>
+            <if test="delicacy != null">
+                #{delicacy,jdbcType=VARCHAR},
+            </if>
+            <if test="entertainment != null">
+                #{entertainment,jdbcType=VARCHAR},
+            </if>
         </trim>
     </insert>
     <update id="updateRequired" parameterType="com.mehome.domain.ProductList">
@@ -243,7 +272,7 @@
                 product_detail = #{productDetail,jdbcType=VARCHAR},
             </if>
             <if test="productSort != null">
-                product_sort = #{productSort,jdbcType=INTEGER},
+                product_sort = #{productSort,jdbcType=REAL},
             </if>
             <if test="listpic != null">
                 listpic = #{listpic,jdbcType=VARCHAR},
@@ -290,6 +319,18 @@
             <if test="score != null">
                 score = #{score,jdbcType=REAL},
             </if>
+            <if test="shopping != null">
+                shopping = #{shopping,jdbcType=VARCHAR},
+            </if>
+            <if test="transport != null">
+                transport = #{transport,jdbcType=VARCHAR},
+            </if>
+            <if test="delicacy != null">
+                delicacy = #{delicacy,jdbcType=VARCHAR},
+            </if>
+            <if test="entertainment != null">
+                entertainment = #{entertainment,jdbcType=VARCHAR}
+            </if>
         </set>
         where product_id = #{productId,jdbcType=INTEGER}
     </update>
@@ -303,7 +344,7 @@
       area_name = #{areaName,jdbcType=VARCHAR},
       product_name = #{productName,jdbcType=VARCHAR},
       product_detail = #{productDetail,jdbcType=VARCHAR},
-      product_sort = #{productSort,jdbcType=INTEGER},
+      product_sort = #{productSort,jdbcType=REAL},
       listpic = #{listpic,jdbcType=VARCHAR},
       detailpic = #{detailpic,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
@@ -318,7 +359,11 @@
       floor = #{floor,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      score = #{score,jdbcType=REAL}
+      score = #{score,jdbcType=REAL},
+      shopping = #{shopping,jdbcType=VARCHAR},
+      transport = #{transport,jdbcType=VARCHAR},
+      delicacy = #{delicacy,jdbcType=VARCHAR},
+      entertainment = #{entertainment,jdbcType=VARCHAR}
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
     <select id="getListByCondition" parameterType="com.mehome.requestDTO.ProductBean" resultMap="BaseResultMap">
@@ -344,7 +389,7 @@
         <if test="endTime != null">
             and create_time &lt;= #{endTime,jdbcType=TIMESTAMP}
         </if>
-        ORDER BY create_time DESC
+        ORDER BY product_sort DESC
         limit #{pageNow},#{pageSize}
     </select>
     <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.ProductBean" resultType="java.lang.Long">
