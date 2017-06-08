@@ -63,7 +63,7 @@ public class CommentServiceImpl implements ICommentService {
 	public String updateComment(CommentBean bean) {
 		ProductComment comment = null;
 		try {
-			comment = bean.beanToPojo(Boolean.FALSE);
+			comment = bean.compareBean();
 			int row = ProductCommentDAO.updateRequired(comment);
 		} catch (Exception e) {
 			log.error("更新点评出错:" + e);

@@ -3,7 +3,7 @@ package com.mehome.requestDTO;
 import java.util.Date;
 import java.util.UUID;
 
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.mehome.domain.ProductComment;
 import com.mehome.enumDTO.ScoreEnum;
@@ -279,6 +279,17 @@ public class CommentBean extends PageMysqlUtil{
 				this.setServiceDesc(scoreEnum.getValue());
 			}
 		}
+	}
+	
+	public ProductComment compareBean(){
+		ProductComment comment=new ProductComment();
+		if(StringUtils.isNotBlank(this.getCommentId())){
+			comment.setCommentId(this.getCommentId());
+		}
+		if(this.getIsCheck()!=null){
+			comment.setIsCheck(this.getIsCheck());
+		}
+		return comment;
 	}
 	
 }
