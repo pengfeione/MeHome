@@ -29,6 +29,15 @@ $("#offline_sure").click(function() {
 
 });
 $("#pay").click(function() {
-	$("#pay_choose").fadeOut();
-	$("#already_deposit").attr("class", "depositSelect");
+	/*$("#pay_choose").fadeOut();
+	$("#already_deposit").attr("class", "depositSelect");*/
+	//请求支付接口
+	var orderId = util.getUrlParam("orderId"); 
+	var url = util.baseUrl + "/order/updateOrder";
+	var param ='{"orderId":'+orderId+',"payOnline":'+true+',"platformHost":'+true+',"payType":"wechat"}';
+	var contentType = "application/json";
+	util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+		$("#pay_choose").fadeOut();
+		$("#already_deposit").attr("class", "depositSelect");
+	});
 });

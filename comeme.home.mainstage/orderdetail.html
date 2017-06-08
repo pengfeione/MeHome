@@ -154,7 +154,7 @@
 				<span>平台托管押金</span><i>押金可线上支付</i>
 			</div>
 			<div class="btnTg">
-				<a href="#" class="btn" id="next">下一步</a>
+				<a  class="btn" id="next">下一步</a>
 			</div>
 		</div>
 
@@ -167,7 +167,7 @@
 				<em class="payWx"><i></i>微信</em><em class="paySel"></em>
 			</div>
 			<div class="btnTg">
-				<a href="#" class="btn" id="pay">立即支付</a>
+				<a  class="btn" id="pay">立即支付</a>
 			</div>
 		</div>
 
@@ -177,7 +177,7 @@
 				确定取消平台押金托管<br>与公寓方线下结算？
 			</h3>
 			<div class="btnOffline">
-				<a href="#" class="btnQx" id="offline_cancel">取消</a><a href="#"
+				<a href="#" class="btnQx" id="offline_cancel">取消</a><a 
 					class="btnPay" id="offline_sure">确定</a>
 			</div>
 		</div>
@@ -227,7 +227,7 @@
 								if (orderStatus > 2) {
 									depositHtml = '<div class="box boxDeposit"><h3>押金托管（支持微信支付）<em id="em">未托管</em></h3><div class="deposit">平台押金托管（押金：1000元） <em class="depositInit" id="already_deposit"></em></div></div>';
 								}
-								if (platformHost == 'TRUE') {
+								if (platformHost) {
 									depositHtml = '<div class="box boxDeposit"><h3>押金托管（支持微信支付）<em id="em">已托管</em></h3><div class="deposit">平台押金托管（押金：1000元） <em class="depositSelect" id="already_deposit"></em></div></div>';
 								}
 								//0预约
@@ -239,14 +239,13 @@
 								if(orderStatus==0||orderStatus==1){
 									rentInfo='';
 									pj='';
-									}
+								}
 								if (orderStatus == 1) {
 									sectionType = 'iconQrz';
 								}
 								if (orderStatus == 2) {
 									sectionType = 'iconYqr';
 									orderLineType='orderLine orderOverLine';
-									pj='';
 								}
 								if (orderStatus == 3) {
 									sectionType = 'iconYrz';
