@@ -3,6 +3,7 @@ package com.mehome.requestDTO;
 import com.alibaba.fastjson.JSONObject;
 import com.mehome.domain.HouseResource;
 import com.mehome.enumDTO.HouseStatusEnum;
+import com.mehome.enumDTO.OrderStatusEnum;
 import com.mehome.utils.DateUtils;
 import com.mehome.utils.LbsAmapUtils;
 import com.mehome.utils.PageMysqlUtil;
@@ -65,6 +66,8 @@ public class HouseBean extends PageMysqlUtil {
 	private Date startTimeDate;
 	
 	private Date endTimeDate;
+	
+	private String statusDesc;
 
 	public Integer getHouseId() {
 		return houseId;
@@ -251,6 +254,14 @@ public class HouseBean extends PageMysqlUtil {
 		this.endTimeDate = endTimeDate;
 	}
 
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
+	}
+
 	public HouseResource beanToPojo(Boolean addBoolean){
 		HouseResource resource = new HouseResource();
 		Date date = new Date();
@@ -310,6 +321,12 @@ public class HouseBean extends PageMysqlUtil {
 		this.setSummary(resource.getSummary());
 		this.setSupplierId(resource.getSupplierId());
 		this.setProductId(resource.getProductId());
+		HouseStatusEnum[] enums=HouseStatusEnum.values();
+		for (HouseStatusEnum houseStatusEnum : enums) {
+			if(resource.getStatus().intValue()==houseStatusEnum.getKey()){
+				this.setStatusDesc(houseStatusEnum.getValue());
+			}
+		}
 	}
 	
 	

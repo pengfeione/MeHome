@@ -127,13 +127,14 @@ public class OrderServiceImpl implements IOrderService {
 			}
 			if ((bean.getOrderStatus()!=null&&bean.getOrderStatus().intValue() == OrderStatusEnum.CONFIRMED.getKey())||(oldOrder.getOrderStatus().intValue()==1)) {
 				bean = calculateWelfare(bean,null);
+				//TODO 更新房源为已经租借状态
 			}
 			order = bean.compareToPojo();
 			if(order.getStartTime()!=null&&order.getEndTime()!=null){
 				Long mills=order.getEndTime().getTime()-order.getStartTime().getTime();
 				Long day=mills/(1000*60*60*24);
 				order.setTenancy(new BigDecimal(day));
-				//TODO 根据租赁期重新计算房租 未满月按满月算
+				//根据租赁期重新计算房租 未满月按满月算
 				Double dividedDouble=day/31.00;
 				Long dividedLong=day/31;
 				Long calculateMonth=dividedLong;
