@@ -64,7 +64,7 @@ public class SupplierController {
      * @param bean
      * @return
      */
-    @Permits(role = {RoleEnum.PLATFORM})
+//    @Permits(role = {RoleEnum.PLATFORM})
     @PostMapping("/lists")
     @ResponseBody
     public ResponseEntity<Result> lists(@RequestBody SupplierRequestDTO bean) {
