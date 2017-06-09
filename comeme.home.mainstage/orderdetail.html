@@ -20,7 +20,13 @@
 <body>
 
 	<div class="wrap">
-
+		<!-- header -->
+        <div class="header">
+        	<div class="headerCont">
+            	<a class="btnBack">&lt;</a>
+            	<span>订单详情</span>
+            </div>
+        </div>
 		<!-- 新预约 -->
 		<!-- <ul class="orderList">
 			<li>
@@ -256,7 +262,7 @@
 									orderLineType='orderLine orderOverLine';
 								}
 								address=address+roomType.room+"室"+roomType.hall+"厅"+roomType.toilet+"卫"+house.roomArea+"㎡";
-								var orderdetail='<ul class="orderList"><li><div class="boxList"><span class="orderTop"><section class="'+sectionType+'"></section> <img src="'+img+'" /><h3>'+productName+'</h3> <em>'+rent+'元／月<section class="iconYj">押一付三</section></em> <i>'+address+'</i></span> <span class="'+orderLineType+'"><i class="orderLt"></i><i class="orderRt"></i></span> <a class="orderTel"><em class="iconTel"></em>客服电话：021-83844848<i class="iconMore"></i></a></div></li></ul>';
+								var orderdetail='<ul class="orderList headerTop"><li><div class="boxList"><span class="orderTop"><section class="'+sectionType+'"></section> <img src="'+img+'" /><h3>'+productName+'</h3> <em>'+rent+'元／月<section class="iconYj">押一付三</section></em> <i>'+address+'</i></span> <span class="'+orderLineType+'"><i class="orderLt"></i><i class="orderRt"></i></span> <a class="orderTel"><em class="iconTel"></em>客服电话：021-83844848<i class="iconMore"></i></a></div></li></ul>';
 								$('.wrap').append(orderdetail).append(rentInfo).append(depositHtml).append(pj);
 								loadScript("js/orderdetail.js");
 							}
