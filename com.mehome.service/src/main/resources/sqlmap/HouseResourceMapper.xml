@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mehome.dao.HouseResourceDao" >
-  <resultMap id="BaseResultMap" type="com.mehome.domain.HouseResource" >
-    <id column="house_id" property="houseId" jdbcType="INTEGER" />
-    <result column="area_id" property="areaId" jdbcType="INTEGER" />
-    <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
-    <result column="subject" property="subject" jdbcType="VARCHAR" />
-    <result column="summary" property="summary" jdbcType="VARCHAR" />
-    <result column="detail" property="detail" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="listpic" property="listpic" jdbcType="VARCHAR" />
-    <result column="detailpic" property="detailpic" jdbcType="VARCHAR" />
-    <result column="position" property="position" jdbcType="VARCHAR" />
-    <result column="sort" property="sort" jdbcType="INTEGER" />
-    <result column="room_type" property="roomType" jdbcType="INTEGER" />
-    <result column="room_type_desc" property="roomTypeDesc" jdbcType="VARCHAR" />
-    <result column="room_area" property="roomArea" jdbcType="DOUBLE" />
-    <result column="room_rent" property="roomRent" jdbcType="INTEGER" />
-    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
-    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
-    <result column="lease_holder" property="leaseHolder" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="product_id" property="productId" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.mehome.dao.HouseResourceDao">
+    <resultMap id="BaseResultMap" type="com.mehome.domain.HouseResource">
+        <id column="house_id" property="houseId" jdbcType="INTEGER"/>
+        <result column="area_id" property="areaId" jdbcType="INTEGER"/>
+        <result column="supplier_id" property="supplierId" jdbcType="INTEGER"/>
+        <result column="subject" property="subject" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="detail" property="detail" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="listpic" property="listpic" jdbcType="VARCHAR"/>
+        <result column="detailpic" property="detailpic" jdbcType="VARCHAR"/>
+        <result column="position" property="position" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="room_type" property="roomType" jdbcType="INTEGER"/>
+        <result column="room_type_desc" property="roomTypeDesc" jdbcType="VARCHAR"/>
+        <result column="room_area" property="roomArea" jdbcType="DOUBLE"/>
+        <result column="room_rent" property="roomRent" jdbcType="INTEGER"/>
+        <result column="pay_type" property="payType" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="lease_holder" property="leaseHolder" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="product_id" property="productId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     house_id, area_id, supplier_id, subject, summary, detail, address, listpic, detailpic, 
     position, sort, room_type, room_type_desc, room_area, room_rent, pay_type, status, 
     start_time, end_time, lease_holder, create_time, update_time,product_id
   </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from house_resource
-    where house_id = #{houseId,jdbcType=INTEGER}
-  </select>
-  <delete id="delete" parameterType="java.lang.Integer" >
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from house_resource
+        where house_id = #{houseId,jdbcType=INTEGER}
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
     delete from house_resource
     where house_id = #{houseId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.mehome.domain.HouseResource" >
+    <insert id="insert" parameterType="com.mehome.domain.HouseResource">
     insert into house_resource (house_id, area_id, supplier_id, 
       subject, summary, detail, 
       address, listpic, detailpic, 
@@ -59,224 +59,224 @@
       #{endTime,jdbcType=TIMESTAMP}, #{leaseHolder,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP},#{productId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertRequired" parameterType="com.mehome.domain.HouseResource" >
-    insert into house_resource
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="houseId != null" >
-        house_id,
-      </if>
-      <if test="areaId != null" >
-        area_id,
-      </if>
-      <if test="supplierId != null" >
-        supplier_id,
-      </if>
-      <if test="subject != null" >
-        subject,
-      </if>
-      <if test="summary != null" >
-        summary,
-      </if>
-      <if test="detail != null" >
-        detail,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="listpic != null" >
-        listpic,
-      </if>
-      <if test="detailpic != null" >
-        detailpic,
-      </if>
-      <if test="position != null" >
-        position,
-      </if>
-      <if test="sort != null" >
-        sort,
-      </if>
-      <if test="roomType != null" >
-        room_type,
-      </if>
-      <if test="roomTypeDesc != null" >
-        room_type_desc,
-      </if>
-      <if test="roomArea != null" >
-        room_area,
-      </if>
-      <if test="roomRent != null" >
-        room_rent,
-      </if>
-      <if test="payType != null" >
-        pay_type,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="startTime != null" >
-        start_time,
-      </if>
-      <if test="endTime != null" >
-        end_time,
-      </if>
-      <if test="leaseHolder != null" >
-        lease_holder,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="productId != null" >
-        product_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="houseId != null" >
-        #{houseId,jdbcType=INTEGER},
-      </if>
-      <if test="areaId != null" >
-        #{areaId,jdbcType=INTEGER},
-      </if>
-      <if test="supplierId != null" >
-        #{supplierId,jdbcType=INTEGER},
-      </if>
-      <if test="subject != null" >
-        #{subject,jdbcType=VARCHAR},
-      </if>
-      <if test="summary != null" >
-        #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="detail != null" >
-        #{detail,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="listpic != null" >
-        #{listpic,jdbcType=VARCHAR},
-      </if>
-      <if test="detailpic != null" >
-        #{detailpic,jdbcType=VARCHAR},
-      </if>
-      <if test="position != null" >
-        #{position,jdbcType=VARCHAR},
-      </if>
-      <if test="sort != null" >
-        #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="roomType != null" >
-        #{roomType,jdbcType=INTEGER},
-      </if>
-      <if test="roomTypeDesc != null" >
-        #{roomTypeDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="roomArea != null" >
-        #{roomArea,jdbcType=DOUBLE},
-      </if>
-      <if test="roomRent != null" >
-        #{roomRent,jdbcType=INTEGER},
-      </if>
-      <if test="payType != null" >
-        #{payType,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="startTime != null" >
-        #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null" >
-        #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="leaseHolder != null" >
-        #{leaseHolder,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="productId != null" >
-        #{productId,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateRequired" parameterType="com.mehome.domain.HouseResource" >
-    update house_resource
-    <set >
-      <if test="areaId != null" >
-        area_id = #{areaId,jdbcType=INTEGER},
-      </if>
-      <if test="supplierId != null" >
-        supplier_id = #{supplierId,jdbcType=INTEGER},
-      </if>
-      <if test="subject != null" >
-        subject = #{subject,jdbcType=VARCHAR},
-      </if>
-      <if test="summary != null" >
-        summary = #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="detail != null" >
-        detail = #{detail,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="listpic != null" >
-        listpic = #{listpic,jdbcType=VARCHAR},
-      </if>
-      <if test="detailpic != null" >
-        detailpic = #{detailpic,jdbcType=VARCHAR},
-      </if>
-      <if test="position != null" >
-        position = #{position,jdbcType=VARCHAR},
-      </if>
-      <if test="sort != null" >
-        sort = #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="roomType != null" >
-        room_type = #{roomType,jdbcType=INTEGER},
-      </if>
-      <if test="roomTypeDesc != null" >
-        room_type_desc = #{roomTypeDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="roomArea != null" >
-        room_area = #{roomArea,jdbcType=DOUBLE},
-      </if>
-      <if test="roomRent != null" >
-        room_rent = #{roomRent,jdbcType=INTEGER},
-      </if>
-      <if test="payType != null" >
-        pay_type = #{payType,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="startTime != null" >
-        start_time = #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null" >
-        end_time = #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="leaseHolder != null" >
-        lease_holder = #{leaseHolder,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="productId != null" >
-        product_id = #{productId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where house_id = #{houseId,jdbcType=INTEGER}
-  </update>
-  <update id="update" parameterType="com.mehome.domain.HouseResource" >
+    <insert id="insertRequired" parameterType="com.mehome.domain.HouseResource">
+        insert into house_resource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="houseId != null">
+                house_id,
+            </if>
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="supplierId != null">
+                supplier_id,
+            </if>
+            <if test="subject != null">
+                subject,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="detail != null">
+                detail,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="listpic != null">
+                listpic,
+            </if>
+            <if test="detailpic != null">
+                detailpic,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="roomType != null">
+                room_type,
+            </if>
+            <if test="roomTypeDesc != null">
+                room_type_desc,
+            </if>
+            <if test="roomArea != null">
+                room_area,
+            </if>
+            <if test="roomRent != null">
+                room_rent,
+            </if>
+            <if test="payType != null">
+                pay_type,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="leaseHolder != null">
+                lease_holder,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="houseId != null">
+                #{houseId,jdbcType=INTEGER},
+            </if>
+            <if test="areaId != null">
+                #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="supplierId != null">
+                #{supplierId,jdbcType=INTEGER},
+            </if>
+            <if test="subject != null">
+                #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="listpic != null">
+                #{listpic,jdbcType=VARCHAR},
+            </if>
+            <if test="detailpic != null">
+                #{detailpic,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="roomType != null">
+                #{roomType,jdbcType=INTEGER},
+            </if>
+            <if test="roomTypeDesc != null">
+                #{roomTypeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="roomArea != null">
+                #{roomArea,jdbcType=DOUBLE},
+            </if>
+            <if test="roomRent != null">
+                #{roomRent,jdbcType=INTEGER},
+            </if>
+            <if test="payType != null">
+                #{payType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leaseHolder != null">
+                #{leaseHolder,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateRequired" parameterType="com.mehome.domain.HouseResource">
+        update house_resource
+        <set>
+            <if test="areaId != null">
+                area_id = #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="supplierId != null">
+                supplier_id = #{supplierId,jdbcType=INTEGER},
+            </if>
+            <if test="subject != null">
+                subject = #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                detail = #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="listpic != null">
+                listpic = #{listpic,jdbcType=VARCHAR},
+            </if>
+            <if test="detailpic != null">
+                detailpic = #{detailpic,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="roomType != null">
+                room_type = #{roomType,jdbcType=INTEGER},
+            </if>
+            <if test="roomTypeDesc != null">
+                room_type_desc = #{roomTypeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="roomArea != null">
+                room_area = #{roomArea,jdbcType=DOUBLE},
+            </if>
+            <if test="roomRent != null">
+                room_rent = #{roomRent,jdbcType=INTEGER},
+            </if>
+            <if test="payType != null">
+                pay_type = #{payType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leaseHolder != null">
+                lease_holder = #{leaseHolder,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where house_id = #{houseId,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="com.mehome.domain.HouseResource">
     update house_resource
     set area_id = #{areaId,jdbcType=INTEGER},
       supplier_id = #{supplierId,jdbcType=INTEGER},
@@ -302,60 +302,65 @@
       product_id = #{productId,jdbcType=INTEGER}
     where house_id = #{houseId,jdbcType=INTEGER}
   </update>
-  <select id="getListByCondition" parameterType="com.mehome.requestDTO.HouseBean" resultMap="BaseResultMap">
-    SELECT
-    <include refid="Base_Column_List"/>
-    FROM house_resource
-    WHERE 1=1
-    <if test="subject != null" >
-      AND subject like CONCAT('%','${subject}','%' )
-    </if>
-    <if test="areaId != null">
-      AND area_id = #{areaId,jdbcType=INTEGER}
-    </if>
-    <if test="supplierId != null">
-      AND supplier_id = #{supplierId,jdbcType=INTEGER}
-    </if>
-    <if test="status != null">
-      AND status = #{status,jdbcType=INTEGER}
-    </if>
-    <if test="startTime != null">
-      AND start_time >= #{startTimeDate,jdbcType=TIMESTAMP}
-    </if>
-    <if test="endTime != null">
-      AND #{endTimeDate,jdbcType=TIMESTAMP}>=end_time
-    </if>
-    <if test="productId != null">
-      AND product_id = #{productId,jdbcType=INTEGER}
-    </if>
-    ORDER BY create_time DESC
-    limit #{pageNow},#{pageSize}
-  </select>
-  <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.HouseBean" resultType="java.lang.Long">
-    SELECT count(*)
-    FROM house_resource
-    WHERE 1=1
-     <if test="subject != null" >
-      AND product_name like CONCAT('%','${productName}','%' )
-    </if>
-    <if test="areaId != null">
-      AND area_id = #{areaId,jdbcType=INTEGER}
-    </if>
-    <if test="supplierId != null">
-      AND supplier_id = #{supplierId,jdbcType=INTEGER}
-    </if>
-    <if test="status != null">
-      AND status = #{status,jdbcType=INTEGER}
-    </if>
-    <if test="startTimeDate != null">
-      AND start_time >= #{startTimeDate,jdbcType=TIMESTAMP}
-    </if>
-    <if test="endTimeDate != null">
-      AND #{endTimeDate,jdbcType=TIMESTAMP}>=end_time
-    </if>
-    <if test="productId != null">
-      AND product_id = #{productId,jdbcType=INTEGER}
-    </if>
-  </select>
-  
+    <select id="getListByCondition" parameterType="com.mehome.requestDTO.HouseBean" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM house_resource
+        WHERE 1=1
+        <if test="houseId != null">
+            AND house_id = #{houseId,jdbcType=INTEGER}
+        </if>
+        <if test="subject != null">
+            AND subject like CONCAT('%','${subject}','%' )
+        </if>
+        <if test="areaId != null">
+            AND area_id = #{areaId,jdbcType=INTEGER}
+        </if>
+        <if test="supplierId != null">
+            AND supplier_id = #{supplierId,jdbcType=INTEGER}
+        </if>
+        <if test="status != null">
+            AND status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            AND start_time >= #{startTimeDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            AND #{endTimeDate,jdbcType=TIMESTAMP}>=end_time
+        </if>
+        <if test="productId != null">
+            AND product_id = #{productId,jdbcType=INTEGER}
+        </if>
+        ORDER BY create_time DESC
+        limit #{pageNow},#{pageSize}
+    </select>
+    <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.HouseBean" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM house_resource
+        WHERE 1=1
+        <if test="houseId != null">
+            AND house_id = #{houseId,jdbcType=INTEGER}
+        </if>
+        <if test="subject != null">
+            AND product_name like CONCAT('%','${productName}','%' )
+        </if>
+        <if test="areaId != null">
+            AND area_id = #{areaId,jdbcType=INTEGER}
+        </if>
+        <if test="supplierId != null">
+            AND supplier_id = #{supplierId,jdbcType=INTEGER}
+        </if>
+        <if test="status != null">
+            AND status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="startTimeDate != null">
+            AND start_time >= #{startTimeDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTimeDate != null">
+            AND #{endTimeDate,jdbcType=TIMESTAMP}>=end_time
+        </if>
+        <if test="productId != null">
+            AND product_id = #{productId,jdbcType=INTEGER}
+        </if>
+    </select>
 </mapper>

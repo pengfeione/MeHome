@@ -1,6 +1,9 @@
 package com.mehome.domain;
 
+import com.alibaba.fastjson.JSONArray;
+
 import java.util.Date;
+import java.util.List;
 
 public class HouseResource {
     private Integer houseId;
@@ -46,8 +49,18 @@ public class HouseResource {
     private Date createTime;
 
     private Date updateTime;
-    
+
     private Integer productId;
+
+    private List<String> detailPicList = null;
+
+    public List<String> getDetailPicList() {
+        return detailPicList;
+    }
+
+    public void setDetailPicList(List<String> detailPicList) {
+        this.detailPicList = detailPicList;
+    }
 
     public Integer getHouseId() {
         return houseId;
@@ -226,14 +239,14 @@ public class HouseResource {
     }
 
     public Integer getProductId() {
-		return productId;
-	}
+        return productId;
+    }
 
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
 
-	@Override
+    @Override
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -246,28 +259,28 @@ public class HouseResource {
         }
         HouseResource other = (HouseResource) that;
         return (this.getHouseId() == null ? other.getHouseId() == null : this.getHouseId().equals(other.getHouseId()))
-            && (this.getAreaId() == null ? other.getAreaId() == null : this.getAreaId().equals(other.getAreaId()))
-            && (this.getSupplierId() == null ? other.getSupplierId() == null : this.getSupplierId().equals(other.getSupplierId()))
-            && (this.getSubject() == null ? other.getSubject() == null : this.getSubject().equals(other.getSubject()))
-            && (this.getSummary() == null ? other.getSummary() == null : this.getSummary().equals(other.getSummary()))
-            && (this.getDetail() == null ? other.getDetail() == null : this.getDetail().equals(other.getDetail()))
-            && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
-            && (this.getListpic() == null ? other.getListpic() == null : this.getListpic().equals(other.getListpic()))
-            && (this.getDetailpic() == null ? other.getDetailpic() == null : this.getDetailpic().equals(other.getDetailpic()))
-            && (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()))
-            && (this.getSort() == null ? other.getSort() == null : this.getSort().equals(other.getSort()))
-            && (this.getRoomType() == null ? other.getRoomType() == null : this.getRoomType().equals(other.getRoomType()))
-            && (this.getRoomTypeDesc() == null ? other.getRoomTypeDesc() == null : this.getRoomTypeDesc().equals(other.getRoomTypeDesc()))
-            && (this.getRoomArea() == null ? other.getRoomArea() == null : this.getRoomArea().equals(other.getRoomArea()))
-            && (this.getRoomRent() == null ? other.getRoomRent() == null : this.getRoomRent().equals(other.getRoomRent()))
-            && (this.getPayType() == null ? other.getPayType() == null : this.getPayType().equals(other.getPayType()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
-            && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
-            && (this.getLeaseHolder() == null ? other.getLeaseHolder() == null : this.getLeaseHolder().equals(other.getLeaseHolder()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getProductId() == null ? other.getProductId() == null : this.getProductId().equals(other.getProductId()));
+                && (this.getAreaId() == null ? other.getAreaId() == null : this.getAreaId().equals(other.getAreaId()))
+                && (this.getSupplierId() == null ? other.getSupplierId() == null : this.getSupplierId().equals(other.getSupplierId()))
+                && (this.getSubject() == null ? other.getSubject() == null : this.getSubject().equals(other.getSubject()))
+                && (this.getSummary() == null ? other.getSummary() == null : this.getSummary().equals(other.getSummary()))
+                && (this.getDetail() == null ? other.getDetail() == null : this.getDetail().equals(other.getDetail()))
+                && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
+                && (this.getListpic() == null ? other.getListpic() == null : this.getListpic().equals(other.getListpic()))
+                && (this.getDetailpic() == null ? other.getDetailpic() == null : this.getDetailpic().equals(other.getDetailpic()))
+                && (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()))
+                && (this.getSort() == null ? other.getSort() == null : this.getSort().equals(other.getSort()))
+                && (this.getRoomType() == null ? other.getRoomType() == null : this.getRoomType().equals(other.getRoomType()))
+                && (this.getRoomTypeDesc() == null ? other.getRoomTypeDesc() == null : this.getRoomTypeDesc().equals(other.getRoomTypeDesc()))
+                && (this.getRoomArea() == null ? other.getRoomArea() == null : this.getRoomArea().equals(other.getRoomArea()))
+                && (this.getRoomRent() == null ? other.getRoomRent() == null : this.getRoomRent().equals(other.getRoomRent()))
+                && (this.getPayType() == null ? other.getPayType() == null : this.getPayType().equals(other.getPayType()))
+                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+                && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
+                && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
+                && (this.getLeaseHolder() == null ? other.getLeaseHolder() == null : this.getLeaseHolder().equals(other.getLeaseHolder()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+                && (this.getProductId() == null ? other.getProductId() == null : this.getProductId().equals(other.getProductId()));
     }
 
     @Override

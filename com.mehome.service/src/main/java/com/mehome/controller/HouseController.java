@@ -6,11 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.mehome.requestDTO.HouseBean;
 import com.mehome.service.iface.IHouseService;
@@ -32,6 +28,16 @@ public class HouseController {
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(houseService.getListByCondition(bean), houseService.getSizeByCondition(bean)));
+    }
+
+    @PostMapping("/get")
+    @ResponseBody
+    public ResponseEntity<Result> get(@RequestParam("houseId") Integer houseId) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(houseService.selectById(houseId)));
     }
 
     @PostMapping("/add")

@@ -4,7 +4,7 @@ package com.mehome.enumDTO;
  * Created by Administrator on 2017/5/12.
  */
 public enum RoleEnum {
-    USER("user"), COMPANY("company"), SUPER("super"), PLATFORM("platform");
+    USER("user"), COMPANY("company"), SUPER("super"), PLATFORM("platform"), SUPPLIER("supplier");
     private String role;
 
     private RoleEnum(String role) {
