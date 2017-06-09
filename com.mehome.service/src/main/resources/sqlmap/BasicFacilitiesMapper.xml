@@ -1,106 +1,112 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mehome.dao.BasicFacilitiesDao" >
-  <resultMap id="BaseResultMap" type="com.mehome.domain.BasicFacilities" >
-    <id column="basic_id" property="basicId" jdbcType="INTEGER" />
-    <result column="pic" property="pic" jdbcType="VARCHAR" />
-    <result column="basic_name" property="basicName" jdbcType="VARCHAR" />
-    <result column="basic_type" property="basicType" jdbcType="VARCHAR" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="basic_active" property="basicActive" jdbcType="BIT" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    basic_id, pic, basic_name, basic_type, update_time, basic_active
-  </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from basic_facilities
-    where basic_id = #{basicId,jdbcType=INTEGER}
-  </select>
-  <delete id="delete" parameterType="java.lang.Integer" >
-    delete from basic_facilities
-    where basic_id = #{basicId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.mehome.domain.BasicFacilities" >
-    insert into basic_facilities (basic_id, pic, basic_name, 
-      basic_type, update_time, basic_active
-      )
-    values (#{basicId,jdbcType=INTEGER}, #{pic,jdbcType=VARCHAR}, #{basicName,jdbcType=VARCHAR}, 
-      #{basicType,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{basicActive,jdbcType=BIT}
-      )
-  </insert>
-  <insert id="insertRequired" parameterType="com.mehome.domain.BasicFacilities" >
-    insert into basic_facilities
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="basicId != null" >
-        basic_id,
-      </if>
-      <if test="pic != null" >
-        pic,
-      </if>
-      <if test="basicName != null" >
-        basic_name,
-      </if>
-      <if test="basicType != null" >
-        basic_type,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="basicActive != null" >
-        basic_active,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="basicId != null" >
-        #{basicId,jdbcType=INTEGER},
-      </if>
-      <if test="pic != null" >
-        #{pic,jdbcType=VARCHAR},
-      </if>
-      <if test="basicName != null" >
-        #{basicName,jdbcType=VARCHAR},
-      </if>
-      <if test="basicType != null" >
-        #{basicType,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="basicActive != null" >
-        #{basicActive,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateRequired" parameterType="com.mehome.domain.BasicFacilities" >
-    update basic_facilities
-    <set >
-      <if test="pic != null" >
-        pic = #{pic,jdbcType=VARCHAR},
-      </if>
-      <if test="basicName != null" >
+<mapper namespace="com.mehome.dao.BasicFacilitiesDao">
+    <resultMap id="BaseResultMap" type="com.mehome.domain.BasicFacilities">
+        <id column="basic_id" property="basicId" jdbcType="INTEGER"/>
+        <result column="pic" property="pic" jdbcType="VARCHAR"/>
+        <result column="basic_name" property="basicName" jdbcType="VARCHAR"/>
+        <result column="basic_type" property="basicType" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="basic_active" property="basicActive" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        basic_id, pic, basic_name, basic_type, update_time, basic_active
+    </sql>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from basic_facilities
+        where basic_id = #{basicId,jdbcType=INTEGER}
+    </select>
+    <select id="list" resultMap="BaseResultMap">
+        select
+         basic_id, pic, basic_name
+        from basic_facilities
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from basic_facilities
+        where basic_id = #{basicId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.mehome.domain.BasicFacilities">
+        insert into basic_facilities (basic_id, pic, basic_name,
+        basic_type, update_time, basic_active
+        )
+        values (#{basicId,jdbcType=INTEGER}, #{pic,jdbcType=VARCHAR}, #{basicName,jdbcType=VARCHAR},
+        #{basicType,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{basicActive,jdbcType=BIT}
+        )
+    </insert>
+    <insert id="insertRequired" parameterType="com.mehome.domain.BasicFacilities">
+        insert into basic_facilities
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="basicId != null">
+                basic_id,
+            </if>
+            <if test="pic != null">
+                pic,
+            </if>
+            <if test="basicName != null">
+                basic_name,
+            </if>
+            <if test="basicType != null">
+                basic_type,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="basicActive != null">
+                basic_active,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="basicId != null">
+                #{basicId,jdbcType=INTEGER},
+            </if>
+            <if test="pic != null">
+                #{pic,jdbcType=VARCHAR},
+            </if>
+            <if test="basicName != null">
+                #{basicName,jdbcType=VARCHAR},
+            </if>
+            <if test="basicType != null">
+                #{basicType,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="basicActive != null">
+                #{basicActive,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateRequired" parameterType="com.mehome.domain.BasicFacilities">
+        update basic_facilities
+        <set>
+            <if test="pic != null">
+                pic = #{pic,jdbcType=VARCHAR},
+            </if>
+            <if test="basicName != null">
+                basic_name = #{basicName,jdbcType=VARCHAR},
+            </if>
+            <if test="basicType != null">
+                basic_type = #{basicType,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="basicActive != null">
+                basic_active = #{basicActive,jdbcType=BIT},
+            </if>
+        </set>
+        where basic_id = #{basicId,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="com.mehome.domain.BasicFacilities">
+        update basic_facilities
+        set pic = #{pic,jdbcType=VARCHAR},
         basic_name = #{basicName,jdbcType=VARCHAR},
-      </if>
-      <if test="basicType != null" >
         basic_type = #{basicType,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="basicActive != null" >
-        basic_active = #{basicActive,jdbcType=BIT},
-      </if>
-    </set>
-    where basic_id = #{basicId,jdbcType=INTEGER}
-  </update>
-  <update id="update" parameterType="com.mehome.domain.BasicFacilities" >
-    update basic_facilities
-    set pic = #{pic,jdbcType=VARCHAR},
-      basic_name = #{basicName,jdbcType=VARCHAR},
-      basic_type = #{basicType,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      basic_active = #{basicActive,jdbcType=BIT}
-    where basic_id = #{basicId,jdbcType=INTEGER}
-  </update>
+        basic_active = #{basicActive,jdbcType=BIT}
+        where basic_id = #{basicId,jdbcType=INTEGER}
+    </update>
 </mapper>

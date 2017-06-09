@@ -10,21 +10,28 @@ import java.text.DecimalFormat;
  */
 public class TestRandom {
     public static void main(String[] args) {
-        for (int i = 0; i < 1000; i++) {
-            System.out.println(Integer.MAX_VALUE);
+//        for (int i = 0; i < 1000; i++) {
+//            System.out.println(Integer.MAX_VALUE);
+//        }
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("notice", "adfa");
+//        jsonObject.put("ab", "bc");
+//        CompanyWelfareNotice c =
+//                JSONObject.parseObject(jsonObject.toJSONString(), CompanyWelfareNotice.class);
+//        System.out.println(c);
+
+        for (int i = 0; i < 100l; i++)
+            System.out.println(trigger(0.5d));
+
+
+    }
+
+    public static boolean trigger(double probability) {
+        if (Math.random() < probability) {
+            return true;
+        } else {
+            return false;
         }
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("notice", "adfa");
-        jsonObject.put("ab", "bc");
-        CompanyWelfareNotice c =
-                JSONObject.parseObject(jsonObject.toJSONString(), CompanyWelfareNotice.class);
-        System.out.println(c);
-
-
-
-
-
-
     }
 
     public static int getRandNum(int min, int max) {
