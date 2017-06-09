@@ -14,6 +14,7 @@ import java.util.Date;
 public class DateUtils {
 	public static Log log = LogFactory.getLog(DateUtils.class);
     public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static SimpleDateFormat simpleDateFormat_Date= new SimpleDateFormat("yyyy-MM-dd");
     public static Calendar getTodayZero(){
         Calendar calendar =  Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY,0);
@@ -38,6 +39,10 @@ public class DateUtils {
 	
 	public static String dateToStr(Date date){
 		return simpleDateFormat.format(date);
+	}
+	
+	public static String dateToDateStr(Date date){
+		return simpleDateFormat_Date.format(date);
 	}
 	
 	public static Date getDayEnd(Date currentDate,String dateType,Integer num) {

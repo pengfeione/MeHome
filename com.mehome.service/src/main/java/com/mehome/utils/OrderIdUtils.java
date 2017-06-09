@@ -18,6 +18,11 @@ public class OrderIdUtils {
         String payIdWithoutTail = String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS%1$tL%2$s", new Date(), StringUtils.getRandomCode(6, NUMBER_CHAR));
         return payIdWithoutTail + calcPayIdTail(payIdWithoutTail + getLocalMac() + userId);
     }
+    
+    public static synchronized String getOrderId(){
+    	String payIdWithoutTail = String.format("%1$tY%1$tm%1$td", new Date());
+    	return payIdWithoutTail;
+    }
 
     private static char calcPayIdTail(String in) {
         char[] charList = in.toCharArray();
@@ -59,8 +64,15 @@ public class OrderIdUtils {
         return s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24); 
     }
     public static void main(String[] args) {
-    	String orderId=OrderIdUtils.getOrderId("100000000000000000");
-    	int length=orderId.length();
-    	System.out.println(OrderIdUtils.getOrderId("100000000000000000").substring(2,length));
+//    	String orderId=OrderIdUtils.getOrderId("100000000000000000");
+//    	int length=orderId.length();
+//    	System.out.println(length);
+    	
+    	
+//    	String newOrderId=OrderIdUtils.getOrderId();
+//    	System.out.println(newOrderId);
+    	long max=0L;
+    	String id=String.format("%06d", max);
+    	System.out.println(id);
 	}
 }

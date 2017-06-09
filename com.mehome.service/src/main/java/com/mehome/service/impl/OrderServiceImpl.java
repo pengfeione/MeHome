@@ -261,7 +261,7 @@ public class OrderServiceImpl implements IOrderService {
 			oper.setOperationId(OrderIdUtils.getUUID());
 			userAccountOperationDAO.insertRequired(oper);
 			bean.setDepositBack(Boolean.TRUE);
-			OrderList updateOrder=bean.beanToPojo(Boolean.FALSE);
+			OrderList updateOrder=bean.compareToPojo();
 			orderListDAO.updateRequired(updateOrder);
 			return Boolean.TRUE.toString();
 		}

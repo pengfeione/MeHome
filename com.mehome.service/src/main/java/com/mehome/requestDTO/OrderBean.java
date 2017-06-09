@@ -510,7 +510,7 @@ public class OrderBean extends PageMysqlUtil{
 		this.setDepositBack(order.getDepositBack());
 		this.setDiscountAmount(order.getDiscountAmount()==null?0:order.getDiscountAmount());
 		this.setDiscountRent(order.getDiscountRent()==null?0:order.getDiscountRent());
-		this.setEndTime(order.getEndTime()==null?"":DateUtils.dateToStr(order.getEndTime()));
+		this.setEndTime(order.getEndTime()==null?"":DateUtils.dateToDateStr(order.getEndTime()));
 		this.setHouseId(order.getHouseId());
 		this.setHouseSubject(order.getHouseSubject());
 		this.setOrderReason(order.getOrderReason());
@@ -542,7 +542,7 @@ public class OrderBean extends PageMysqlUtil{
 		this.setPlatformHost(order.getPlatformHost());
 		this.setProductId(order.getProductId());
 		this.setProductName(order.getProductName());
-		this.setStartTime(order.getStartTime()==null?"":DateUtils.dateToStr(order.getStartTime()));
+		this.setStartTime(order.getStartTime()==null?"":DateUtils.dateToDateStr(order.getStartTime()));
 		this.setSupplierId(order.getSupplierId());
 		this.setSupplierName(order.getSupplierName());
 		this.setTenancy(order.getTenancy());
