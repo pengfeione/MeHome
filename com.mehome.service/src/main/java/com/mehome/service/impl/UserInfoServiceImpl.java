@@ -49,10 +49,22 @@ public class UserInfoServiceImpl implements IUserInfoService {
         AssertUtils.isNotNull(userInfo.getMobile(), "用户手机号不能为空！");
         AssertUtils.isNotNull(userInfo.getPassword(), "用户密码不能为空！");
         UserInfo result = userInfoDao.login(userInfo);
+        if (null == userInfoDao.selectByMobile(userInfo.getMobile())) {
+            throw new InfoException("当前登录手机不存在，马上注册！");
+        }
         if (null != result) {
             return result;
         } else {
-            throw new InfoException("用户名或密码错误！");
+            throw new InfoException("手机号或密码错误！");
+        }
+    }
+
+    @Override
+    public boolean mobile(String mobile) {
+        if (null == userInfoDao.selectByMobile(mobile)) {
+            return false;
+        } else {
+            return true;
         }
     }
 

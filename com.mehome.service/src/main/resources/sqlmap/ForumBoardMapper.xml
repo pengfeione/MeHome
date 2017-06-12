@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mehome.dao.ForumBoardDao" >
+  <resultMap id="BaseResultMap" type="com.mehome.domain.ForumBoard" >
+    <id column="bid" property="bid" jdbcType="INTEGER" />
+    <result column="fid" property="fid" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="display_order" property="displayOrder" jdbcType="SMALLINT" />
+    <result column="allowpost" property="allowpost" jdbcType="BIT" />
+    <result column="type" property="type" jdbcType="BIT" />
+    <result column="last_topic_uid" property="lastTopicUid" jdbcType="VARCHAR" />
+    <result column="last_topic_time" property="lastTopicTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="is_active" property="isActive" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    bid, fid, pid, name, logo, display_order, allowpost, type, last_topic_uid, last_topic_time, 
+    create_time, is_active
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from forum_board
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from forum_board
+    where bid = #{bid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mehome.domain.ForumBoard" >
+    insert into forum_board (bid, fid, pid, 
+      name, logo, display_order, 
+      allowpost, type, last_topic_uid, 
+      last_topic_time, create_time, is_active
+      )
+    values (#{bid,jdbcType=INTEGER}, #{fid,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, #{displayOrder,jdbcType=SMALLINT}, 
+      #{allowpost,jdbcType=BIT}, #{type,jdbcType=BIT}, #{lastTopicUid,jdbcType=VARCHAR}, 
+      #{lastTopicTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{isActive,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertRequired" parameterType="com.mehome.domain.ForumBoard" >
+    insert into forum_board
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        bid,
+      </if>
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="displayOrder != null" >
+        display_order,
+      </if>
+      <if test="allowpost != null" >
+        allowpost,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="lastTopicUid != null" >
+        last_topic_uid,
+      </if>
+      <if test="lastTopicTime != null" >
+        last_topic_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="fid != null" >
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=SMALLINT},
+      </if>
+      <if test="allowpost != null" >
+        #{allowpost,jdbcType=BIT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=BIT},
+      </if>
+      <if test="lastTopicUid != null" >
+        #{lastTopicUid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTopicTime != null" >
+        #{lastTopicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateRequired" parameterType="com.mehome.domain.ForumBoard" >
+    update forum_board
+    <set >
+      <if test="fid != null" >
+        fid = #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        display_order = #{displayOrder,jdbcType=SMALLINT},
+      </if>
+      <if test="allowpost != null" >
+        allowpost = #{allowpost,jdbcType=BIT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=BIT},
+      </if>
+      <if test="lastTopicUid != null" >
+        last_topic_uid = #{lastTopicUid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTopicTime != null" >
+        last_topic_time = #{lastTopicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=BIT},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <update id="update" parameterType="com.mehome.domain.ForumBoard" >
+    update forum_board
+    set fid = #{fid,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      display_order = #{displayOrder,jdbcType=SMALLINT},
+      allowpost = #{allowpost,jdbcType=BIT},
+      type = #{type,jdbcType=BIT},
+      last_topic_uid = #{lastTopicUid,jdbcType=VARCHAR},
+      last_topic_time = #{lastTopicTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_active = #{isActive,jdbcType=BIT}
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+</mapper>

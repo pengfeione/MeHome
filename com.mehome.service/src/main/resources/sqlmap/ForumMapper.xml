@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mehome.dao.ForumDao" >
+  <resultMap id="BaseResultMap" type="com.mehome.domain.Forum" >
+    <id column="fid" property="fid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="last_topic_id" property="lastTopicId" jdbcType="VARCHAR" />
+    <result column="last_post_time" property="lastPostTime" jdbcType="TIMESTAMP" />
+    <result column="domain" property="domain" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="is_active" property="isActive" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    fid, name, logo, last_topic_id, last_post_time, domain, create_time, is_active
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from forum
+    where fid = #{fid,jdbcType=VARCHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from forum
+    where fid = #{fid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mehome.domain.Forum" >
+    insert into forum (fid, name, logo, 
+      last_topic_id, last_post_time, domain, 
+      create_time, is_active)
+    values (#{fid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, 
+      #{lastTopicId,jdbcType=VARCHAR}, #{lastPostTime,jdbcType=TIMESTAMP}, #{domain,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{isActive,jdbcType=BIT})
+  </insert>
+  <insert id="insertRequired" parameterType="com.mehome.domain.Forum" >
+    insert into forum
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="lastTopicId != null" >
+        last_topic_id,
+      </if>
+      <if test="lastPostTime != null" >
+        last_post_time,
+      </if>
+      <if test="domain != null" >
+        domain,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTopicId != null" >
+        #{lastTopicId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastPostTime != null" >
+        #{lastPostTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domain != null" >
+        #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateRequired" parameterType="com.mehome.domain.Forum" >
+    update forum
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTopicId != null" >
+        last_topic_id = #{lastTopicId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastPostTime != null" >
+        last_post_time = #{lastPostTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domain != null" >
+        domain = #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=BIT},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+  <update id="update" parameterType="com.mehome.domain.Forum" >
+    update forum
+    set name = #{name,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      last_topic_id = #{lastTopicId,jdbcType=VARCHAR},
+      last_post_time = #{lastPostTime,jdbcType=TIMESTAMP},
+      domain = #{domain,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_active = #{isActive,jdbcType=BIT}
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+</mapper>

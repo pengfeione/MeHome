@@ -35,6 +35,7 @@
         <include refid="Base_Column_List"/>
         from user_info
         where mobile = #{mobile,jdbcType=VARCHAR}
+        limit 1
     </select>
     <select id="selectByOpen" parameterType="com.mehome.domain.UserInfo" resultMap="BaseResultMap">
         select

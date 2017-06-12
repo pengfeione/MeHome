@@ -20,6 +20,9 @@ public interface IUserInfoService {
      */
     public UserInfo login(UserInfo userInfo);
 
+
+    public boolean mobile(String mobile);
+
     /**
      * 通过企业认证的
      *

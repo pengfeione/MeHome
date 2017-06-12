@@ -49,6 +49,22 @@ public class UserController {
     }
 
     /**
+     * 判断手机号是否存在
+     *
+     * @param mobile
+     * @return
+     */
+    @PostMapping("/mobile")
+    @ResponseBody
+    public ResponseEntity<Result> mobile(@RequestParam("mobile") String mobile) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(userInfoService.mobile(mobile)));
+    }
+
+    /**
      * 用户登录
      *
      * @param request
