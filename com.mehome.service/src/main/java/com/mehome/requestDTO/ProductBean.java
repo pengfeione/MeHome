@@ -451,5 +451,6 @@ public class ProductBean extends PageMysqlUtil {
         this.setEntertainment(product.getEntertainment());
         //
         this.setProductId(product.getProductId());
+        this.setScore(product.getScore());
     }
 }
