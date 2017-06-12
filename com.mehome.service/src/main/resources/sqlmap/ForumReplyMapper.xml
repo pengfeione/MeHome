@@ -216,4 +216,53 @@
       is_active = #{isActive,jdbcType=BIT}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="getListByCondition" parameterType="com.mehome.requestDTO.ReplyBean" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM forum_reply
+        WHERE 1=1
+        <if test="replyId != null">
+            AND id = #{replyId,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null">
+            AND type = #{type,jdbcType=VARCHAR}
+        </if>
+        <if test="tid != null">
+            AND tid = #{tid,jdbcType=VARCHAR}
+        </if>
+        <if test="replier != null">
+            AND replier = #{replier,jdbcType=VARCHAR}
+        </if>
+        <if test="isActive != null">
+            AND is_active = #{isActive,jdbcType=BIT}
+        </if>
+        <if test="platform != null">
+            AND platform = #{platform,jdbcType=VARCHAR}
+        </if>
+        ORDER BY create_time DESC
+        limit #{pageNow},#{pageSize}
+    </select>
+    <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.ReplyBean" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM forum_reply
+        WHERE 1=1
+       <if test="replyId != null">
+            AND id = #{replyId,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null">
+            AND type = #{type,jdbcType=VARCHAR}
+        </if>
+        <if test="tid != null">
+            AND tid = #{tid,jdbcType=VARCHAR}
+        </if>
+        <if test="replier != null">
+            AND replier = #{replier,jdbcType=VARCHAR}
+        </if>
+        <if test="isActive != null">
+            AND is_active = #{isActive,jdbcType=BIT}
+        </if>
+        <if test="platform != null">
+            AND platform = #{platform,jdbcType=VARCHAR}
+        </if>
+    </select>
 </mapper>

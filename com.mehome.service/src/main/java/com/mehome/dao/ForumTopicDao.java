@@ -1,6 +1,9 @@
 package com.mehome.dao;
 
+import java.util.List;
+
 import com.mehome.domain.ForumTopic;
+import com.mehome.requestDTO.TopicBean;
 
 public interface ForumTopicDao {
     int delete(String tid);
@@ -16,4 +19,8 @@ public interface ForumTopicDao {
     int updateByPrimaryKeyWithBLOBs(ForumTopic record);
 
     int update(ForumTopic record);
+    
+    List<ForumTopic> getListByCondition(TopicBean bean);
+    
+    Long getSizeByCondition(TopicBean bean);
 }
