@@ -2,6 +2,7 @@ package com.mehome.requestDTO;
 
 import java.util.Date;
 
+import com.mehome.domain.ForumTopic;
 import com.mehome.utils.PageMysqlUtil;
 
 public class TopicBean extends PageMysqlUtil{
@@ -245,5 +246,15 @@ public class TopicBean extends PageMysqlUtil{
 		this.formatContent = formatContent;
 	}
     
-    
+    public TopicBean(ForumTopic topic){
+    	
+    }
+    public ForumTopic beanToPojo(){
+    	ForumTopic topic=new ForumTopic();
+		return topic;
+    }
+    public ForumTopic compareToPojo(){
+    	ForumTopic topic=new ForumTopic();
+    	return topic;
+    }
 }
