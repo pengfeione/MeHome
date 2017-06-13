@@ -140,4 +140,10 @@ public class PlatformView {
     public String users() {
         return "platformUsers";
     }
+    
+    @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+    @RequestMapping("/activity.html")
+    public String activity() {
+        return "platformActivity";
+    }
 }

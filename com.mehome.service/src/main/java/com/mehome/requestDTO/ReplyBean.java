@@ -150,6 +150,9 @@ public class ReplyBean extends PageMysqlUtil{
 		this.formatContent = formatContent;
 	}
     
+	public ReplyBean(){
+		
+	}
     public ReplyBean(ForumReply reply){
     	this.setContent(reply.getContent());
     	this.setCreateTime(DateUtils.dateToDateStr(reply.getCreateTime()));

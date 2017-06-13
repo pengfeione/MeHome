@@ -5,6 +5,8 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mehome.domain.ForumTopic;
+import com.mehome.enumDTO.TopicTypeEnum;
+import com.mehome.utils.DateUtils;
 import com.mehome.utils.OrderIdUtils;
 import com.mehome.utils.PageMysqlUtil;
 
@@ -27,7 +29,7 @@ public class TopicBean extends PageMysqlUtil{
 
     private Short platform;
 
-    private Date lastReplyTime;
+    private String lastReplyTime;
 
     private String lastReplier;
 
@@ -57,6 +59,8 @@ public class TopicBean extends PageMysqlUtil{
 
     private String formatContent;
 
+    private String topicTypeDesc;
+    
 	public String getTid() {
 		return tid;
 	}
@@ -129,11 +133,11 @@ public class TopicBean extends PageMysqlUtil{
 		this.platform = platform;
 	}
 
-	public Date getLastReplyTime() {
+	public String getLastReplyTime() {
 		return lastReplyTime;
 	}
 
-	public void setLastReplyTime(Date lastReplyTime) {
+	public void setLastReplyTime(String lastReplyTime) {
 		this.lastReplyTime = lastReplyTime;
 	}
 
@@ -249,8 +253,45 @@ public class TopicBean extends PageMysqlUtil{
 		this.formatContent = formatContent;
 	}
     
-    public TopicBean(ForumTopic topic){
-    	
+    public String getTopicTypeDesc() {
+		return topicTypeDesc;
+	}
+
+	public void setTopicTypeDesc(String topicTypeDesc) {
+		this.topicTypeDesc = topicTypeDesc;
+	}
+
+	public TopicBean(){
+		
+	}
+	public TopicBean(ForumTopic topic){
+		TopicTypeEnum[] enums=TopicTypeEnum.values();
+		for (TopicTypeEnum topicTypeEnum : enums) {
+			if(topic.getTopicType().equals(topicTypeEnum.getKey())){
+				this.setTopicTypeDesc(topicTypeEnum.getValue());
+			}
+		}
+		this.setBid(topic.getBid());
+		this.setContent(topic.getContent());
+		this.setContentFrom(topic.getContentFrom());
+		this.setCreateTime(DateUtils.dateToStr(topic.getCreateTime()));
+		this.setDisplayLocation(topic.getDisplayLocation());
+		this.setDisplayOrder(topic.getDisplayOrder());
+		this.setDisplayPic(topic.getDisplayPic());
+		this.setFid(topic.getFid());
+		this.setFormatContent(topic.getFormatContent());
+		this.setIsActive(topic.getIsActive());
+		this.setLastReplier(topic.getLastReplier());
+		if(topic.getLastReplyTime()!=null)
+		this.setLastReplyTime(DateUtils.dateToStr(topic.getLastReplyTime()));
+		this.setListpic(topic.getListpic());
+		this.setPlatform(topic.getPlatform());
+		this.setSubject(topic.getSubject());
+		this.setSummary(topic.getSummary());
+		this.setTid(topic.getTid());
+		this.setTopicType(topic.getTopicType());
+		this.setTopicUrl(topic.getTopicUrl());
+		this.setUid(topic.getUid());
     }
     public ForumTopic beanToPojo(){
     	Date date=new Date();
