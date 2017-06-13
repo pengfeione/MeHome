@@ -2,6 +2,7 @@ package com.mehome.domain;
 
 import com.alibaba.fastjson.JSONArray;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,7 +53,28 @@ public class HouseResource {
 
     private Integer productId;
 
+    private String basicIds;
+    private List<BasicFacilities> basicList = new ArrayList<BasicFacilities>();
+
+    public String getBasicIds() {
+        return basicIds;
+    }
+
+
     private List<String> detailPicList = null;
+
+    public void setBasicIds(String basicIds) {
+        this.basicIds = basicIds;
+    }
+
+
+    public List<BasicFacilities> getBasicList() {
+        return basicList;
+    }
+
+    public void setBasicList(List<BasicFacilities> basicList) {
+        this.basicList = basicList;
+    }
 
     public List<String> getDetailPicList() {
         return detailPicList;

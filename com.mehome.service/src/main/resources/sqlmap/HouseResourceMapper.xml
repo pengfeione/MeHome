@@ -14,6 +14,7 @@
         <result column="position" property="position" jdbcType="VARCHAR"/>
         <result column="sort" property="sort" jdbcType="INTEGER"/>
         <result column="room_type" property="roomType" jdbcType="INTEGER"/>
+        <result column="basic_ids" property="basicIds" jdbcType="VARCHAR"/>
         <result column="room_type_desc" property="roomTypeDesc" jdbcType="VARCHAR"/>
         <result column="room_area" property="roomArea" jdbcType="DOUBLE"/>
         <result column="room_rent" property="roomRent" jdbcType="INTEGER"/>
@@ -27,10 +28,10 @@
         <result column="product_id" property="productId" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-    house_id, area_id, supplier_id, subject, summary, detail, address, listpic, detailpic, 
-    position, sort, room_type, room_type_desc, room_area, room_rent, pay_type, status, 
-    start_time, end_time, lease_holder, create_time, update_time,product_id
-  </sql>
+        house_id, area_id, supplier_id, subject, summary, detail, address, listpic, detailpic,
+        position, sort, room_type, basic_ids, room_type_desc, room_area, room_rent, pay_type, status,
+        start_time, end_time, lease_holder, create_time, update_time, product_id
+    </sql>
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -38,27 +39,30 @@
         where house_id = #{houseId,jdbcType=INTEGER}
     </select>
     <delete id="delete" parameterType="java.lang.Integer">
-    delete from house_resource
-    where house_id = #{houseId,jdbcType=INTEGER}
-  </delete>
+        DELETE FROM house_resource
+        WHERE house_id = #{houseId,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="com.mehome.domain.HouseResource">
-    insert into house_resource (house_id, area_id, supplier_id, 
-      subject, summary, detail, 
-      address, listpic, detailpic, 
-      position, sort, room_type, 
-      room_type_desc, room_area, room_rent, 
-      pay_type, status, start_time, 
-      end_time, lease_holder, create_time, 
-      update_time,product_id)
-    values (#{houseId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{supplierId,jdbcType=INTEGER}, 
-      #{subject,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{listpic,jdbcType=VARCHAR}, #{detailpic,jdbcType=VARCHAR}, 
-      #{position,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{roomType,jdbcType=INTEGER}, 
-      #{roomTypeDesc,jdbcType=VARCHAR}, #{roomArea,jdbcType=DOUBLE}, #{roomRent,jdbcType=INTEGER}, 
-      #{payType,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, 
-      #{endTime,jdbcType=TIMESTAMP}, #{leaseHolder,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP},#{productId,jdbcType=INTEGER})
-  </insert>
+        INSERT INTO house_resource (house_id, area_id, supplier_id,
+                                    subject, summary, detail,
+                                    address, listpic, detailpic,
+                                    position, sort, basic_ids, room_type,
+                                    room_type_desc, room_area, room_rent,
+                                    pay_type, status, start_time,
+                                    end_time, lease_holder, create_time,
+                                    update_time, product_id)
+        VALUES (#{houseId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{supplierId,jdbcType=INTEGER},
+                                             #{subject,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
+                                             #{detail,jdbcType=VARCHAR},
+                                             #{address,jdbcType=VARCHAR}, #{listpic,jdbcType=VARCHAR},
+                                             #{detailpic,jdbcType=VARCHAR},
+                                             #{position,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
+            #{basicIds,jdbcType=VARCHAR}, #{roomType,jdbcType=INTEGER},
+            #{roomTypeDesc,jdbcType=VARCHAR}, #{roomArea,jdbcType=DOUBLE}, #{roomRent,jdbcType=INTEGER},
+            #{payType,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP},
+            #{endTime,jdbcType=TIMESTAMP}, #{leaseHolder,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}, #{productId,jdbcType=INTEGER})
+    </insert>
     <insert id="insertRequired" parameterType="com.mehome.domain.HouseResource">
         insert into house_resource
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -94,6 +98,9 @@
             </if>
             <if test="sort != null">
                 sort,
+            </if>
+            <if test="basicIds != null">
+                basic_ids,
             </if>
             <if test="roomType != null">
                 room_type,
@@ -166,6 +173,9 @@
             <if test="sort != null">
                 #{sort,jdbcType=INTEGER},
             </if>
+            <if test="basicIds != null">
+                #{basicIds,jdbcType=VARCHAR},
+            </if>
             <if test="roomType != null">
                 #{roomType,jdbcType=INTEGER},
             </if>
@@ -237,6 +247,9 @@
             <if test="sort != null">
                 sort = #{sort,jdbcType=INTEGER},
             </if>
+            <if test="basicIds != null">
+                basic_ids = #{basicIds,jdbcType=VARCHAR},
+            </if>
             <if test="roomType != null">
                 room_type = #{roomType,jdbcType=INTEGER},
             </if>
@@ -277,31 +290,32 @@
         where house_id = #{houseId,jdbcType=INTEGER}
     </update>
     <update id="update" parameterType="com.mehome.domain.HouseResource">
-    update house_resource
-    set area_id = #{areaId,jdbcType=INTEGER},
-      supplier_id = #{supplierId,jdbcType=INTEGER},
-      subject = #{subject,jdbcType=VARCHAR},
-      summary = #{summary,jdbcType=VARCHAR},
-      detail = #{detail,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      listpic = #{listpic,jdbcType=VARCHAR},
-      detailpic = #{detailpic,jdbcType=VARCHAR},
-      position = #{position,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=INTEGER},
-      room_type = #{roomType,jdbcType=INTEGER},
-      room_type_desc = #{roomTypeDesc,jdbcType=VARCHAR},
-      room_area = #{roomArea,jdbcType=DOUBLE},
-      room_rent = #{roomRent,jdbcType=INTEGER},
-      pay_type = #{payType,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
-      lease_holder = #{leaseHolder,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      product_id = #{productId,jdbcType=INTEGER}
-    where house_id = #{houseId,jdbcType=INTEGER}
-  </update>
+        UPDATE house_resource
+        SET area_id        = #{areaId,jdbcType=INTEGER},
+            supplier_id    = #{supplierId,jdbcType=INTEGER},
+            subject        = #{subject,jdbcType=VARCHAR},
+            summary        = #{summary,jdbcType=VARCHAR},
+            detail         = #{detail,jdbcType=VARCHAR},
+            address        = #{address,jdbcType=VARCHAR},
+            listpic        = #{listpic,jdbcType=VARCHAR},
+            detailpic      = #{detailpic,jdbcType=VARCHAR},
+            position       = #{position,jdbcType=VARCHAR},
+            sort           = #{sort,jdbcType=INTEGER},
+            basic_ids      = #{basicIds,jdbcType=VARCHAR},
+            room_type      = #{roomType,jdbcType=INTEGER},
+            room_type_desc = #{roomTypeDesc,jdbcType=VARCHAR},
+            room_area      = #{roomArea,jdbcType=DOUBLE},
+            room_rent      = #{roomRent,jdbcType=INTEGER},
+            pay_type       = #{payType,jdbcType=VARCHAR},
+            status         = #{status,jdbcType=INTEGER},
+            start_time     = #{startTime,jdbcType=TIMESTAMP},
+            end_time       = #{endTime,jdbcType=TIMESTAMP},
+            lease_holder   = #{leaseHolder,jdbcType=VARCHAR},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            update_time    = #{updateTime,jdbcType=TIMESTAMP},
+            product_id     = #{productId,jdbcType=INTEGER}
+        WHERE house_id = #{houseId,jdbcType=INTEGER}
+    </update>
     <select id="getListByCondition" parameterType="com.mehome.requestDTO.HouseBean" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>

@@ -1,7 +1,10 @@
 package com.mehome.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Date;
 
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class BasicFacilities {
     private Integer basicId;
 
@@ -76,11 +79,11 @@ public class BasicFacilities {
         }
         BasicFacilities other = (BasicFacilities) that;
         return (this.getBasicId() == null ? other.getBasicId() == null : this.getBasicId().equals(other.getBasicId()))
-            && (this.getPic() == null ? other.getPic() == null : this.getPic().equals(other.getPic()))
-            && (this.getBasicName() == null ? other.getBasicName() == null : this.getBasicName().equals(other.getBasicName()))
-            && (this.getBasicType() == null ? other.getBasicType() == null : this.getBasicType().equals(other.getBasicType()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getBasicActive() == null ? other.getBasicActive() == null : this.getBasicActive().equals(other.getBasicActive()));
+                && (this.getPic() == null ? other.getPic() == null : this.getPic().equals(other.getPic()))
+                && (this.getBasicName() == null ? other.getBasicName() == null : this.getBasicName().equals(other.getBasicName()))
+                && (this.getBasicType() == null ? other.getBasicType() == null : this.getBasicType().equals(other.getBasicType()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+                && (this.getBasicActive() == null ? other.getBasicActive() == null : this.getBasicActive().equals(other.getBasicActive()));
     }
 
     @Override

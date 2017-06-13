@@ -15,6 +15,7 @@ public interface BasicFacilitiesDao {
 
     List<BasicFacilities> list();
 
+
     int updateRequired(BasicFacilities record);
 
     int update(BasicFacilities record);

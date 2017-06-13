@@ -1,6 +1,7 @@
 package com.mehome.requestDTO;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mehome.domain.BasicFacilities;
 import com.mehome.domain.HouseResource;
 import com.mehome.enumDTO.HouseStatusEnum;
 import com.mehome.enumDTO.OrderStatusEnum;
@@ -8,6 +9,7 @@ import com.mehome.utils.DateUtils;
 import com.mehome.utils.LbsAmapUtils;
 import com.mehome.utils.PageMysqlUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -16,318 +18,342 @@ import org.springframework.util.StringUtils;
 
 /**
  * 房源
- * @author xuyixun21
  *
+ * @author xuyixun21
  */
 public class HouseBean extends PageMysqlUtil {
 
-	private Integer houseId;
-	
-	private Integer areaId;
-	
-	private Integer supplierId;
-	
-	private String subject;
-	
-	private String summary;
-	
-	private String detail;
-	
-	private String address;
-	
-	private String listpic;
-	
-	private List<String> detailpic;
-	
-	private String position;
-	
-	private Integer sort;
-	
-	private Integer roomType;
-	
-	private String roomTypeDesc;
-	
-	private Double roomArea;
-	
-	private Integer roomRent;
-	
-	private String payType;
-	
-	private Integer status;
-	
-	private String startTime;
-	
-	private String endTime;
-	
-	private String leaseHolder;
-	
-	private Integer productId;
-	
-	private Date startTimeDate;
-	
-	private Date endTimeDate;
-	
-	private String statusDesc;
+    private Integer houseId;
 
-	public Integer getHouseId() {
-		return houseId;
-	}
+    private Integer areaId;
 
-	public void setHouseId(Integer houseId) {
-		this.houseId = houseId;
-	}
+    private Integer supplierId;
 
-	public Integer getAreaId() {
-		return areaId;
-	}
+    private String subject;
 
-	public void setAreaId(Integer areaId) {
-		this.areaId = areaId;
-	}
+    private String summary;
 
-	public Integer getSupplierId() {
-		return supplierId;
-	}
+    private String detail;
 
-	public void setSupplierId(Integer supplierId) {
-		this.supplierId = supplierId;
-	}
+    private String address;
 
-	public String getSubject() {
-		return subject;
-	}
+    private String listpic;
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    private List<String> detailpic;
 
-	public String getSummary() {
-		return summary;
-	}
+    private String position;
 
-	public void setSummary(String summary) {
-		this.summary = summary;
-	}
+    private Integer sort;
 
-	public String getDetail() {
-		return detail;
-	}
+    private Integer roomType;
 
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
+    private String roomTypeDesc;
 
-	public String getAddress() {
-		return address;
-	}
+    private Double roomArea;
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    private Integer roomRent;
 
-	public String getListpic() {
-		return listpic;
-	}
+    private String payType;
 
-	public void setListpic(String listpic) {
-		this.listpic = listpic;
-	}
+    private Integer status;
 
-	public List<String> getDetailpic() {
-		return detailpic;
-	}
+    private String startTime;
 
-	public void setDetailpic(List<String> detailpic) {
-		this.detailpic = detailpic;
-	}
+    private String endTime;
 
-	public String getPosition() {
-		return position;
-	}
+    private String leaseHolder;
 
-	public void setPosition(String position) {
-		this.position = position;
-	}
+    private Integer productId;
 
-	public Integer getSort() {
-		return sort;
-	}
+    private Date startTimeDate;
 
-	public void setSort(Integer sort) {
-		this.sort = sort;
-	}
+    private Date endTimeDate;
 
-	public Integer getRoomType() {
-		return roomType;
-	}
+    private String statusDesc;
 
-	public void setRoomType(Integer roomType) {
-		this.roomType = roomType;
-	}
+    private String basicIds;
+    private List<BasicFacilities> basicList = new ArrayList<BasicFacilities>();
 
-	public String getRoomTypeDesc() {
-		return roomTypeDesc;
-	}
+    public String getBasicIds() {
+        return basicIds;
+    }
 
-	public void setRoomTypeDesc(String roomTypeDesc) {
-		this.roomTypeDesc = roomTypeDesc;
-	}
+    public void setBasicIds(String basicIds) {
+        this.basicIds = basicIds;
+    }
 
-	public Double getRoomArea() {
-		return roomArea;
-	}
+    public List<BasicFacilities> getBasicList() {
+        return basicList;
+    }
 
-	public void setRoomArea(Double roomArea) {
-		this.roomArea = roomArea;
-	}
+    public void setBasicList(List<BasicFacilities> basicList) {
+        this.basicList = basicList;
+    }
 
-	public Integer getRoomRent() {
-		return roomRent;
-	}
+    public Integer getHouseId() {
+        return houseId;
+    }
 
-	public void setRoomRent(Integer roomRent) {
-		this.roomRent = roomRent;
-	}
+    public void setHouseId(Integer houseId) {
+        this.houseId = houseId;
+    }
 
-	public String getPayType() {
-		return payType;
-	}
+    public Integer getAreaId() {
+        return areaId;
+    }
 
-	public void setPayType(String payType) {
-		this.payType = payType;
-	}
+    public void setAreaId(Integer areaId) {
+        this.areaId = areaId;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    public Integer getSupplierId() {
+        return supplierId;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public void setSupplierId(Integer supplierId) {
+        this.supplierId = supplierId;
+    }
 
-	public String getStartTime() {
-		return startTime;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public String getEndTime() {
-		return endTime;
-	}
+    public String getSummary() {
+        return summary;
+    }
 
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
-	}
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
-	public String getLeaseHolder() {
-		return leaseHolder;
-	}
+    public String getDetail() {
+        return detail;
+    }
 
-	public void setLeaseHolder(String leaseHolder) {
-		this.leaseHolder = leaseHolder;
-	}
-	
-	public Integer getProductId() {
-		return productId;
-	}
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
 
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	
-	public Date getStartTimeDate() {
-		return startTimeDate;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setStartTimeDate(Date startTimeDate) {
-		this.startTimeDate = startTimeDate;
-	}
+    public String getListpic() {
+        return listpic;
+    }
 
-	public Date getEndTimeDate() {
-		return endTimeDate;
-	}
+    public void setListpic(String listpic) {
+        this.listpic = listpic;
+    }
 
-	public void setEndTimeDate(Date endTimeDate) {
-		this.endTimeDate = endTimeDate;
-	}
+    public List<String> getDetailpic() {
+        return detailpic;
+    }
 
-	public String getStatusDesc() {
-		return statusDesc;
-	}
+    public void setDetailpic(List<String> detailpic) {
+        this.detailpic = detailpic;
+    }
 
-	public void setStatusDesc(String statusDesc) {
-		this.statusDesc = statusDesc;
-	}
+    public String getPosition() {
+        return position;
+    }
 
-	public HouseResource beanToPojo(Boolean addBoolean){
-		HouseResource resource = new HouseResource();
-		Date date = new Date();
-		resource.setHouseId(this.getHouseId());
-		resource.setAddress(this.getAddress());
-		resource.setAreaId(this.getAreaId());
-		resource.setCreateTime(addBoolean?date:null);
-		resource.setDetail(this.getDetail());
-		resource.setDetailpic(this.getDetailpic()==null&&addBoolean?null:this.getDetailpic().toString());
-		resource.setEndTime(StringUtils.isEmpty(this.getEndTime())&&addBoolean?date:DateUtils.strToDate(this.getEndTime()));
-		resource.setLeaseHolder(this.getLeaseHolder());
-		resource.setListpic(this.getListpic());
-		resource.setPayType(StringUtils.isEmpty(this.getPayType())&&addBoolean?"{\"payMentNum\":3,\"mortagageNum\":1}":this.getPayType());
-		if(!StringUtils.isEmpty(this.getAddress())){
-			String position=LbsAmapUtils.formatPosition(this.getAddress());
-			resource.setPosition(position);
-		}
-		resource.setRoomArea(this.getRoomArea()==null&&addBoolean?0.00:this.getRoomArea());
-		resource.setRoomRent(this.getRoomRent()==null&&addBoolean?0:this.getRoomRent());
-		resource.setRoomTypeDesc(StringUtils.isEmpty(this.getRoomTypeDesc())&&addBoolean?"{\"room\":0,\"hall\":0,\"toilet\":0}":this.getRoomTypeDesc());
-		JSONObject roomTypeObject=JSONObject.parseObject(this.getRoomTypeDesc());
-		Integer roomType=(roomTypeObject.getInteger("room")==null&&addBoolean?0:roomTypeObject.getInteger("room"));
-		resource.setRoomType(this.getRoomType()==null&&addBoolean?roomType:this.getRoomType());
-		resource.setSort(this.getSort()==null&&addBoolean?0:this.getSort());
-		resource.setStartTime(StringUtils.isEmpty(this.getStartTime())&&addBoolean?date:DateUtils.strToDate(this.getStartTime()));
-		resource.setStatus(this.getStatus()==null&&addBoolean?HouseStatusEnum.AVAILABLE.getKey():this.getStatus());
-		resource.setSubject(StringUtils.isEmpty(this.getSubject())&&addBoolean?"房源标题未定义":this.getSubject());
-		resource.setSummary(this.getSummary());
-		resource.setSupplierId(this.getSupplierId()==null&&addBoolean?0:this.getSupplierId());
-		resource.setUpdateTime(date);
-		resource.setProductId(this.getProductId());
-		return resource;
-	}
-	
-	public HouseBean(){
-		
-	}
-	public HouseBean(HouseResource resource){
-		this.setAddress(resource.getAddress());
-		this.setAreaId(resource.getAreaId());
-		this.setDetail(resource.getDetail());
-		this.setDetailpic(StringUtils.isEmpty(resource.getDetailpic())?null:Arrays.asList(resource.getDetailpic()));
-		this.setEndTime(resource.getEndTime()==null?null:DateUtils.dateToStr(resource.getEndTime()));
-		this.setHouseId(resource.getHouseId());
-		this.setLeaseHolder(resource.getLeaseHolder());
-		this.setListpic(resource.getListpic());
-		this.setPayType(resource.getPayType());
-		this.setPosition(resource.getPosition());
-		this.setRoomArea(resource.getRoomArea());
-		this.setRoomRent(resource.getRoomRent());
-		this.setRoomType(resource.getRoomType());
-		this.setRoomTypeDesc(resource.getRoomTypeDesc());
-		this.setSort(resource.getSort());
-		this.setStartTime(resource.getStartTime()==null?null:DateUtils.dateToStr(resource.getStartTime()));
-		this.setStatus(resource.getStatus());
-		this.setSubject(resource.getSubject());
-		this.setSummary(resource.getSummary());
-		this.setSupplierId(resource.getSupplierId());
-		this.setProductId(resource.getProductId());
-		HouseStatusEnum[] enums=HouseStatusEnum.values();
-		for (HouseStatusEnum houseStatusEnum : enums) {
-			if(resource.getStatus().intValue()==houseStatusEnum.getKey()){
-				this.setStatusDesc(houseStatusEnum.getValue());
-			}
-		}
-	}
-	
-	
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public Integer getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(Integer roomType) {
+        this.roomType = roomType;
+    }
+
+    public String getRoomTypeDesc() {
+        return roomTypeDesc;
+    }
+
+    public void setRoomTypeDesc(String roomTypeDesc) {
+        this.roomTypeDesc = roomTypeDesc;
+    }
+
+    public Double getRoomArea() {
+        return roomArea;
+    }
+
+    public void setRoomArea(Double roomArea) {
+        this.roomArea = roomArea;
+    }
+
+    public Integer getRoomRent() {
+        return roomRent;
+    }
+
+    public void setRoomRent(Integer roomRent) {
+        this.roomRent = roomRent;
+    }
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getLeaseHolder() {
+        return leaseHolder;
+    }
+
+    public void setLeaseHolder(String leaseHolder) {
+        this.leaseHolder = leaseHolder;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+
+    public Date getStartTimeDate() {
+        return startTimeDate;
+    }
+
+    public void setStartTimeDate(Date startTimeDate) {
+        this.startTimeDate = startTimeDate;
+    }
+
+    public Date getEndTimeDate() {
+        return endTimeDate;
+    }
+
+    public void setEndTimeDate(Date endTimeDate) {
+        this.endTimeDate = endTimeDate;
+    }
+
+    public String getStatusDesc() {
+        return statusDesc;
+    }
+
+    public void setStatusDesc(String statusDesc) {
+        this.statusDesc = statusDesc;
+    }
+
+    public HouseResource beanToPojo(Boolean addBoolean) {
+        HouseResource resource = new HouseResource();
+        Date date = new Date();
+        resource.setHouseId(this.getHouseId());
+        resource.setAddress(this.getAddress());
+        resource.setAreaId(this.getAreaId());
+        resource.setCreateTime(addBoolean ? date : null);
+        resource.setDetail(this.getDetail());
+        resource.setDetailpic(this.getDetailpic() == null && addBoolean ? null : this.getDetailpic().toString());
+        resource.setEndTime(StringUtils.isEmpty(this.getEndTime()) && addBoolean ? date : DateUtils.strToDate(this.getEndTime()));
+        resource.setLeaseHolder(this.getLeaseHolder());
+        resource.setListpic(this.getListpic());
+        resource.setPayType(StringUtils.isEmpty(this.getPayType()) && addBoolean ? "{\"payMentNum\":3,\"mortagageNum\":1}" : this.getPayType());
+        if (!StringUtils.isEmpty(this.getAddress())) {
+            String position = LbsAmapUtils.formatPosition(this.getAddress());
+            resource.setPosition(position);
+        }
+        resource.setRoomArea(this.getRoomArea() == null && addBoolean ? 0.00 : this.getRoomArea());
+        resource.setRoomRent(this.getRoomRent() == null && addBoolean ? 0 : this.getRoomRent());
+        resource.setRoomTypeDesc(StringUtils.isEmpty(this.getRoomTypeDesc()) && addBoolean ? "{\"room\":0,\"hall\":0,\"toilet\":0}" : this.getRoomTypeDesc());
+        JSONObject roomTypeObject = JSONObject.parseObject(this.getRoomTypeDesc());
+        Integer roomType = (roomTypeObject.getInteger("room") == null && addBoolean ? 0 : roomTypeObject.getInteger("room"));
+        resource.setRoomType(this.getRoomType() == null && addBoolean ? roomType : this.getRoomType());
+        resource.setSort(this.getSort() == null && addBoolean ? 0 : this.getSort());
+        resource.setStartTime(StringUtils.isEmpty(this.getStartTime()) && addBoolean ? date : DateUtils.strToDate(this.getStartTime()));
+        resource.setStatus(this.getStatus() == null && addBoolean ? HouseStatusEnum.AVAILABLE.getKey() : this.getStatus());
+        resource.setSubject(StringUtils.isEmpty(this.getSubject()) && addBoolean ? "房源标题未定义" : this.getSubject());
+        resource.setSummary(this.getSummary());
+        resource.setSupplierId(this.getSupplierId() == null && addBoolean ? 0 : this.getSupplierId());
+        resource.setUpdateTime(date);
+        resource.setProductId(this.getProductId());
+        resource.setBasicIds(this.getBasicIds());
+        resource.setBasicList(this.getBasicList());
+        return resource;
+    }
+
+    public HouseBean() {
+
+    }
+
+    public HouseBean(HouseResource resource) {
+        this.setAddress(resource.getAddress());
+        this.setAreaId(resource.getAreaId());
+        this.setDetail(resource.getDetail());
+        this.setDetailpic(StringUtils.isEmpty(resource.getDetailpic()) ? null : Arrays.asList(resource.getDetailpic()));
+        this.setEndTime(resource.getEndTime() == null ? null : DateUtils.dateToStr(resource.getEndTime()));
+        this.setHouseId(resource.getHouseId());
+        this.setLeaseHolder(resource.getLeaseHolder());
+        this.setListpic(resource.getListpic());
+        this.setPayType(resource.getPayType());
+        this.setPosition(resource.getPosition());
+        this.setRoomArea(resource.getRoomArea());
+        this.setRoomRent(resource.getRoomRent());
+        this.setRoomType(resource.getRoomType());
+        this.setRoomTypeDesc(resource.getRoomTypeDesc());
+        this.setSort(resource.getSort());
+        this.setStartTime(resource.getStartTime() == null ? null : DateUtils.dateToStr(resource.getStartTime()));
+        this.setStatus(resource.getStatus());
+        this.setSubject(resource.getSubject());
+        this.setSummary(resource.getSummary());
+        this.setSupplierId(resource.getSupplierId());
+        this.setProductId(resource.getProductId());
+        this.setBasicIds(resource.getBasicIds());
+        this.setBasicList(resource.getBasicList());
+        HouseStatusEnum[] enums = HouseStatusEnum.values();
+        for (HouseStatusEnum houseStatusEnum : enums) {
+            if (resource.getStatus().intValue() == houseStatusEnum.getKey()) {
+                this.setStatusDesc(houseStatusEnum.getValue());
+            }
+        }
+    }
+
+
 }

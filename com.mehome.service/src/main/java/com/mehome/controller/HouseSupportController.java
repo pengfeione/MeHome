@@ -30,4 +30,6 @@ public class HouseSupportController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(basicFacilitiesDao.list()));
     }
+
+
 }
