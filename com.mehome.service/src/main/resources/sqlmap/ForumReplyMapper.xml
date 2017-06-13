@@ -265,4 +265,9 @@
             AND platform = #{platform,jdbcType=VARCHAR}
         </if>
     </select>
+    <select id="getMaxFloorByTid" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT max(floor)
+    FROM forum_reply
+    WHERE tid = #{tid,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mehome.dao.ForumTopicDao;
 import com.mehome.domain.ForumTopic;
 import com.mehome.requestDTO.TopicBean;
 import com.mehome.service.iface.ITopicService;
-
+@Service("ITopicService")
 public class TopicServiceImpl implements ITopicService {
 	@Autowired
 	private ForumTopicDao forumTopicDao;

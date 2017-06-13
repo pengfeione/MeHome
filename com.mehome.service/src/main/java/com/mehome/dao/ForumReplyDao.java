@@ -23,4 +23,6 @@ public interface ForumReplyDao {
     List<ForumReply> getListByCondition(ReplyBean bean);
     
     Long getSizeByCondition(ReplyBean bean);
+    
+    Integer getMaxFloorByTid(String tid);
 }

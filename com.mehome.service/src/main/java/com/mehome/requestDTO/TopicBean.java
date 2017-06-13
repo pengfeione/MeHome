@@ -2,7 +2,10 @@ package com.mehome.requestDTO;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.mehome.domain.ForumTopic;
+import com.mehome.utils.OrderIdUtils;
 import com.mehome.utils.PageMysqlUtil;
 
 public class TopicBean extends PageMysqlUtil{
@@ -250,11 +253,75 @@ public class TopicBean extends PageMysqlUtil{
     	
     }
     public ForumTopic beanToPojo(){
+    	Date date=new Date();
     	ForumTopic topic=new ForumTopic();
+    	topic.setBid(this.getBid()==null?1:this.getBid());
+    	topic.setContent(this.getContent());
+    	topic.setContentFrom(StringUtils.isBlank(this.getContentFrom())?"Me+":this.getContentFrom());
+    	topic.setCreateTime(date);
+    	topic.setDisplayLocation(this.getDisplayLocation());
+    	topic.setDisplayOrder(this.getDisplayOrder());
+    	topic.setDisplayPic(this.getDisplayPic());
+    	topic.setFid(this.getFid());
+    	topic.setFormatContent(this.getFormatContent());
+    	topic.setIsActive(Boolean.TRUE);
+    	topic.setLastReplier(this.getLastReplier());
+//    	topic.setLastReplyTime(date);
+    	topic.setListpic(this.getListpic());
+    	topic.setPlatform(this.getPlatform()==null?(short) 2:this.getPlatform());
+    	topic.setReplies(0);
+    	topic.setSubject(StringUtils.isBlank(this.getSubject())?"未定义标题":this.getSubject());
+    	topic.setSummary(this.getSummary());
+    	topic.setTid(StringUtils.isBlank(this.getTid())?OrderIdUtils.getUUID():this.getTid());
+    	topic.setUpdateTime(date);
+    	topic.setViews(0);
+    	topic.setWatchs(0);
 		return topic;
     }
     public ForumTopic compareToPojo(){
     	ForumTopic topic=new ForumTopic();
+    	if(StringUtils.isNotBlank(this.getContent())){
+    		topic.setContent(this.getContent());
+    	}
+    	if(StringUtils.isNotBlank(this.getContentFrom())){
+    		topic.setContentFrom(this.getContentFrom());
+    	}
+    	if(StringUtils.isNotBlank(this.getDisplayLocation())){
+    		topic.setDisplayLocation(this.getDisplayLocation());
+    	}
+    	if(StringUtils.isNotBlank(this.getDisplayPic())){
+    		topic.setDisplayPic(this.getDisplayPic());
+    	}
+    	if(StringUtils.isNotBlank(this.getFid())){
+    		topic.setFid(this.getFid());
+    	}
+    	if(StringUtils.isNotBlank(this.getFormatContent())){
+    		topic.setFormatContent(this.getFormatContent());
+    	}
+    	if(StringUtils.isNotBlank(this.getLastReplier())){
+    		topic.setLastReplier(this.getLastReplier());
+    	}
+    	if(StringUtils.isNotBlank(this.getListpic())){
+    		topic.setListpic(this.getListpic());
+    	}
+    	if(StringUtils.isNotBlank(this.getSubject())){
+    		topic.setSubject(this.getSubject());
+    	}
+    	if(StringUtils.isNotBlank(this.getSummary())){
+    		topic.setSummary(this.getSummary());
+    	}
+    	if(StringUtils.isNotBlank(this.getTid())){
+    		topic.setTid(this.getTid());
+    	}
+    	if(StringUtils.isNotBlank(this.getTopicType())){
+    		topic.setTopicType(this.getTopicType());
+    	}
+    	if(StringUtils.isNoneBlank(this.getTopicUrl())){
+    		topic.setTopicUrl(this.getTopicUrl());
+    	}
+    	if(this.getIsActive()!=null){
+    		topic.setIsActive(this.getIsActive());
+    	}
     	return topic;
     }
 }

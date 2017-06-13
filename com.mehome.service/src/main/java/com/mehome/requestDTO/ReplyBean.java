@@ -2,8 +2,11 @@ package com.mehome.requestDTO;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.mehome.domain.ForumReply;
 import com.mehome.utils.DateUtils;
+import com.mehome.utils.OrderIdUtils;
 import com.mehome.utils.PageMysqlUtil;
 
 public class ReplyBean extends PageMysqlUtil{
@@ -168,17 +171,18 @@ public class ReplyBean extends PageMysqlUtil{
     	ForumReply reply = new ForumReply();
     	reply.setContent(this.getContent());
     	reply.setCreateTime(date);
-    	reply.setFloor(this.getFloor());
+    	reply.setFloor(this.getFloor()==null?0:this.getFloor());
     	reply.setFormatContent(this.getFormatContent());
-    	reply.setIsActive(this.getIsActive());
-    	reply.setIsAdmin(this.getIsAdmin());
-    	reply.setIsBest(this.getIsBest());
+    	reply.setIsActive(this.getIsActive()==null?Boolean.TRUE:this.getIsActive());
+    	reply.setIsAdmin(this.getIsAdmin()==null?Boolean.FALSE:this.getIsAdmin());
+    	reply.setIsBest(this.getIsBest()==null?Boolean.FALSE:this.getIsBest());
     	reply.setListpic(this.getListpic());
     	reply.setPlatform(this.getPlatform());
-    	reply.setReplier(this.getReplier());
+    	reply.setReplier(StringUtils.isBlank(this.getReplier())?"unfined":this.getReplier());
     	reply.setScore(this.getScore());
-    	reply.setTid(this.getTid());
-    	reply.setType(this.getType());
+    	reply.setTid(StringUtils.isBlank(this.getTid())?"1":this.getTid());
+    	reply.setType(StringUtils.isBlank(this.getType())?"normal":this.getType());
+    	reply.setId(StringUtils.isBlank(this.getReplyId())?OrderIdUtils.getUUID():this.getReplyId());
     	return reply;
     }
 }
