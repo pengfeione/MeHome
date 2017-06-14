@@ -331,7 +331,15 @@ public class HouseBean extends PageMysqlUtil {
         this.setEndTime(resource.getEndTime() == null ? null : DateUtils.dateToStr(resource.getEndTime()));
         this.setHouseId(resource.getHouseId());
         this.setLeaseHolder(resource.getLeaseHolder());
-        this.setListpic(resource.getListpic());
+        if (!StringUtils.isEmpty(resource.getDetailpic()) && resource.getDetailpic().length() > 2) {
+            List<String> detailPicList = new ArrayList<String>();
+            String detailPic = resource.getDetailpic().substring(1, resource.getDetailpic().length() - 1);
+            String[] pics = detailPic.split(",");
+            for (String string : pics) {
+                detailPicList.add(string);
+            }
+            this.setDetailpic(detailPicList);
+        }
         this.setPayType(resource.getPayType());
         this.setPosition(resource.getPosition());
         this.setRoomArea(resource.getRoomArea());

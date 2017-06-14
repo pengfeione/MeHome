@@ -295,7 +295,7 @@ public class OrderServiceImpl implements IOrderService {
 			return "";
 		}
 		String biller=bean.getBiller();
-		if(StringUtils.isNotBlank(biller)){
+		if(StringUtils.isBlank(biller)){
 			log.error("biller未传");
 			return "";
 		}
