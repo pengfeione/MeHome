@@ -122,7 +122,7 @@ public class OrderController {
                 .body(Result.build().content(orderService.refundOrder(order)));
     }
     /**
-     * 退款
+     * 判断预约  返回true代表可以预约
      *
      * @param order
      * @return
