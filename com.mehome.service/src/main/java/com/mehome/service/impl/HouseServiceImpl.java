@@ -2,12 +2,8 @@ package com.mehome.service.impl;
 
 import java.util.*;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.mehome.controller.HouseSupportController;
 import com.mehome.dao.BasicFacilitiesDao;
 import com.mehome.domain.BasicFacilities;
-import com.mehome.utils.AssertUtils;
 import com.mehome.utils.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +13,6 @@ import com.mehome.dao.HouseResourceDao;
 import com.mehome.domain.HouseResource;
 import com.mehome.requestDTO.HouseBean;
 import com.mehome.service.iface.IHouseService;
-
-import static com.sun.tools.attach.VirtualMachine.list;
 
 @Service("IHouseService")
 public class HouseServiceImpl implements IHouseService {

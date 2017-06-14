@@ -121,4 +121,19 @@ public class OrderController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(orderService.refundOrder(order)));
     }
+    /**
+     * 退款
+     *
+     * @param order
+     * @return
+     */
+    @PostMapping("/judgeExistOrder")
+    @ResponseBody
+    public ResponseEntity<Result> judgeExistOrder(@RequestBody OrderBean order){
+    	return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(orderService.judgeExistOrder(order)));
+    }
 }

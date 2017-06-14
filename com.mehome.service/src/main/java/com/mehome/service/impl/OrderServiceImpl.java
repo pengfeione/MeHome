@@ -26,6 +26,7 @@ import com.mehome.domain.ProductRelationWelfare;
 import com.mehome.domain.SupplierList;
 import com.mehome.domain.UserAccountOperation;
 import com.mehome.domain.UserInfo;
+import com.mehome.enumDTO.HouseStatusEnum;
 import com.mehome.enumDTO.OperationTypeEnum;
 import com.mehome.enumDTO.OrderStatusEnum;
 import com.mehome.enumDTO.UserCompanyEnum;
@@ -83,6 +84,10 @@ public class OrderServiceImpl implements IOrderService {
 		try {
 			Integer houseId = bean.getHouseId();
 			HouseResource house = houseResourceDAO.selectById(houseId);
+			if(house != null && house.getStatus().intValue()!=HouseStatusEnum.AVAILABLE.getKey()){
+				log.error("房源["+houseId+"]不处于可租赁状态");
+				return "";
+			}
 			if (house != null && house.getProductId() != null) {
 				ProductList product = productListDAO.selectById(house.getProductId());
 				bean.setHouseSubject(house.getSubject());
@@ -127,7 +132,12 @@ public class OrderServiceImpl implements IOrderService {
 			}
 			if ((bean.getOrderStatus()!=null&&bean.getOrderStatus().intValue() == OrderStatusEnum.CONFIRMED.getKey())||(oldOrder.getOrderStatus().intValue()==1)) {
 				bean = calculateWelfare(bean,null);
-				//TODO 更新房源为已经租借状态
+				//更新房源为已经租借状态
+				Integer houseId=oldOrder.getHouseId();
+				HouseResource house = houseResourceDAO.selectById(houseId);
+				house.setStatus(HouseStatusEnum.LEASED.getKey());
+				house.setLeaseHolder(oldOrder.getBiller());
+				houseResourceDAO.update(house);
 			}
 			order = bean.compareToPojo();
 			if(order.getStartTime()!=null&&order.getEndTime()!=null){
@@ -275,6 +285,30 @@ public class OrderServiceImpl implements IOrderService {
 		Date b=DateUtils.strToDate(dateStr);
 		System.out.println(a.compareTo(b));
 		
+	}
+
+	@Override
+	public String judgeExistOrder(OrderBean bean) {
+		Integer houseId=bean.getHouseId();
+		if(houseId==null){
+			log.error("houseId未传");
+			return "";
+		}
+		String biller=bean.getBiller();
+		if(StringUtils.isNotBlank(biller)){
+			log.error("biller未传");
+			return "";
+		}
+		HouseResource house = houseResourceDAO.selectById(houseId);
+		OrderBean requestBean=new OrderBean();
+		requestBean.setHouseId(houseId);
+		requestBean.setBiller(biller);
+		requestBean.setOrderStatus(OrderStatusEnum.ORDER.getKey());
+		long num=orderListDAO.getSizeByCondition(requestBean);
+		if(house!=null&&house.getStatus().intValue()==HouseStatusEnum.AVAILABLE.getKey()&&num==0){
+			return Boolean.TRUE.toString();
+		}
+		return Boolean.FALSE.toString();
 	}
 
 }

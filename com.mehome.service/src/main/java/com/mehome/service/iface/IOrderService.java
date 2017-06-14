@@ -24,4 +24,6 @@ public interface IOrderService {
 	
 	public String refundOrder(OrderBean bean);
 	
+	public String judgeExistOrder(OrderBean bean);
+	
 }

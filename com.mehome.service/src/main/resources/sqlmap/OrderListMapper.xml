@@ -432,6 +432,9 @@
     <if test="productId != null">
       AND product_id = #{productId,jdbcType=INTEGER}
     </if>
+    <if test="houseId != null">
+      AND house_id = #{houseId,jdbcType=INTEGER}
+    </if>
     <if test="platformHost != null">
       AND platform_host = #{platformHost,jdbcType=BIT}
     </if>
@@ -474,6 +477,9 @@
     </if>
     <if test="productId != null">
       AND product_id = #{productId,jdbcType=INTEGER}
+    </if>
+    <if test="houseId != null">
+      AND house_id = #{houseId,jdbcType=INTEGER}
     </if>
     <if test="platformHost != null">
       AND platform_host = #{platformHost,jdbcType=BIT}
