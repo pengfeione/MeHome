@@ -23,8 +23,6 @@
     <result column="display_location" property="displayLocation" jdbcType="VARCHAR" />
     <result column="display_pic" property="displayPic" jdbcType="VARCHAR" />
     <result column="topic_url" property="topicUrl" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.mehome.domain.ForumTopic" extends="BaseResultMap" >
     <result column="listpic" property="listpic" jdbcType="LONGVARCHAR" />
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
     <result column="format_content" property="formatContent" jdbcType="LONGVARCHAR" />
@@ -32,16 +30,11 @@
   <sql id="Base_Column_List" >
     tid, fid, uid, bid, topic_type, subject, summary, content_from, platform, last_reply_time, 
     last_replier, views, replies, watchs, display_order, create_time, update_time, is_active, 
-    display_location, display_pic, topic_url
+    display_location, display_pic, topic_url,listpic, content, format_content
   </sql>
-  <sql id="Blob_Column_List" >
-    listpic, content, format_content
-  </sql>
-  <select id="selectById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from forum_topic
     where tid = #{tid,jdbcType=VARCHAR}
   </select>

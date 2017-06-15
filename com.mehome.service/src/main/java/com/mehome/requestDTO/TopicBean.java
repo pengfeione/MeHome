@@ -1,6 +1,8 @@
 package com.mehome.requestDTO;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -53,7 +55,7 @@ public class TopicBean extends PageMysqlUtil{
 
     private String topicUrl;
 
-    private String listpic;
+    private List<String> listpic;
 
     private String content;
 
@@ -229,11 +231,11 @@ public class TopicBean extends PageMysqlUtil{
 		this.topicUrl = topicUrl;
 	}
 
-	public String getListpic() {
+	public List<String> getListpic() {
 		return listpic;
 	}
 
-	public void setListpic(String listpic) {
+	public void setListpic(List<String> listpic) {
 		this.listpic = listpic;
 	}
 
@@ -284,7 +286,15 @@ public class TopicBean extends PageMysqlUtil{
 		this.setLastReplier(topic.getLastReplier());
 		if(topic.getLastReplyTime()!=null)
 		this.setLastReplyTime(DateUtils.dateToStr(topic.getLastReplyTime()));
-		this.setListpic(topic.getListpic());
+		if (!StringUtils.isEmpty(topic.getListpic()) && topic.getListpic().length() > 2) {
+            List<String> detailPicList = new ArrayList<String>();
+            String detailPic = topic.getListpic().substring(1, topic.getListpic().length() - 1);
+            String[] pics = detailPic.split(",");
+            for (String string : pics) {
+                detailPicList.add(string);
+            }
+            this.setListpic(detailPicList);
+        }
 		this.setPlatform(topic.getPlatform());
 		this.setSubject(topic.getSubject());
 		this.setSummary(topic.getSummary());
@@ -303,17 +313,19 @@ public class TopicBean extends PageMysqlUtil{
     	topic.setDisplayLocation(this.getDisplayLocation());
     	topic.setDisplayOrder(this.getDisplayOrder());
     	topic.setDisplayPic(this.getDisplayPic());
-    	topic.setFid(this.getFid());
+    	topic.setFid(this.getFid()==null?"1":this.getFid());
     	topic.setFormatContent(this.getFormatContent());
     	topic.setIsActive(Boolean.TRUE);
     	topic.setLastReplier(this.getLastReplier());
 //    	topic.setLastReplyTime(date);
-    	topic.setListpic(this.getListpic());
+    	topic.setListpic(this.getListpic()==null?null:this.getListpic().toString());
     	topic.setPlatform(this.getPlatform()==null?(short) 2:this.getPlatform());
     	topic.setReplies(0);
     	topic.setSubject(StringUtils.isBlank(this.getSubject())?"未定义标题":this.getSubject());
     	topic.setSummary(this.getSummary());
     	topic.setTid(StringUtils.isBlank(this.getTid())?OrderIdUtils.getUUID():this.getTid());
+    	topic.setUid(StringUtils.isBlank(this.getUid())?"未定义编辑者":this.getUid());
+    	topic.setTopicType(StringUtils.isBlank(this.getTopicType())?"undefined":this.getTopicType());
     	topic.setUpdateTime(date);
     	topic.setViews(0);
     	topic.setWatchs(0);
@@ -342,8 +354,8 @@ public class TopicBean extends PageMysqlUtil{
     	if(StringUtils.isNotBlank(this.getLastReplier())){
     		topic.setLastReplier(this.getLastReplier());
     	}
-    	if(StringUtils.isNotBlank(this.getListpic())){
-    		topic.setListpic(this.getListpic());
+    	if(this.getListpic()!=null){
+    		topic.setListpic(this.getListpic().toString());
     	}
     	if(StringUtils.isNotBlank(this.getSubject())){
     		topic.setSubject(this.getSubject());

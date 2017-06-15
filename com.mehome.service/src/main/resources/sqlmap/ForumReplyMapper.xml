@@ -13,23 +13,16 @@
     <result column="score" property="score" jdbcType="REAL" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="is_active" property="isActive" jdbcType="BIT" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.mehome.domain.ForumReply" extends="BaseResultMap" >
     <result column="listpic" property="listpic" jdbcType="LONGVARCHAR" />
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
     <result column="format_content" property="formatContent" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, tid, type, replier, is_best, floor, is_admin, platform, score, create_time, is_active
+    id, tid, type, replier, is_best, floor, is_admin, platform, score, create_time, is_active,listpic, content, format_content
   </sql>
-  <sql id="Blob_Column_List" >
-    listpic, content, format_content
-  </sql>
-  <select id="selectById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from forum_reply
     where id = #{id,jdbcType=VARCHAR}
   </select>

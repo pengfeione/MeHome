@@ -155,7 +155,7 @@ public class ReplyBean extends PageMysqlUtil{
 	}
     public ReplyBean(ForumReply reply){
     	this.setContent(reply.getContent());
-    	this.setCreateTime(DateUtils.dateToDateStr(reply.getCreateTime()));
+    	this.setCreateTime(DateUtils.dateToStr(reply.getCreateTime()));
     	this.setFloor(reply.getFloor());
     	this.setFormatContent(reply.getFormatContent());
     	this.setIsActive(reply.getIsActive());
