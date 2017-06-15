@@ -30,7 +30,6 @@ jQuery.fn.areaSelector = function (argument, idHidden) {
     function setCoordinate() {
         var offsetX = $("#" + thisId).offset().top;
         var offsetY = $("#" + thisId).offset().left;
-        console.log(offsetX + " : " + offsetY);
         $("#" + contentId).offset({
             top: offsetX - $("#" + thisId).parent().innerHeight() / 2,
             left: offsetY - $("#" + thisId).parent().innerWidth() / 2
