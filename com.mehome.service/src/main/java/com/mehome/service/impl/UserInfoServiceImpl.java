@@ -169,6 +169,9 @@ public class UserInfoServiceImpl implements IUserInfoService {
         AssertUtils.isNotNull(record.getUserId(), "更新用户无法确定！");
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(record.getUserId());
+        if (StringUtils.isNotNull(record.getMobile()) && null != userInfoDao.selectByMobile(record.getMobile())) {
+            throw new InfoException("手机号已被别的用户绑定！");
+        }
         userInfo.setMobile(record.getMobile());
         userInfo.setAvatar(record.getAvatar());
         userInfo.setNickName(record.getNickName());

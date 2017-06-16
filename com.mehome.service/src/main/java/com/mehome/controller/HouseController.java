@@ -2,6 +2,7 @@ package com.mehome.controller;
 
 import java.util.List;
 
+import com.mehome.domain.HouseResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -52,11 +53,21 @@ public class HouseController {
 
     @PostMapping("/update")
     @ResponseBody
-    public ResponseEntity<Result> update(@RequestBody HouseBean bean) {
+    public ResponseEntity<Result> update(@RequestBody HouseResource bean) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(houseService.updateHouse(bean)));
+    }
+
+    @PostMapping("/save")
+    @ResponseBody
+    public ResponseEntity<Result> save(@RequestBody HouseResource bean) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(houseService.saveHouse(bean)));
     }
 }

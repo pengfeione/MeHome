@@ -11,9 +11,11 @@ public interface IHouseService {
 
     public String addHouse(HouseBean bean);
 
+    public String saveHouse(HouseResource bean);
+
     public Long getSizeByCondition(HouseBean bean);
 
-    public String updateHouse(HouseBean bean);
+    public String updateHouse(HouseResource bean);
 
     HouseResource selectById(Integer houseId);
 }

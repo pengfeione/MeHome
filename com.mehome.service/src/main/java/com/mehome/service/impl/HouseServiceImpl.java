@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.mehome.dao.BasicFacilitiesDao;
 import com.mehome.domain.BasicFacilities;
+import com.mehome.utils.AssertUtils;
 import com.mehome.utils.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,16 +72,16 @@ public class HouseServiceImpl implements IHouseService {
     }
 
     @Override
-    public String updateHouse(HouseBean bean) {
-        HouseResource resource = null;
-        try {
-            resource = bean.beanToPojo(Boolean.FALSE);
-            int row = houseResourceDAO.updateRequired(resource);
-        } catch (Exception e) {
-            log.error("更新房源出错:" + e);
-            return Boolean.FALSE.toString();
-        }
-        return Boolean.TRUE.toString();
+    public String saveHouse(HouseResource bean) {
+        houseResourceDAO.insertRequired(bean);
+        return bean.getHouseId() + "";
+    }
+
+    @Override
+    public String updateHouse(HouseResource bean) {
+        AssertUtils.isNotNull(bean.getHouseId(), "更新标识不能为空！");
+        houseResourceDAO.updateRequired(bean);
+        return bean.getHouseId() + "";
     }
 
     @Override

@@ -33,7 +33,7 @@ public class HouseView {
 
     @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
     @PostMapping(path = "/update")
-    public ModelAndView update(@RequestBody HouseBean house) {
+    public ModelAndView update(@RequestBody HouseResource house) {
         ModelAndView mav = new ModelAndView();
         String ret = houseService.updateHouse(house);
         mav.setViewName("house");
@@ -51,7 +51,7 @@ public class HouseView {
         return mav;
     }
 
-//    @Permits(role = {RoleEnum.PLATFORM, RoleEnum.SUPPLIER})
+    //    @Permits(role = {RoleEnum.PLATFORM, RoleEnum.SUPPLIER})
     @GetMapping(path = "/info")
     public String info(@RequestParam(value = "code", required = false) Integer code, Model model) {
         if (null == code) {

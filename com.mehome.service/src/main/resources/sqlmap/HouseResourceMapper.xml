@@ -63,7 +63,8 @@
             #{endTime,jdbcType=TIMESTAMP}, #{leaseHolder,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
                 #{updateTime,jdbcType=TIMESTAMP}, #{productId,jdbcType=INTEGER})
     </insert>
-    <insert id="insertRequired" parameterType="com.mehome.domain.HouseResource">
+    <insert id="insertRequired" parameterType="com.mehome.domain.HouseResource" keyProperty="houseId"
+            useGeneratedKeys="true">
         insert into house_resource
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="houseId != null">
