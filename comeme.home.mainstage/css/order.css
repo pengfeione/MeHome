@@ -17,7 +17,7 @@ body { background:#f5f5f5; }
 .orderList .orderTop img { width:120px; height:80px; position:absolute; left:10px; top:0; z-index:3; }
 .orderList .orderTop h3  { height:36px; line-height:36px; overflow:hidden; font-size:16px; }
 .orderList .orderTop em  { height:22px; line-height:22px; display:block; overflow:hidden; color:#f36700; }
-.orderList .orderTop i   { height:22px; line-height:22px; display:block; overflow:hidden; font-style:normal; }
+.orderList .orderTop i   { height:22px; line-height:22px; display:block; font-size:12px; overflow:hidden; font-style:normal; }
 .orderList .orderLine { margin-bottom:10px; height:20px; display:block; border-bottom:1px dashed #c9c9c9; position:relative; }
 .orderList .orderLine i { width:7px; height:15px; display:block; position:absolute; top:13px; z-index:3; }
 .orderList .orderLine .orderLt { left:0; background:url(../img/orderLeft.png) no-repeat; background-size:7px 15px; }
@@ -25,8 +25,7 @@ body { background:#f5f5f5; }
 .orderList .orderState { margin-bottom:10px; height:30px; font-size:16px; text-align:center; line-height:30px; display:block; color:#1eaa94; font-weight:bold; }
 .orderList .orderState i { margin:0 5px; width:3px; height:3px; display:inline-block; vertical-align:middle; background:#1eaa94; }
 .orderList .cancelEnd h3,.order .cancelEnd em,.order .cancelEnd i,.order .cancelEnd .orderState { color:#b5b5b5; }
-.orderList .cancelEnd .orderTop img { opacity:0.5; filter:alpha(opacity=50); }
-
+.orderList .cancelEnd .orderTop img,.orderList .cancelEnd .orderState i { -webkit-filter:grayscale(100%); -moz-filter:grayscale(100%); -ms-filter:grayscale(100%); -o-filter:grayscale(100%); filter:grayscale(100%); filter:gray; }
 
 .orderTel { padding:0 28px 0 39px; height:30px; display:block; position:relative; }
 .orderTel .iconMore { right:10px; top:3px; }

@@ -6,33 +6,39 @@
 	date    : 2017-05-15
 	page    : editinfo login register enterpriseuser getbackpwd1 getbackpwd2
 */
-
-.loginBg { background:url(../img/loginBg.jpg) left bottom no-repeat; background-size:100% auto; }
+.editBody { background:#f5f5f5; }
+.loginBg  { background:url(../img/loginBg.jpg) left bottom no-repeat; background-size:100% auto; }
 
 /* login register edit */
+.headerInfo          { padding-top:44px; }
 .loginList           { margin:0 34px 0; overflow:hidden; }
-.loginList li        { padding-left:80px; height:50px; border-bottom:1px solid #dcdcdc; position:relative; }
-.loginList li span   { width:80px; height:40px; line-height:40px; font-size:16px; display:block; position:absolute; left:0; top:10px; z-index:3; color:#282828; }
+.loginList li        { padding:15px 0 0 80px; height:35px; border-bottom:1px solid #ececec; position:relative; }
+.loginList li span   { width:80px; height:30px; line-height:30px; font-size:16px; display:block; position:absolute; left:0; top:15px; z-index:3; color:#282828; }
 .loginList li span i { font-style:normal; color:#fe2e2e; }
-.loginList li .text  { margin-top:10px; width:100%; height:40px; line-height:40px; font-size:16px; }
+.loginList li .text  { width:100%; height:30px; line-height:30px; font-size:16px; }
+.login li { padding:15px 0 0 60px; }
 
 /* login */
 .loginTitle       { padding:50px 0 40px; line-height:50px; font-size:24px; text-align:center; }
 .login ul li span { color:#a0a0a0;  }
 .btnLogin         { margin-top:30px; }
-.loginInfo        { height:30px; line-height:30px; display:block; }
-.loginInfo .linkRegister  { float:left; }
-.loginInfo .linkForgetPwd { float:right; }
+.loginInfo        { height:50px; line-height:50px; display:block; }
+.loginInfo .linkRegister  { float:left; color:#24ad92; }
+.loginInfo .linkForgetPwd { float:right; color:#24ad92; }
+
+.loginOther { margin:0 34px; overflow:hidden; position:absolute; left:0; bottom:0; z-index:3; }
+.loginOther img { width:100%; }
+.btnWx { margin:10px auto 50px; width:13%; display:block; }
 
 /* register */
 .register          { margin-top:20px; }
 .register ul li span { color:#a0a0a0;  }
-.btnGetYzm         { width:75px; line-height:30px; text-align:right; border-left:1px solid #e5e5e5; display:block; position:absolute; right:0; top:15px; z-index:3; color:#24ad92; }
-.loginList .yzm    { padding:0 80px; }
+.btnGetYzm         { width:80px; line-height:20px; text-align:right; border-left:1px solid #e5e5e5; display:block; position:absolute; right:0; top:18px; z-index:3; color:#24ad92; }
+/*.loginList .yzm    { padding:0 80px; }*/
 .btnShowPwd        { width:23px; height:15px; display:block; background:url(../img/iconShowPwd.png) no-repeat; background-size:23px 15px; position:absolute; right:0; top:22px; z-index:3; }
 .btnHidePwd        { width:23px; height:15px; display:block; background:url(../img/iconHidePwd.png) no-repeat; background-size:23px 15px; position:absolute; right:0; top:22px; z-index:3; }
-.loginList .setPwd { padding:0 25px 0 80px;}
-.btnRegister       { margin-top:30px; }
+/*.loginList .setPwd { padding:0 25px 0 80px;}*/
+.btnRegister,.btnEnd { margin-top:30px; }
 .loginIm           { margin-top:20px; height:40px; line-height:40px; display:block; text-align:center; font-size:16px; }
 .loginIm a         { color:#1da995; }
 .popRegister,.popFail,.popEnter       { margin:-150px 0 0 -75px; }
@@ -47,12 +53,11 @@
 
 /* enterpriseuser */
 .popEnter span { display:block; text-align:center; font-size:16px; color:#fff; }
-.btnGoto { margin-top:10px; height:33px; line-height:33px; text-align:center; font-size:16px; border-radius:5px; border:1px solid #1ea994; color:#1ea994; display:block; }
+.btnGoto { margin-top:10px; height:38px; line-height:38px; text-align:center; font-size:16px; border-radius:5px; border:1px solid #1ea994; color:#1ea994; display:block; }
 
 
 /* getbackpwd */
 .btnNext,.btnQd { margin-top:24px; }
-
 
 /* edit */
 .edit             { margin-top:20px; }
@@ -62,3 +67,29 @@
 /* edit pop */
 .popSuccess       { margin:-150px 0 0 -75px; }
 .popSuccess span  { display:block; text-align:center; color:#fff; }
+
+
+/* editinfo */
+.userHeadTop { padding-top:54px; overflow:hidden; }
+.userHead { margin-bottom:10px; height:74px; display:block; background:#fff; position:relative; }
+.userHead .userText { height:74px; line-height:74px; display:block; color:#282828; position:absolute; left:10px; top:0; z-index:3; }
+.userHead .userImg  { width:64px; height:44px; display:block; position:absolute; right:10px; top:15px; z-index:3; }
+.userHead .userImg img { width:44px; height:44px; display:block; overflow:hidden; border-radius:50%; }
+.userHead .iconMore { top:30px; }
+.userEditInfo li { height:40px; line-height:40px; border-bottom:1px solid #f5f5f5; background:#fff; }
+.userEditInfo li a { height:40px; display:block; position:relative; }
+.userEditInfo li span { height:40px; display:block; position:absolute; left:10px; top:0; }
+.userEditInfo li em { font-size:12px; position:absolute; right:35px; top:0px; z-index:3; }
+.userEditInfo .btnClose { width:20px; height:20px; display:block; background:url(../img/close4.png) no-repeat; background-size:20px; position:absolute; right:5px; top:10px; z-index:3; }
+.userEditInfo .txt { height:40px; text-align:right; }
+
+.loginRelative { margin-top:20px; height:30px; line-height:30px; color:#bcbcbc; text-align:center; display:block; }
+@media screen and (min-width:375px)
+{
+	.loginRelative { font-size:16px; }
+}
+
+@media screen and (min-width:414px)
+{
+	.loginRelative { font-size:16px; }
+}

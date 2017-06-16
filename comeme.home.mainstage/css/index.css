@@ -9,19 +9,24 @@ body { background:#f0f0f0; }
 
 .bannerIndex      { position:relative; width:100%; overflow:hidden; }
 .swiper-slide img { width:100%; max-height:220px; display:block; }
+.swiper-container-horizontal > .swiper-pagination { bottom:35px; }
+.swiper-container-horizontal > .swiper-pagination .swiper-pagination-bullet { margin:0 4px; vertical-align:middle; width:15px; height:3px; opacity:1; border-radius:0px; background:#ffffff; }
+.swiper-container-horizontal > .swiper-pagination .swiper-pagination-bullet-active { width:15px; height:3px; border:none; background:#28af90; }
+
 
 .houseList          { padding:5px 0 0; overflow:hidden; }
 .houseList li       { margin-top:10px; padding:0 10px; }
 .houseList li a     { position:relative; display:block; }
 .houseList li a img { width:100%; border-radius:5px; overflow:hidden; box-shadow:3px 3px 5px #ccc; }
 .houseList li h3    { margin-left:-40%; width:80%; height:40px; line-height:40px; text-align:center; font-size:20px; font-weight:normal; overflow:hidden; position:absolute; left:50%; top:28%; z-index:3; color:#fff; }
-.houseList li em    { margin-left:-40%; width:80%; height:1px; display:block; background:#9c8c80; position:absolute; left:50%; top:50%; z-index:3; }
+.houseList li em    { margin-left:-40%; width:80%; height:1px; display:block; opacity:0.3; background:#fff; position:absolute; left:50%; top:50%; z-index:3; }
 .houseList li span  { margin-left:-40%; width:80%; height:20px; display:block; text-align:center; line-height:20px; font-size:16px; overflow:hidden; position:absolute; left:50%; top:56%; z-index:3; color:#afa8a5;}
 
 .search             { margin:-25px 10px 0; padding-right:45px; height:50px; border-radius:5px; box-shadow:5px 5px 10px #eee; position:relative; z-index:10; background:#fff; }
 .search .iconSearch { width:45px; height:50px; display:block; background:url(../img/indexSearch.png) no-repeat; background-size:45px 50px; position:absolute; right:0; top:0; }
-.search span        { float:left; margin:8px 0 0 10px; cursor:default; padding:8px 10px; border:1px solid #d2d2d2;  background:#fff; }
+.search span        { float:left; margin:8px 0 0 10px; border-radius:3px; cursor:default; padding:8px 10px; border:1px solid #d2d2d2;  background:#fff; }
 .search span i      { margin-left:10px; width:12px; height:12px; display:inline-block; background:url(../img/close2.png) no-repeat; background-size:12px; }
+.search .placeholder { text-indent:10px; height:50px; line-height:50px; font-style:normal; display:block; color:#c7c7c7; position:absolute; left:0; top:0; }
 
 /* my */
 .bannerMy     { position:relative; width:100%; overflow:hidden; }
@@ -32,18 +37,23 @@ body { background:#f0f0f0; }
 .myClass      { margin-left:-40px; width:80px; height:24px; display:block; background:url(../img/qyClass.png) no-repeat; background-size:80px 24px; position:absolute; left:50%; top:75%; z-index:3; }
 .myList li    { margin-bottom:1px; height:44px; }
 .myList li a  { padding-left:40px; height:44px; line-height:44px; display:block; position:relative; background:#fff; }
+.myList li .rz  { font-size:12px; position:absolute; right:35px; top:0px; z-index:3; }
 
 /* evaluate */
-.service  { margin-bottom:10px; padding:20px 0; background:#fff; overflow:hidden; }
+.service  { margin-bottom:10px; padding:10px 0; background:#fff; overflow:hidden; }
 .service li { margin:10px 0; padding-left:70px; height:26px; line-height:26px; position:relative; color:#282828; }
 .service li .ssd { width:50px; height:26px; display:block; position:absolute; left:10px; top:0; z-index:3; }
 .service dl      { margin-right:10px; }
 .service dl dd   { float:left; margin-right:4%; width:26px; height:25px; display:block; background:url(../img/iconStar.png) no-repeat; background-size:26px 25px; }
 .service dl .ssdSelect { width:26px; height:25px; display:block; background:url(../img/iconStar2.png) no-repeat; background-size:26px 25px; }
 
-.common { padding:0 10px; }
+.common { margin-top:10px; padding:0 10px; }
 .common h2 { padding:20px 0 10px; font-size:16px; color:#777777; }
+.common .commonList li { border-bottom:1px solid #e5e5e5; }
 
 .textarea { padding:5px 0; width:100%; height:120px; font-size:14px; line-height:24px; color:#c8c8c8; }
 .btnFb { padding:10px 10px 0; }
 .popEva span { margin-top:5px; text-align:center; font-size:16px; line-height:30px; display:block; color:#fff; }
+.hdTop { margin-top:44px; }
+
+.btnLoginout { margin-top:10px; height:40px; line-height:40px; text-align:center; display:block; background:#fff; color:#ff3636; }

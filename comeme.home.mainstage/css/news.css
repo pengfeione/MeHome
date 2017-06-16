@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+/*
+	project : me+
+	auther  : Charles
+	date    : 2017-05-15
+*/
+body { background:#fafafa; }
+
+.iconAct { margin:-2px 5px 0 0; width:40px; height:20px; font-style:normal; font-size:12px; display:inline-block; line-height:20px; vertical-align:middle; border-radius:3px; text-align:center; background:#f69528; color:#fff; }
+
+.news           { overflow:hidden; }
+.newsList       { margin:0 10px; padding-left:110px; height:90px; display:block; position:relative; border-bottom:1px solid #eeeeee; overflow:hidden; }
+.newsList img   { width:100px; height:70px; position:absolute; left:0; top:10px; z-index:3; }
+.newsList h3    { margin:10px 0 0; height:40px; font-size:16px; line-height:20px; display:block; overflow:hidden; color:#282828; text-align:justify; }
+.newsList span  { height:30px; line-height:30px; text-align:right; display:block; color:#b5b5b5; }
+.newsListTj     { margin:0 10px; padding:5px 0 10px; display:block; border-bottom:1px solid #eeeeee; }
+.newsListTj h3  { height:40px; line-height:40px; overflow:hidden; }
+.newsListTj img { width:100%; display:block; }
+
+
+.bgLargeImg,.bgLargeImg img { width:100%; display:block; }
+.newsInfo         { margin:-60px 20px 0 0; height:82px; background:#fff; box-shadow:2px 2px 2px #ccc; position:relative; z-index:10; }
+.newsInfo h3      { padding:10px 10px 5px; height:40px; line-height:20px; display:block; color:#282828; overflow:hidden; }
+.newsInfo span    { height:30px; font-size:12px; line-height:20px; display:block; overflow:hidden; }
+.newsInfo span em { margin:0 10px; font-style:normal; color:#b5b5b5; }
+.newsInfo span i  { font-style:normal; color:#b5b5b5;}
+.newsContent { margin:0 10px 10px; padding:10px 0; line-height:20px; color:#282828; border-bottom:1px solid #f0f0f0; }
+.newsContent p { margin:10px 0 0; }
+
+.newsCommon { margin:0 10px; }
+.newsCommon h2 { font-size:16px; }
+
