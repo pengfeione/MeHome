@@ -1,0 +1,64 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>利用js的FormData对象快速收集表单信息及无刷新上传头像</title>  
+    <style>  
+        #pat{width:200px;height: 20px;  
+            border-radius: 5px;  
+            background-color: #ccc;  
+            margin: 10px}  
+        #son{width: 0;height: 100%;  
+            background: #9cf;  
+            text-align: center;  
+            border-radius: 5px}  
+    </style>  
+</head>  
+<body>  
+<form enctype="multipart/form-data">  
+    用户名:<input type="text" name="user"><br/>  
+    密码:<input type="password" name="pass"><br/>  
+    头像:<input type="file" name="file"><br/>  
+    <input type="submit" value="提交" name="sub">  
+</form>  
+<div id="showResult" style="display: none">  
+<p>ajax无刷新界面返回结果：</p>  
+用户名：<input type="text" id="user" disabled="disabled"><br/>  
+  密码：<input type="text" id="pass" disabled="disabled"><br/>  
+  头像：<img src="" id="face" style="width:200px;height:200px">  
+        <div id="pat"><div id="son"></div></div>  
+</div>  
+<script type="text/javascript">  
+        var fm=document.getElementsByTagName('form')[0];  
+        fm.onsubmit=function () {  
+            //实例化 FormData对象，同时收集表单的信息，包括普通表单域和文件表单域的信息  
+            var fd=new FormData(fm);  
+            var xhr=new XMLHttpRequest();  
+            xhr.onreadystatechange=function () {  
+                if(xhr.readyState==4){  
+                    eval("var info="+xhr.responseText); //将json信息转化成js对象  
+                    var result=document.getElementById("showResult"),  
+                        user=document.getElementById("user"),  
+                        pass=document.getElementById("pass"),  
+                        face=document.getElementById("face");  
+                    result.style.display='block';  
+                    user.value=info.user;  
+                    pass.value=info.pass;  
+                    face.setAttribute("src",info.face);  
+                }  
+            };  
+            xhr.upload.onprogress=function (evt) {   //事件监听器，获取上传的情况  
+                var loaded=evt.loaded,  //已上传的大小  
+                    total=evt.total,  //总大小  
+                    per=Math.floor((loaded/total)*100)+'%', //转换成百分比  
+                    son=document.getElementById("son");  
+                son.innerHTML=per;  
+                son.style.width=per;  
+            }  
+            xhr.open('post','./upload.php');    
+            xhr.send(fd);   //发送数据  
+            return false;   //阻止页面提交  
+        }  
+</script>  
+</body>  
+</html>  

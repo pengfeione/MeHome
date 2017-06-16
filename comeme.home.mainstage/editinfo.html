@@ -33,12 +33,12 @@
         <section>
         	<div class="userEditInfo">
             	<ul>
-                	<li id="li_name"><a onclick="editName();"><span>昵称</span><em id="em_name">多小米</em><i class="iconMore"></i></a></li>
-                    <li id="li_edit" style="display: none;"><a><span>昵称</span><em>
+                	<li id="li_name"><a onclick="editName();"><span style="font-size: 12px;">昵称</span><em id="em_name">多小米</em><i class="iconMore"></i></a></li>
+                    <li id="li_edit" style="display: none;"><a><span style="font-size: 12px;">昵称</span><em>
                     	<input type="text" value="多小米" class="txt" id="i_name"
                     		onblur="submitUser();"/></em><i class="btnClose" id="i_close" onclick="clearName();"></i></a>
                     </li>
-                    <li><a onclick="enterprise();"><span>企业用户认证</span><em id="em_auth">未认证，点我认证</em><i class="iconMore"></i></a></li>
+                    <!--<li><a onclick="enterprise();"><span>企业用户认证</span><em id="em_auth">未认证，点我认证</em><i class="iconMore"></i></a></li>-->
                 </ul>
             </div>
         </section>
@@ -98,6 +98,8 @@
 	function editName(){
 		$('#li_name').hide();
 		$('#li_edit').show();
+		$('#i_name').click();
+		$('#i_name').select();
 	}
 	
 	//清除姓名

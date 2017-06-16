@@ -23,30 +23,45 @@
 </head>
 <body class="bodyApartmentdetail">
 
-    <div class="wrap">
+    <div class="wrap headerTop">
+    	
+    	<!-- header -->
+        <div class="header">
+        	<div class="headerCont">
+            	<a class="btnBack" onclick="history.back();">&lt;</a>
+            	<span>公寓详情</span>
+            </div>
+        </div>
 
     	<!-- apartmenInfo -->
     	<div class="apartmentInfo">
             <div class="apartTop">
                 <span class="apartImg"><a><img id="img_head" src="img/test/test1.jpg" onclick="showLargeImg();"><i id='i_num'>5张</i></a></span>
                 <h3>Ascott商务服务中心</h3>
-                <span class="apartStar"><i class="curr"></i><i class="curr"></i><i class="curr"></i><i></i><i></i><em>4.0</em></span>
-                <span class="apartTag"><i class="tagGw">购物</i><i class="tagJt">交通</i><i class="tagCy">餐饮</i><i class="tagYl">娱乐</i></span>
+                <span class="apartStar" id="span_star"></span>
+                <span class="apartTag">
+                	<i id="i_gw" class="tagGw" style="display: none;">购物</i>
+                	<i id="i_jt" class="tagJt" style="display: none;">交通</i>
+                	<i id="i_cy" class="tagCy" style="display: none;">餐饮</i>
+                	<i id="i_yl" class="tagYl" style="display: none;">娱乐</i>
+                </span>
                 <a class="btnHouseRule" onclick="showRule();"></a>
             </div>
             <ul class="mapInfo">
             	<a onclick="showMap();">
                 	<li class="apartAddress"><i></i><label id="l_address">上海市浦东新区福山路82号</label></li>
                 </a>
-                <li ><i class="iconCar"></i>交通：1.地铁2号线转5号线步行15分钟 2地铁2号线转5号步行15分钟.3.地铁2号线转5号线步行15分钟</li>
+                <li ><i class="iconCar"></i><label id="l_jt"></label></li>
             </ul>
         </div>
 
         <div class="apartFl">
-            <h3><em>个人用户福利</em><a class="btnShow">展开<i></i></a></h3>
-            <div class="apartFlcont" id="div_welfare">1. 个人用户福利个人用户福利个人用户福利个人用户福利个人个人用户福利；2. 个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；</div>        
+            <h3><em>个人用户福利</em><a class="btnShow"><span>展开</span><i></i></a></h3>
+            <div class="apartFlcont" id="div_welfare">
+            	<p>1. 个人用户福利个人用户福利个人用户福利个人用户福利个人个人用户福利；2. 个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；</p>
+            </div>        
         </div>
-        <span class="apartLogin" id="span_apartLogin">企业用户福利多多，<a href="login.html">立即登陆</a></span>
+        <span class="apartLogin" id="span_apartLogin">企业用户福利多多，<a href="login.html?jumpType=0">立即登陆</a></span>
 
         <!-- 评价 -->
         <div class="houseStyle">
@@ -162,10 +177,48 @@
 					$('#longitude').val(positions[0]);
 					$('#latitude').val(positions[1]);
 					var detailpic = productInfo.detailpic;
+					var shopping = productInfo.shopping;
+					var transport = productInfo.transport;
+					var delicacy = productInfo.delicacy;
+					var entertainment = productInfo.entertainment;
+					if(shopping != null){
+						$('#i_gw').show();
+					}
+					if(transport != null){
+						$('#i_jt').show();
+						$('#l_jt').html(transport);
+					}
+					if(delicacy != null){
+						$('#i_cy').show();
+					}
+					if(entertainment != null){
+						$('#i_yl').show();
+					}
+					var score = productInfo.score;
+					if(score == null || score == ''){
+						score = 0.0;
+					}
+					var span_star_str = '';
+					for(k=0;k<5;k++){
+						if(k<score){
+							span_star_str += '<i class="curr"></i>'; 
+						}else{
+							span_star_str += '<i></i>'; 
+						}
+					}
+					span_star_str += '<em>'+score+'</em>'; 
+					$('#span_star').html(span_star_str);
+					var welfareStr='';
+					if(productInfo.hasPersonal){
 					var personalWelfare = eval('(' + productInfo.personalWelfare + ')');
 					util.logResult(personalWelfare.notice);
-					var welfareStr = personalWelfare.notice+',优惠'+personalWelfare.remitPercent
-									+'%,押'+personalWelfare.mortagageNum+'付'+personalWelfare.payMentNum;
+					welfareStr ='<p>'+ personalWelfare.notice+',优惠'+personalWelfare.remitPercent
+									+'%,押'+personalWelfare.mortagageNum+'付'+personalWelfare.payMentNum
+									+'</p>';
+					}
+					else{
+				    welfareStr='无';
+					}
 					$('#div_welfare').html(welfareStr);
 					$('#i_num').html(detailpic.length+'张');
 					$('#img_head').attr('src',productInfo.listpic);
@@ -182,34 +235,38 @@
 	function loadHouseList(){
 		var productId = util.getUrlParam('productId');
 		var url = util.baseUrl + '/house/list';
-		var param ='{"productId": '+productId+'}';
+		var param ='{"productId": '+productId+',"status":1}';
 		var contentType = "application/json";
 		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 			util.logResult(data); 
 			$.each(data.result,function(index,houseInfo){
-				 var roomTypeDesc = eval('(' + houseInfo.roomTypeDesc + ')');
-				 var room_type_des =  roomTypeDesc.room +'室'+roomTypeDesc.hall+'厅'+roomTypeDesc.toilet+'卫';
-				 var li_html = '';
-				 var room_status_str = '';
-				 if(houseInfo.status == 1){showMap
-				 	li_html = '<li onclick="gotoHouseDetail('+houseInfo.houseId+','+houseInfo.productId+');">';
-				 	room_status_str = '<a href="#" class="btnApart btnYya">预约</a>';
-				 }else if(houseInfo.status == 2){
-				 	li_html = '<li>';
-				 	room_status_str = '<a href="#" class="btnApart btnYjc">已借出</a>';
-				 }else if(houseInfo.status == 3){
-				 	li_html = '<li>';
-				 	room_status_str = '<a href="#" class="btnApart btnYjc">已下线</a>';
+				if(houseInfo.status != 3){
+					 var roomTypeDesc = eval('(' + houseInfo.roomTypeDesc + ')');
+					 var room_type_des =  roomTypeDesc.room +'室'+roomTypeDesc.hall+'厅'+roomTypeDesc.toilet+'卫';
+					 var li_html = '';
+					 var room_status_str = '';
+					 if(houseInfo.status == 1){
+					 	li_html = '<li onclick="gotoHouseDetail('+houseInfo.houseId+','+houseInfo.productId+');">';
+					 	room_status_str = '<a class="btnApart btnYya">预约</a>';
+					 }else if(houseInfo.status == 2){
+					 	li_html = '<li>';
+					 	room_status_str = '<a class="btnApart btnYjc">已借出</a>';
+					 }
+//					 else if(houseInfo.status == 3){
+//					 	li_html = '<li>';
+//					 	room_status_str = '<a class="btnApart btnYjc">已下线</a>';
+//					 }
+					 var listpic = houseInfo.listpic;
+					 var house_html = li_html
+					 				+ '	<img src="'+listpic+'" />'
+					 				+ '	<h3 class="hi">'+houseInfo.subject+'</h3>'
+					 				+ '	<span class="ht">'+room_type_des+' '+houseInfo.roomArea+'㎡</span>'
+					 				+ '	<span class="hm">'+houseInfo.roomRent+'／月</span>'
+					 				+ room_status_str
+					 				+'</li>';
+					 $('#ul_house').append(house_html);
+					 $('#div_house').show();
 				 }
-				 var house_html = li_html
-				 				+ '	<img src="img/test/test1.jpg" />'
-				 				+ '	<h3 class="hi">'+houseInfo.subject+'</h3>'
-				 				+ '	<span class="ht">'+room_type_des+' '+houseInfo.roomArea+'㎡</span>'
-				 				+ '	<span class="hm">'+houseInfo.roomRent+'／月</span>'
-				 				+ room_status_str
-				 				+'</li>';
-				 $('#ul_house').append(house_html);
-				 $('#div_house').show();
 			});
 		});
 	}
@@ -249,9 +306,23 @@
 	            		avatar = userInfoJson.avatar;
 	            	}
 	            	nickName = (userInfos[replier] != undefined && userInfoJson.nickName != undefined)?userInfoJson.nickName:'';
+	            	var createTime = commentInfo.createTime;
+	            	createTime = createTime.substr(5,5)+' '+createTime.substr(14,5);
+	            	var score = commentInfo.score;
+	            	var span_star_str = '';
+					for(k=0;k<5;k++){
+						if(k<score){
+							span_star_str += '<em class="selectStart"></em>'; 
+						}else{
+							span_star_str += '<em></em>'; 
+						}
+					}
+					span_star_str += '<i>'+score+'</i>'; 
 	            	var comment_html = '<li>'
 	            					  +' <img src="'+avatar+'" />'
 	            					  +' <h3>'+nickName+'</h3>'
+	            					  +'<span class="commonDate">'+createTime+'</span>'
+	            					  +' <span class="commonStar">'+span_star_str+'</span>'
 	            					  +' <span>'+commentInfo.formatContent+'</span>'
 	            					  +' </li>';
 	            		$('#ul_common').append(comment_html);

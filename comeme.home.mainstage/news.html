@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+<base href="http://m.mjiahome.com/"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name = "format-detection" content="telephone=no">
+<meta name="viewport"  content="width=device-width,user-scalable=no">
+<title>Me+房间资讯</title>
+<meta name="keywords" content="ME+">
+<meta name="description" content="ME+">
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<link rel="stylesheet" type="text/css" href="css/common.css" />
+<link rel="stylesheet" type="text/css" href="css/news.css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/util.js"></script>
+</head>
+<body>
+    
+    <div class="wrap headerTop">
+		<!-- header -->
+        <div class="header">
+        	<div class="headerCont">
+        		<a class="btnBack" onclick="history.back();">&lt;</a>
+            	<span>资讯</span>
+            </div>
+        </div>
+        <section class="section">
+			<div class="news" id="div_news">
+            	<!--<a href="#" class="newsList">
+                	<img src="img/test/test1.jpg" />
+                    <h3>银行房贷优惠渐次收紧部分银行开始按月放贷</h3>
+                    <span>东方时空</span>
+                </a>
+                <a href="#" class="newsList">
+                	<img src="img/test/test1.jpg" />
+                    <h3>银行房贷优惠渐次收紧部分银行开始按月放贷</h3>
+                    <span>东方时空</span>
+                </a>
+                <a href="#" class="newsListTj">
+                	<h3><i class="iconAct">活动</i>银行房贷优惠渐次收紧部分银行开始按月放贷银行房贷优惠渐次收紧部分银行开始按月放贷</h3>
+                	<img src="img/test/test1.jpg" />
+                </a>
+                <a href="#" class="newsList">
+                	<img src="img/test/test1.jpg" />
+                    <h3>银行房贷优惠渐次收紧部分银行开始按月放贷</h3>
+                    <span>东方时空</span>
+                </a>
+                <a href="#" class="newsList">
+                	<img src="img/test/test1.jpg" />
+                    <h3>银行房贷优惠渐次收紧部分银行开始按月放贷</h3>
+                    <span>东方时空</span>
+                </a>-->
+            </div>
+        </section>
+        
+        <!-- footer修改 -->
+        <div class="fooder">
+            <a class="m1" href="index.html"><em></em><span>发现</span></a>
+            <a class="m2 curr" href="news.html"><em></em><span>资讯</span></a>
+            <a class="m3" onclick="gotoME();"><em></em><span>我的</span></a>
+        </div>   
+    </div>
+    
+</body>
+<script type="text/javascript">
+	var util;
+	var isSubmit = 0;
+	//页面初始化
+	$(function(){
+		util = new Util();
+		
+		//加载新闻列表
+		loadNewsList();
+	});
+	
+	//跳到个人页面
+	function gotoME(){
+		//判断用户是否登录
+		var userInfo = util.getCookie("userInfo");
+		//如果登录跳转到个人中心,否则跳转到登录页面
+		if(userInfo != null && userInfo != ''){
+			window.location.href='my.html';
+		}else{
+			window.location.href='login.html';
+		}
+	}
+	
+	//加载新闻了列表
+	function loadNewsList(){
+		var url = util.baseUrl + '/topic/list';
+		var param ='{}';
+		var contentType = "application/json";
+		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+			util.logResult(data);
+			$.each(data.result,function(index,newsInfo){
+				var topicType = newsInfo.topicType;
+				var news_str = '';
+				var topicUrl = newsInfo.topicUrl;
+				var summary = newsInfo.summary;
+				var displayPic = newsInfo.displayPic;
+				var contentFrom = newsInfo.contentFrom;
+				var tid = newsInfo.tid;
+				if(topicType == 'activity'){
+					news_str += '<a href="newsdetail.html?tid='+tid+'" class="newsListTj">'
+							   +'	<h3><i class="iconAct">活动</i>'+summary+'</h3>'
+							   +'	<img src="'+displayPic+'" />'
+							   +'</a>';
+				}else{
+                	news_str += '<a href=newsdetail.html?tid="'+tid+'" class="newsList">'
+                			   +'	<img src="img/test/test1.jpg" />'
+                			   +'	<h3>'+summary+'</h3>'
+                			   +'	<span>'+contentFrom+'</span>'
+                			   +'</a>';
+				}
+				$('#div_news').append(news_str);
+			});
+		});
+	}
+</script>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+<base href="http://m.mjiahome.com/"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name = "format-detection" content="telephone=no">
+<meta name="viewport"  content="width=device-width,user-scalable=no">
+<title>Me+资讯详情</title>
+<meta name="keywords" content="ME+">
+<meta name="description" content="ME+">
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<link rel="stylesheet" type="text/css" href="css/common.css" />
+<link rel="stylesheet" type="text/css" href="css/news.css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/util.js"></script>
+</head>
+<body>
+     
+    <div class="wrap headerTop">
+		<!-- header -->
+        <div class="header">
+        	<div class="headerCont">
+        		<a class="btnBack" onclick="history.back();">&lt;</a>
+            	<span id="span_news_title"></span>
+            </div>
+        </div>
+        <header id="head_info">
+        	<a  onclick="history.back();" class="btnBack2"></a>
+        </header>
+        
+        <section class="section">
+			<div class="newsContent" id="div_content">
+            	 
+            </div>
+            <div class="newsCommon">
+            	<h2>全部评论</h2>
+                <ul class="commonList" id="ul_reply">
+                	<!--<li>
+                        <img src="img/test/test4.jpg" />
+                        <h3 class="commonName">用户名</h3>
+                        <span class="commonDateNews">04-23 12:23</span>
+                        <span class="commonContent">评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
+                    </li>
+                    <li>
+                        <img src="img/test/test4.jpg" />
+                        <h3 class="commonName">用户名</h3>
+                        <span class="commonDateNews">04-23 12:23</span>
+                        <span class="commonContent">评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
+                    </li>
+                    <li>
+                        <img src="img/test/test4.jpg" />
+                        <h3 class="commonName">用户名</h3>
+                        <span class="commonDateNews">04-23 12:23</span>
+                        <span class="commonContent">评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
+                    </li>
+                    <li>
+                        <img src="img/test/test4.jpg" />
+                        <h3 class="commonName">用户名</h3>
+                        <span class="commonDateNews">04-23 12:23</span>
+                        <span class="commonContent">评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
+                    </li>
+                    <li>
+                        <img src="img/test/test4.jpg" />
+                        <h3 class="commonName">用户名</h3>
+                        <span class="commonDateNews">04-23 12:23</span>
+                        <span class="commonContent">评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h3>
+                    </li>-->
+                </ul>
+            </div>	
+        </section>
+         
+    </div>
+    
+</body>
+<script type="text/javascript">
+	var util;
+	var isSubmit = 0;
+	//页面初始化
+	$(function(){
+		util = new Util();
+		
+		//加载新闻详情
+		loadNewsDetail();
+		
+		//加载评论
+		loadReplyList();
+		
+	});
+	
+	//加载新闻详情
+	function loadNewsDetail(){
+		var url = util.baseUrl + '/topic/list';
+		var tid = util.getUrlParam("tid");
+		var param ='{"tid": "'+tid+'"}';
+		var contentType = "application/json";
+		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+			util.logResult(data);
+			$.each(data.result,function(index,newsInfo){
+				if(index == 0){
+					var topicType = newsInfo.topicType;
+					var topicUrl = newsInfo.topicUrl;
+					var summary = newsInfo.summary;
+					var subject = newsInfo.subject;
+					var displayPic = newsInfo.displayPic;
+					var contentFrom = newsInfo.contentFrom;
+					var content = newsInfo.content;
+					var formatContent = newsInfo.formatContent;
+					var tid = newsInfo.tid;
+					var createTime = newsInfo.createTime;
+					var timeStr = createTime.substr(0,4)+'年'+createTime.substr(5,2)+'月'+createTime.substr(8,2)+'日'+' '+createTime.substr(11,5);
+					var head_str = '<span class="bgLargeImg"><img src="'+displayPic+'" /></span>'
+								  +' <div class="newsInfo"> '
+								  +' <h3>'+summary+'</h3> '
+								  +' <span><em>来源：'+contentFrom+'</em><i>'+timeStr+'</i></span> '
+								  +'</div>';
+		            $('#head_info').append(head_str);
+		            $('#div_content').html(formatContent);
+		            
+		            $('#span_news_title').html(subject);
+				}
+			});
+		});
+	}
+	
+	//加载评论
+	function loadReplyList(){
+		var url = util.baseUrl + '/reply/list';
+		var tid = util.getUrlParam("tid");
+		var param ='{"tid": "'+tid+'","isActive": true}';
+		var contentType = "application/json";
+		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+			util.logResult(data);
+			var userIds = '';
+			var userInfos;
+			$.each(data.result,function(index,replyInfo){
+				userIds += replyInfo.replier+',';
+			});
+			userIds = userIds.substring(0,userIds.length-1)
+			util.logResult(userIds);
+			userInfos = getUserBatch(userIds);
+			$.each(data.result,function(index,replyInfo){
+				var replier = replyInfo.replier;
+            	var userInfo = userInfos[replier];
+            	var userInfo1 = JSON.stringify(userInfo) ;
+            	var userInfoJson = eval('(' + userInfo1 + ')');
+            	var avatar = (userInfos[replier] != undefined && userInfoJson.avatar != undefined)?userInfoJson.avatar:'';
+            	var nickName = (userInfos[replier] != undefined && userInfoJson.nickName != undefined)?userInfoJson.nickName:'';
+				var createTime = replyInfo.createTime;
+				createTime = createTime.substr(5,5)+' '+createTime.substr(11,5);
+				var content = replyInfo.content;
+				var formatContent = replyInfo.formatContent;
+				var reply_str = '<li>'
+							   +'	<img src="'+avatar+'" />'
+							   +' 	<h3 class="commonName">'+nickName+'</h3>'
+							   +'	<span class="commonDateNews">'+createTime+'</span>'
+							   +'	<span class="commonContent">'+formatContent+'</h3>'
+							   +'</li>';
+				$('#ul_reply').append(reply_str);
+			});
+		});
+	}
+	
+	//批量获取用户信息 
+	function getUserBatch(userIds){
+		var url = util.baseUrl + '/usr/batch_info?userIds='+userIds+'&returnType=map';
+		var result = {};
+		util.sendRequest(url, null, "post", false, function(data) {
+			var dataJson = eval('(' + JSON.stringify(data) + ')');
+			result = dataJson.result;
+		});
+		return result;
+	}
+</script>
+</html>

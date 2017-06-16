@@ -17,6 +17,11 @@
 <script src="js/swiper.min.js"></script>
 <script src="js/detail.js"></script>
 <script src="js/util.js"></script>
+<style>
+.swiper-slide img  { width:100%; max-height:250px; display:block; }
+.swiper-container-horizontal > .swiper-pagination .swiper-pagination-bullet { margin:0 4px; vertical-align:middle; width:15px; height:3px; opacity:1; border-radius:0px; background:#ffffff; }
+.swiper-container-horizontal > .swiper-pagination .swiper-pagination-bullet-active { width:15px; height:3px; border:none; background:#28af90; }
+</style>
 </head>
 <body>
     
@@ -24,13 +29,14 @@
     
     	<!-- header -->
     	<header class="bannerDetail">
+    		<a href="#" class="btnBack2"></a>
             <div class="swiper-container">
-                <div class="swiper-wrapper">
+                <div class="swiper-wrapper" id="div_swiper">
+                    <!--<div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
                     <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
                     <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
                     <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
-                    <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
-                    <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
+                    <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>-->
                 </div>
                 <!-- Add Pagination -->
                 <div class="swiper-pagination"></div>
@@ -44,21 +50,12 @@
             <div class="housePt">
             	<h3><em></em>配套设施</h3>
                 <ul id="ul_basic">
-                	<!--<li><em class="iconBed"></em><i>床</i></li>
-                    <li><em class="iconYg"></em><i>衣柜</i></li>
-                    <li><em class="iconCz"></em><i>餐桌</i></li>
-                    <li><em class="iconTv"></em><i>电视机</i></li>
-                    <li><em class="iconKt"></em><i>空调</i></li>
-                    <li><em class="iconRsq"></em><i>热水器</i></li>
-                    <li><em class="iconNet"></em><i>无线网</i></li>
-                    <li><em class="iconCyj"></em><i>油烟机</i></li>
-                    <li><em class="iconCg"></em><i>橱柜</i></li>-->
                 </ul>
             </div>
         </section>
         
         <!-- footer -->
-        <a class="btn btnYy" onclick="appointment();">立即预约</a>
+        <a class="btn btnYy" onclick="appointment();" id="a_yy">立即预约</a>
         
     </div>
     
@@ -86,23 +83,50 @@
 <script type="text/javascript">
 	var util;
 	var isSubmit = 0;
+	var judgeStatus = 'true'; 
 	//页面初始化
 	$(function(){
 		util = new Util();
 		
+		//判断用户是否可以预约
+		isJudge();
 		//加载房源详细
 		loadHouseDetail();
 		//加载产品基础设施
 		loadProductBasic();
 		//刷新个人信息
 		flushUerInfo();
+		
+		
 	});
+	
+	//判断用户是否可以预约
+	function isJudge(){
+		var houseId = util.getUrlParam('houseId');
+		var userInfo = util.getCookie("userInfo");
+		var url = util.baseUrl + '/order/judgeExistOrder';
+		if(userInfo != null && userInfo != ''){
+			var userInfoJson = eval('(' + userInfo + ')');
+			var userId = userInfoJson.userId;
+			var param ='{"houseId": '+houseId+',"biller":'+userId+'}';
+			var contentType = "application/json";
+			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+				util.logResult("===========judgeExistOrder"+data.result); 
+				judgeStatus = data.result;
+				if(judgeStatus == 'false'){
+					$('#a_yy').html('已预约');
+					$('#a_yy').attr('style','border:0px solid #ccc;color:#959595;background:#ccc;');
+				}
+			});
+		}
+		
+	}
 	
 	//加载房源详细
 	function loadHouseDetail(){
 		var houseId = util.getUrlParam('houseId');
 		var url = util.baseUrl + '/house/list';
-		var param ='{"houseId": '+houseId+'}';
+		var param ='{"houseId": '+houseId+',"status":1}';
 		var contentType = "application/json";
 		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 			util.logResult(data); 
@@ -116,7 +140,23 @@
 					 				+ '	<span><i>'+pay_type_des+'</i>'+room_type_des+' '+houseInfo.roomArea+'㎡</span>'
 					 				+ '	<em>'+houseInfo.roomRent+'元／月</em>';
 					$('#div_house').append(house_html);
+					
+					var detailpic = houseInfo.detailpic;
+					for(var i=0;i<detailpic.length;i++){
+						var slide_str = '<div class="swiper-slide"><img src="'+detailpic[i]+'" /></div>';
+						$('#div_swiper').append(slide_str);
+					}
 				}
+			});
+			
+			var swiper = new Swiper('.swiper-container', {
+				pagination : '.swiper-pagination',
+				paginationClickable: true, //此参数设置为true时，点击分页器的指示点分页器会控制Swiper切换。
+				spaceBetween: 10,
+				centeredSlides: true,
+				autoplay: 5000,
+				loop:true,
+				autoplayDisableOnInteraction : false  //播放完毕后
 			});
 		});
 	}
@@ -143,7 +183,9 @@
 	
 	//立即预约
 	function appointment(){
-		$('#div_popbox').fadeIn();
+		if(judgeStatus == 'true'){
+			$('#div_popbox').fadeIn();
+		}
 	}
 	
 	//是否预约
@@ -158,10 +200,22 @@
 				$('#div_popbox').fadeOut();
 				$('#span_pop').html('请先登录!');
 				$( '#div_popFail' ).fadeIn();
-				setTimeout( function(){$( '#div_popFail' ).fadeOut();}, ( 1* 1000 ) );
+				setTimeout( function(){$( '#div_popFail' ).fadeOut();
+					window.location.href='login.html?jumpType=0';
+				}, ( 1* 1000 ) );
 				return false;
 			}
 			var userInfoJson = eval('(' + userInfo + ')');
+			var mobile = userInfoJson.mobile;
+			if(mobile == null || mobile == ''){
+				$('#div_popbox').fadeOut();
+				$('#span_pop').html('请先绑定手机号!');
+				$( '#div_popFail' ).fadeIn();
+				setTimeout( function(){$( '#div_popFail' ).fadeOut();
+					window.location.href='relation.html';
+				}, ( 1* 1000 ) );
+				return false;
+			}
 			var userId = userInfoJson.userId;
 			var url = util.baseUrl + '/order/placeOrder';
 			var param ='{"houseId":'+houseId+',"biller":'+userId+'}';
@@ -173,7 +227,12 @@
 				if(errorCode == 0){
 					$('#div_popbox').fadeOut();
 					$( '#div_popSuccess' ).fadeIn();
-					setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1 * 1000 ) );
+					judgeStatus = 'false';
+					$('#a_yy').html('已预约');
+					$('#a_yy').attr('style','border:0px solid #ccc;color:#959595;background:#ccc');
+					setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+						window.location.href='order.html';
+					}, ( 1 * 1000 ) );
 				}else{
 					$('#div_popbox').fadeOut();
 					$( '#div_popFail' ).fadeIn();
