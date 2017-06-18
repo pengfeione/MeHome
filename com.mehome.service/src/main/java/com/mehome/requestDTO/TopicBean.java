@@ -331,49 +331,48 @@ public class TopicBean extends PageMysqlUtil{
     	topic.setWatchs(0);
 		return topic;
     }
-    public ForumTopic compareToPojo(){
-    	ForumTopic topic=new ForumTopic();
-    	if(StringUtils.isNotBlank(this.getContent())){
-    		topic.setContent(this.getContent());
+    public ForumTopic compareToPojo(ForumTopic topic,TopicBean bean){
+    	if(StringUtils.isNotBlank(bean.getContent())){
+    		topic.setContent(bean.getContent());
     	}
-    	if(StringUtils.isNotBlank(this.getContentFrom())){
-    		topic.setContentFrom(this.getContentFrom());
+    	if(StringUtils.isNotBlank(bean.getContentFrom())){
+    		topic.setContentFrom(bean.getContentFrom());
     	}
-    	if(StringUtils.isNotBlank(this.getDisplayLocation())){
-    		topic.setDisplayLocation(this.getDisplayLocation());
+    	if(StringUtils.isNotBlank(bean.getDisplayLocation())){
+    		topic.setDisplayLocation(bean.getDisplayLocation());
     	}
-    	if(StringUtils.isNotBlank(this.getDisplayPic())){
-    		topic.setDisplayPic(this.getDisplayPic());
+    	if(StringUtils.isNotBlank(bean.getDisplayPic())){
+    		topic.setDisplayPic(bean.getDisplayPic());
     	}
-    	if(StringUtils.isNotBlank(this.getFid())){
-    		topic.setFid(this.getFid());
+    	if(StringUtils.isNotBlank(bean.getFid())){
+    		topic.setFid(bean.getFid());
     	}
-    	if(StringUtils.isNotBlank(this.getFormatContent())){
-    		topic.setFormatContent(this.getFormatContent());
+    	if(StringUtils.isNotBlank(bean.getFormatContent())){
+    		topic.setFormatContent(bean.getFormatContent());
     	}
-    	if(StringUtils.isNotBlank(this.getLastReplier())){
-    		topic.setLastReplier(this.getLastReplier());
+    	if(StringUtils.isNotBlank(bean.getLastReplier())){
+    		topic.setLastReplier(bean.getLastReplier());
     	}
-    	if(this.getListpic()!=null){
-    		topic.setListpic(this.getListpic().toString());
+    	if(bean.getListpic()!=null){
+    		topic.setListpic(bean.getListpic().toString());
     	}
-    	if(StringUtils.isNotBlank(this.getSubject())){
-    		topic.setSubject(this.getSubject());
+    	if(StringUtils.isNotBlank(bean.getSubject())){
+    		topic.setSubject(bean.getSubject());
     	}
-    	if(StringUtils.isNotBlank(this.getSummary())){
-    		topic.setSummary(this.getSummary());
+    	if(StringUtils.isNotBlank(bean.getSummary())){
+    		topic.setSummary(bean.getSummary());
     	}
-    	if(StringUtils.isNotBlank(this.getTid())){
-    		topic.setTid(this.getTid());
+    	if(StringUtils.isNotBlank(bean.getTid())){
+    		topic.setTid(bean.getTid());
     	}
-    	if(StringUtils.isNotBlank(this.getTopicType())){
-    		topic.setTopicType(this.getTopicType());
+    	if(StringUtils.isNotBlank(bean.getTopicType())){
+    		topic.setTopicType(bean.getTopicType());
     	}
-    	if(StringUtils.isNoneBlank(this.getTopicUrl())){
-    		topic.setTopicUrl(this.getTopicUrl());
+    	if(StringUtils.isNoneBlank(bean.getTopicUrl())){
+    		topic.setTopicUrl(bean.getTopicUrl());
     	}
-    	if(this.getIsActive()!=null){
-    		topic.setIsActive(this.getIsActive());
+    	if(bean.getIsActive()!=null){
+    		topic.setIsActive(bean.getIsActive());
     	}
     	return topic;
     }

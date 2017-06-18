@@ -3,6 +3,8 @@ package com.mehome.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.mehome.requestDTO.TopicBean;
 import com.mehome.service.iface.ITopicService;
 @Service("ITopicService")
 public class TopicServiceImpl implements ITopicService {
+	private Logger log = Logger.getLogger(this.getClass());
 	@Autowired
 	private ForumTopicDao forumTopicDao;
 	@Override
@@ -50,8 +53,15 @@ public class TopicServiceImpl implements ITopicService {
 	@Override
 	public String updateTopic(TopicBean bean) {
 		// TODO Auto-generated method stub
-		ForumTopic topic=bean.compareToPojo();
-		int row=forumTopicDao.update(topic);
+		String tid=bean.getTid();
+		if(StringUtils.isBlank(tid)){
+			log.error("tid属性为空");
+			return Boolean.FALSE.toString();
+		}
+		TopicBean newbean=new TopicBean();
+		ForumTopic topic=forumTopicDao.selectById(tid);
+		ForumTopic updateTopic=newbean.compareToPojo(topic,bean);
+		int row=forumTopicDao.updateByPrimaryKeyWithBLOBs(updateTopic);
 		if(row>0){
 			return Boolean.TRUE.toString();
 		}
