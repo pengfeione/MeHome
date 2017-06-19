@@ -1,11 +1,11 @@
-package com.mehome.dao;
+package com.mehome.service.iface;
 
 import com.mehome.domain.HouseRentPiece;
 import com.mehome.requestDTO.HouseRentPieceDTO;
 
 import java.util.List;
 
-public interface HouseRentPieceDao {
+public interface IHouseRentPieceService {
     int delete(Long autoId);
 
     int insertRequired(HouseRentPiece record);
@@ -14,8 +14,8 @@ public interface HouseRentPieceDao {
 
     int updateRequired(HouseRentPiece record);
 
-    List<HouseRentPiece> listByCondition(HouseRentPieceDTO houseRentPieceDTO);
+    public List<HouseRentPiece> listByCondition(HouseRentPieceDTO houseRentPieceDTO);
 
-    Long countByCondition(HouseRentPieceDTO houseRentPieceDTO);
+    public Long countByCondition(HouseRentPieceDTO houseRentPieceDTO);
 
 }

@@ -57,12 +57,18 @@ public class CompanyServiceImpl implements ICompanyService {
                     item.setRegisterNum(0);
                 } else {
                     item.setRegisterNum(authNum.intValue());
-                    item.setPassword(authorizeAdmin.getPassword());
                 }
                 if (null == authorizeAdmin) {
                     item.setAdminAccount("");
+                    item.setPassword("");
                 } else {
+                    item.setPassword(authorizeAdmin.getPassword());
                     item.setAdminAccount(authorizeAdmin.getName());
+                }
+                if (companyWelfareDao.selectByCompanyId(item.getCompanyId()).size() > 0) {
+                    item.setHasCompanyWelfare(true);
+                } else {
+                    item.setHasCompanyWelfare(false);
                 }
             }
         }

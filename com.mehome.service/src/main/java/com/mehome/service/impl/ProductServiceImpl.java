@@ -85,11 +85,13 @@ public class ProductServiceImpl implements IProductService {
         productListDAO.insertRequired(bean);
         return bean.getProductId() == null ? "" : bean.getProductId().toString();
     }
+
     @Override
     public Long getSizeByCondition(ProductBean bean) {
         Long size = productListDAO.getSizeByCondition(bean);
         return size;
     }
+
     @Override
     public String updateProduct(ProductList bean) {
         AssertUtils.isNotNull(bean.getProductId(), "更新标识未知");
@@ -139,7 +141,8 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<ProductCompanyWelfare> listCompanyWelfare(ProductCompanyWelfareDTO productCompanyWelfareDTO) {
-        if (null != productCompanyWelfareDTO.getProductId()) {
+        AssertUtils.isNotNull(productCompanyWelfareDTO.getProductId(), "产品id不能为空！");
+        if (!productCompanyWelfareDTO.getAdd()) {//列出该产品的关联的企业福利
             //列出已添加企业福利
             //查询该产品的关联的企业福利
             List<ProductCompanyWelfare> productCompanyWelfare = productRelationWelfareDao.listWelfareByProductId(productCompanyWelfareDTO);
@@ -151,11 +154,17 @@ public class ProductServiceImpl implements IProductService {
                 welfare.setProductId(productCompanyWelfareDTO.getProductId());
             }
             return productCompanyWelfare;
-        } else {
-            //列出要添加的企业福利
+        } else {//列出未添加的企业福利，一个企业只能添加一次，要过滤
+            //列出要添加的企业福利-一个企业只能添加一次
             List<ProductCompanyWelfare> result = new ArrayList<ProductCompanyWelfare>();
-            //查询为未关联的企业福利
-            List<CompanyWelfare> welfareList = companyWelfareDao.listUnSelected(productCompanyWelfareDTO);
+            List<Integer> donotNeedCompanyIds = productRelationWelfareDao.selectHasAddCompanyId(productCompanyWelfareDTO.getProductId());
+            List<CompanyWelfare> welfareList = null;
+            if (donotNeedCompanyIds.size() > 0) {
+                productCompanyWelfareDTO.setDontNeedCompanyId(donotNeedCompanyIds);
+                welfareList = companyWelfareDao.listOppositeUnSelected(productCompanyWelfareDTO);
+            } else {
+                welfareList = companyWelfareDao.listAllCompanyWelfare(productCompanyWelfareDTO);
+            }
             for (CompanyWelfare item : welfareList) {
                 ProductCompanyWelfare itemResult = new ProductCompanyWelfare();
                 itemResult.setCompanyId(item.getCompanyId());

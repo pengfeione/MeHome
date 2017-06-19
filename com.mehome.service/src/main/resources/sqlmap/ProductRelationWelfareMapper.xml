@@ -13,7 +13,7 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-      welfare_id, product_id, create_time
+        welfare_id, product_id, create_time
     </sql>
     <select id="listWelfareByProductId" resultMap="ProductCompanyWelfareMap"
             parameterType="com.mehome.requestDTO.ProductCompanyWelfareDTO">
@@ -29,9 +29,9 @@
     </select>
     <select id="countWelfareByProductId" resultType="java.lang.Long"
             parameterType="com.mehome.requestDTO.ProductCompanyWelfareDTO">
-        select count(welfare_id)
-        from  product_relation_welfare
-        where  product_id= #{productId,jdbcType=INTEGER}
+        SELECT count(welfare_id)
+        FROM product_relation_welfare
+        WHERE product_id = #{productId,jdbcType=INTEGER}
     </select>
     <select id="selectById" resultMap="BaseResultMap" parameterType="map">
         select
@@ -40,24 +40,32 @@
         where welfare_id = #{welfareId,jdbcType=INTEGER}
         and product_id = #{productId,jdbcType=INTEGER}
     </select>
+
+    <select id="selectHasAddCompanyId" resultType="java.lang.Integer" parameterType="map">
+        SELECT DISTINCT company_welfare.company_id AS company_id
+        FROM (SELECT *
+              FROM product_relation_welfare
+              WHERE product_id = #{productId,jdbcType=INTEGER}
+             ) product
+            LEFT JOIN company_welfare ON product.welfare_id = company_welfare.welfare_id
+    </select>
     <select id="selectByProductId" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
         from product_relation_welfare
         where product_id = #{productId,jdbcType=INTEGER}
     </select>
-
     <delete id="delete" parameterType="map">
-    delete from product_relation_welfare
-    where welfare_id = #{welfareId,jdbcType=INTEGER}
-      and product_id = #{productId,jdbcType=INTEGER}
-  </delete>
+        DELETE FROM product_relation_welfare
+        WHERE welfare_id = #{welfareId,jdbcType=INTEGER}
+              AND product_id = #{productId,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="com.mehome.domain.ProductRelationWelfare">
-    insert into product_relation_welfare (welfare_id, product_id, create_time
-      )
-    values (#{welfareId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
+        INSERT INTO product_relation_welfare (welfare_id, product_id, create_time
+        )
+        VALUES (#{welfareId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
     <insert id="insertBatch" parameterType="map">
         insert into product_relation_welfare (welfare_id, product_id )
         values
@@ -107,9 +115,9 @@
         and product_id = #{productId,jdbcType=INTEGER}
     </update>
     <update id="update" parameterType="com.mehome.domain.ProductRelationWelfare">
-    update product_relation_welfare
-    set create_time = #{createTime,jdbcType=TIMESTAMP}
-    where welfare_id = #{welfareId,jdbcType=INTEGER}
-      and product_id = #{productId,jdbcType=INTEGER}
-  </update>
+        UPDATE product_relation_welfare
+        SET create_time = #{createTime,jdbcType=TIMESTAMP}
+        WHERE welfare_id = #{welfareId,jdbcType=INTEGER}
+              AND product_id = #{productId,jdbcType=INTEGER}
+    </update>
 </mapper>

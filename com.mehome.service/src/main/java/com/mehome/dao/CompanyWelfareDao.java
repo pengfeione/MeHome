@@ -20,8 +20,21 @@ public interface CompanyWelfareDao {
 
     List<CompanyWelfare> selectByCompanyId(Integer companyId);
 
+    /**
+     * 一个企业福利可以被多个产品关联
+     *
+     * @param productCompanyWelfareDTO
+     * @return
+     */
 
-    List<CompanyWelfare> listUnSelected(ProductCompanyWelfareDTO productCompanyWelfareDTO);
+    List<CompanyWelfare> listAllCompanyWelfare(ProductCompanyWelfareDTO productCompanyWelfareDTO);
+
+    /**
+     * 不列出参数中的公司的，且是未被选择的企业福利
+     *
+     * @return
+     */
+    List<CompanyWelfare> listOppositeUnSelected(ProductCompanyWelfareDTO productCompanyWelfareDTO);
 
     Long countUnSelected();
 

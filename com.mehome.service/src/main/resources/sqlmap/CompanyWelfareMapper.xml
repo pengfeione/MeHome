@@ -10,8 +10,8 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-    welfare_id, welfare_content, company_id, is_select, welfare_active, update_time
-  </sql>
+        welfare_id, welfare_content, company_id, is_select, welfare_active, update_time
+    </sql>
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -33,35 +33,49 @@
         from company_welfare
         where company_id = #{companyId,jdbcType=INTEGER} and welfare_active=1
     </select>
-    <select id="listUnSelected" resultMap="BaseResultMap"
+    <select id="listAllCompanyWelfare" resultMap="BaseResultMap"
             parameterType="com.mehome.requestDTO.ProductCompanyWelfareDTO">
         select
         <include refid="Base_Column_List"/>
         from company_welfare
-        where is_select=0
+        <if test="pageNow !=null and pageSize !=null">
+            limit #{pageNow},#{pageSize}
+        </if>
+    </select>
+    <select id="listOppositeUnSelected" resultMap="BaseResultMap"
+            parameterType="com.mehome.requestDTO.ProductCompanyWelfareDTO">
+        select
+        <include refid="Base_Column_List"/>
+        from company_welfare
+        where
+        <if test="dontNeedCompanyId != null">
+            company_id not in
+            <foreach collection="dontNeedCompanyId" index="index" open="(" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </if>
         <if test="pageNow !=null and pageSize !=null">
             limit #{pageNow},#{pageSize}
         </if>
     </select>
     <select id="countUnSelected" resultType="java.lang.Long"
             parameterType="com.mehome.requestDTO.ProductCompanyWelfareDTO">
-        select
-        count(welfare_id)
-        from company_welfare
-        where is_select=0
+        SELECT count(welfare_id)
+        FROM company_welfare
+        WHERE is_select = 0
     </select>
     <delete id="delete" parameterType="java.lang.Integer">
-    delete from company_welfare
-    where welfare_id = #{welfareId,jdbcType=INTEGER}
-  </delete>
+        DELETE FROM company_welfare
+        WHERE welfare_id = #{welfareId,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="com.mehome.domain.CompanyWelfare">
-    insert into company_welfare (welfare_id, welfare_content, company_id, 
-      is_select, welfare_active, update_time
-      )
-    values (#{welfareId,jdbcType=INTEGER}, #{welfareContent,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER}, 
-      #{isSelect,jdbcType=BIT}, #{welfareActive,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
+        INSERT INTO company_welfare (welfare_id, welfare_content, company_id,
+                                     is_select, welfare_active, update_time
+        )
+        VALUES (#{welfareId,jdbcType=INTEGER}, #{welfareContent,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER},
+                #{isSelect,jdbcType=BIT}, #{welfareActive,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
     <insert id="insertRequired" parameterType="com.mehome.domain.CompanyWelfare" useGeneratedKeys="true"
             keyProperty="welfareId">
         insert into company_welfare
@@ -146,12 +160,12 @@
         </foreach>
     </update>
     <update id="update" parameterType="com.mehome.domain.CompanyWelfare">
-    update company_welfare
-    set welfare_content = #{welfareContent,jdbcType=VARCHAR},
-      company_id = #{companyId,jdbcType=INTEGER},
-      is_select = #{isSelect,jdbcType=BIT},
-      welfare_active = #{welfareActive,jdbcType=BIT},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where welfare_id = #{welfareId,jdbcType=INTEGER}
-  </update>
+        UPDATE company_welfare
+        SET welfare_content = #{welfareContent,jdbcType=VARCHAR},
+            company_id      = #{companyId,jdbcType=INTEGER},
+            is_select       = #{isSelect,jdbcType=BIT},
+            welfare_active  = #{welfareActive,jdbcType=BIT},
+            update_time     = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE welfare_id = #{welfareId,jdbcType=INTEGER}
+    </update>
 </mapper>

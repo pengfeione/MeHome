@@ -27,6 +27,8 @@ public class CompanyList {
 
     private Boolean companyActive;
 
+    private Boolean hasCompanyWelfare;
+
     private Date updateTime;
 
     private String position;
@@ -34,6 +36,14 @@ public class CompanyList {
     private String adminAccount;
 
     private String password;
+
+    public Boolean getHasCompanyWelfare() {
+        return hasCompanyWelfare;
+    }
+
+    public void setHasCompanyWelfare(Boolean hasCompanyWelfare) {
+        this.hasCompanyWelfare = hasCompanyWelfare;
+    }
 
     public String getPassword() {
         return password;
