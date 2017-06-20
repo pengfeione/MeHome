@@ -22,9 +22,29 @@ public class SupplierList {
 
     private BigDecimal depositPercent;
 
+    private String account;
+
+    private String password;
+
     private Date createTime;
 
     private Date updateTime;
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Integer getSupplierId() {
         return supplierId;
@@ -127,16 +147,16 @@ public class SupplierList {
         }
         SupplierList other = (SupplierList) that;
         return (this.getSupplierId() == null ? other.getSupplierId() == null : this.getSupplierId().equals(other.getSupplierId()))
-            && (this.getSupplierName() == null ? other.getSupplierName() == null : this.getSupplierName().equals(other.getSupplierName()))
-            && (this.getSupplierPhone() == null ? other.getSupplierPhone() == null : this.getSupplierPhone().equals(other.getSupplierPhone()))
-            && (this.getRecipientType() == null ? other.getRecipientType() == null : this.getRecipientType().equals(other.getRecipientType()))
-            && (this.getRecipientAccount() == null ? other.getRecipientAccount() == null : this.getRecipientAccount().equals(other.getRecipientAccount()))
-            && (this.getRentOnline() == null ? other.getRentOnline() == null : this.getRentOnline().equals(other.getRentOnline()))
-            && (this.getRentPercent() == null ? other.getRentPercent() == null : this.getRentPercent().equals(other.getRentPercent()))
-            && (this.getDepositOnline() == null ? other.getDepositOnline() == null : this.getDepositOnline().equals(other.getDepositOnline()))
-            && (this.getDepositPercent() == null ? other.getDepositPercent() == null : this.getDepositPercent().equals(other.getDepositPercent()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+                && (this.getSupplierName() == null ? other.getSupplierName() == null : this.getSupplierName().equals(other.getSupplierName()))
+                && (this.getSupplierPhone() == null ? other.getSupplierPhone() == null : this.getSupplierPhone().equals(other.getSupplierPhone()))
+                && (this.getRecipientType() == null ? other.getRecipientType() == null : this.getRecipientType().equals(other.getRecipientType()))
+                && (this.getRecipientAccount() == null ? other.getRecipientAccount() == null : this.getRecipientAccount().equals(other.getRecipientAccount()))
+                && (this.getRentOnline() == null ? other.getRentOnline() == null : this.getRentOnline().equals(other.getRentOnline()))
+                && (this.getRentPercent() == null ? other.getRentPercent() == null : this.getRentPercent().equals(other.getRentPercent()))
+                && (this.getDepositOnline() == null ? other.getDepositOnline() == null : this.getDepositOnline().equals(other.getDepositOnline()))
+                && (this.getDepositPercent() == null ? other.getDepositPercent() == null : this.getDepositPercent().equals(other.getDepositPercent()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override

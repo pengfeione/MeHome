@@ -3,6 +3,8 @@ package com.mehome.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mehome.dao.AuthorizeAdminDao;
+import com.mehome.domain.AuthorizeAdmin;
 import com.mehome.enumDTO.PayTypeEnum;
 import com.mehome.exceptions.InfoException;
 import com.mehome.requestDTO.SupplierRequestDTO;
@@ -22,6 +24,8 @@ public class SupplierServiceImpl implements ISupplierService {
     private Logger log = Logger.getLogger(this.getClass());
     @Autowired
     private SupplierListDao supplierListDAO;
+    @Autowired
+    private AuthorizeAdminDao authorizeAdminDao;
 
     @Override
     public List<SupplierBean> getListByCondition(SupplierBean bean) {
@@ -135,6 +139,17 @@ public class SupplierServiceImpl implements ISupplierService {
 
     @Override
     public List<SupplierList> selectByCondition(SupplierRequestDTO supplier) {
+        List<SupplierList> supplierLists = supplierListDAO.selectByCondition(supplier);
+        for (SupplierList supllier : supplierLists) {
+            AuthorizeAdmin authorizeAdmin = authorizeAdminDao.selectBySupplierId(supllier.getSupplierId());
+            if (null != authorizeAdmin) {
+                supllier.setAccount(authorizeAdmin.getName());
+                supllier.setPassword(authorizeAdmin.getPassword());
+            } else {
+                supllier.setAccount("");
+                supllier.setPassword("");
+            }
+        }
         return supplierListDAO.selectByCondition(supplier);
     }
 

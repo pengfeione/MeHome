@@ -9,12 +9,13 @@
         <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="role" property="role" jdbcType="VARCHAR"/>
         <result column="company_id" property="companyId" jdbcType="INTEGER"/>
+        <result column="supplier_id" property="supplierId" jdbcType="INTEGER"/>
         <result column="create_by" property="createBy" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-    admin_id, avatar, nick_name, name, password, role, company_id, create_by, create_time
-  </sql>
+        admin_id, avatar, nick_name, name, password, role, company_id, supplier_id, create_by, create_time
+    </sql>
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -26,6 +27,13 @@
         <include refid="Base_Column_List"/>
         from authorize_admin
         where company_id = #{companyId,jdbcType=INTEGER}
+        limit 1
+    </select>
+    <select id="selectBySupplierId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from authorize_admin
+        where supplier_id = #{supplierId,jdbcType=INTEGER}
         limit 1
     </select>
     <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -42,9 +50,9 @@
         and password=#{password,jdbcType=VARCHAR}
     </select>
     <delete id="delete" parameterType="java.lang.Integer">
-    delete from authorize_admin
-    where admin_id = #{adminId,jdbcType=INTEGER}
-  </delete>
+        DELETE FROM authorize_admin
+        WHERE admin_id = #{adminId,jdbcType=INTEGER}
+    </delete>
     <insert id="insertRequired" parameterType="com.mehome.domain.AuthorizeAdmin" useGeneratedKeys="true"
             keyProperty="adminId">
         insert into authorize_admin
@@ -66,6 +74,9 @@
             </if>
             <if test="companyId != null">
                 company_id,
+            </if>
+            <if test="supplierId != null">
+                supplier_id,
             </if>
             <if test="createBy != null">
                 create_by,
@@ -89,6 +100,9 @@
             </if>
             <if test="companyId != null">
                 #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="supplierId != null">
+                #{supplierId,jdbcType=INTEGER},
             </if>
             <if test="createBy != null">
                 #{createBy,jdbcType=INTEGER},
@@ -116,6 +130,9 @@
             <if test="companyId != null">
                 company_id = #{companyId,jdbcType=INTEGER},
             </if>
+            <if test="supplierId != null">
+                supplier_id= #{supplierId,jdbcType=INTEGER},
+            </if>
             <if test="createBy != null">
                 create_by = #{createBy,jdbcType=INTEGER},
             </if>
@@ -126,15 +143,16 @@
         where admin_id = #{adminId,jdbcType=INTEGER}
     </update>
     <update id="update" parameterType="com.mehome.domain.AuthorizeAdmin">
-    update authorize_admin
-    set avatar = #{avatar,jdbcType=VARCHAR},
-      nick_name = #{nickName,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      password = password(#{password,jdbcType=VARCHAR}),
-      role = #{role,jdbcType=VARCHAR},
-      company_id = #{companyId,jdbcType=INTEGER},
-      create_by = #{createBy,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where admin_id = #{adminId,jdbcType=INTEGER}
-  </update>
+        UPDATE authorize_admin
+        SET avatar      = #{avatar,jdbcType=VARCHAR},
+            nick_name   = #{nickName,jdbcType=VARCHAR},
+            name        = #{name,jdbcType=VARCHAR},
+            password    = password(#{password,jdbcType=VARCHAR}),
+            role        = #{role,jdbcType=VARCHAR},
+            company_id  = #{companyId,jdbcType=INTEGER},
+            supplier_id = #{supplierId,jdbcType=INTEGER},
+            create_by   = #{createBy,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        WHERE admin_id = #{adminId,jdbcType=INTEGER}
+    </update>
 </mapper>
