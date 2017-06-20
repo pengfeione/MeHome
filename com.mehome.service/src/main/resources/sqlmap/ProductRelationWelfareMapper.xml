@@ -49,11 +49,10 @@
              ) product
             LEFT JOIN company_welfare ON product.welfare_id = company_welfare.welfare_id
     </select>
-    <select id="selectByProductId" resultMap="BaseResultMap" parameterType="map">
-        select
-        <include refid="Base_Column_List"/>
-        from product_relation_welfare
-        where product_id = #{productId,jdbcType=INTEGER}
+    <select id="selectByProductId" resultType="java.lang.Integer" parameterType="map">
+        SELECT welfare_id
+        FROM product_relation_welfare
+        WHERE product_id = #{productId,jdbcType=INTEGER}
     </select>
     <delete id="delete" parameterType="map">
         DELETE FROM product_relation_welfare

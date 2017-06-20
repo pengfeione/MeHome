@@ -152,6 +152,22 @@ public class UserController {
     }
 
     /**
+     * 绑定手机号
+     *
+     * @param authCode
+     * @return
+     */
+    @GetMapping("/judge_auth_code")
+    @ResponseBody
+    public ResponseEntity<Result> judge_auth_code(@RequestParam("authCode") String authCode) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(userInfoService.selectByAuthCode(authCode)));
+    }
+
+    /**
      * 获取用户信息
      *
      * @param userInfo

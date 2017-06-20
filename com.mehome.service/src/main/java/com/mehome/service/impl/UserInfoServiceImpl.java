@@ -69,6 +69,12 @@ public class UserInfoServiceImpl implements IUserInfoService {
     }
 
     @Override
+    public boolean selectByAuthCode(String authCode) {
+        ;
+        return companyDao.selectByAuthCode(authCode) == null ? false : true;
+    }
+
+    @Override
     public int mobile_register(UserInfo userInfo) {
         AssertUtils.isNotNull(userInfo.getMobile(), "手机号不能为空！");
         AssertUtils.isNotNull(userInfo.getPassword(), "密码不能为空！");

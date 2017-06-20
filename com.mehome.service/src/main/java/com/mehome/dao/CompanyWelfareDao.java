@@ -18,6 +18,9 @@ public interface CompanyWelfareDao {
 
     List<String> selectByIds(@Param("welfareIds") List<String> welfareIds);
 
+
+    String selectWelfareByCondition(@Param("welfareIds") List<Integer> welfareIds, @Param("companyId") Integer companyId);
+
     List<CompanyWelfare> selectByCompanyId(Integer companyId);
 
     /**
