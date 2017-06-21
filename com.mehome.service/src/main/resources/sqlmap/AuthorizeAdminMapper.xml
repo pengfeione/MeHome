@@ -92,8 +92,11 @@
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
             </if>
-            <if test="password != null">
+            <if test="password != null and role !='supplier'">
                 password(#{password,jdbcType=VARCHAR}),
+            </if>
+            <if test="password != null and role =='supplier'">
+                #{password,jdbcType=VARCHAR},
             </if>
             <if test="role != null">
                 #{role,jdbcType=VARCHAR},
@@ -121,8 +124,11 @@
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
-            <if test="password != null">
-                password =password(#{password,jdbcType=VARCHAR}),
+            <if test="password != null and role !='supplier'">
+                password=password(#{password,jdbcType=VARCHAR}),
+            </if>
+            <if test="password != null and role =='supplier'">
+                password= #{password,jdbcType=VARCHAR},
             </if>
             <if test="role != null">
                 role = #{role,jdbcType=VARCHAR},

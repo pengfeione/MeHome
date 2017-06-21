@@ -12,7 +12,7 @@
         <result column="listpic" property="listpic" jdbcType="VARCHAR"/>
         <result column="detailpic" property="detailpic" jdbcType="VARCHAR"/>
         <result column="position" property="position" jdbcType="VARCHAR"/>
-        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="sort" property="sort" jdbcType="REAL"/>
         <result column="room_type" property="roomType" jdbcType="INTEGER"/>
         <result column="basic_ids" property="basicIds" jdbcType="VARCHAR"/>
         <result column="room_type_desc" property="roomTypeDesc" jdbcType="VARCHAR"/>
@@ -56,7 +56,7 @@
                                              #{detail,jdbcType=VARCHAR},
                                              #{address,jdbcType=VARCHAR}, #{listpic,jdbcType=VARCHAR},
                                              #{detailpic,jdbcType=VARCHAR},
-                                             #{position,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
+                                             #{position,jdbcType=VARCHAR}, #{sort,jdbcType=REAL},
             #{basicIds,jdbcType=VARCHAR}, #{roomType,jdbcType=INTEGER},
             #{roomTypeDesc,jdbcType=VARCHAR}, #{roomArea,jdbcType=DOUBLE}, #{roomRent,jdbcType=INTEGER},
             #{payType,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP},
@@ -172,7 +172,7 @@
                 #{position,jdbcType=VARCHAR},
             </if>
             <if test="sort != null">
-                #{sort,jdbcType=INTEGER},
+                #{sort,jdbcType=REAL},
             </if>
             <if test="basicIds != null">
                 #{basicIds,jdbcType=VARCHAR},
@@ -246,7 +246,7 @@
                 position = #{position,jdbcType=VARCHAR},
             </if>
             <if test="sort != null">
-                sort = #{sort,jdbcType=INTEGER},
+                sort = #{sort,jdbcType=REAL},
             </if>
             <if test="basicIds != null">
                 basic_ids = #{basicIds,jdbcType=VARCHAR},
@@ -301,7 +301,7 @@
             listpic        = #{listpic,jdbcType=VARCHAR},
             detailpic      = #{detailpic,jdbcType=VARCHAR},
             position       = #{position,jdbcType=VARCHAR},
-            sort           = #{sort,jdbcType=INTEGER},
+            sort           = #{sort,jdbcType=REAL},
             basic_ids      = #{basicIds,jdbcType=VARCHAR},
             room_type      = #{roomType,jdbcType=INTEGER},
             room_type_desc = #{roomTypeDesc,jdbcType=VARCHAR},
@@ -346,7 +346,7 @@
         <if test="productId != null">
             AND product_id = #{productId,jdbcType=INTEGER}
         </if>
-        ORDER BY create_time DESC
+        ORDER BY sort DESC
         limit #{pageNow},#{pageSize}
     </select>
     <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.HouseBean" resultType="java.lang.Long">

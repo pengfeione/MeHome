@@ -1,9 +1,12 @@
 package com.mehome.controller;
 
+import com.mehome.domain.HouseRentPiece;
 import com.mehome.domain.SupplierList;
 import com.mehome.enumDTO.RoleEnum;
+import com.mehome.requestDTO.HouseRentPieceDTO;
 import com.mehome.requestDTO.SupplierBean;
 import com.mehome.requestDTO.SupplierRequestDTO;
+import com.mehome.service.iface.IHouseRentPieceService;
 import com.mehome.service.iface.ISupplierService;
 import com.mehome.utils.Permits;
 import com.mehome.utils.Result;
@@ -19,27 +22,27 @@ public class HousePieceController {
     @Value("${cros}")
     private String cros;
     @Autowired
-    private ISupplierService supplierSerive;
+    private IHouseRentPieceService pieceService;
 
     //根据订单号查询
     @PostMapping("/list")
     @ResponseBody
-    public ResponseEntity<Result> list(@RequestBody SupplierBean bean) {
+    public ResponseEntity<Result> list(@RequestBody HouseRentPieceDTO bean) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(supplierSerive.getListByCondition(bean), supplierSerive.getSizeByCondition(bean)));
+                .body(Result.build().content(pieceService.listByCondition(bean), pieceService.countByCondition(bean)));
     }
 
     @PostMapping("/update")
     @ResponseBody
-    public ResponseEntity<Result> update(@RequestBody SupplierBean bean) {
+    public ResponseEntity<Result> update(@RequestBody HouseRentPiece bean) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(supplierSerive.updateSupplier(bean)));
+                .body(Result.build().content(pieceService.updateRequired(bean)));
     }
 
     /**
@@ -51,11 +54,11 @@ public class HousePieceController {
     @Permits(role = {RoleEnum.SUPPLIER})
     @PostMapping("/save")
     @ResponseBody
-    public ResponseEntity<Result> save(@RequestBody SupplierList bean) {
+    public ResponseEntity<Result> save(@RequestBody HouseRentPiece bean) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(supplierSerive.insertRequired(bean)));
+                .body(Result.build().content(pieceService.insertRequired(bean)));
     }
 }

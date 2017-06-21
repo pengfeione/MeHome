@@ -24,6 +24,16 @@ public class AdministratorBean {
 
     private int companyId;
 
+    private int supplierId;
+
+
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
+    }
 
     public int getCompanyId() {
         return companyId;
@@ -44,6 +54,7 @@ public class AdministratorBean {
             this.nickName = admin.getNickName();
             this.role = admin.getRole();
             this.companyId = admin.getCompanyId();
+            this.supplierId = admin.getSupplierId();
         }
     }
 

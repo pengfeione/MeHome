@@ -6,18 +6,21 @@ import java.util.List;
 import com.mehome.dao.AuthorizeAdminDao;
 import com.mehome.domain.AuthorizeAdmin;
 import com.mehome.enumDTO.PayTypeEnum;
+import com.mehome.enumDTO.RoleEnum;
 import com.mehome.exceptions.InfoException;
 import com.mehome.requestDTO.SupplierRequestDTO;
 import com.mehome.utils.AssertUtils;
 import com.mehome.utils.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mehome.dao.SupplierListDao;
 import com.mehome.domain.SupplierList;
 import com.mehome.requestDTO.SupplierBean;
 import com.mehome.service.iface.ISupplierService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("ISupplierSerive")
 public class SupplierServiceImpl implements ISupplierService {
@@ -26,15 +29,17 @@ public class SupplierServiceImpl implements ISupplierService {
     private SupplierListDao supplierListDAO;
     @Autowired
     private AuthorizeAdminDao authorizeAdminDao;
+    @Value("${default_normal_avatar}")
+    private String defaultAvatar;
 
     @Override
+    @Deprecated
     public List<SupplierBean> getListByCondition(SupplierBean bean) {
         List<SupplierList> supplierList = supplierListDAO.getListByCondition(bean);
         List<SupplierBean> supplierBeanList = new ArrayList<SupplierBean>();
         if (supplierList != null && supplierList.size() > 0) {
             for (SupplierList supplier : supplierList) {
-                SupplierBean newBean = new SupplierBean(supplier);
-                supplierBeanList.add(newBean);
+                supplierBeanList.add(new SupplierBean(supplier));
             }
         }
         return supplierBeanList;
@@ -52,9 +57,12 @@ public class SupplierServiceImpl implements ISupplierService {
         return supplier.getSupplierId() == null ? "" : supplier.getSupplierId().toString();
     }
 
-    @Override
+    @Deprecated
     public Long getSizeByCondition(SupplierBean bean) {
         Long size = supplierListDAO.getSizeByCondition(bean);
+        if (null == size) {
+            return 0l;
+        }
         return size;
     }
 
@@ -98,6 +106,30 @@ public class SupplierServiceImpl implements ISupplierService {
         }
         record.setCreateTime(null);
         record.setUpdateTime(null);
+
+        if (StringUtils.isNotNull(record.getAccount())) {
+            if (StringUtils.isNull(record.getPassword())) {
+                throw new InfoException("管理员密码不能为空！");
+            }
+            AuthorizeAdmin oldAdmin = authorizeAdminDao.selectBySupplierId(record.getSupplierId());
+            if (null == oldAdmin) {
+                AuthorizeAdmin authorizeAdmin = new AuthorizeAdmin();
+                authorizeAdmin.setAvatar(defaultAvatar);
+                authorizeAdmin.setSupplierId(record.getSupplierId());
+                authorizeAdmin.setNickName(record.getSupplierName());
+                authorizeAdmin.setName(record.getAccount());
+                authorizeAdmin.setPassword(record.getPassword());
+                authorizeAdmin.setRole(RoleEnum.SUPPLIER.getRole());
+                authorizeAdminDao.insertRequired(authorizeAdmin);
+            } else {
+                if (oldAdmin.getName().equals(record.getAccount()) && oldAdmin.getPassword().equals(record.getPassword())) {
+                } else {
+                    oldAdmin.setName(record.getAccount());
+                    oldAdmin.setPassword(record.getPassword());
+                    authorizeAdminDao.updateRequired(oldAdmin);
+                }
+            }
+        }
         return supplierListDAO.updateRequired(record);
     }
 
@@ -107,7 +139,7 @@ public class SupplierServiceImpl implements ISupplierService {
         return supplierListDAO.selectById(supplierListId);
     }
 
-    @Override
+    @Transactional
     public int insertRequired(SupplierList record) {
         AssertUtils.isNotNull(record.getSupplierPhone(), "供应商电话不能为空！");
         AssertUtils.isNotNull(record.getRecipientType(), "收款方式未知！");
@@ -119,7 +151,6 @@ public class SupplierServiceImpl implements ISupplierService {
                 && StringUtils.isNull(record.getRecipientAccount())) {
             throw new InfoException("非现金支付方式账户不能为空！");
         }
-
         if (null != record.getRentOnline()
                 && record.getRentOnline()
                 && StringUtils.isNull(record.getRecipientAccount())) {
@@ -134,6 +165,19 @@ public class SupplierServiceImpl implements ISupplierService {
         record.setCreateTime(null);
         record.setUpdateTime(null);
         supplierListDAO.insertRequired(record);
+        if (StringUtils.isNotNull(record.getAccount())) {
+            if (StringUtils.isNull(record.getPassword())) {
+                throw new InfoException("管理员密码不能为空！");
+            }
+            AuthorizeAdmin authorizeAdmin = new AuthorizeAdmin();
+            authorizeAdmin.setAvatar(defaultAvatar);
+            authorizeAdmin.setSupplierId(record.getSupplierId());
+            authorizeAdmin.setNickName(record.getSupplierName());
+            authorizeAdmin.setName(record.getAccount());
+            authorizeAdmin.setPassword(record.getPassword());
+            authorizeAdmin.setRole(RoleEnum.SUPPLIER.getRole());
+            authorizeAdminDao.insertRequired(authorizeAdmin);
+        }
         return record.getSupplierId();
     }
 
@@ -150,7 +194,7 @@ public class SupplierServiceImpl implements ISupplierService {
                 supllier.setPassword("");
             }
         }
-        return supplierListDAO.selectByCondition(supplier);
+        return supplierLists;
     }
 
     @Override

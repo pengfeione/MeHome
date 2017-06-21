@@ -3,7 +3,9 @@ package com.mehome.service.impl;
 import java.util.*;
 
 import com.mehome.dao.BasicFacilitiesDao;
+import com.mehome.dao.ProductListDao;
 import com.mehome.domain.BasicFacilities;
+import com.mehome.domain.ProductList;
 import com.mehome.utils.AssertUtils;
 import com.mehome.utils.StringUtils;
 import org.apache.log4j.Logger;
@@ -22,6 +24,8 @@ public class HouseServiceImpl implements IHouseService {
     private HouseResourceDao houseResourceDAO;
     @Autowired
     private BasicFacilitiesDao basicFacilitiesDao;
+    @Autowired
+    private ProductListDao productListDao;
 
     @Override
     public List<HouseBean> getListByCondition(HouseBean bean) {
@@ -73,6 +77,10 @@ public class HouseServiceImpl implements IHouseService {
 
     @Override
     public String saveHouse(HouseResource bean) {
+        AssertUtils.isNotNull(bean.getProductId(), "产品标识未知！");
+        ProductList productList = productListDao.selectById(bean.getProductId());
+        AssertUtils.isNotNull(productList, "选择的产品非法！");
+        bean.setSupplierId(productList.getSupplierId());
         houseResourceDAO.insertRequired(bean);
         return bean.getHouseId() + "";
     }
