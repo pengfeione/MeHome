@@ -19,7 +19,15 @@
 <body>
     
     <div class="wrap">
-        <section>
+    	 <!-- header -->
+        <div class="header">
+        	<div class="headerCont">
+            	<a class="btnBack" onclick="history.back();">&lt;</a>
+            	<span>注册</span>
+            </div>
+        </div>
+        
+        <section class="headerTop">
         	<div class="loginList register">
             	<ul>
                 	<li><span>手机号</span><input type="text" value="" class="text" id="mobile" /></li>
@@ -31,7 +39,7 @@
                     </li>
                     <li class="setPwd"><span>设置密码</span>
                     	<input type="password" placeholder="6位数字" class="text" id="pwd"/>
-                    	<a class="btnShowPwd"></a>
+                    	<a class="btnHidePwd"></a>
                     </li>
                 </ul>
                 <a class="btn btnRegister" onclick="userRegister();">注册</a>
@@ -172,7 +180,7 @@
 			}
 			
 			var url = util.baseUrl + '/usr/mobile_register';
-			var param ='{"mobile": '+mobile+',"password":'+pwd+',"verifyCode":"'+code+'"}';
+			var param ='{"mobile": '+mobile+',"password":"'+pwd+'","verifyCode":"'+code+'"}';
 			var contentType = "application/json";
 			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 				util.logResult(data); 

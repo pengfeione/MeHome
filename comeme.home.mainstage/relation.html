@@ -190,6 +190,7 @@
 					var userId = data.result;
 					$('#div_register_res').fadeIn();
 					setTimeout( function(){$( '#div_register_res' ).fadeOut();
+						flushUerInfo();
 						window.history.back(); 
 						}, ( 1 * 1000 ) );
 				}else{
@@ -197,6 +198,36 @@
 					$('#div_register_fail').fadeIn();
 					setTimeout( function(){$( '#div_register_fail' ).fadeOut();}, ( 1 * 1000 ) );
 					isSubmit = 0;
+				}
+				
+			});
+		}
+	}
+	
+	//刷新个人信息
+	function flushUerInfo(){
+		var userInfo = util.getCookie("userInfo");
+		if(userInfo != null && userInfo != ''){
+			var userInfoJson = eval('(' + userInfo + ')');
+			util.logResult(userInfoJson);
+			var userId = userInfoJson.userId;
+			var updateTime = userInfoJson.updateTime;
+			var url = util.baseUrl + '/usr/get'; 
+			var param ='{"userId": '+userId+'}';
+			var contentType = "application/json";
+			util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+				util.logResult(data); 
+				var result = data.result;
+				if(result == null || result == undefined){
+					util.setCookie("userInfo", '');
+				}
+				var newUpdateTime = result.updateTime;
+				util.logResult(newUpdateTime+' '+updateTime);
+				if(newUpdateTime != updateTime){
+					userInfoJson.avatar = result.avatar;
+					userInfoJson.updateTime = newUpdateTime;
+					userInfoJson.mobile = result.mobile;
+				 	util.setCookie("userInfo", JSON.stringify(userInfoJson));
 				}
 				
 			});

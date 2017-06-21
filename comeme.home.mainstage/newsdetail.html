@@ -11,19 +11,20 @@
 <link rel="stylesheet" type="text/css" href="css/base.css" />
 <link rel="stylesheet" type="text/css" href="css/common.css" />
 <link rel="stylesheet" type="text/css" href="css/news.css" />
+<link rel="stylesheet" type="text/css" href="css/index.css" />
 <script src="js/jquery.min.js"></script>
 <script src="js/util.js"></script>
 </head>
 <body>
      
-    <div class="wrap headerTop">
+    <div class="wrap">
 		<!-- header -->
-        <div class="header">
+        <!--<div class="header">
         	<div class="headerCont">
         		<a class="btnBack" onclick="history.back();">&lt;</a>
             	<span id="span_news_title"></span>
             </div>
-        </div>
+        </div>-->
         <header id="head_info">
         	<a  onclick="history.back();" class="btnBack2"></a>
         </header>
@@ -68,7 +69,19 @@
                 </ul>
             </div>	
         </section>
+        
+         <div class="commonFooter">
+	    	<div class="commonFCont">
+	            <input type="text" placeholder="发表评论..." class="text" id="formatContent" onclick="clearContent();"/>
+	            <a class="btnSend" onclick="submitComment();">发表</a>
+	        </div>
+	    </div>
          
+    </div>
+    <!-- 评价成功 -->
+    <div class="pop popEva" id="div_popSuccess">
+    	<em class="iconSuccess"></em>
+    	<span id="span_commonet">评价成功</span>
     </div>
     
 </body>
@@ -138,6 +151,7 @@
 			userIds = userIds.substring(0,userIds.length-1)
 			util.logResult(userIds);
 			userInfos = getUserBatch(userIds);
+			$('#ul_reply').empty();
 			$.each(data.result,function(index,replyInfo){
 				var replier = replyInfo.replier;
             	var userInfo = userInfos[replier];
@@ -169,6 +183,63 @@
 			result = dataJson.result;
 		});
 		return result;
+	}
+	
+	//清除文本框提示信息
+	function clearContent(){
+		var content = $('#formatContent').val();
+		if(content == '发表评论...'){
+			$('#formatContent').val('');
+			$('#formatContent').css('color','black');
+		}
+	}
+	
+	//发布评论
+	function submitComment(){
+		var tid = util.getUrlParam("tid");
+		var userInfo = util.getCookie("userInfo");
+		if(userInfo == null || userInfo == ''){
+			$('#span_commonet').html('请先登录!');
+			$( '#div_popSuccess' ).fadeIn();
+			setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+			return false;
+		}
+		var userInfoJson = eval('(' + userInfo + ')');
+		var mobile = userInfoJson.mobile;
+		if(mobile == null || mobile == ''){
+			$('#span_commonet').html('请绑定手机号!');
+			$( '#div_popSuccess' ).fadeIn();
+			setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+				window.location.href='relation.html';
+			}, ( 1* 1000 ) );
+			return false;
+		}
+		var userId = userInfoJson.userId;
+		var content = $('#formatContent').val();
+		if(content == '发表评论...'){
+			content = '';
+		}
+		var url = util.baseUrl + '/reply/add';
+		var param ='{"tid":"'+tid+'","replier":'+userId+',"formatContent":"'+content
+				  +'","platform":3}';
+		var contentType = "application/json";
+		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+			util.logResult(data);
+			var code = data.code;
+			if(code == 0){
+				$('#div_popSuccess').fadeIn();
+				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+					}, ( 1 * 1000 ) );
+				$('#formatContent').val('发表评论...');
+			    $('#formatContent').css('color','gray');
+			    loadReplyList();
+			}else{
+				$('#formatContent').html('评论失败!');
+				$('#formatContent').fadeIn();
+				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+					}, ( 1 * 1000 ) );
+			}
+		});
 	}
 </script>
 </html>

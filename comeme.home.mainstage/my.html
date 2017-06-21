@@ -33,12 +33,12 @@
                     <!--<li><a onclick="editUserInfo();"><em class="iconEdit"></em>编辑个人信息<i class="iconMore"></i></a></li>-->
                      <li>
                      	<a onclick="enterprise();">
-                     		<em class="iconEdit"></em>企业用户认证<em class="rz">未认证，点我认证</em>
+                     		<em class="iconEdit"></em>企业用户认证<em class="rz" id="em_auth">未认证，点我认证</em>
                      		<i class="iconMore"></i>
                      	</a>
                      </li>
                 </ul>
-                <a class="btnLoginout" onclick="logOut();">退出登录</a>
+                <a class="btnLoginout" onclick="logOut();" id="a_logoOut">退出登录</a>
             </div>
         </section>
         
@@ -64,6 +64,7 @@
 		util = new Util();
 		flushUerInfo();
 		loadUserInfo();
+		hideLogout();
 	});
 	
 	//刷新个人信息
@@ -71,6 +72,15 @@
 		var userInfo = util.getCookie("userInfo");
 		if(userInfo != null && userInfo != ''){
 			var userInfoJson = eval('(' + userInfo + ')');
+			var mobile = userInfoJson.mobile;
+			if(mobile == null || mobile == ''){
+				$('#registerFail').html('请绑定手机号!');
+				$( '#div_register_fail' ).fadeIn();
+				setTimeout( function(){$( '#div_register_fail' ).fadeOut();
+					window.location.href='relation.html';
+				}, ( 1* 1000 ) );
+				return false;
+			}
 			util.logResult(userInfoJson.userId);
 			var userId = userInfoJson.userId;
 			var url = util.baseUrl + '/usr/get'; 
@@ -106,6 +116,15 @@
 		if(companyStatus == 1){
 			$('#span_company').show();
 		}
+		if(companyStatus == 0){
+			$('#em_auth').html('未认证，点我认证');
+		}else if(companyStatus == 1){
+			$('#em_auth').html('已认证');
+		}else if(companyStatus == 2){
+			$('#em_auth').html('待审核');
+		}else if(companyStatus == 3){
+			$('#em_auth').html('审核不通过');
+		}
 	}
 	
 	//我的订单
@@ -132,6 +151,14 @@
 	function logOut(){
 		util.setCookie("userInfo", '');
 		window.location.href='login.html';
+	}
+	
+	//隐藏退出登录
+	function hideLogout(){
+		var ua = navigator.userAgent.toLowerCase();
+		if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			 $('#a_logoOut').hide();
+		}
 	}
 	
 </script>

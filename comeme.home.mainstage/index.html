@@ -19,44 +19,55 @@
 </head>
 <body>
     
-    <div class="wrap headerTop">
-    
-   		<!-- header -->
-        <div class="header" >
-        	<div class="headerCont">
-            	<span >首页</span>
-            </div>
-        </div>
+    <div class="wrap headerTop" id="div_header_top">
+    	
     	<!-- header -->
-    	<header class="bannerIndex">
-            <div class="swiper-container">
-                <div class="swiper-wrapper" id="div_swiper">
-                </div>
-                 <!-- Add Pagination修改 -->
-                <div class="swiper-pagination"></div>
+        <div class="header" id="div_header">
+        	<div class="headerCont">
+            	<span>Me+发现</span>
             </div>
-        </header>
-        
-        <!-- search -->
-        <div class="search" id="search">
-        	<em class="placeholder">快速选择区域( 仅限上海）</em>
-        	<section></section>
-        	<em class="iconSearch"></em>
         </div>
         
-        <!-- section -->
-        <section class="section">
-        	<div class="houseList">
-        		<label id="lab_remind" style="display: none;color: gray;margin-top: 10px;margin-left: 10px;">该区域暂无房源</label>
-            	<ul id="ul_product">
-                	<!--<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
-                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
-                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
-                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
-                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>-->
-                </ul>
+        <div id="houseList">
+            <div class="houseContent">
+                <div id="pullDown">
+                    <span class="pullDownIcon"></span><span class="pullDownLabel">Pull up to refresh</span>
+                </div>
+            	<!-- header -->
+            	<header class="bannerIndex">
+		            <div class="swiper-container">
+		                <div class="swiper-wrapper" id="div_swiper">
+		                </div>
+		                 <!-- Add Pagination修改 -->
+		                <div class="swiper-pagination"></div>
+		            </div>
+		        </header>
+
+				<!-- search -->
+		        <div class="search" id="search">
+		        	<em class="placeholder">快速选择区域( 仅限上海）</em>
+		        	<section></section>
+		        	<em class="iconSearch"></em>
+		        </div>
+		        
+                <!-- section -->
+		        <section class="section">
+		        	<div class="houseList">
+		        		<label id="lab_remind" style="display: none;color: gray;margin-top: 10px;margin-left: 10px;">该区域暂无房源</label>
+		            	<ul id="ul_product">
+		                	<!--<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
+		                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
+		                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
+		                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>
+		                	<li><a href="#"><img src="img/test/test2.jpg" /><h3>Ascott商务服务中心</h3><em></em><span>老牌英伦风格，顶级配置</span></a></li>-->
+		                </ul>
+		                <div id="pullUp">
+		                    <span class="pullUpIcon"></span><span class="pullUpLabel">Pull up to refresh</span>
+		                </div>
+		            </div>
+		        </section>
             </div>
-        </section>
+        </div>
         
         <!-- footer -->
         <div class="fooder">
@@ -69,9 +80,11 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/swiper.min.js"></script>
 <script src="js/iosSelect.js"></script>
+<script src="js/iscroll.js"></script>
 <script src="js/index.js"></script>
 <script type="text/javascript">
 	var util;
+	var indexUtil;
 	var h = $(window).height();
 	$(".wrap").css("height",h);
 	var hasMore=true;
@@ -122,18 +135,27 @@
 		});
 		
 		util = new Util();
-		
+		indexUtil = new Index();
 		//是否微信登录
 		is_weixin();
-		
-		$(window).on('scroll',function(){
-			sTop=$(window).scrollTop();
-			if(sTop>=$(".houseList").get(0).offsetHeight-$(".wrap").height())
-			{
+		//隐藏banner
+		hideBanner();
+		indexUtil.bindUpDownScroll("houseList",$("#pullDown"),$("#pullUp"),
+			function(scroller){
+			},
+			function(scroller){
 				loadProductList(tempPageIndex);
-				tempPageIndex++;
+				scroller.refresh();
 			}
-		});
+		);
+//		$(window).on('scroll',function(){
+//			sTop=$(window).scrollTop();
+//			if(sTop>=$(".houseList").get(0).offsetHeight-$(".wrap").height())
+//			{
+//				loadProductList(tempPageIndex);
+//				tempPageIndex++;
+//			}
+//		});
 	});
 	
 	//加载轮播图片
@@ -183,12 +205,15 @@
 					var html_str = '<li>'
 								 + '	<a href="apartmentdetail.html?productId='+productInfo.productId+'">'
 								 + '		<img src="'+productInfo.listpic+'" />'
+								 + ' 		<i class="houseMask"></i>'
 								 + '		<h3>'+productInfo.productName+'</h3>'
 								 + '		<em></em><span>'+productInfo.productDetail+'</span>'
 								 + ' 	</a>'
 								 + '</li>';
 					$('#ul_product').append(html_str);
-				})
+				});
+				setTimeout( function(){loadLayer();}, ( 1 * 1000 ) );
+				loadLayer();
 			});
 		}
 		
@@ -206,17 +231,29 @@
 			$.each(data.result,function(index,productInfo){
 				var detailpic = productInfo.detailpic;
 				var html_str = '<li>'
-							 + '	<a href="#">'
+							 + '	<a href="apartmentdetail.html?productId='+productInfo.productId+'">'
 							 + '		<img src="'+detailpic[0]+'" />'
+							 + ' 		<i class="houseMask"></i>'
 							 + '		<h3>'+productInfo.productName+'</h3>'
 							 + '		<em></em><span>'+productInfo.productDetail+'</span>'
 							 + ' 	</a>'
 							 + '</li>';
 				$('#ul_product').append(html_str);
 			});
+			loadLayer();
 			if(data.totalCount == 0){
 				$('#lab_remind').show();
 			}
+		});
+	}
+	
+	//加载图层
+	function loadLayer(){
+		$(".houseList ul li").each(function(){
+			var self = $(this);
+			var houseMask = self.find(".houseMask");
+			var houseImg = self.find("img");
+			houseMask.css({"width":($(window).width()-20)+"px","height":houseImg.get(0).offsetHeight+"px"});
 		});
 	}
 	
@@ -255,11 +292,11 @@
 				if(result == null || result == undefined){
 					util.setCookie("userInfo", '');
 				}
-				var newUpdateTime = result.updateTime;
-				util.logResult(newUpdateTime+' '+updateTime);
-				if(newUpdateTime != updateTime){
-					util.setCookie("userInfo", '');
-				}
+//				var newUpdateTime = result.updateTime;
+//				util.logResult(newUpdateTime+' '+updateTime);
+//				if(newUpdateTime != updateTime){
+//					util.setCookie("userInfo", '');
+//				}
 				
 			});
 		}
@@ -296,6 +333,15 @@
 			//刷新个人信息
 			flushUerInfo();
 	 	}
+	}
+	
+	//隐藏退出登录
+	function hideBanner(){
+		var ua = navigator.userAgent.toLowerCase();
+		if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			 $('#div_header').hide();
+			 $('#div_header_top').attr('class','wrap');
+		}
 	}
 </script>
 
