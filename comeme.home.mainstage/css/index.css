@@ -13,14 +13,14 @@ body { background:#f0f0f0; }
 .swiper-container-horizontal > .swiper-pagination .swiper-pagination-bullet { margin:0 4px; vertical-align:middle; width:15px; height:3px; opacity:1; border-radius:0px; background:#ffffff; }
 .swiper-container-horizontal > .swiper-pagination .swiper-pagination-bullet-active { width:15px; height:3px; border:none; background:#28af90; }
 
-
 .houseList          { padding:5px 0 0; overflow:hidden; }
 .houseList li       { margin-top:10px; padding:0 10px; }
-.houseList li a     { position:relative; display:block; }
+.houseList li a     { position:relative; width:100%; display:block; }
 .houseList li a img { width:100%; border-radius:5px; overflow:hidden; box-shadow:3px 3px 5px #ccc; }
 .houseList li h3    { margin-left:-40%; width:80%; height:40px; line-height:40px; text-align:center; font-size:20px; font-weight:normal; overflow:hidden; position:absolute; left:50%; top:28%; z-index:3; color:#fff; }
 .houseList li em    { margin-left:-40%; width:80%; height:1px; display:block; opacity:0.3; background:#fff; position:absolute; left:50%; top:50%; z-index:3; }
 .houseList li span  { margin-left:-40%; width:80%; height:20px; display:block; text-align:center; line-height:20px; font-size:16px; overflow:hidden; position:absolute; left:50%; top:56%; z-index:3; color:#afa8a5;}
+.houseList .houseMask { width:100%; display:block; border-radius:5px; filter:alpha(opacity=60); opacity:0.6; background:#000; position:absolute; left:0; top:0; z-index:2; }
 
 .search             { margin:-25px 10px 0; padding-right:45px; height:50px; border-radius:5px; box-shadow:5px 5px 10px #eee; position:relative; z-index:10; background:#fff; }
 .search .iconSearch { width:45px; height:50px; display:block; background:url(../img/indexSearch.png) no-repeat; background-size:45px 50px; position:absolute; right:0; top:0; }
@@ -57,3 +57,41 @@ body { background:#f0f0f0; }
 .hdTop { margin-top:44px; }
 
 .btnLoginout { margin-top:10px; height:40px; line-height:40px; text-align:center; display:block; background:#fff; color:#ff3636; }
+
+#houseList { position:relative; }
+/*// 下拉更新 /////////////*/
+#pullDown, #pullUp                             { display:none; height:30px; line-height:30px; padding:10px 0; font-weight:bold; font-size:14px; color:#888; }
+#pullDown .pullDownLabel, #pullUp .pullUpLabel { display:none; }
+#pullDown .pullDownIcon, #pullUp .pullUpIcon   { margin:0 auto; display:block; width:30px; height:30px; background:url(../img/pull-icon@2x.png) no-repeat; background-size:30px 60px; -webkit-transition-property:-webkit-transform; -webkit-transition-duration:250ms; transition-property:transform; transition-duration:250ms; }
+#pullDown .pullDownIcon                        { -webkit-transform:rotate(0deg) translateZ(0); transform:rotate(0deg) translateZ(0); }
+#pullUp .pullUpIcon                            { -webkit-transform:rotate(-180deg) translateZ(0); transform:rotate(-180deg) translateZ(0); }
+#pullDown.flip .pullDownIcon                   { -webkit-transform:rotate(-180deg) translateZ(0); transform:rotate(-180deg) translateZ(0); }
+#pullUp.flip .pullUpIcon                       { -webkit-transform:rotate(0deg) translateZ(0); transform:rotate(0deg) translateZ(0); }
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon { background-position:0 100%; -webkit-transform:rotate(0deg) translateZ(0); -webkit-transition-duration:0ms; -webkit-animation-name:loading; -webkit-animation-duration:2s; -webkit-animation-iteration-count:infinite; -webkit-animation-timing-function:linear; }
+
+.noHouse { margin-top:20%; }
+.noHouse img { width:100%; display:block; }
+/*
+#pullDown2, #pullUp2                             { display:none; height:40px; line-height:40px; padding:0px; font-weight:bold; font-size:14px; color:#888; }
+#pullDown2 .pullDownLabel, #pullUp2 .pullUpLabel { display:none; }
+#pullDown2 .pullDownIcon, #pullUp2 .pullUpIcon   { margin:0 auto; display:block; width:40px; height:40px; background:url(../img/pull-icon@2x.png) no-repeat; background-size:40px 80px; -webkit-transition-property:-webkit-transform; -webkit-transition-duration:250ms; transition-property:transform; transition-duration:250ms; }
+#pullDown2 .pullDownIcon                         { -webkit-transform:rotate(0deg) translateZ(0); transform:rotate(0deg) translateZ(0); }
+#pullUp2 .pullUpIcon                             { -webkit-transform:rotate(-180deg) translateZ(0); transform:rotate(-180deg) translateZ(0); }
+#pullDown2.flip .pullDownIcon                    { -webkit-transform:rotate(-180deg) translateZ(0); transform:rotate(-180deg) translateZ(0); }
+#pullUp2.flip .pullUpIcon                        { -webkit-transform:rotate(0deg) translateZ(0); transform:rotate(0deg) translateZ(0); }
+#pullDown2.loading .pullDownIcon, #pullUp2.loading .pullUpIcon { background-position:0 100%; -webkit-transform:rotate(0deg) translateZ(0); -webkit-transition-duration:0ms; -webkit-animation-name:loading; -webkit-animation-duration:2s; -webkit-animation-iteration-count:infinite; -webkit-animation-timing-function:linear; }
+#pullUp2 { height:1px; overflow:hidden; }*/
+@keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to   { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to   { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+
+@-moz-keyframes loading {
+	from { -moz-transform:rotate(0deg) translateZ(0); }
+	to   { -moz-transform:rotate(360deg) translateZ(0); }
+}

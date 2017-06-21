@@ -7,7 +7,8 @@
 */
 body { background:#fafafa; }
 
-.iconAct { margin:-2px 5px 0 0; width:40px; height:20px; font-style:normal; font-size:12px; display:inline-block; line-height:20px; vertical-align:middle; border-radius:3px; text-align:center; background:#f69528; color:#fff; }
+.iconAct { margin:-3px 5px 0 0; width:36px; height:18px; display:inline-block; vertical-align:middle; background:url(../img/iconHd.png); background-size:36px 18px; }
+.iconZt  { margin:-3px 5px 0 0; width:36px; height:18px; display:inline-block; vertical-align:middle; background:url(../img/iconZt.png); background-size:36px 18px; }
 
 .news           { overflow:hidden; }
 .newsList       { margin:0 10px; padding-left:110px; height:90px; display:block; position:relative; border-bottom:1px solid #eeeeee; overflow:hidden; }
@@ -25,9 +26,13 @@ body { background:#fafafa; }
 .newsInfo span    { height:30px; font-size:12px; line-height:20px; display:block; overflow:hidden; }
 .newsInfo span em { margin:0 10px; font-style:normal; color:#b5b5b5; }
 .newsInfo span i  { font-style:normal; color:#b5b5b5;}
-.newsContent { margin:0 10px 10px; padding:10px 0; line-height:20px; color:#282828; border-bottom:1px solid #f0f0f0; }
-.newsContent p { margin:10px 0 0; }
+.newsContent      { margin:0 10px 10px; padding:10px 0; line-height:20px; color:#282828; border-bottom:1px solid #f0f0f0; }
+.newsContent p    { margin:10px 0 0; }
 
-.newsCommon { margin:0 10px; }
+.newsCommon    { margin:0 10px; }
 .newsCommon h2 { font-size:16px; }
 
+.commonFooter  { width:100%; height:44px; background:#fff; border-top:1px solid #f2f2f2; position:fixed; left:0; bottom:0; z-index:99; }
+.commonFCont   { margin-top:6px; padding:0 72px 0 10px; height:32px; position:relative; overflow:hidden; }
+.commonFCont .text { width:100%; height:32px; text-indent:10px; border-radius:5px; line-height:32px; background:#eeeeee; }
+.commonFCont .btnSend { width:55px; height:32px; font-size:14px; text-align:center; line-height:32px; color:#fff; display:block; border-radius:5px; background:url(../img/btnSubmit.png) no-repeat; background-size:100% 32px; position:absolute; right:10px; top:0; z-index:3; }
