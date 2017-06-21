@@ -11,7 +11,8 @@ Loginshare.prototype={
 	{
 		var _this = this;
 		_this.setBody();
-		//_this.getYzm($(".btnGetYzm"));
+		_this.getYzm($(".btnGetYzm"));
+		_this.showHidePassword();
 	},
 	//setBody
 	setBody:function()
@@ -47,6 +48,22 @@ Loginshare.prototype={
 				}
 				second--;
 			},1000);
+		});	
+	},
+	showHidePassword:function()
+	{
+		$(".btnHidePwd").bind("click",function()
+		{
+			if(!$(this).hasClass("btnShowPwd"))
+			{
+				$(".setPwd .text").attr({"type":"text"});
+				$(this).addClass("btnShowPwd");
+			}
+			else
+			{
+				$(".setPwd .text").attr({"type":"password"});
+				$(this).removeClass("btnShowPwd");
+			}
 		});	
 	}
 };
