@@ -29,7 +29,7 @@ $("#offline_sure").click(function() {
 	util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
 		$("#order_offline").fadeOut();
 		$("#already_deposit").attr("class", "depositInit");
-		// alert($("#already_deposit").attr("class"));
+		// alert($("#already_deposit").attr("class"));1
 		$("#em").hide();
 	});
 
