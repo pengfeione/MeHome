@@ -160,7 +160,7 @@
 				<span>平台托管押金</span><i>押金可线上支付</i>
 			</div>
 			<div class="btnTg">
-				<a  class="btn" id="next">下一步</a>
+				<a  class="btn" id="next">确认</a>
 			</div>
 		</div>
 
@@ -226,6 +226,7 @@
 								var endTime=order[0].endTime;
 								var discountRent=order[0].discountRent/100;
 								var discountAmount=order[0].discountAmount/100;
+								var deposit=order[0].deposit/100;
 								var depositHtml = '';
 								if (orderStatus == 2) {
 									depositHtml = '<div class="box boxDeposit"><h3>押金托管（支持微信支付）<em id="em" style="display:none;">已托管</em></h3><div class="deposit">平台押金托管（押金：1000元） <em class="depositInit" id="already_deposit"></em></div></div>';
@@ -239,7 +240,7 @@
 								//0预约
 								var sectionType = 'iconXyy';
 								var orderLineType='orderLine orderDatilLine';
-								var rentInfo='<div class="box boxInfo"><h3>租聘信息</h3><ul><li>租借周期:'+startTime+'-'+endTime+'</li><li>押金：1000元</li><li>首付房租：'+discountRent+'元</li><li>首付订单总额：'+discountAmount+'元</li></ul></div>';
+								var rentInfo='<div class="box boxInfo"><h3>租聘信息</h3><ul><li>租借周期:'+startTime+'-'+endTime+'</li><li>押金：'+deposit+'元</li><li>首付房租：'+discountRent+'元</li><li>首付订单总额：'+discountAmount+'元</li></ul></div>';
 								var pj='<div class="btnPj" id="pj"><a onclick="goCommon('+productId+');" class="btn">评价</a></div>';
 								//订单状态: 0预约   1确认中 2已经确认 3入住  4结束 5取消
 								if(orderStatus==0||orderStatus==1){

@@ -1,6 +1,16 @@
 $("#next").click(function() {
-	$("#hold_choose").fadeOut();
-	$("#pay_choose").fadeIn();
+	/*$("#hold_choose").fadeOut();
+	$("#pay_choose").fadeIn();*/
+	var orderId = util.getUrlParam("orderId");
+	var url = util.baseUrl + "/order/updateOrder";
+	var param ='{"orderId":'+orderId+',"platformHost":'+true+'}';
+	var contentType = "application/json";
+	util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+		$("#hold_choose").fadeOut();
+		$("#already_deposit").attr("class", "depositSelect");
+		// alert($("#already_deposit").attr("class"));1
+		/*$("#em").hide();*/
+	});
 });
 $("#pay_close").click(function() {
 	$("#pay_choose").fadeOut();
