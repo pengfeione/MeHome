@@ -51,7 +51,7 @@ public interface IUserInfoService {
      */
     public int mobile_register(UserInfo userInfo);
 
-    public UserInfo weChat_register(WeChatUserInfo userInfo);
+    public UserInfo weChatInfo(WeChatUserInfo userInfo);
 
     /**
      * 根据条件查询用户信息

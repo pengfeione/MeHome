@@ -61,12 +61,18 @@ public class WeChatController {
 
     }
 
+    /**
+     * 根据微信code获取用户信息
+     *
+     * @param code
+     * @return
+     */
     @RequestMapping("/auth")
     public ResponseEntity<Result> auth(@RequestParam(value = "code", required = false) String code) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(userInfoService.weChat_register(weChatInfo.GetWeixinInfo(code))));
+                .body(Result.build().content(userInfoService.weChatInfo(weChatInfo.GetWeixinInfo(code))));
     }
 }
