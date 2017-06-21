@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mehome.dao.*;
 import com.mehome.domain.*;
 import com.mehome.exceptions.InfoException;
@@ -74,6 +75,15 @@ public class ProductServiceImpl implements IProductService {
         return productBeanList;
     }
 
+    @Override
+    public JSONObject getCompanyWelfare(CompanyWelfareDTO companyWelfareDTO) {
+        List<Integer> welfareIds = productRelationWelfareDao.selectByProductId(companyWelfareDTO.getProductId());
+        String companyWelfareByProduct = companyWelfareDao.selectWelfareByCondition(welfareIds, companyWelfareDTO.getCompanyId());
+        if (null != companyWelfareByProduct) {
+            return JSONObject.parseObject(companyWelfareByProduct);
+        }
+        return new JSONObject();
+    }
 
     @Override
     public ProductList selectById(Integer productId) {

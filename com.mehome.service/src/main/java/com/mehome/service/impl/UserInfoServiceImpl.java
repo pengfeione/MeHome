@@ -69,6 +69,12 @@ public class UserInfoServiceImpl implements IUserInfoService {
     }
 
     @Override
+    public boolean selectByAuthCode(String authCode) {
+        ;
+        return companyDao.selectByAuthCode(authCode) == null ? false : true;
+    }
+
+    @Override
     public int mobile_register(UserInfo userInfo) {
         AssertUtils.isNotNull(userInfo.getMobile(), "手机号不能为空！");
         AssertUtils.isNotNull(userInfo.getPassword(), "密码不能为空！");
@@ -84,14 +90,16 @@ public class UserInfoServiceImpl implements IUserInfoService {
                 throw new InfoException("验证码不正确！");
             }
         }
-        userInfo.setOpenType(UserOpenType.MOBILE.getKey());
+        if (null == userInfo.getOpenType()) {
+            userInfo.setOpenType(UserOpenType.MOBILE.getKey());
+        }
         userInfo.setCreateTime(Calendar.getInstance().getTime());
         userInfoDao.insertRequired(userInfo);
         return userInfo.getUserId();
     }
 
     @Override
-    public UserInfo weChat_register(WeChatUserInfo weChatUserInfo) {
+    public UserInfo weChatInfo(WeChatUserInfo weChatUserInfo) {
         UserInfo userInfo = new UserInfo();
         userInfo.setOpenId(weChatUserInfo.getOpenid());
         userInfo.setOpenType(UserOpenType.WECHAT.getKey());
@@ -100,7 +108,6 @@ public class UserInfoServiceImpl implements IUserInfoService {
             userInfo.setAvatar(weChatUserInfo.getHeadimgurl());
             userInfo.setNickName(weChatUserInfo.getNickname());
             userInfo.setSex(Integer.valueOf(weChatUserInfo.getSex()));
-            userInfoDao.insertRequired(userInfo);
             return userInfo;
         } else {
             return existUser;

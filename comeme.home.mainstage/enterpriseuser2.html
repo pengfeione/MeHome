@@ -27,7 +27,7 @@
         	<div class="loginList edit">
             	<ul>
                 	<li><span>授权码<i>*</i></span>
-                		<input type="text" value="" class="text" id="auth_code"/>
+                		<input type="text" value="" class="text" id="auth_code" onblur="authCodeIsExists();"/>
                 	</li>
                     <li><span>姓名<i>*</i></span>
                     	<input type="text" value="" class="text" id="user_name"/>
@@ -55,6 +55,23 @@
 		util = new Util();
 	});
 	
+	//判断授权码是否存在
+	function authCodeIsExists(){
+		var authCode = $('#auth_code').val();
+		var url = util.baseUrl + '/usr/judge_auth_code?authCode='+authCode;
+		util.requestRemoteData(url,null,function(data){
+			util.logResult(data);
+			var dataResult = eval('(' + data + ')');
+			var authResult = dataResult.result;
+			if(!authResult){
+				$('#span_pop').html('授权码不存在!');
+				$( '#div_popSuccess' ).fadeIn();
+				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+				$('#auth_code').select();
+			}
+		});
+	}
+	
 	//申请企业用户
 	function submitAuth(){
 		if(isSubmit == 0){
@@ -67,11 +84,11 @@
 			var realName = $('#user_name').val();
 			var idCard = $('#id_card').val();
 			if(userId == null || userId == ''){
-					$('#span_pop').html('请先登录!');
-					$( '#div_popSuccess' ).fadeIn();
-					setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
-					isSubmit = 0
-					return false;
+				$('#span_pop').html('请先登录!');
+				$( '#div_popSuccess' ).fadeIn();
+				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+				isSubmit = 0
+				return false;
 			 }
 			if(authCode == null || authCode == ''){
 				$('#span_pop').html('请输入授权码!');
@@ -99,8 +116,10 @@
 					util.logResult(data); 
 					var code = data.code;
 					if(code == 0){
+						$('#span_pop').html('提交成功<br>等待企业审核');
 						$('#div_popSuccess').fadeIn();
 						setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+							flushUerInfo();
 							window.location.href="my.html";
 							}, ( 1 * 1000 ) );
 					}else{
@@ -112,6 +131,29 @@
 					}
 			 });
 		 }
+	}
+	
+	//刷新个人信息
+	function flushUerInfo(){
+		var userInfo = util.getCookie("userInfo");
+		if(userInfo != null && userInfo != ''){
+			var userInfoJson = eval('(' + userInfo + ')');
+			util.logResult(userInfoJson.userId);
+			var userId = userInfoJson.userId;
+			var url = util.baseUrl + '/usr/get'; 
+			var param ='{"userId": '+userId+'}';
+			var contentType = "application/json";
+			util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+				var result = data.result;
+				if(result == null || result == undefined){
+					window.location.href='login.html';
+				}
+				util.logResult(result); 
+				var companyStatus = result.companyStatus;
+				userInfoJson.companyStatus = companyStatus;
+				util.setCookie("userInfo", JSON.stringify(userInfoJson));
+			});
+		}
 	}
 	
 </script>

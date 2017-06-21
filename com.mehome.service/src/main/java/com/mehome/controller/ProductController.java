@@ -2,6 +2,7 @@ package com.mehome.controller;
 
 import com.alipay.api.domain.Product;
 import com.mehome.domain.CompanyWelfare;
+import com.mehome.domain.CompanyWelfareDTO;
 import com.mehome.domain.ProductList;
 import com.mehome.enumDTO.RoleEnum;
 import com.mehome.requestDTO.CompanyWelfareNotice;
@@ -96,7 +97,17 @@ public class ProductController {
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(productService.listCompanyWelfare(productCompanyWelfareDTO),productService.countCompanyWelfare(productCompanyWelfareDTO)));
+                .body(Result.build().content(productService.listCompanyWelfare(productCompanyWelfareDTO), productService.countCompanyWelfare(productCompanyWelfareDTO)));
+    }
+
+    @PostMapping("/get_company_welfare")
+    @ResponseBody
+    public ResponseEntity<Result> getCompanyWelfare(@RequestBody CompanyWelfareDTO companyWelfareDTO) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(productService.getCompanyWelfare(companyWelfareDTO)));
     }
 
     @PostMapping("/add_company_welfare")

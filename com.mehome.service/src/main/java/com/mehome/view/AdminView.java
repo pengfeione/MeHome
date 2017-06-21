@@ -44,7 +44,6 @@ public class AdminView {
                 model.addAttribute("msg", "用户名或密码不正确");
                 return "redirect:/html/login.html";
             } else {
-
                 if (RoleEnum.COMPANY.getRole().equals(administratorBean.getRole())) {
                     session.setAttribute("user", administratorBean);
                     redisTemplate.opsForValue().set(session.getId(), administratorBean);
@@ -54,6 +53,10 @@ public class AdminView {
                     session.setAttribute("user", administratorBean);
                     session.setMaxInactiveInterval(3000);
                     return "redirect:/html/platform/home.html";
+                } else if (RoleEnum.SUPPLIER.getRole().equals(administratorBean.getRole())) {
+                    session.setAttribute("user", administratorBean);
+                    session.setMaxInactiveInterval(3000);
+                    return "redirect:/html/platform/supplierOrder.html";
                 } else {
                     return "redirect:/html/404.html";
                 }

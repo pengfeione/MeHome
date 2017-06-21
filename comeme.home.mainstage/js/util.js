@@ -41,7 +41,7 @@ Util.prototype = {
 		$.ajax({
 	        url: url,
 	        type: 'GET',
-	        async: async || true,
+	        async: async || false,
 	        dataType: "html",
 	        data: data,
 	        success: callback,

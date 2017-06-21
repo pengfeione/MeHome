@@ -27,6 +27,17 @@
             #{item}
         </foreach>
     </select>
+    <select id="selectWelfareByCondition" resultType="java.lang.String" parameterType="map">
+        select
+        welfare_content
+        from company_welfare
+        where company_id = #{companyId,jdbcType=INTEGER}
+        and welfare_id IN
+        <foreach collection="welfareIds" close=")" open="(" index="index" item="item" separator=",">
+            #{item}
+        </foreach>
+        limit 1
+    </select>
     <select id="selectByCompanyId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>

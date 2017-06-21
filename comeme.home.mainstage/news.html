@@ -16,11 +16,10 @@
 </head>
 <body>
     
-    <div class="wrap headerTop">
+    <div class="wrap headerTop" id="div_header_top">
 		<!-- header -->
-        <div class="header">
+        <div class="header" id="div_header">
         	<div class="headerCont">
-        		<a class="btnBack" onclick="history.back();">&lt;</a>
             	<span>资讯</span>
             </div>
         </div>
@@ -71,6 +70,8 @@
 		
 		//加载新闻列表
 		loadNewsList();
+		
+		hideBanner();
 	});
 	
 	//跳到个人页面
@@ -96,25 +97,42 @@
 				var topicType = newsInfo.topicType;
 				var news_str = '';
 				var topicUrl = newsInfo.topicUrl;
-				var summary = newsInfo.summary;
-				var displayPic = newsInfo.displayPic;
+				var subject = newsInfo.subject;
+				var listpic = newsInfo.listpic;
 				var contentFrom = newsInfo.contentFrom;
 				var tid = newsInfo.tid;
-				if(topicType == 'activity'){
-					news_str += '<a href="newsdetail.html?tid='+tid+'" class="newsListTj">'
-							   +'	<h3><i class="iconAct">活动</i>'+summary+'</h3>'
-							   +'	<img src="'+displayPic+'" />'
-							   +'</a>';
-				}else{
-                	news_str += '<a href=newsdetail.html?tid="'+tid+'" class="newsList">'
-                			   +'	<img src="img/test/test1.jpg" />'
-                			   +'	<h3>'+summary+'</h3>'
-                			   +'	<span>'+contentFrom+'</span>'
-                			   +'</a>';
+				var isActive = newsInfo.isActive;
+				if(isActive){
+					if(topicType == 'activity'){
+						news_str += '<a href="newsdetail.html?tid='+tid+'" class="newsListTj">'
+								   +'	<h3><i class="iconAct"></i>'+subject+'</h3>'
+								   +'	<img src="'+listpic[0]+'" />'
+								   +'</a>';
+					}else if(topicType == 'topic'){
+						news_str += '<a href="newsdetail.html?tid='+tid+'" class="newsListTj">'
+								   +'	<h3><i class="iconZt"></i>'+subject+'</h3>'
+								   +'	<img src="'+listpic[0]+'" />'
+								   +'</a>';
+					}else{
+	                	news_str += '<a href=newsdetail.html?tid="'+tid+'" class="newsList">'
+	                			   +'	<img src="'+listpic[0]+'" />'
+	                			   +'	<h3>'+subject+'</h3>'
+	                			   +'	<span>'+contentFrom+'</span>'
+	                			   +'</a>';
+					}
+					$('#div_news').append(news_str);
 				}
-				$('#div_news').append(news_str);
 			});
 		});
+	}
+	
+	//隐藏退出登录
+	function hideBanner(){
+		var ua = navigator.userAgent.toLowerCase();
+		if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			 $('#div_header').hide();
+			 $('#div_header_top').attr('class','wrap');
+		}
 	}
 </script>
 </html>

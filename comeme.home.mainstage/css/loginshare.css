@@ -35,8 +35,9 @@
 .register ul li span { color:#a0a0a0;  }
 .btnGetYzm         { width:80px; line-height:20px; text-align:right; border-left:1px solid #e5e5e5; display:block; position:absolute; right:0; top:18px; z-index:3; color:#24ad92; }
 /*.loginList .yzm    { padding:0 80px; }*/
-.btnShowPwd        { width:23px; height:15px; display:block; background:url(../img/iconShowPwd.png) no-repeat; background-size:23px 15px; position:absolute; right:0; top:22px; z-index:3; }
 .btnHidePwd        { width:23px; height:15px; display:block; background:url(../img/iconHidePwd.png) no-repeat; background-size:23px 15px; position:absolute; right:0; top:22px; z-index:3; }
+.btnShowPwd        { width:23px; height:15px; display:block; background:url(../img/iconShowPwd.png) no-repeat; background-size:23px 15px; position:absolute; right:0; top:22px; z-index:3; }
+
 /*.loginList .setPwd { padding:0 25px 0 80px;}*/
 .btnRegister,.btnEnd { margin-top:30px; }
 .loginIm           { margin-top:20px; height:40px; line-height:40px; display:block; text-align:center; font-size:16px; }

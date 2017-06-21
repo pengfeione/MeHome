@@ -211,6 +211,15 @@ $(function()
 			return false;
 		}
 		var userInfoJson = eval('(' + userInfo + ')');
+		var mobile = userInfoJson.mobile;
+		if(mobile == null || mobile == ''){
+			$('#span_commonet').html('请绑定手机号!');
+			$( '#div_popSuccess' ).fadeIn();
+			setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+				window.location.href='relation.html';
+			}, ( 1* 1000 ) );
+			return false;
+		}
 		var userId = userInfoJson.userId;
 		var content = $('#area_content').val();
 		if(content == '说点什么吧'){

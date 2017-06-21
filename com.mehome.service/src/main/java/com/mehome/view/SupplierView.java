@@ -2,6 +2,8 @@ package com.mehome.view;
 
 import java.util.List;
 
+import com.mehome.requestDTO.OrderBean;
+import com.mehome.service.iface.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,39 +19,32 @@ import com.mehome.utils.Permits;
 @Controller
 @RequestMapping("/html/supplier")
 public class SupplierView {
-	@Autowired
-	private ISupplierService supplierService;
-	
-	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+    @Autowired
+    private ISupplierService supplierService;
+
+    @Autowired
+    private IOrderService orderService;
+
+
+    @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
     @PostMapping(path = "/list")
-	public ModelAndView list(@RequestBody SupplierBean supplier){
-		ModelAndView mav=new ModelAndView();
-		mav.setViewName("supplier");
-		List<SupplierBean> supplierList=supplierService.getListByCondition(supplier);
-		Long supplierSize=supplierService.getSizeByCondition(supplier);
-		mav.addObject("supplierList", supplierList);
-		mav.addObject("supplierTotalCount", supplierSize);
-		return mav;
-	}
-	
-	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+    public ModelAndView list(@RequestBody SupplierBean supplier) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("supplier");
+        List<SupplierBean> supplierList = supplierService.getListByCondition(supplier);
+        Long supplierSize = supplierService.getSizeByCondition(supplier);
+        mav.addObject("supplierList", supplierList);
+        mav.addObject("supplierTotalCount", supplierSize);
+        return mav;
+    }
+
+    @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
     @PostMapping(path = "/update")
-	public ModelAndView update(@RequestBody SupplierBean supplier){
-		ModelAndView mav=new ModelAndView();
-		String ret=supplierService.updateSupplier(supplier);
-		mav.setViewName("supplier");
-		mav.addObject("updateRet", ret);
-		return mav;
-	}
-	
-	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
-    @PostMapping(path = "/add")
-	public ModelAndView add(@RequestBody SupplierBean supplier){
-		ModelAndView mav=new ModelAndView();
-		String ret=supplierService.addSupplier(supplier);
-		mav.setViewName("supplier");
-		mav.addObject("addRet", ret);
-		return mav;
-	}
-	
+    public ModelAndView update(@RequestBody SupplierBean supplier) {
+        ModelAndView mav = new ModelAndView();
+        String ret = supplierService.updateSupplier(supplier);
+        mav.setViewName("supplier");
+        mav.addObject("updateRet", ret);
+        return mav;
+    }
 }

@@ -26,7 +26,7 @@ public interface ProductRelationWelfareDao {
     List<Integer> selectHasAddCompanyId(@Param("productId") Integer productId);
 
 
-    List<ProductRelationWelfare> selectByProductId(@Param("productId") Integer productId);
+    List<Integer> selectByProductId(@Param("productId") Integer productId);
 
     List<ProductCompanyWelfare> listWelfareByProductId(ProductCompanyWelfareDTO productCompanyWelfareDTO);
 

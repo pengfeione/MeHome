@@ -23,10 +23,10 @@
 </head>
 <body class="bodyApartmentdetail">
 
-    <div class="wrap headerTop">
+    <div class="wrap headerTop" id="div_header_top">
     	
     	<!-- header -->
-        <div class="header">
+        <div class="header" id="div_header">
         	<div class="headerCont">
             	<a class="btnBack" onclick="history.back();">&lt;</a>
             	<span>公寓详情</span>
@@ -49,15 +49,22 @@
             </div>
             <ul class="mapInfo">
             	<a onclick="showMap();">
-                	<li class="apartAddress"><i></i><label id="l_address">上海市浦东新区福山路82号</label></li>
+                	<li class="apartAddress"><i></i><label id="l_address" style="margin-left: 5px;">上海市浦东新区福山路82号</label></li>
                 </a>
-                <li ><i class="iconCar"></i><label id="l_jt"></label></li>
+                <li ><i class="iconCar"></i><label id="l_jt" style="margin-left: 5px;"></label></li>
             </ul>
         </div>
 
-        <div class="apartFl">
-            <h3><em>个人用户福利</em><a class="btnShow"><span>展开</span><i></i></a></h3>
+        <div class="apartFl" id="div_apartFl" style="display: none;">
+            <h3><em><i class="iconWelfare"></i>个人用户福利</em><a class="btnShow"><span>展开</span><i></i></a></h3>
             <div class="apartFlcont" id="div_welfare">
+            	<p>1. 个人用户福利个人用户福利个人用户福利个人用户福利个人个人用户福利；2. 个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；</p>
+            </div>        
+        </div>
+        
+        <div class="apartFl" id="div_apartF2" style="display: none;">
+            <h3><em><i class="iconWelfare"></i>企业福利</em><a class="btnShow"><span>展开</span><i></i></a></h3>
+            <div class="apartFlcont" id="div_welfare2">
             	<p>1. 个人用户福利个人用户福利个人用户福利个人用户福利个人个人用户福利；2. 个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；</p>
             </div>        
         </div>
@@ -102,7 +109,7 @@
     </div>
 
 	<!-- houseRule -->
-    <div class="houseRule" id="houseRule" onclick="hideRule();">
+    <div class="houseRule" id="houseRule">
         <div class="houseWrap">
             <a class="showClose"></a>
         	<h3>房屋守则</h3>
@@ -138,19 +145,21 @@
 	$(function(){
 		util = new Util();
 		
+		//刷新个人信息
+		flushUerInfo();
+		
 		//加载产品详细
 		loadProductDetail();
 		//加载房屋列表
 		loadHouseList();
 		//加载评论列表
 		loadCommonList();
-		//刷新个人信息
-//		flushUerInfo();
-
-		var userInfo = util.getCookie("userInfo");
-		if(userInfo != null && userInfo != ''){
-			$('#span_apartLogin').hide();
-		}
+		
+		//加载企业福利
+		loadWelfare();
+		
+		hideBanner();
+		
 		$(window).on('scroll',function(){
 			sTop=$(window).scrollTop();
 			if(sTop>=$(".houseSection").get(0).offsetHeight-$(".wrap").height())
@@ -160,6 +169,35 @@
 			}
 		});
 	});
+	
+	//加载企业福利
+	function loadWelfare(){
+		var userInfo = util.getCookie("userInfo");
+		if(userInfo != null && userInfo != ''){
+			$('#span_apartLogin').hide();
+		}
+		var userInfoJson = eval('(' + userInfo + ')');
+		var companyId = userInfoJson.companyId;
+		var productId = util.getUrlParam('productId');
+		var url = util.baseUrl+'/product/get_company_welfare';
+		var param ='{"productId":'+productId+',"companyId":'+companyId+'}';
+		var contentType = "application/json";
+		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+			util.logResult(data);
+			var code = data.code;
+			if(code == 0){
+				var result = data.result;
+				var welfareStr='';
+				util.logResult(result.notice);
+				welfareStr ='<p>'
+							+ result.notice+',优惠'+result.remitPercent
+							+'%,押'+result.mortagageNum+'付'+result.payMentNum
+							+'</p>';
+				$('#div_welfare2').html(welfareStr);
+				$('#div_apartF2').show();
+			}
+		});
+	}
 	
 	//加载产品详细
 	function loadProductDetail(){
@@ -196,7 +234,7 @@
 					}
 					var score = productInfo.score;
 					if(score == null || score == ''){
-						score = 0.0;
+						score = 5.0;
 					}
 					var span_star_str = '';
 					for(k=0;k<5;k++){
@@ -206,24 +244,28 @@
 							span_star_str += '<i></i>'; 
 						}
 					}
+					score = parseFloat(score);
+					score = score.toFixed(1); 
 					span_star_str += '<em>'+score+'</em>'; 
 					$('#span_star').html(span_star_str);
 					var welfareStr='';
 					if(productInfo.hasPersonal){
-					var personalWelfare = eval('(' + productInfo.personalWelfare + ')');
-					util.logResult(personalWelfare.notice);
-					welfareStr ='<p>'+ personalWelfare.notice+',优惠'+personalWelfare.remitPercent
-									+'%,押'+personalWelfare.mortagageNum+'付'+personalWelfare.payMentNum
-									+'</p>';
+						var personalWelfare = eval('(' + productInfo.personalWelfare + ')');
+						util.logResult(personalWelfare.notice);
+						welfareStr ='<p>'+ personalWelfare.notice+',优惠'+personalWelfare.remitPercent
+										+'%,押'+personalWelfare.mortagageNum+'付'+personalWelfare.payMentNum
+										+'</p>';
+						$('#div_welfare').html(welfareStr);
+						$('#div_apartFl').show();
 					}
-					else{
-				    welfareStr='无';
-					}
-					$('#div_welfare').html(welfareStr);
 					$('#i_num').html(detailpic.length+'张');
-					$('#img_head').attr('src',productInfo.listpic);
+					if(detailpic.length == 0){
+						$('#img_head').attr('src',productInfo.listpic);
+					}else{
+						$('#img_head').attr('src',detailpic[0]);
+					}
 					for(var i=0;i<detailpic.length;i++){
-						var img_html = '<div class="swiper-slide" onclick="hideLargeImg();"><img src="'+detailpic[i]+'" /></div>';
+						var img_html = '<div class="swiper-slide" ><img src="'+detailpic[i]+'" /></div>';
 						$('#div_swiper').append(img_html);
 					}
 				}
@@ -309,6 +351,8 @@
 	            	var createTime = commentInfo.createTime;
 	            	createTime = createTime.substr(5,5)+' '+createTime.substr(14,5);
 	            	var score = commentInfo.score;
+	            	score = parseFloat(score);
+					score = score.toFixed(1); 
 	            	var span_star_str = '';
 					for(k=0;k<5;k++){
 						if(k<score){
@@ -320,7 +364,7 @@
 					span_star_str += '<i>'+score+'</i>'; 
 	            	var comment_html = '<li>'
 	            					  +' <img src="'+avatar+'" />'
-	            					  +' <h3>'+nickName+'</h3>'
+	            					  +' <label>'+nickName+'</label>'
 	            					  +'<span class="commonDate">'+createTime+'</span>'
 	            					  +' <span class="commonStar">'+span_star_str+'</span>'
 	            					  +' <span>'+commentInfo.formatContent+'</span>'
@@ -387,11 +431,6 @@
 		$('#houseRule').fadeIn();
 	}
 	
-	//隐藏规则
-	function hideRule(){
-		$('#houseRule').fadeOut();
-	}
-	
 	//展示大图
 	function showLargeImg(){
 		$('#showLargeImg').show();
@@ -406,11 +445,6 @@
 		});
 	}
 	
-	//隐藏大图
-	function hideLargeImg(){
-		$('#showLargeImg').hide();
-	}
-	
 	//刷新个人信息
 	function flushUerInfo(){
 		var userInfo = util.getCookie("userInfo");
@@ -422,18 +456,31 @@
 			var url = util.baseUrl + '/usr/get'; 
 			var param ='{"userId": '+userId+'}';
 			var contentType = "application/json";
-			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+			util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+				util.logResult(data)
 				var result = data.result;
 				if(result == null || result == undefined){
 					util.setCookie("userInfo", '');
 				}
-				var newUpdateTime = result.updateTime;
-				util.logResult(newUpdateTime+' '+updateTime);
-				if(newUpdateTime != updateTime){
-					util.setCookie("userInfo", '');
-				}
+				userInfoJson.companyId = result.companyId;
+				util.logResult(userInfoJson); 
+				util.setCookie("userInfo", JSON.stringify(userInfoJson));
+//				var newUpdateTime = result.updateTime;
+//				util.logResult(newUpdateTime+' '+updateTime);
+//				if(newUpdateTime != updateTime){
+//					util.setCookie("userInfo", '');
+//				}
 				
 			});
+		}
+	}
+	
+	//隐藏退出登录
+	function hideBanner(){
+		var ua = navigator.userAgent.toLowerCase();
+		if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			 $('#div_header').hide();
+			 $('#div_header_top').attr('class','wrap');
 		}
 	}
 </script>

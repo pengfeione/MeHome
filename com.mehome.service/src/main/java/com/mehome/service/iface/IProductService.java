@@ -2,8 +2,10 @@ package com.mehome.service.iface;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mehome.domain.BasicFacilities;
 import com.mehome.domain.CompanyWelfare;
+import com.mehome.domain.CompanyWelfareDTO;
 import com.mehome.domain.ProductList;
 import com.mehome.requestDTO.CompanyWelfareNotice;
 import com.mehome.requestDTO.ProductBean;
@@ -15,10 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface IProductService {
     public List<ProductBean> getListByCondition(ProductBean bean);
 
-
     public ProductList selectById(Integer productId);
 
     public String addProduct(ProductList bean);
+
+    public JSONObject getCompanyWelfare(CompanyWelfareDTO companyWelfareDTO);
 
     public Long getSizeByCondition(ProductBean bean);
 

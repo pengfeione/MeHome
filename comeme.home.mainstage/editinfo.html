@@ -33,10 +33,15 @@
         <section>
         	<div class="userEditInfo">
             	<ul>
-                	<li id="li_name"><a onclick="editName();"><span style="font-size: 12px;">昵称</span><em id="em_name">多小米</em><i class="iconMore"></i></a></li>
-                    <li id="li_edit" style="display: none;"><a><span style="font-size: 12px;">昵称</span><em>
-                    	<input type="text" value="多小米" class="txt" id="i_name"
-                    		onblur="submitUser();"/></em><i class="btnClose" id="i_close" onclick="clearName();"></i></a>
+                	<li id="li_name"><a onclick="editName();"><span style="font-size: 12px;">昵称</span><em id="em_name"></em><i class="iconMore"></i></a></li>
+                    <li id="li_edit" style="display: none;">
+                    	<a><span style="font-size: 12px;">昵称</span>
+	                    	<em>
+		                    	<input type="text" value="" class="txt" id="i_name"
+		                    		onblur="submitUser();"/>
+	                    	</em>
+	                    	<!--<i class="btnClose" id="i_close" onclick="clearName();"></i>-->
+                    	</a>
                     </li>
                     <!--<li><a onclick="enterprise();"><span>企业用户认证</span><em id="em_auth">未认证，点我认证</em><i class="iconMore"></i></a></li>-->
                 </ul>
@@ -128,6 +133,7 @@
 				 $('#em_name').html(nikeName);
 				 $('#li_name').show();
 				 $('#li_edit').hide();
+				 flushUerInfo();
 			}
 		});
 	}
@@ -153,6 +159,7 @@
 				util.logResult(newUpdateTime+' '+updateTime);
 				if(newUpdateTime != updateTime){
 					userInfoJson.avatar = result.avatar;
+					userInfoJson.updateTime = newUpdateTime;
 				 	util.logResult(userInfoJson); 
 				 	util.setCookie("userInfo", JSON.stringify(userInfoJson));
 				}

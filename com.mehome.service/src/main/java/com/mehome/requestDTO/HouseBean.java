@@ -43,7 +43,7 @@ public class HouseBean extends PageMysqlUtil {
 
     private String position;
 
-    private Integer sort;
+    private Float sort;
 
     private Integer roomType;
 
@@ -170,11 +170,11 @@ public class HouseBean extends PageMysqlUtil {
         this.position = position;
     }
 
-    public Integer getSort() {
+    public Float getSort() {
         return sort;
     }
 
-    public void setSort(Integer sort) {
+    public void setSort(Float sort) {
         this.sort = sort;
     }
 

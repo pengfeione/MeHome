@@ -61,10 +61,12 @@ body { background:#fff; }
 .apartTag .tagYl { border:1px solid #fe986e; color:#fe986e; }
 .btnHouseRule { width:38px; height:47px; display:block; background:url(../img/btnRule.png) no-repeat; background-size:38px 47px; position:absolute; right:10px; top:0; z-index:10; }
 .mapInfo    { margin:0 10px; color: #3c3c3c; }
-.mapInfo li { padding:5px 10px 5px 20px; line-height:20px; position:relative; }
+.mapInfo li { padding:5px 0; line-height:20px; }
 .mapInfo .apartAddress { border-bottom:1px solid #f0f0f0; }
-.mapInfo .apartAddress i { width:11px; height:15px; display:block; background:url(../img/iconAddress.png) no-repeat; background-size:11px 15px; position:absolute; left:0; top:8px; z-index:5; }
-.iconCar { width:13px; height:13px; display:block; background:url(../img/iconCar.png) no-repeat; background-size:13px; position:absolute; left:0; top:10px; z-index:5;  }
+.mapInfo .apartAddress a { padding:0 10px 0 18px; height:20px; line-height:20px; display:block; position:relative; }
+.mapInfo .apartAddress i { width:11px; height:15px; display:block; background:url(../img/iconAddress.png) no-repeat; background-size:11px 15px; position:absolute; left:0; margin-top:2px; z-index:5; }
+.mapInfo .apartAddress .iconMore { top:3px; }
+.iconCar { width:13px; height:13px; display:block; background:url(../img/iconCar.png) no-repeat; background-size:13px; position:absolute; left:0;  margin-top:2px; z-index:5;  }
 
 /* apartFl */
 .apartFl { padding:0 10px; background:#fff; color: #3c3c3c; overflow:hidden; }
@@ -74,9 +76,10 @@ body { background:#fff; }
 .apartFl h3 a i { margin-left:5px; width:13px; height:7px; display:inline-block; background:url(../img/iconShowNext.png) no-repeat; background-size:13px 7px; }
 .apartFl h3 .btnHide i { margin-left:5px; width:13px; height:7px; display:inline-block; background:url(../img/iconShowUp.png) no-repeat; background-size:13px 7px; }
 .apartFlcont { padding:10px 0; border-bottom:1px solid #f0f0f0;; }
-.apartFlcont p { height:60px; line-height:20px; overflow:hidden; }
+.apartFlcont p { height:40px; line-height:20px; overflow:hidden; }
 .apartLogin { margin-bottom:10px; height:40px; line-height:40px; display:block; font-size:16px; text-align:center; background:#fff; }
 .apartLogin a { color:#1eaa94; }
+.iconWelfare { margin:-6px 3px 0 0; width:15px; height:15px; display:inline-block; vertical-align:middle; background:url(../img/iconGift.png) no-repeat; background-size:15px; }
 
 .houseBox { padding:0 10px; }
 .houseSection { display:none; }
@@ -102,7 +105,7 @@ body { background:#fff; }
 .listEnd { height:40px; display:none; text-align:center; line-height:40px; color:#c8c8c8; }
 
 
-.houseRule { margin:-200px 0 0 -150px; width:300px; height:400px; display:none; position:fixed; left:50%; top:50%; z-index:9999; }
+.houseRule { margin:-170px 0 0 -150px; width:300px; height:400px; display:none; position:fixed; left:50%; top:50%; z-index:9999; }
 .houseWrap { padding:0 20px; height:400px; position:relative; border-radius:10px; background:#fff; }
 .houseWrap h3 { height:50px; line-height:50px; font-size:18px; border-bottom:1px solid #28af90; text-align:center; }
 .houseText    { margin-top:5px;  padding-right:10px; height:330px; overflow-y:auto; color:#282828; }

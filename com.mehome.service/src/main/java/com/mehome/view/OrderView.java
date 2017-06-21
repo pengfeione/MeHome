@@ -17,39 +17,39 @@ import com.mehome.utils.Permits;
 @Controller
 @RequestMapping("/html/order")
 public class OrderView {
-	@Autowired
-	private IOrderService orderService;
-	
-	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+    @Autowired
+    private IOrderService orderService;
+
+    @Permits(role = {RoleEnum.PLATFORM, RoleEnum.SUPPLIER}, needLogin = true)
     @PostMapping(path = "/list")
-	public ModelAndView list(@RequestBody OrderBean order){
-		ModelAndView mav=new ModelAndView();
-		mav.setViewName("order");
-		List<OrderBean> orderList=orderService.getListByCondition(order);
-		Long orderSize=orderService.getSizeByCondition(order);
-		mav.addObject("orderList", orderList);
-		mav.addObject("orderTotalCount", orderSize);
-		return mav;
-	}
-	
-	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+    public ModelAndView list(@RequestBody OrderBean order) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("order");
+        List<OrderBean> orderList = orderService.getListByCondition(order);
+        Long orderSize = orderService.getSizeByCondition(order);
+        mav.addObject("orderList", orderList);
+        mav.addObject("orderTotalCount", orderSize);
+        return mav;
+    }
+
+    @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
     @PostMapping(path = "/update")
-	public ModelAndView update(@RequestBody OrderBean order){
-		ModelAndView mav=new ModelAndView();
-		String ret=orderService.updateOrder(order);
-		mav.setViewName("order");
-		mav.addObject("updateRet", ret);
-		return mav;
-	}
-	
-	@Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+    public ModelAndView update(@RequestBody OrderBean order) {
+        ModelAndView mav = new ModelAndView();
+        String ret = orderService.updateOrder(order);
+        mav.setViewName("order");
+        mav.addObject("updateRet", ret);
+        return mav;
+    }
+
+    @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
     @PostMapping(path = "/refund")
-	public ModelAndView refund(@RequestBody OrderBean order){
-		ModelAndView mav=new ModelAndView();
-		String ret=orderService.refundOrder(order);
-		mav.setViewName("order");
-		mav.addObject("refundRet", ret);
-		return mav;
-	}
-	
+    public ModelAndView refund(@RequestBody OrderBean order) {
+        ModelAndView mav = new ModelAndView();
+        String ret = orderService.refundOrder(order);
+        mav.setViewName("order");
+        mav.addObject("refundRet", ret);
+        return mav;
+    }
+
 }

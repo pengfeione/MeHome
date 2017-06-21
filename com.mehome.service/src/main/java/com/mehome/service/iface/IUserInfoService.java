@@ -1,5 +1,6 @@
 package com.mehome.service.iface;
 
+import com.mehome.domain.CompanyList;
 import com.mehome.domain.UserInfo;
 import com.mehome.domain.WeChatUserInfo;
 import com.mehome.requestDTO.UserApplyCompanyDTO;
@@ -22,6 +23,9 @@ public interface IUserInfoService {
 
 
     public boolean mobile(String mobile);
+
+
+    boolean selectByAuthCode(String authCode);
 
     /**
      * 通过企业认证的
@@ -47,7 +51,7 @@ public interface IUserInfoService {
      */
     public int mobile_register(UserInfo userInfo);
 
-    public UserInfo weChat_register(WeChatUserInfo userInfo);
+    public UserInfo weChatInfo(WeChatUserInfo userInfo);
 
     /**
      * 根据条件查询用户信息

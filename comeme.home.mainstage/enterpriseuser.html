@@ -27,7 +27,7 @@
         	<div class="loginList edit">
             	<ul>
                 	<li><span>授权码<i>*</i></span>
-                		<input type="text" value="" class="text" id="auth_code"/>
+                		<input type="text" value="" class="text" id="auth_code" onblur="authCodeIsExists();"/>
                 	</li>
                     <li><span>姓名<i>*</i></span>
                     	<input type="text" value="" class="text" id="user_name"/>
@@ -56,12 +56,42 @@
 		util = new Util();
 	});
 	
+	//判断授权码是否存在
+	function authCodeIsExists(){
+		var authCode = $('#auth_code').val();
+		var url = util.baseUrl + '/usr/judge_auth_code?authCode='+authCode;
+		util.requestRemoteData(url,null,function(data){
+			util.logResult(data);
+			var dataResult = eval('(' + data + ')');
+			var authResult = dataResult.result;
+			if(!authResult){
+				$('#span_success').html('授权码不存在!');
+				$( '#div_enter' ).fadeIn();
+				setTimeout( function(){$( '#div_enter' ).fadeOut();}, ( 1* 1000 ) );
+				$('#auth_code').select();
+			}
+		});
+	}
 	//申请企业用户
 	function submitAuth(){
 		isSubmit = 1;
 		 var userId = util.getUrlParam('userId');
 		 var authCode = $('#auth_code').val();
 		 var realName = $('#user_name').val();
+		 if(authCode == null || authCode == ''){
+			$('#span_success').html('请输入授权码!');
+			$( '#div_enter' ).fadeIn();
+			setTimeout( function(){$( '#div_enter' ).fadeOut();}, ( 1* 1000 ) );
+			isSubmit = 0
+			return false;
+		}
+		if(realName == null || realName == ''){
+			$('#span_success').html('请输入姓名!');
+			$( '#div_enter' ).fadeIn();
+			setTimeout( function(){$( '#div_enter' ).fadeOut();}, ( 1* 1000 ) );
+			isSubmit = 0
+			return false;
+		}
 		 var idCard = $('#id_card').val();
 		 var res= util.identityCodeValid(idCard);
 		 if(!res){
@@ -77,7 +107,8 @@
 				if(code == 0){
 					$('#div_enter').fadeIn();
 					setTimeout( function(){$( '#div_enter' ).fadeOut();
-						window.location.href="login.html";
+						loadUerInfo(userId);
+						window.location.href="my.html";
 						}, ( 1 * 1000 ) );
 				}else{
 					$('#span_success').html('提交失败!');
@@ -93,8 +124,20 @@
 	
 	//暂不申请
 	function gotoNext(){
-		window.location.href="login.html";
+		var userId = util.getUrlParam('userId');
+		loadUerInfo(userId);
+		window.location.href="my.html";
 	}
 	
+	//加载个人信息
+	function loadUerInfo(userId){
+		var url = util.baseUrl + '/usr/get'; 
+		var param ='{"userId": '+userId+'}';
+		var contentType = "application/json";
+		util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+			var userInfo = data.result;
+			util.setCookie("userInfo", JSON.stringify(userInfo));
+		});
+	}
 </script>
 </html>

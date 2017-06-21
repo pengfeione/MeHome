@@ -58,6 +58,17 @@ public class PlatformView {
         return "platformSupplierList";
     }
 
+    /**
+     * 供应商列表
+     *
+     * @param modelAndView
+     * @return
+     */
+    @Permits(role = {RoleEnum.PLATFORM, RoleEnum.SUPPLIER}, needLogin = true)
+    @RequestMapping("/supplierOrder.html")
+    public String supplierOrder(ModelAndView modelAndView) {
+        return "SupplierOrder";
+    }
 
     @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
     @RequestMapping("/order.html")
@@ -140,7 +151,7 @@ public class PlatformView {
     public String users() {
         return "platformUsers";
     }
-    
+
     @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
     @RequestMapping("/activity.html")
     public String activity() {

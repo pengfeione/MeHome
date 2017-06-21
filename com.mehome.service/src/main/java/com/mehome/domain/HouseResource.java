@@ -27,7 +27,7 @@ public class HouseResource {
 
     private String position;
 
-    private Integer sort;
+    private Float sort;
 
     private Integer roomType;
 
@@ -164,11 +164,11 @@ public class HouseResource {
         this.position = position == null ? null : position.trim();
     }
 
-    public Integer getSort() {
+    public Float getSort() {
         return sort;
     }
 
-    public void setSort(Integer sort) {
+    public void setSort(Float sort) {
         this.sort = sort;
     }
 
