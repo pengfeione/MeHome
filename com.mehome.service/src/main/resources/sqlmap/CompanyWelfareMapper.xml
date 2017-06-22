@@ -53,6 +53,7 @@
         select
         <include refid="Base_Column_List"/>
         from company_welfare
+        where welfare_active=1
         <if test="pageNow !=null and pageSize !=null">
             limit #{pageNow},#{pageSize}
         </if>
@@ -63,8 +64,9 @@
         <include refid="Base_Column_List"/>
         from company_welfare
         where
+        welfare_active=1
         <if test="dontNeedCompanyId != null">
-            company_id not in
+            and company_id not in
             <foreach collection="dontNeedCompanyId" index="index" open="(" close=")" item="id" separator=",">
                 #{id}
             </foreach>

@@ -170,6 +170,7 @@ public class ProductServiceImpl implements IProductService {
         } else {//列出未添加的企业福利，一个企业只能添加一次，要过滤
             //列出要添加的企业福利-一个企业只能添加一次
             List<ProductCompanyWelfare> result = new ArrayList<ProductCompanyWelfare>();
+            //该产品已关联过福利的的企业id
             List<Integer> donotNeedCompanyIds = productRelationWelfareDao.selectHasAddCompanyId(productCompanyWelfareDTO.getProductId());
             List<CompanyWelfare> welfareList = null;
             if (donotNeedCompanyIds.size() > 0) {
