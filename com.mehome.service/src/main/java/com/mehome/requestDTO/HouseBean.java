@@ -340,6 +340,7 @@ public class HouseBean extends PageMysqlUtil {
             }
             this.setDetailpic(detailPicList);
         }
+        this.setListpic(resource.getListpic());
         this.setPayType(resource.getPayType());
         this.setPosition(resource.getPosition());
         this.setRoomArea(resource.getRoomArea());

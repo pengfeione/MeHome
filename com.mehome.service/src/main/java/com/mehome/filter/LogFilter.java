@@ -28,6 +28,7 @@ public class LogFilter implements Filter {
 
     static {
         allowDomain.add("http://m.mjiahome.com");
+        allowDomain.add("http://test.mjiahome.com");
         allowDomain.add("http://www.m.mjiahome.com");
     }
 
@@ -50,15 +51,19 @@ public class LogFilter implements Filter {
             } catch (Exception e) {
             }
         }
-//        if (allowDomain.contains(headerMap.get("accept"))) {
-        response.setHeader("Access-Control-Allow-Origin", "http://m.mjiahome.com");
+        String url = httpServletRequest.getRequestURL().toString();
+        log.info(url);
+        String uri = httpServletRequest.getRequestURI();
+        log.info(uri);
+        String allow = url.substring(0, url.indexOf(uri));
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Origin,X-Requested-With,content-type,Accept");
-//        }
         BodyRequestWrapper bodyRequestWrapper = new BodyRequestWrapper(httpServletRequest);
         log.info("\n------------------------------------------------------------------------------------------" +
-                "\n\t     user-agent : " + headerMap.get("accept") +
+                "\n\t     user-agent : " + allow +
                 "\n\t      client IP : " + httpServletRequest.getRemoteAddr() +
                 "\n\t   content type : " + httpServletRequest.getContentType() +
                 "\n\t    request url : " + httpServletRequest.getRequestURL() +

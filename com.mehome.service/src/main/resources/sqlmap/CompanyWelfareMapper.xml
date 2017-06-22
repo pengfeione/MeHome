@@ -22,20 +22,24 @@
         select
         concat(welfare_id,'')
         from company_welfare
-        where welfare_id IN
-        <foreach collection="welfareIds" close=")" open="(" index="index" item="item" separator=",">
-            #{item}
-        </foreach>
+        <if test="welfareIds != null">
+            WHERE welfare_id IN
+            <foreach collection="welfareIds" close=")" open="(" index="index" item="item" separator=",">
+                #{item}
+            </foreach>
+        </if>
     </select>
     <select id="selectWelfareByCondition" resultType="java.lang.String" parameterType="map">
         select
         welfare_content
         from company_welfare
         where company_id = #{companyId,jdbcType=INTEGER}
-        and welfare_id IN
-        <foreach collection="welfareIds" close=")" open="(" index="index" item="item" separator=",">
-            #{item}
-        </foreach>
+        <if test="welfareIds != null">
+            and welfare_id IN
+            <foreach collection="welfareIds" close=")" open="(" index="index" item="item" separator=",">
+                #{item}
+            </foreach>
+        </if>
         limit 1
     </select>
     <select id="selectByCompanyId" resultMap="BaseResultMap" parameterType="java.lang.Integer">

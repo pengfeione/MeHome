@@ -78,6 +78,9 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public JSONObject getCompanyWelfare(CompanyWelfareDTO companyWelfareDTO) {
         List<Integer> welfareIds = productRelationWelfareDao.selectByProductId(companyWelfareDTO.getProductId());
+        if (welfareIds.size() <= 0) {
+            welfareIds = null;
+        }
         String companyWelfareByProduct = companyWelfareDao.selectWelfareByCondition(welfareIds, companyWelfareDTO.getCompanyId());
         if (null != companyWelfareByProduct) {
             return JSONObject.parseObject(companyWelfareByProduct);
@@ -215,6 +218,9 @@ public class ProductServiceImpl implements IProductService {
         List<String> validWelfareIdList = new ArrayList<String>();
         if (companyWelfareIdArr.length > 0) {
             Collections.addAll(validWelfareIdList, companyWelfareIdArr);
+            if (0 == validWelfareIdList.size()) {
+                validWelfareIdList = null;
+            }
             List<String> validFinalWelfareIdList = companyWelfareDao.selectByIds(validWelfareIdList);
             if (validFinalWelfareIdList.size() > 0) {
                 Iterator<String> iterator = validFinalWelfareIdList.iterator();
