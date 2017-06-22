@@ -37,6 +37,11 @@
                      		<i class="iconMore"></i>
                      	</a>
                      </li>
+                     <li>
+                     	<a onclick="bindMobile();">
+                     		<em class="iconMy"></em>绑定手机号<em class="rz" id="em_bind">未绑定</em><i class="iconMore"></i>
+                     	</a>
+                     </li>
                 </ul>
                 <a class="btnLoginout" onclick="logOut();" id="a_logoOut">退出登录</a>
             </div>
@@ -73,13 +78,13 @@
 		if(userInfo != null && userInfo != ''){
 			var userInfoJson = eval('(' + userInfo + ')');
 			var mobile = userInfoJson.mobile;
-			if(mobile == null || mobile == ''){
-				$('#registerFail').html('请绑定手机号!');
-				$( '#div_register_fail' ).fadeIn();
-				setTimeout( function(){$( '#div_register_fail' ).fadeOut();
-					window.location.href='relation.html';
-				}, ( 1* 1000 ) );
-				return false;
+			if(mobile != null && mobile != '' && mobile != undefined){
+				$('#em_bind').html('已绑定');
+//				$('#registerFail').html('请绑定手机号!');
+//				$( '#div_register_fail' ).fadeIn();
+//				setTimeout( function(){$( '#div_register_fail' ).fadeOut();
+//					window.location.href='relation.html';
+//				}, ( 1* 1000 ) );
 			}
 			util.logResult(userInfoJson.userId);
 			var userId = userInfoJson.userId;
@@ -123,7 +128,7 @@
 		}else if(companyStatus == 2){
 			$('#em_auth').html('待审核');
 		}else if(companyStatus == 3){
-			$('#em_auth').html('审核不通过');
+			$('#em_auth').html('未认证，点我认证');
 		}
 	}
 	
@@ -142,8 +147,18 @@
 		var userInfo = util.getCookie("userInfo");
 		var userInfoJson = eval('(' + userInfo + ')');
 		var companyStatus = userInfoJson.companyStatus;
-		if(companyStatus == 0){
+		if(companyStatus == 0 || companyStatus == 3){
 			window.location.href='enterpriseuser2.html';
+		}
+	}
+	
+	//绑定手机号
+	function bindMobile(){
+		var userInfo = util.getCookie("userInfo");
+		var userInfoJson = eval('(' + userInfo + ')');
+		var mobile = userInfoJson.mobile;
+		if(mobile == null || mobile == '' || mobile == undefined){
+			window.location.href='relation.html';
 		}
 	}
 	

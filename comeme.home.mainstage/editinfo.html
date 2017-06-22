@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="css/base.css" />
 <link rel="stylesheet" type="text/css" href="css/common.css" />
 <link rel="stylesheet" type="text/css" href="css/loginshare.css" />
+<link rel="stylesheet" type="text/css" href="css/index.css" />
 <script src="js/jquery.min.js"></script>
 <script src="js/loginshare.js"></script>
 <script src="js/util.js"></script>
@@ -49,10 +50,10 @@
         </section>
     </div>
     
-    <!-- 提交成功等待企业审核 -->
-    <div class="pop popSuccess">
+     <!-- 评价成功 -->
+    <div class="pop popEva" id="div_popSuccess">
     	<em class="iconSuccess"></em>
-    	<span>提交成功<br>等待企业审核</span>
+    	<span id="span_commonet">评价成功</span>
     </div>
 </body>
 <script type="text/javascript">
@@ -120,6 +121,11 @@
 		var userId = userInfoJson.userId;
 		var nikeName = $('#i_name').val();
 		util.logResult(userInfoJson); 
+		if(nikeName.trim() == ''){
+			$('#span_commonet').html('昵称不可为空!');
+			$( '#div_popSuccess' ).fadeIn();
+			setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+		}
 		var url = util.baseUrl + '/usr/update_info';
 		var param ='{"userId": '+userId+',"nickName":"'+nikeName+'"}';
 		var contentType = "application/json";

@@ -20,6 +20,12 @@
 <script src="js/swiper.min.js"></script>
 <script src="js/detail.js"></script>
 <script src="js/util.js"></script>
+<style>
+.swiper-button-next, .swiper-button-prev { width:44px; height:44px; }
+.swiper-button-next { background:url(static/img/showImageRt.png) no-repeat; background-size:44px; }
+.swiper-button-prev { background:url(static/img/showImageLt.png) no-repeat; background-size:44px;  }
+.swiper-slide img   { width:100%; }
+</style>
 </head>
 <body class="bodyApartmentdetail">
 
@@ -48,10 +54,14 @@
                 <a class="btnHouseRule" onclick="showRule();"></a>
             </div>
             <ul class="mapInfo">
-            	<a onclick="showMap();">
-                	<li class="apartAddress"><i></i><label id="l_address" style="margin-left: 5px;">上海市浦东新区福山路82号</label></li>
-                </a>
-                <li ><i class="iconCar"></i><label id="l_jt" style="margin-left: 5px;"></label></li>
+            	<!--<a onclick="showMap();">
+                	<li class="apartAddress"><i></i><label id="l_address">上海市浦东新区福山路82号</label></li>
+                </a>-->
+                 <li class="apartAddress">
+                 	<a onclick="showMap();"><i></i><label id="l_address">上海市浦东新区福山路82号</label><em class="iconMore"></em></a>
+                 </li>
+
+                <li ><i class="iconCar"></i><label id="l_jt"></label></li>
             </ul>
         </div>
 

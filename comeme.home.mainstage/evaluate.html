@@ -225,6 +225,12 @@ $(function()
 		if(content == '说点什么吧'){
 			content = '';
 		}
+		if(content == ''){
+			$('#span_commonet').html('请说点什么吧!');
+			$( '#div_popSuccess' ).fadeIn();
+			setTimeout(function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+			return false;
+		}
 		var comfort = $('#comfort').val();
 		var convenient = $('#convenient').val();
 		var service = $('#service').val();

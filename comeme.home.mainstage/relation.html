@@ -176,11 +176,14 @@
 			
 			var userInfo = util.getCookie("userInfo");
 			var userInfoJson = eval('(' + userInfo + ')');
-			util.logResult(userInfoJson.userId);
-			var userId = userInfoJson.userId;
-			
-			var url = util.baseUrl + '/usr/update_info';
-			var param ='{"userId": '+userId+',"mobile":"'+mobile+'"}';
+			util.logResult(userInfoJson.openId);
+			var openId = userInfoJson.openId;
+			var avatar = userInfoJson.avatar;
+			var sex = userInfoJson.sex;
+			var nickName = userInfoJson.nickName;
+			var url = util.baseUrl + '/usr/mobile_register';
+			var param ='{"mobile": '+mobile+',"password":"'+pwd+'","verifyCode":"'+code
+					  +'","openId":'+openId+',"avatar":'+avatar+',"sex":'+sex+',"nickName":"'+nickName+'"}';
 			var contentType = "application/json";
 			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 				util.logResult(data); 
