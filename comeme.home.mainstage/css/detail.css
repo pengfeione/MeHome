@@ -61,12 +61,12 @@ body { background:#fff; }
 .apartTag .tagYl { border:1px solid #fe986e; color:#fe986e; }
 .btnHouseRule { width:38px; height:47px; display:block; background:url(../img/btnRule.png) no-repeat; background-size:38px 47px; position:absolute; right:10px; top:0; z-index:10; }
 .mapInfo    { margin:0 10px; color: #3c3c3c; }
-.mapInfo li { padding:5px 0; line-height:20px; }
+.mapInfo li { padding:5px 10px 5px 18px; line-height:20px; position:relative; }
 .mapInfo .apartAddress { border-bottom:1px solid #f0f0f0; }
-.mapInfo .apartAddress a { padding:0 10px 0 18px; height:20px; line-height:20px; display:block; position:relative; }
-.mapInfo .apartAddress i { width:11px; height:15px; display:block; background:url(../img/iconAddress.png) no-repeat; background-size:11px 15px; position:absolute; left:0; margin-top:2px; z-index:5; }
+.mapInfo .apartAddress a { line-height:20px; display:block; }
+.mapInfo .apartAddress i { width:11px; height:15px; display:block; background:url(../img/iconAddress.png) no-repeat; background-size:11px 15px; position:absolute; left:0; top:6px; z-index:5; }
 .mapInfo .apartAddress .iconMore { top:3px; }
-.iconCar { width:13px; height:13px; display:block; background:url(../img/iconCar.png) no-repeat; background-size:13px; position:absolute; left:0;  margin-top:2px; z-index:5;  }
+.iconCar { width:13px; height:13px; display:block; background:url(../img/iconCar.png) no-repeat; background-size:13px; position:absolute; left:0; top:8px; z-index:5;  }
 
 /* apartFl */
 .apartFl { padding:0 10px; background:#fff; color: #3c3c3c; overflow:hidden; }
