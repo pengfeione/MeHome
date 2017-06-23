@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -70,7 +71,6 @@ public class UserInfoServiceImpl implements IUserInfoService {
 
     @Override
     public boolean selectByAuthCode(String authCode) {
-        ;
         return companyDao.selectByAuthCode(authCode) == null ? false : true;
     }
 
@@ -81,23 +81,48 @@ public class UserInfoServiceImpl implements IUserInfoService {
         if (StringUtils.isNull(userInfo.getAvatar())) {
             userInfo.setAvatar(defaultAvatar);
         }
-        AssertUtils.isNull(userInfoDao.selectByMobile(userInfo.getMobile()), "该手机号已注册！");
-        SmsRecord validSms = smsRecordDao.selectValid(userInfo.getMobile(), SmsEnum.NORMAL_REG.getKey());
-        if (null == validSms) {
-            throw new InfoException("验证码已失效！");
-        } else {
-            if (!validSms.getCode().equals(userInfo.getVerifyCode())) {
-                throw new InfoException("验证码不正确！");
+        UserInfo sameMobileUser = userInfoDao.selectByMobile(userInfo.getMobile());
+        if (null != sameMobileUser) {
+            if (StringUtils.isNull(sameMobileUser.getOpenId())) {
+                UserInfo userInfo1 = new UserInfo();
+                userInfo1.setMobile(userInfo.getMobile());
+                userInfo1.setPassword(userInfo.getPassword());
+                if (null == userInfoDao.login(userInfo1)) {
+                    throw new InfoException("与该账号首次注册时密码不一致");
+                } else {
+                    if (StringUtils.isNull(sameMobileUser.getAvatar())) {
+                        sameMobileUser.setAvatar(userInfo.getAvatar());
+                    }
+                    if (StringUtils.isNull(sameMobileUser.getNickName())) {
+                        sameMobileUser.setNickName(userInfo.getNickName());
+                    }
+                    sameMobileUser.setSex(userInfo.getSex());
+                    sameMobileUser.setOpenId(userInfo.getOpenId());
+                    userInfoDao.updateRequired(sameMobileUser);
+                    return sameMobileUser.getUserId();
+                }
+            } else {
+                throw new InfoException("该手机号已被别的账号绑定");
             }
-        }
-        if (StringUtils.isNotNull(userInfo.getOpenId())) {
-            userInfo.setOpenType(UserOpenType.WECHAT.getKey());
         } else {
-            userInfo.setOpenType(UserOpenType.MOBILE.getKey());
+            AssertUtils.isNull(userInfoDao.selectByMobile(userInfo.getMobile()), "该手机号已注册！");
+            SmsRecord validSms = smsRecordDao.selectValid(userInfo.getMobile(), SmsEnum.NORMAL_REG.getKey());
+            if (null == validSms) {
+                throw new InfoException("验证码已失效！");
+            } else {
+                if (!validSms.getCode().equals(userInfo.getVerifyCode())) {
+                    throw new InfoException("验证码不正确！");
+                }
+            }
+            if (StringUtils.isNotNull(userInfo.getOpenId())) {
+                userInfo.setOpenType(UserOpenType.WECHAT.getKey());
+            } else {
+                userInfo.setOpenType(UserOpenType.MOBILE.getKey());
+            }
+            userInfo.setCreateTime(Calendar.getInstance().getTime());
+            userInfoDao.insertRequired(userInfo);
+            return userInfo.getUserId();
         }
-        userInfo.setCreateTime(Calendar.getInstance().getTime());
-        userInfoDao.insertRequired(userInfo);
-        return userInfo.getUserId();
     }
 
     @Override
