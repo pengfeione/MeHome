@@ -90,7 +90,9 @@ public class UserInfoServiceImpl implements IUserInfoService {
                 throw new InfoException("验证码不正确！");
             }
         }
-        if (null == userInfo.getOpenType()) {
+        if (StringUtils.isNotNull(userInfo.getOpenId())) {
+            userInfo.setOpenType(UserOpenType.WECHAT.getKey());
+        } else {
             userInfo.setOpenType(UserOpenType.MOBILE.getKey());
         }
         userInfo.setCreateTime(Calendar.getInstance().getTime());
@@ -102,7 +104,6 @@ public class UserInfoServiceImpl implements IUserInfoService {
     public UserInfo weChatInfo(WeChatUserInfo weChatUserInfo) {
         UserInfo userInfo = new UserInfo();
         userInfo.setOpenId(weChatUserInfo.getOpenid());
-        userInfo.setOpenType(UserOpenType.WECHAT.getKey());
         UserInfo existUser = userInfoDao.selectByOpen(userInfo);
         if (null == existUser) {
             userInfo.setAvatar(weChatUserInfo.getHeadimgurl());
