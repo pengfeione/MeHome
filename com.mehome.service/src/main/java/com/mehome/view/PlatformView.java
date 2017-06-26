@@ -153,8 +153,14 @@ public class PlatformView {
     }
 
     @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
-    @RequestMapping("/activity.html")
+    @RequestMapping("/activityEdit.html")
     public String activity() {
+        return "platformActivityEdit";
+    }
+    
+    @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
+    @RequestMapping("/activity.html")
+    public String activityEdit() {
         return "platformActivity";
     }
 }
