@@ -56,23 +56,65 @@
         }
         return fmt;
     }
-    var rented = '2017-06-22,2017-06-23,2017-06-26';
+
+    function GetQueryParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    var rentedDateRange = [];
     var now = new Date();
     var configObject = {
         language: 'cn',
         startDate: now.format('yyyy-MM-dd'),
         selectForward: true,
+        hoveringTooltip: false,
         inline: true,
         container: '#container',
         alwaysOpen: true,
         beforeShowDay: function (t) {
-            var valid = rented.indexOf(t.format('yyyy-MM-dd')) < 0;  //disable saturday and sunday
+            var nowDate = t.format('yyyy-MM-dd');
+            var valid = true;
+            for (var i = 0; i < rentedDateRange.length; i++) {
+                var startDate = rentedDateRange[i]['startTime'];
+                var endDate = rentedDateRange[i]['endTime'];
+                if (nowDate >= startDate && nowDate <= endDate) {
+                    valid = false;
+                    break;
+                }
+            }
             var _tooltip = valid ? '' : '已出租';
-            return [valid, '', _tooltip];
+            return [valid, 'background-color: red !important; ', _tooltip];
         }
     };
     $(function () {
-        $('#date-range0').dateRangePicker(configObject);
+        var orderId = GetQueryParam('code');
+        if ('' == orderId || undefined == orderId || null == orderId) {
+            alert("参数不正确！");
+        } else {
+            var data = {};
+            data.orderId = orderId;
+            $.ajax({
+                type: "POST",
+                async: true,
+                url: "/api/order/time_piece",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                dataType: "json",
+                success: function (ret) {
+                    if (ret['code'] == 0) {
+                        rentedDateRange = ret['result'];
+                        $('#date-range0').dateRangePicker(configObject);
+                    }
+                },
+                error: function (message) {
+                    alert("请求数据出错！");
+                }
+            });
+
+        }
     })
 </script>
 </html>

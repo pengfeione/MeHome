@@ -1,509 +1,525 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mehome.dao.OrderListDao" >
-  <resultMap id="BaseResultMap" type="com.mehome.domain.OrderList" >
-    <id column="order_id" property="orderId" jdbcType="VARCHAR" />
-    <result column="product_id" property="productId" jdbcType="INTEGER" />
-    <result column="product_name" property="productName" jdbcType="VARCHAR" />
-    <result column="house_id" property="houseId" jdbcType="INTEGER" />
-    <result column="house_subject" property="houseSubject" jdbcType="VARCHAR" />
-    <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
-    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
-    <result column="biller" property="biller" jdbcType="VARCHAR" />
-    <result column="payer" property="payer" jdbcType="VARCHAR" />
-    <result column="bill_time" property="billTime" jdbcType="TIMESTAMP" />
-    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
-    <result column="biller_phone" property="billerPhone" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="deposit" property="deposit" jdbcType="INTEGER" />
-    <result column="orig_rent" property="origRent" jdbcType="INTEGER" />
-    <result column="orig_amount" property="origAmount" jdbcType="INTEGER" />
-    <result column="discount_rent" property="discountRent" jdbcType="INTEGER" />
-    <result column="discount_amount" property="discountAmount" jdbcType="INTEGER" />
-    <result column="pay_account" property="payAccount" jdbcType="VARCHAR" />
-    <result column="pay_online" property="payOnline" jdbcType="BIT" />
-    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
-    <result column="pay_flow" property="payFlow" jdbcType="VARCHAR" />
-    <result column="pay_amount" property="payAmount" jdbcType="INTEGER" />
-    <result column="tenancy" property="tenancy" jdbcType="DECIMAL" />
-    <result column="deposit_back" property="depositBack" jdbcType="BIT" />
-    <result column="back_amount" property="backAmount" jdbcType="INTEGER" />
-    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
-    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
-    <result column="platform_host" property="platformHost" jdbcType="BIT" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
-    <result column="order_reason" property="orderReason" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    order_id, product_id, product_name, house_id, house_subject, supplier_id, supplier_name, 
-    biller, payer, bill_time, pay_time, biller_phone, address, deposit, orig_rent, orig_amount, 
-    discount_rent, discount_amount, pay_account, pay_online, pay_type, pay_flow, pay_amount, tenancy, 
-    deposit_back, back_amount, start_time, end_time, platform_host, update_time, order_status, 
-    order_reason
-  </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from order_list
-    where order_id = #{orderId,jdbcType=VARCHAR}
-  </select>
-  <delete id="delete" parameterType="java.lang.String" >
-    delete from order_list
-    where order_id = #{orderId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.mehome.domain.OrderList" >
-    insert into order_list (order_id, product_id, product_name, 
-      house_id, house_subject, supplier_id, 
-      supplier_name, biller, payer, 
-      bill_time, pay_time, biller_phone, 
-      address, deposit, orig_rent, 
-      orig_amount, discount_rent, discount_amount, 
-      pay_account, pay_online, pay_type, pay_flow,
-      pay_amount, tenancy, deposit_back, 
-      back_amount, start_time, end_time, 
-      platform_host, update_time, order_status, 
-      order_reason)
-    values (#{orderId,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, 
-      #{houseId,jdbcType=INTEGER}, #{houseSubject,jdbcType=VARCHAR}, #{supplierId,jdbcType=INTEGER}, 
-      #{supplierName,jdbcType=VARCHAR}, #{biller,jdbcType=VARCHAR}, #{payer,jdbcType=VARCHAR}, 
-      #{billTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{billerPhone,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{deposit,jdbcType=INTEGER}, #{origRent,jdbcType=INTEGER}, 
-      #{origAmount,jdbcType=INTEGER}, #{discountRent,jdbcType=INTEGER}, #{discountAmount,jdbcType=INTEGER}, 
-      #{payAccount,jdbcType=VARCHAR}, #{payOnline,jdbcType=BIT}, #{payType,jdbcType=VARCHAR}, #{payFlow,jdbcType=VARCHAR},
-      #{payAmount,jdbcType=INTEGER}, #{tenancy,jdbcType=DECIMAL}, #{depositBack,jdbcType=BIT}, 
-      #{backAmount,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{platformHost,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=INTEGER}, 
-      #{orderReason,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertRequired" parameterType="com.mehome.domain.OrderList" >
-    insert into order_list
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="orderId != null" >
-        order_id,
-      </if>
-      <if test="productId != null" >
-        product_id,
-      </if>
-      <if test="productName != null" >
-        product_name,
-      </if>
-      <if test="houseId != null" >
-        house_id,
-      </if>
-      <if test="houseSubject != null" >
-        house_subject,
-      </if>
-      <if test="supplierId != null" >
-        supplier_id,
-      </if>
-      <if test="supplierName != null" >
-        supplier_name,
-      </if>
-      <if test="biller != null" >
-        biller,
-      </if>
-      <if test="payer != null" >
-        payer,
-      </if>
-      <if test="billTime != null" >
-        bill_time,
-      </if>
-      <if test="payTime != null" >
-        pay_time,
-      </if>
-      <if test="billerPhone != null" >
-        biller_phone,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="deposit != null" >
-        deposit,
-      </if>
-      <if test="origRent != null" >
-        orig_rent,
-      </if>
-      <if test="origAmount != null" >
-        orig_amount,
-      </if>
-      <if test="discountRent != null" >
-        discount_rent,
-      </if>
-      <if test="discountAmount != null" >
-        discount_amount,
-      </if>
-      <if test="payAccount != null" >
-        pay_account,
-      </if>
-      <if test="payOnline != null" >
-        pay_online,
-      </if>
-      <if test="payType != null" >
-        pay_type,
-      </if>
-      <if test="payFlow != null" >
-        pay_flow,
-      </if>
-      <if test="payAmount != null" >
-        pay_amount,
-      </if>
-      <if test="tenancy != null" >
-        tenancy,
-      </if>
-      <if test="depositBack != null" >
-        deposit_back,
-      </if>
-      <if test="backAmount != null" >
-        back_amount,
-      </if>
-      <if test="startTime != null" >
-        start_time,
-      </if>
-      <if test="endTime != null" >
-        end_time,
-      </if>
-      <if test="platformHost != null" >
-        platform_host,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="orderStatus != null" >
-        order_status,
-      </if>
-      <if test="orderReason != null" >
-        order_reason,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="orderId != null" >
-        #{orderId,jdbcType=VARCHAR},
-      </if>
-      <if test="productId != null" >
-        #{productId,jdbcType=INTEGER},
-      </if>
-      <if test="productName != null" >
-        #{productName,jdbcType=VARCHAR},
-      </if>
-      <if test="houseId != null" >
-        #{houseId,jdbcType=INTEGER},
-      </if>
-      <if test="houseSubject != null" >
-        #{houseSubject,jdbcType=VARCHAR},
-      </if>
-      <if test="supplierId != null" >
-        #{supplierId,jdbcType=INTEGER},
-      </if>
-      <if test="supplierName != null" >
-        #{supplierName,jdbcType=VARCHAR},
-      </if>
-      <if test="biller != null" >
-        #{biller,jdbcType=VARCHAR},
-      </if>
-      <if test="payer != null" >
-        #{payer,jdbcType=VARCHAR},
-      </if>
-      <if test="billTime != null" >
-        #{billTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="payTime != null" >
-        #{payTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="billerPhone != null" >
-        #{billerPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="deposit != null" >
-        #{deposit,jdbcType=INTEGER},
-      </if>
-      <if test="origRent != null" >
-        #{origRent,jdbcType=INTEGER},
-      </if>
-      <if test="origAmount != null" >
-        #{origAmount,jdbcType=INTEGER},
-      </if>
-      <if test="discountRent != null" >
-        #{discountRent,jdbcType=INTEGER},
-      </if>
-      <if test="discountAmount != null" >
-        #{discountAmount,jdbcType=INTEGER},
-      </if>
-      <if test="payAccount != null" >
-        #{payAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="payOnline != null" >
-        #{payOnline,jdbcType=BIT},
-      </if>
-      <if test="payType != null" >
-        #{payType,jdbcType=VARCHAR},
-      </if>
-      <if test="payFlow != null" >
-        #{payFlow,jdbcType=VARCHAR},
-      </if>
-      <if test="payAmount != null" >
-        #{payAmount,jdbcType=INTEGER},
-      </if>
-      <if test="tenancy != null" >
-        #{tenancy,jdbcType=DECIMAL},
-      </if>
-      <if test="depositBack != null" >
-        #{depositBack,jdbcType=BIT},
-      </if>
-      <if test="backAmount != null" >
-        #{backAmount,jdbcType=INTEGER},
-      </if>
-      <if test="startTime != null" >
-        #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null" >
-        #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="platformHost != null" >
-        #{platformHost,jdbcType=BIT},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="orderStatus != null" >
-        #{orderStatus,jdbcType=INTEGER},
-      </if>
-      <if test="orderReason != null" >
-        #{orderReason,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateRequired" parameterType="com.mehome.domain.OrderList" >
-    update order_list
-    <set >
-      <if test="productId != null" >
-        product_id = #{productId,jdbcType=INTEGER},
-      </if>
-      <if test="productName != null" >
-        product_name = #{productName,jdbcType=VARCHAR},
-      </if>
-      <if test="houseId != null" >
-        house_id = #{houseId,jdbcType=INTEGER},
-      </if>
-      <if test="houseSubject != null" >
-        house_subject = #{houseSubject,jdbcType=VARCHAR},
-      </if>
-      <if test="supplierId != null" >
-        supplier_id = #{supplierId,jdbcType=INTEGER},
-      </if>
-      <if test="supplierName != null" >
-        supplier_name = #{supplierName,jdbcType=VARCHAR},
-      </if>
-      <if test="biller != null" >
-        biller = #{biller,jdbcType=VARCHAR},
-      </if>
-      <if test="payer != null" >
-        payer = #{payer,jdbcType=VARCHAR},
-      </if>
-      <if test="billTime != null" >
-        bill_time = #{billTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="payTime != null" >
-        pay_time = #{payTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="billerPhone != null" >
-        biller_phone = #{billerPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="deposit != null" >
-        deposit = #{deposit,jdbcType=INTEGER},
-      </if>
-      <if test="origRent != null" >
-        orig_rent = #{origRent,jdbcType=INTEGER},
-      </if>
-      <if test="origAmount != null" >
-        orig_amount = #{origAmount,jdbcType=INTEGER},
-      </if>
-      <if test="discountRent != null" >
-        discount_rent = #{discountRent,jdbcType=INTEGER},
-      </if>
-      <if test="discountAmount != null" >
-        discount_amount = #{discountAmount,jdbcType=INTEGER},
-      </if>
-      <if test="payAccount != null" >
-        pay_account = #{payAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="payOnline != null" >
-        pay_online = #{payOnline,jdbcType=BIT},
-      </if>
-      <if test="payType != null" >
-        pay_type = #{payType,jdbcType=VARCHAR},
-      </if>
-      <if test="payFlow != null" >
-        pay_flow = #{payFlow,jdbcType=VARCHAR},
-      </if>
-      <if test="payAmount != null" >
-        pay_amount = #{payAmount,jdbcType=INTEGER},
-      </if>
-      <if test="tenancy != null" >
-        tenancy = #{tenancy,jdbcType=DECIMAL},
-      </if>
-      <if test="depositBack != null" >
-        deposit_back = #{depositBack,jdbcType=BIT},
-      </if>
-      <if test="backAmount != null" >
-        back_amount = #{backAmount,jdbcType=INTEGER},
-      </if>
-      <if test="startTime != null" >
-        start_time = #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null" >
-        end_time = #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="platformHost != null" >
-        platform_host = #{platformHost,jdbcType=BIT},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="orderStatus != null" >
-        order_status = #{orderStatus,jdbcType=INTEGER},
-      </if>
-      <if test="orderReason != null" >
-        order_reason = #{orderReason,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where order_id = #{orderId,jdbcType=VARCHAR}
-  </update>
-  <update id="update" parameterType="com.mehome.domain.OrderList" >
-    update order_list
-    set product_id = #{productId,jdbcType=INTEGER},
-      product_name = #{productName,jdbcType=VARCHAR},
-      house_id = #{houseId,jdbcType=INTEGER},
-      house_subject = #{houseSubject,jdbcType=VARCHAR},
-      supplier_id = #{supplierId,jdbcType=INTEGER},
-      supplier_name = #{supplierName,jdbcType=VARCHAR},
-      biller = #{biller,jdbcType=VARCHAR},
-      payer = #{payer,jdbcType=VARCHAR},
-      bill_time = #{billTime,jdbcType=TIMESTAMP},
-      pay_time = #{payTime,jdbcType=TIMESTAMP},
-      biller_phone = #{billerPhone,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      deposit = #{deposit,jdbcType=INTEGER},
-      orig_rent = #{origRent,jdbcType=INTEGER},
-      orig_amount = #{origAmount,jdbcType=INTEGER},
-      discount_rent = #{discountRent,jdbcType=INTEGER},
-      discount_amount = #{discountAmount,jdbcType=INTEGER},
-      pay_account = #{payAccount,jdbcType=VARCHAR},
-      pay_online = #{payOnline,jdbcType=BIT},
-      pay_type = #{payType,jdbcType=VARCHAR},
-      pay_flow = #{payFlow,jdbcType=VARCHAR},
-      pay_amount = #{payAmount,jdbcType=INTEGER},
-      tenancy = #{tenancy,jdbcType=DECIMAL},
-      deposit_back = #{depositBack,jdbcType=BIT},
-      back_amount = #{backAmount,jdbcType=INTEGER},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
-      platform_host = #{platformHost,jdbcType=BIT},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      order_status = #{orderStatus,jdbcType=INTEGER},
-      order_reason = #{orderReason,jdbcType=VARCHAR}
-    where order_id = #{orderId,jdbcType=VARCHAR}
-  </update>
-  <select id="getListByCondition" parameterType="com.mehome.requestDTO.OrderBean" resultMap="BaseResultMap">
-    SELECT
-    <include refid="Base_Column_List"/>
-    FROM order_list
-    WHERE 1=1
-    <if test="orderId != null">
-      AND order_id = #{orderId,jdbcType=VARCHAR}
-    </if>
-    <if test="productName != null" >
-      AND product_name like CONCAT('%','${productName}','%' )
-    </if>
-    <if test="houseSubject != null" >
-      AND house_subject like CONCAT('%','${houseSubject}','%' )
-    </if>
-    <if test="biller != null">
-      AND biller = #{biller,jdbcType=VARCHAR}
-    </if>
-    <if test="payType != null">
-      AND pay_type = #{payType,jdbcType=VARCHAR}
-    </if>
-    <if test="productId != null">
-      AND product_id = #{productId,jdbcType=INTEGER}
-    </if>
-    <if test="houseId != null">
-      AND house_id = #{houseId,jdbcType=INTEGER}
-    </if>
-    <if test="supplierId != null" >
-      AND supplier_id = #{supplierId,jdbcType=INTEGER}
-    </if>
-    <if test="platformHost != null">
-      AND platform_host = #{platformHost,jdbcType=BIT}
-    </if>
-    <if test="orderStatus != null">
-      AND order_status = #{orderStatus,jdbcType=INTEGER}
-    </if>
-    <if test="payFlow != null">
-      AND pay_flow = #{payFlow,jdbcType=INTEGER}
-    </if>
-    <if test="startTimeDateBegin != null">
-      AND start_time >= #{startTimeDateBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="endTimeDateEnd != null">
-      AND #{endTimeDateEnd,jdbcType=TIMESTAMP}>end_time
-    </if>
-    <if test="endTimeDateBegin != null">
-      AND end_time>=#{endTimeDateBegin,jdbcType=TIMESTAMP}
-    </if>
-    ORDER BY bill_time DESC
-    limit #{pageNow},#{pageSize}
-  </select>
-  <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.OrderBean" resultType="java.lang.Long">
-    SELECT count(*)
-    FROM order_list
-    WHERE 1=1
-    <if test="orderId != null">
-      AND order_id = #{orderId,jdbcType=VARCHAR}
-    </if>
-    <if test="productName != null" >
-      AND product_name like CONCAT('%','${productName}','%' )
-    </if>
-    <if test="houseSubject != null" >
-      AND house_subject like CONCAT('%','${houseSubject}','%' )
-    </if>
-    <if test="biller != null">
-      AND biller = #{biller,jdbcType=VARCHAR}
-    </if>
-    <if test="payType != null">
-      AND pay_type = #{payType,jdbcType=VARCHAR}
-    </if>
-    <if test="productId != null">
-      AND product_id = #{productId,jdbcType=INTEGER}
-    </if>
-    <if test="houseId != null">
-      AND house_id = #{houseId,jdbcType=INTEGER}
-    </if>
-    <if test="supplierId != null" >
-      AND supplier_id = #{supplierId,jdbcType=INTEGER}
-    </if>
-    <if test="platformHost != null">
-      AND platform_host = #{platformHost,jdbcType=BIT}
-    </if>
-    <if test="orderStatus != null">
-      AND order_status = #{orderStatus,jdbcType=INTEGER}
-    </if>
-    <if test="payFlow != null">
-      AND pay_flow = #{payFlow,jdbcType=INTEGER}
-    </if>
-    <if test="startTimeDateBegin != null">
-      AND start_time >= #{startTimeDateBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="endTimeDateEnd != null">
-      AND #{endTimeDateEnd,jdbcType=TIMESTAMP}>end_time
-    </if>
-    <if test="endTimeDateBegin != null">
-      AND end_time>=#{endTimeDateBegin,jdbcType=TIMESTAMP}
-    </if>
-  </select>
+<mapper namespace="com.mehome.dao.OrderListDao">
+    <resultMap id="BaseResultMap" type="com.mehome.domain.OrderList">
+        <id column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="product_id" property="productId" jdbcType="INTEGER"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        <result column="house_id" property="houseId" jdbcType="INTEGER"/>
+        <result column="house_subject" property="houseSubject" jdbcType="VARCHAR"/>
+        <result column="supplier_id" property="supplierId" jdbcType="INTEGER"/>
+        <result column="supplier_name" property="supplierName" jdbcType="VARCHAR"/>
+        <result column="biller" property="biller" jdbcType="VARCHAR"/>
+        <result column="payer" property="payer" jdbcType="VARCHAR"/>
+        <result column="bill_time" property="billTime" jdbcType="TIMESTAMP"/>
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
+        <result column="biller_phone" property="billerPhone" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="deposit" property="deposit" jdbcType="INTEGER"/>
+        <result column="orig_rent" property="origRent" jdbcType="INTEGER"/>
+        <result column="orig_amount" property="origAmount" jdbcType="INTEGER"/>
+        <result column="discount_rent" property="discountRent" jdbcType="INTEGER"/>
+        <result column="discount_amount" property="discountAmount" jdbcType="INTEGER"/>
+        <result column="pay_account" property="payAccount" jdbcType="VARCHAR"/>
+        <result column="pay_online" property="payOnline" jdbcType="BIT"/>
+        <result column="pay_type" property="payType" jdbcType="VARCHAR"/>
+        <result column="pay_flow" property="payFlow" jdbcType="VARCHAR"/>
+        <result column="pay_amount" property="payAmount" jdbcType="INTEGER"/>
+        <result column="tenancy" property="tenancy" jdbcType="DECIMAL"/>
+        <result column="deposit_back" property="depositBack" jdbcType="BIT"/>
+        <result column="back_amount" property="backAmount" jdbcType="INTEGER"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="platform_host" property="platformHost" jdbcType="BIT"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="order_status" property="orderStatus" jdbcType="INTEGER"/>
+        <result column="order_reason" property="orderReason" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="HouseTimePieceBase" type="com.mehome.resonpseDTO.HouseTimePiece">
+        <id column="start_time" property="startTime" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        order_id, product_id, product_name, house_id, house_subject, supplier_id, supplier_name,
+        biller, payer, bill_time, pay_time, biller_phone, address, deposit, orig_rent, orig_amount,
+        discount_rent, discount_amount, pay_account, pay_online, pay_type, pay_flow, pay_amount, tenancy,
+        deposit_back, back_amount, start_time, end_time, platform_host, update_time, order_status,
+        order_reason
+    </sql>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from order_list
+        where order_id = #{orderId,jdbcType=VARCHAR}
+    </select>
+    <select id="houseTimePiece" resultMap="HouseTimePieceBase" parameterType="java.lang.Integer">
+        SELECT
+            DATE_FORMAT(if(start_time > now(), start_time, now()), '%Y-%m-%d') AS start_time,
+            DATE_FORMAT(end_time, '%Y-%m-%d')                                  AS end_time
+        FROM order_list
+        WHERE house_id = #{houseId,jdbcType=VARCHAR}
+              AND end_time >= now()
+    </select>
+    <delete id="delete" parameterType="java.lang.String">
+        DELETE FROM order_list
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.mehome.domain.OrderList">
+        INSERT INTO order_list (order_id, product_id, product_name,
+                                house_id, house_subject, supplier_id,
+                                supplier_name, biller, payer,
+                                bill_time, pay_time, biller_phone,
+                                address, deposit, orig_rent,
+                                orig_amount, discount_rent, discount_amount,
+                                pay_account, pay_online, pay_type, pay_flow,
+                                pay_amount, tenancy, deposit_back,
+                                back_amount, start_time, end_time,
+                                platform_host, update_time, order_status,
+                                order_reason)
+        VALUES (#{orderId,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR},
+                                             #{houseId,jdbcType=INTEGER}, #{houseSubject,jdbcType=VARCHAR},
+                                             #{supplierId,jdbcType=INTEGER},
+                                             #{supplierName,jdbcType=VARCHAR}, #{biller,jdbcType=VARCHAR},
+                                             #{payer,jdbcType=VARCHAR},
+                                             #{billTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP},
+            #{billerPhone,jdbcType=VARCHAR},
+            #{address,jdbcType=VARCHAR}, #{deposit,jdbcType=INTEGER}, #{origRent,jdbcType=INTEGER},
+            #{origAmount,jdbcType=INTEGER}, #{discountRent,jdbcType=INTEGER}, #{discountAmount,jdbcType=INTEGER},
+            #{payAccount,jdbcType=VARCHAR}, #{payOnline,jdbcType=BIT}, #{payType,jdbcType=VARCHAR},
+            #{payFlow,jdbcType=VARCHAR},
+            #{payAmount,jdbcType=INTEGER}, #{tenancy,jdbcType=DECIMAL}, #{depositBack,jdbcType=BIT},
+            #{backAmount,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+            #{platformHost,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=INTEGER},
+                #{orderReason,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertRequired" parameterType="com.mehome.domain.OrderList">
+        insert into order_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="productName != null">
+                product_name,
+            </if>
+            <if test="houseId != null">
+                house_id,
+            </if>
+            <if test="houseSubject != null">
+                house_subject,
+            </if>
+            <if test="supplierId != null">
+                supplier_id,
+            </if>
+            <if test="supplierName != null">
+                supplier_name,
+            </if>
+            <if test="biller != null">
+                biller,
+            </if>
+            <if test="payer != null">
+                payer,
+            </if>
+            <if test="billTime != null">
+                bill_time,
+            </if>
+            <if test="payTime != null">
+                pay_time,
+            </if>
+            <if test="billerPhone != null">
+                biller_phone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="deposit != null">
+                deposit,
+            </if>
+            <if test="origRent != null">
+                orig_rent,
+            </if>
+            <if test="origAmount != null">
+                orig_amount,
+            </if>
+            <if test="discountRent != null">
+                discount_rent,
+            </if>
+            <if test="discountAmount != null">
+                discount_amount,
+            </if>
+            <if test="payAccount != null">
+                pay_account,
+            </if>
+            <if test="payOnline != null">
+                pay_online,
+            </if>
+            <if test="payType != null">
+                pay_type,
+            </if>
+            <if test="payFlow != null">
+                pay_flow,
+            </if>
+            <if test="payAmount != null">
+                pay_amount,
+            </if>
+            <if test="tenancy != null">
+                tenancy,
+            </if>
+            <if test="depositBack != null">
+                deposit_back,
+            </if>
+            <if test="backAmount != null">
+                back_amount,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="platformHost != null">
+                platform_host,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="orderStatus != null">
+                order_status,
+            </if>
+            <if test="orderReason != null">
+                order_reason,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="houseId != null">
+                #{houseId,jdbcType=INTEGER},
+            </if>
+            <if test="houseSubject != null">
+                #{houseSubject,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierId != null">
+                #{supplierId,jdbcType=INTEGER},
+            </if>
+            <if test="supplierName != null">
+                #{supplierName,jdbcType=VARCHAR},
+            </if>
+            <if test="biller != null">
+                #{biller,jdbcType=VARCHAR},
+            </if>
+            <if test="payer != null">
+                #{payer,jdbcType=VARCHAR},
+            </if>
+            <if test="billTime != null">
+                #{billTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payTime != null">
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="billerPhone != null">
+                #{billerPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="deposit != null">
+                #{deposit,jdbcType=INTEGER},
+            </if>
+            <if test="origRent != null">
+                #{origRent,jdbcType=INTEGER},
+            </if>
+            <if test="origAmount != null">
+                #{origAmount,jdbcType=INTEGER},
+            </if>
+            <if test="discountRent != null">
+                #{discountRent,jdbcType=INTEGER},
+            </if>
+            <if test="discountAmount != null">
+                #{discountAmount,jdbcType=INTEGER},
+            </if>
+            <if test="payAccount != null">
+                #{payAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="payOnline != null">
+                #{payOnline,jdbcType=BIT},
+            </if>
+            <if test="payType != null">
+                #{payType,jdbcType=VARCHAR},
+            </if>
+            <if test="payFlow != null">
+                #{payFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="payAmount != null">
+                #{payAmount,jdbcType=INTEGER},
+            </if>
+            <if test="tenancy != null">
+                #{tenancy,jdbcType=DECIMAL},
+            </if>
+            <if test="depositBack != null">
+                #{depositBack,jdbcType=BIT},
+            </if>
+            <if test="backAmount != null">
+                #{backAmount,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="platformHost != null">
+                #{platformHost,jdbcType=BIT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderStatus != null">
+                #{orderStatus,jdbcType=INTEGER},
+            </if>
+            <if test="orderReason != null">
+                #{orderReason,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateRequired" parameterType="com.mehome.domain.OrderList">
+        update order_list
+        <set>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="productName != null">
+                product_name = #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="houseId != null">
+                house_id = #{houseId,jdbcType=INTEGER},
+            </if>
+            <if test="houseSubject != null">
+                house_subject = #{houseSubject,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierId != null">
+                supplier_id = #{supplierId,jdbcType=INTEGER},
+            </if>
+            <if test="supplierName != null">
+                supplier_name = #{supplierName,jdbcType=VARCHAR},
+            </if>
+            <if test="biller != null">
+                biller = #{biller,jdbcType=VARCHAR},
+            </if>
+            <if test="payer != null">
+                payer = #{payer,jdbcType=VARCHAR},
+            </if>
+            <if test="billTime != null">
+                bill_time = #{billTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="billerPhone != null">
+                biller_phone = #{billerPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="deposit != null">
+                deposit = #{deposit,jdbcType=INTEGER},
+            </if>
+            <if test="origRent != null">
+                orig_rent = #{origRent,jdbcType=INTEGER},
+            </if>
+            <if test="origAmount != null">
+                orig_amount = #{origAmount,jdbcType=INTEGER},
+            </if>
+            <if test="discountRent != null">
+                discount_rent = #{discountRent,jdbcType=INTEGER},
+            </if>
+            <if test="discountAmount != null">
+                discount_amount = #{discountAmount,jdbcType=INTEGER},
+            </if>
+            <if test="payAccount != null">
+                pay_account = #{payAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="payOnline != null">
+                pay_online = #{payOnline,jdbcType=BIT},
+            </if>
+            <if test="payType != null">
+                pay_type = #{payType,jdbcType=VARCHAR},
+            </if>
+            <if test="payFlow != null">
+                pay_flow = #{payFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="payAmount != null">
+                pay_amount = #{payAmount,jdbcType=INTEGER},
+            </if>
+            <if test="tenancy != null">
+                tenancy = #{tenancy,jdbcType=DECIMAL},
+            </if>
+            <if test="depositBack != null">
+                deposit_back = #{depositBack,jdbcType=BIT},
+            </if>
+            <if test="backAmount != null">
+                back_amount = #{backAmount,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="platformHost != null">
+                platform_host = #{platformHost,jdbcType=BIT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus,jdbcType=INTEGER},
+            </if>
+            <if test="orderReason != null">
+                order_reason = #{orderReason,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+    <update id="update" parameterType="com.mehome.domain.OrderList">
+        UPDATE order_list
+        SET product_id      = #{productId,jdbcType=INTEGER},
+            product_name    = #{productName,jdbcType=VARCHAR},
+            house_id        = #{houseId,jdbcType=INTEGER},
+            house_subject   = #{houseSubject,jdbcType=VARCHAR},
+            supplier_id     = #{supplierId,jdbcType=INTEGER},
+            supplier_name   = #{supplierName,jdbcType=VARCHAR},
+            biller          = #{biller,jdbcType=VARCHAR},
+            payer           = #{payer,jdbcType=VARCHAR},
+            bill_time       = #{billTime,jdbcType=TIMESTAMP},
+            pay_time        = #{payTime,jdbcType=TIMESTAMP},
+            biller_phone    = #{billerPhone,jdbcType=VARCHAR},
+            address         = #{address,jdbcType=VARCHAR},
+            deposit         = #{deposit,jdbcType=INTEGER},
+            orig_rent       = #{origRent,jdbcType=INTEGER},
+            orig_amount     = #{origAmount,jdbcType=INTEGER},
+            discount_rent   = #{discountRent,jdbcType=INTEGER},
+            discount_amount = #{discountAmount,jdbcType=INTEGER},
+            pay_account     = #{payAccount,jdbcType=VARCHAR},
+            pay_online      = #{payOnline,jdbcType=BIT},
+            pay_type        = #{payType,jdbcType=VARCHAR},
+            pay_flow        = #{payFlow,jdbcType=VARCHAR},
+            pay_amount      = #{payAmount,jdbcType=INTEGER},
+            tenancy         = #{tenancy,jdbcType=DECIMAL},
+            deposit_back    = #{depositBack,jdbcType=BIT},
+            back_amount     = #{backAmount,jdbcType=INTEGER},
+            start_time      = #{startTime,jdbcType=TIMESTAMP},
+            end_time        = #{endTime,jdbcType=TIMESTAMP},
+            platform_host   = #{platformHost,jdbcType=BIT},
+            update_time     = #{updateTime,jdbcType=TIMESTAMP},
+            order_status    = #{orderStatus,jdbcType=INTEGER},
+            order_reason    = #{orderReason,jdbcType=VARCHAR}
+        WHERE order_id = #{orderId,jdbcType=VARCHAR}
+    </update>
+    <select id="getListByCondition" parameterType="com.mehome.requestDTO.OrderBean" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM order_list
+        WHERE 1=1
+        <if test="orderId != null">
+            AND order_id = #{orderId,jdbcType=VARCHAR}
+        </if>
+        <if test="productName != null">
+            AND product_name like CONCAT('%','${productName}','%' )
+        </if>
+        <if test="houseSubject != null">
+            AND house_subject like CONCAT('%','${houseSubject}','%' )
+        </if>
+        <if test="biller != null">
+            AND biller = #{biller,jdbcType=VARCHAR}
+        </if>
+        <if test="payType != null">
+            AND pay_type = #{payType,jdbcType=VARCHAR}
+        </if>
+        <if test="productId != null">
+            AND product_id = #{productId,jdbcType=INTEGER}
+        </if>
+        <if test="houseId != null">
+            AND house_id = #{houseId,jdbcType=INTEGER}
+        </if>
+        <if test="supplierId != null">
+            AND supplier_id = #{supplierId,jdbcType=INTEGER}
+        </if>
+        <if test="platformHost != null">
+            AND platform_host = #{platformHost,jdbcType=BIT}
+        </if>
+        <if test="orderStatus != null">
+            AND order_status = #{orderStatus,jdbcType=INTEGER}
+        </if>
+        <if test="payFlow != null">
+            AND pay_flow = #{payFlow,jdbcType=INTEGER}
+        </if>
+        <if test="startTimeDateBegin != null">
+            AND start_time >= #{startTimeDateBegin,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTimeDateEnd != null">
+            AND #{endTimeDateEnd,jdbcType=TIMESTAMP}>end_time
+        </if>
+        <if test="endTimeDateBegin != null">
+            AND end_time>=#{endTimeDateBegin,jdbcType=TIMESTAMP}
+        </if>
+        ORDER BY bill_time DESC
+        limit #{pageNow},#{pageSize}
+    </select>
+    <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.OrderBean" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM order_list
+        WHERE 1=1
+        <if test="orderId != null">
+            AND order_id = #{orderId,jdbcType=VARCHAR}
+        </if>
+        <if test="productName != null">
+            AND product_name like CONCAT('%','${productName}','%' )
+        </if>
+        <if test="houseSubject != null">
+            AND house_subject like CONCAT('%','${houseSubject}','%' )
+        </if>
+        <if test="biller != null">
+            AND biller = #{biller,jdbcType=VARCHAR}
+        </if>
+        <if test="payType != null">
+            AND pay_type = #{payType,jdbcType=VARCHAR}
+        </if>
+        <if test="productId != null">
+            AND product_id = #{productId,jdbcType=INTEGER}
+        </if>
+        <if test="houseId != null">
+            AND house_id = #{houseId,jdbcType=INTEGER}
+        </if>
+        <if test="supplierId != null">
+            AND supplier_id = #{supplierId,jdbcType=INTEGER}
+        </if>
+        <if test="platformHost != null">
+            AND platform_host = #{platformHost,jdbcType=BIT}
+        </if>
+        <if test="orderStatus != null">
+            AND order_status = #{orderStatus,jdbcType=INTEGER}
+        </if>
+        <if test="payFlow != null">
+            AND pay_flow = #{payFlow,jdbcType=INTEGER}
+        </if>
+        <if test="startTimeDateBegin != null">
+            AND start_time >= #{startTimeDateBegin,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTimeDateEnd != null">
+            AND #{endTimeDateEnd,jdbcType=TIMESTAMP}>end_time
+        </if>
+        <if test="endTimeDateBegin != null">
+            AND end_time>=#{endTimeDateBegin,jdbcType=TIMESTAMP}
+        </if>
+    </select>
 </mapper>

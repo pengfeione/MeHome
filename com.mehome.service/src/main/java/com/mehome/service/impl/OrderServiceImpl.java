@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.mehome.resonpseDTO.HouseTimePiece;
+import com.mehome.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +38,6 @@ import com.mehome.requestDTO.OrderBean;
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IOrderService;
 import com.mehome.service.iface.IThirdPay;
-import com.mehome.utils.DateUtils;
-import com.mehome.utils.OrderIdUtils;
-import com.mehome.utils.PropertiesUtil;
-import com.mehome.utils.SpringContextUtil;
 
 @Service("IOrderService")
 public class OrderServiceImpl implements IOrderService {
@@ -312,4 +310,13 @@ public class OrderServiceImpl implements IOrderService {
         return Boolean.FALSE.toString();
     }
 
+    @Override
+    public List<HouseTimePiece> houseTimePiece(OrderBean bean) {
+        AssertUtils.isNotNull(bean.getOrderId(), "订单编号不能为空！");
+        OrderList orderList = orderListDAO.selectById(bean.getOrderId());
+        if (null == orderList.getHouseId()) {
+            return new ArrayList<HouseTimePiece>();
+        }
+        return orderListDAO.houseTimePiece(orderList.getHouseId());
+    }
 }

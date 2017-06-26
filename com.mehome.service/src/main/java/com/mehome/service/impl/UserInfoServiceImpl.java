@@ -96,6 +96,9 @@ public class UserInfoServiceImpl implements IUserInfoService {
                     if (StringUtils.isNull(sameMobileUser.getNickName())) {
                         sameMobileUser.setNickName(userInfo.getNickName());
                     }
+                    if(!defaultAvatar.equals(sameMobileUser.getAvatar())){
+                        sameMobileUser.setAvatar(userInfo.getAvatar());
+                    }
                     sameMobileUser.setSex(userInfo.getSex());
                     sameMobileUser.setOpenId(userInfo.getOpenId());
                     userInfoDao.updateRequired(sameMobileUser);
@@ -136,6 +139,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
             userInfo.setSex(Integer.valueOf(weChatUserInfo.getSex()));
             return userInfo;
         } else {
+            existUser.setPassword("");
             return existUser;
         }
     }

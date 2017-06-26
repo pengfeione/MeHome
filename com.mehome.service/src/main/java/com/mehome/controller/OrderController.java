@@ -7,12 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.mehome.requestDTO.OrderBean;
 import com.mehome.service.iface.IOrderService;
@@ -36,21 +31,21 @@ public class OrderController {
     @PostMapping("/list")
     @ResponseBody
     public ResponseEntity<Result> list(@RequestBody OrderBean order) {
-    	Calendar cal = Calendar.getInstance();
-		cal.setTime(new Date());
-		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE), 0, 0, 0);
-		cal.set(Calendar.MILLISECOND, 0);
-		Date nowDate=cal.getTime();
-		if(order.getDays()!=null){
-			Date endTimeEnd=DateUtils.getDayEnd(new Date(), "day", order.getDays());
-			order.setEndTimeDateBegin(nowDate);
-			order.setEndTimeDateEnd(endTimeEnd);
-		}
-		if(order.getMonths()!=null){
-			Date endTimeEnd=DateUtils.getDayEnd(new Date(), "month", order.getMonths());
-			order.setEndTimeDateBegin(nowDate);
-			order.setEndTimeDateEnd(endTimeEnd);
-		}
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE), 0, 0, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date nowDate = cal.getTime();
+        if (order.getDays() != null) {
+            Date endTimeEnd = DateUtils.getDayEnd(new Date(), "day", order.getDays());
+            order.setEndTimeDateBegin(nowDate);
+            order.setEndTimeDateEnd(endTimeEnd);
+        }
+        if (order.getMonths() != null) {
+            Date endTimeEnd = DateUtils.getDayEnd(new Date(), "month", order.getMonths());
+            order.setEndTimeDateBegin(nowDate);
+            order.setEndTimeDateEnd(endTimeEnd);
+        }
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
@@ -121,6 +116,7 @@ public class OrderController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(orderService.refundOrder(order)));
     }
+
     /**
      * 判断预约  返回true代表可以预约
      *
@@ -129,11 +125,27 @@ public class OrderController {
      */
     @PostMapping("/judgeExistOrder")
     @ResponseBody
-    public ResponseEntity<Result> judgeExistOrder(@RequestBody OrderBean order){
-    	return ResponseEntity
+    public ResponseEntity<Result> judgeExistOrder(@RequestBody OrderBean order) {
+        return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(orderService.judgeExistOrder(order)));
+    }
+
+    /**
+     * 返回订单的租赁时间
+     *
+     * @param order
+     * @return
+     */
+    @PostMapping("/time_piece")
+    @ResponseBody
+    public ResponseEntity<Result> timePiece(@RequestBody OrderBean order) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(orderService.houseTimePiece(order)));
     }
 }
