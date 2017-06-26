@@ -73,6 +73,7 @@
         hoveringTooltip: false,
         inline: true,
         container: '#container',
+        separator: 'to',
         alwaysOpen: true,
         beforeShowDay: function (t) {
             var nowDate = t.format('yyyy-MM-dd');
@@ -90,6 +91,16 @@
         }
     };
     $(function () {
+        $('#btn_search').on('click', function () {
+            if ('' == $('#date-range0').val()) {
+                alert("未选择时间！");
+            }
+            var strs = new Array();
+            strs = $('#date-range0').val().split("to");
+            var startTime = strs[0];
+            var endTime = strs[1];
+            //TODO 更新订单
+        });
         var orderId = GetQueryParam('code');
         if ('' == orderId || undefined == orderId || null == orderId) {
             alert("参数不正确！");
