@@ -96,7 +96,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
                     if (StringUtils.isNull(sameMobileUser.getNickName())) {
                         sameMobileUser.setNickName(userInfo.getNickName());
                     }
-                    if(!defaultAvatar.equals(sameMobileUser.getAvatar())){
+                    if (!defaultAvatar.equals(sameMobileUser.getAvatar())) {
                         sameMobileUser.setAvatar(userInfo.getAvatar());
                     }
                     sameMobileUser.setSex(userInfo.getSex());
@@ -133,12 +133,18 @@ public class UserInfoServiceImpl implements IUserInfoService {
         UserInfo userInfo = new UserInfo();
         userInfo.setOpenId(weChatUserInfo.getOpenid());
         UserInfo existUser = userInfoDao.selectByOpen(userInfo);
+        System.out.println("------------------>>>>");
+        System.out.println(existUser);
         if (null == existUser) {
+            System.out.println("------------------>>>>2");
+            System.out.println(existUser);
             userInfo.setAvatar(weChatUserInfo.getHeadimgurl());
             userInfo.setNickName(weChatUserInfo.getNickname());
             userInfo.setSex(Integer.valueOf(weChatUserInfo.getSex()));
             return userInfo;
         } else {
+            System.out.println("------------------>>>>3");
+            System.out.println(existUser);
             existUser.setPassword("");
             return existUser;
         }
