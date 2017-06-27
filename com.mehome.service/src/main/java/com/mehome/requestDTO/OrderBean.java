@@ -553,8 +553,11 @@ public class OrderBean extends PageMysqlUtil{
 		if(order.getOrderStatus().intValue()>=2){
 			if(order.getPlatformHost()){
 				this.setPlatFormAmount(order.getDeposit());
+				this.setSupplierAmount(order.getDiscountAmount()-order.getDeposit());
 			}
-			this.setSupplierAmount(order.getDiscountAmount()-order.getDeposit());
+			else{
+				this.setSupplierAmount(order.getDiscountAmount());
+			}
 		}
 	}
 	
