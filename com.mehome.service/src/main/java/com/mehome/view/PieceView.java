@@ -21,4 +21,9 @@ public class PieceView {
     public String list() {
         return "HousePiece";
     }
+
+    @GetMapping(path = "/piece2")
+    public String piece2() {
+        return "HousePiece2";
+    }
 }

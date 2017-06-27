@@ -314,9 +314,29 @@ public class OrderServiceImpl implements IOrderService {
     public List<HouseTimePiece> houseTimePiece(OrderBean bean) {
         AssertUtils.isNotNull(bean.getOrderId(), "订单编号不能为空！");
         OrderList orderList = orderListDAO.selectById(bean.getOrderId());
-        if (null == orderList.getHouseId()) {
-            return new ArrayList<HouseTimePiece>();
+        List<HouseTimePiece> houseTimePieceList = new ArrayList<HouseTimePiece>();
+        if (null != orderList) {
+            HouseTimePiece houseTimePiece = new HouseTimePiece();
+            if (null != orderList.getStartTime() && null != orderList.getEndTime()) {
+                houseTimePiece.setStartTime(DateUtils.dateToDateStr(orderList.getStartTime()));
+                houseTimePiece.setEndTime(DateUtils.dateToDateStr(orderList.getEndTime()));
+            } else {
+                houseTimePiece.setStartTime("");
+                houseTimePiece.setEndTime("");
+            }
+            houseTimePieceList.add(houseTimePiece);
+            if (null == orderList.getHouseId()) {
+                return houseTimePieceList;
+            } else {
+                houseTimePieceList.addAll(orderListDAO.houseTimePieceExceptMe(orderList.getHouseId(), bean.getOrderId()));
+            }
         }
-        return orderListDAO.houseTimePiece(orderList.getHouseId());
+        return houseTimePieceList;
+    }
+
+    @Override
+    public List<HouseTimePiece> pieceByHouse(HouseResource bean) {
+        AssertUtils.isNotNull(bean.getHouseId(), "订单编号不能为空！");
+        return orderListDAO.houseTimePiece(bean.getHouseId());
     }
 }

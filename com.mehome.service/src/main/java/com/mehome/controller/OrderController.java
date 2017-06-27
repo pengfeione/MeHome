@@ -3,6 +3,7 @@ package com.mehome.controller;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.mehome.domain.HouseResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -139,13 +140,29 @@ public class OrderController {
      * @param order
      * @return
      */
-    @PostMapping("/time_piece")
+    @PostMapping("/piece_by_order")
     @ResponseBody
-    public ResponseEntity<Result> timePiece(@RequestBody OrderBean order) {
+    public ResponseEntity<Result> piece_by_order(@RequestBody OrderBean order) {
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(orderService.houseTimePiece(order)));
+    }
+
+    /**
+     * 返回订单的租赁时间
+     *
+     * @param house
+     * @return
+     */
+    @PostMapping("/piece_by_house")
+    @ResponseBody
+    public ResponseEntity<Result> piece_by_house(@RequestBody HouseResource house) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(orderService.pieceByHouse(house)));
     }
 }

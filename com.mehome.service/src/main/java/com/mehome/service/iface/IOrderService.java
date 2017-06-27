@@ -2,6 +2,7 @@ package com.mehome.service.iface;
 
 import java.util.List;
 
+import com.mehome.domain.HouseResource;
 import com.mehome.requestDTO.OrderBean;
 import com.mehome.resonpseDTO.HouseTimePiece;
 
@@ -31,5 +32,8 @@ public interface IOrderService {
 
 
     List<HouseTimePiece> houseTimePiece(OrderBean bean);
+
+    List<HouseTimePiece> pieceByHouse(HouseResource bean);
+
 
 }

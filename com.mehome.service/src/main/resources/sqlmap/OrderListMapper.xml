@@ -52,7 +52,17 @@
         from order_list
         where order_id = #{orderId,jdbcType=VARCHAR}
     </select>
-    <select id="houseTimePiece" resultMap="HouseTimePieceBase" parameterType="java.lang.Integer">
+    <select id="houseTimePieceExceptMe" resultMap="HouseTimePieceBase" parameterType="map">
+        SELECT
+            DATE_FORMAT(if(start_time > now(), start_time, now()), '%Y-%m-%d') AS start_time,
+            DATE_FORMAT(end_time, '%Y-%m-%d')                                  AS end_time
+        FROM order_list
+        WHERE
+            order_id != #{orderId,jdbcType=VARCHAR}
+            AND house_id = #{houseId,jdbcType=VARCHAR}
+            AND end_time >= now()
+    </select>
+    <select id="houseTimePiece" resultMap="HouseTimePieceBase" parameterType="map">
         SELECT
             DATE_FORMAT(if(start_time > now(), start_time, now()), '%Y-%m-%d') AS start_time,
             DATE_FORMAT(end_time, '%Y-%m-%d')                                  AS end_time

@@ -30,9 +30,6 @@
 <div>
     <input id="date-range0" size="40" value="" style="display:none;"/>
     <div id="container"></div>
-    <span class="input-group-btn">
-       <button class="btn btn-s-md btn-primary btn-rounded" type="button" id="btn_search">确定</button>
-     </span>
 </div>
 </body>
 <script>
@@ -56,6 +53,7 @@
         }
         return fmt;
     }
+    var currDate = new Date().format('yyyy-MM-dd');
 
     function GetQueryParam(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -63,7 +61,7 @@
         if (r != null) return unescape(r[2]);
         return null;
     }
-    var currDate  =new Date().format('yyyy-MM-dd');
+
     var rentedDateRange = [];
     var configObject = {
         language: 'cn',
@@ -74,10 +72,10 @@
         beforeShowDay: function (t) {
             var nowDate = t.format('yyyy-MM-dd');
             var valid = true;
-            for (var i = 1; i < rentedDateRange.length; i++) {
+            for (var i = 0; i < rentedDateRange.length; i++) {
                 var startDate = rentedDateRange[i]['startTime'];
                 var endDate = rentedDateRange[i]['endTime'];
-                if ((nowDate >= startDate && nowDate <= endDate)||nowDate<currDate) {
+                if ((nowDate >= startDate && nowDate <= endDate) || nowDate < currDate) {
                     valid = false;
                     break;
                 }
@@ -87,39 +85,23 @@
         }
     };
     $(function () {
-        $('#btn_search').on('click', function () {
-            if ('' == $('#date-range0').val()) {
-                alert("未选择时间！");
-            }
-            var strs = new Array();
-            strs = $('#date-range0').val().split(" to ");
-            var startTime = strs[0];
-            var endTime = strs[1];
-            console.log(startTime, endTime);
-            //TODO 更新订单
-        });
-        var orderId = GetQueryParam('code');
-        if ('' == orderId || undefined == orderId || null == orderId) {
+        var houseId = GetQueryParam('code');
+        if ('' == houseId || undefined == houseId || null == houseId) {
             alert("参数不正确！");
         } else {
             var data = {};
-            data.orderId = orderId;
+            data.houseId = houseId;
             $.ajax({
                 type: "POST",
                 async: true,
-                url: "/api/order/piece_by_order",
+                url: "/api/order/piece_by_house",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 dataType: "json",
                 success: function (ret) {
                     if (ret['code'] == 0) {
                         rentedDateRange = ret['result'];
-                        console.log(rentedDateRange);
                         $('#date-range0').dateRangePicker(configObject);
-                        if (rentedDateRange.length > 0) {
-                            console.log(rentedDateRange[0]['startTime'], rentedDateRange[0]['endTime']);
-                            $('#date-range0').data('dateRangePicker').setDateRange(rentedDateRange[0]['startTime'], rentedDateRange[0]['endTime']);
-                        }
                     }
                 },
                 error: function (message) {

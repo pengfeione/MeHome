@@ -3,6 +3,7 @@ package com.mehome.dao;
 import com.mehome.domain.OrderList;
 import com.mehome.requestDTO.OrderBean;
 import com.mehome.resonpseDTO.HouseTimePiece;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,7 +16,18 @@ public interface OrderListDao {
 
     OrderList selectById(String orderId);
 
-    List<HouseTimePiece> houseTimePiece(Integer houseId);
+
+    /**
+     * 查询所有房源id是houseId的所有订单的起始时间和结束时间，排除订单id是orderId的开始时间和结束时间
+     *
+     * @param houseId
+     * @param orderId
+     * @return
+     */
+    List<HouseTimePiece> houseTimePieceExceptMe(@Param("houseId") Integer houseId, @Param("orderId") String orderId);
+
+
+    List<HouseTimePiece> houseTimePiece(@Param("houseId") Integer houseId);
 
     int updateRequired(OrderList record);
 
