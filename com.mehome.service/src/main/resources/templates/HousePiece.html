@@ -144,7 +144,7 @@
                         $('#date-range0').dateRangePicker(configObject);
                         if (rentedDateRange.length > 0) {
                             console.log(rentedDateRange[0]['startTime'], rentedDateRange[0]['endTime']);
-                            if(rentedDateRange[0]['startTime']!=''&&rentedDateRange[0]['endTime']!=''&&rentedDateRange[0]['startTime']!=null&&rentedDateRange[0]['endTime']!=null){
+                            if(rentedDateRange[0]['startTime']!=''&&rentedDateRange[0]['endTime']!=''&&rentedDateRange[0]['startTime']!=null&&rentedDateRange[0]['endTime']!=null&&rentedDateRange[0]['startTime']!='undefined'&&rentedDateRange[0]['endTime']!='undefined'){
                             $('#date-range0').data('dateRangePicker').setDateRange(rentedDateRange[0]['startTime'], rentedDateRange[0]['endTime']);
                             }
                         }
