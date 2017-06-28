@@ -30,6 +30,8 @@
 <div>
     <input id="date-range0" size="40" value="" style="display:none;"/>
     <div id="container"></div>
+    <span id="platformHost" style="display:none">是否选择押金平台托管：<label><input type="radio" name="optionsRadios" id="optionsRadios" value="true" checked>&nbsp;是</label>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="radio" name="optionsRadios" id="optionsRadios" value="false">&nbsp;否</label></span>
+    <br>
     <span class="input-group-btn">
        <button class="btn btn-s-md btn-primary btn-rounded" type="button" id="btn_search">确定</button>
      </span>
@@ -87,6 +89,8 @@
         }
     };
     $(function () {
+    	var type=GetQueryParam('type');
+    	var orderId = GetQueryParam('code');
         $('#btn_search').on('click', function () {
             if ('' == $('#date-range0').val()) {
                 alert("未选择时间！");
@@ -97,8 +101,30 @@
             var endTime = strs[1];
             console.log(startTime, endTime);
             //TODO 更新订单
+            var dataSubmit = {};
+            dataSubmit['orderId']=orderId;
+            dataSubmit['startTime'] = startTime;
+            dataSubmit['endTime'] = endTime;
+            if(type=='orderConfirm'){
+            	var depositBoolean = $("input[name='optionsRadios']:checked").val();
+            	dataSubmit['platformHost'] = depositBoolean;
+            }
+            console.log(JSON.stringify(dataSubmit));
+            $.ajax({
+                type: "POST",
+                async: true,
+                url: "/api/order/updateOrder",
+                contentType: "application/json",
+                data: JSON.stringify(dataSubmit),
+                dataType: "json",
+                success: function (ret) {
+                	alert("更改订单成功");
+                },
+                error: function (message) {
+                    alert("订单更新出错:" + message);
+                }
+            });
         });
-        var orderId = GetQueryParam('code');
         if ('' == orderId || undefined == orderId || null == orderId) {
             alert("参数不正确！");
         } else {
@@ -118,7 +144,13 @@
                         $('#date-range0').dateRangePicker(configObject);
                         if (rentedDateRange.length > 0) {
                             console.log(rentedDateRange[0]['startTime'], rentedDateRange[0]['endTime']);
+                            if(rentedDateRange[0]['startTime']!=''&&rentedDateRange[0]['endTime']!=''&&rentedDateRange[0]['startTime']!=null&&rentedDateRange[0]['endTime']!=null){
                             $('#date-range0').data('dateRangePicker').setDateRange(rentedDateRange[0]['startTime'], rentedDateRange[0]['endTime']);
+                            }
+                        }
+                        if(type=='orderConfirm'){
+                            //如果是确认订单操作，显示押金托管选项，否则不显示
+                        $('#platformHost').show();
                         }
                     }
                 },
