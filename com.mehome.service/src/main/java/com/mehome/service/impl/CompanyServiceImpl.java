@@ -1,8 +1,10 @@
 package com.mehome.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.util.TypeUtils;
-import com.mehome.dao.*;
+import com.mehome.dao.AuthorizeAdminDao;
+import com.mehome.dao.CompanyListDao;
+import com.mehome.dao.CompanyWelfareDao;
+import com.mehome.dao.UserInfoDao;
 import com.mehome.domain.AuthorizeAdmin;
 import com.mehome.domain.CompanyList;
 import com.mehome.domain.CompanyWelfare;
@@ -23,9 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Administrator on 2017/5/16.
@@ -147,12 +147,12 @@ public class CompanyServiceImpl implements ICompanyService {
         if (null == companyList) {
             throw new InfoException("修改的公司不存在");
         }
+        AuthorizeAdmin sameNameAdmin = adminDao.selectByName(authorizeAdmin.getName());
+        if (null != sameNameAdmin) {
+            throw new InfoException("该账户名已存在！");
+        }
         AuthorizeAdmin sameCompany = adminDao.selectByCompanyId(authorizeAdmin.getCompanyId());
         if (null == sameCompany) {
-            AuthorizeAdmin sameNameAdmin = adminDao.selectByName(authorizeAdmin.getName());
-            if (null != sameNameAdmin) {
-                throw new InfoException("账号已存在！");
-            }
             sameCompany = new AuthorizeAdmin();
             sameCompany.setCompanyId(authorizeAdmin.getCompanyId());
             sameCompany.setAvatar(defaultAvatar);
@@ -164,7 +164,9 @@ public class CompanyServiceImpl implements ICompanyService {
             adminDao.insertRequired(sameCompany);
             return sameCompany.getAdminId();
         } else {
-            throw new InfoException("该公司的管理员已存在！");
+            sameCompany.setName(authorizeAdmin.getName());
+            adminDao.updateRequired(sameCompany);
+            return sameCompany.getAdminId();
         }
     }
 }

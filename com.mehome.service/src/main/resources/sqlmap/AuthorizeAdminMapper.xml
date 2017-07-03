@@ -93,7 +93,7 @@
                 #{name,jdbcType=VARCHAR},
             </if>
             <if test="password != null and role !='supplier'">
-                password(#{password,jdbcType=VARCHAR}),
+               #{password,jdbcType=VARCHAR},
             </if>
             <if test="password != null and role =='supplier'">
                 #{password,jdbcType=VARCHAR},
@@ -125,7 +125,7 @@
                 name = #{name,jdbcType=VARCHAR},
             </if>
             <if test="password != null and role !='supplier'">
-                password=password(#{password,jdbcType=VARCHAR}),
+                password=#{password,jdbcType=VARCHAR},
             </if>
             <if test="password != null and role =='supplier'">
                 password= #{password,jdbcType=VARCHAR},
@@ -153,7 +153,7 @@
         SET avatar      = #{avatar,jdbcType=VARCHAR},
             nick_name   = #{nickName,jdbcType=VARCHAR},
             name        = #{name,jdbcType=VARCHAR},
-            password    = password(#{password,jdbcType=VARCHAR}),
+            password    = #{password,jdbcType=VARCHAR},
             role        = #{role,jdbcType=VARCHAR},
             company_id  = #{companyId,jdbcType=INTEGER},
             supplier_id = #{supplierId,jdbcType=INTEGER},
