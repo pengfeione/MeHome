@@ -1,26 +1,25 @@
 package com.mehome.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mehome.dao.AuthorizeAdminDao;
+import com.mehome.dao.SupplierListDao;
 import com.mehome.domain.AuthorizeAdmin;
+import com.mehome.domain.SupplierList;
 import com.mehome.enumDTO.PayTypeEnum;
 import com.mehome.enumDTO.RoleEnum;
 import com.mehome.exceptions.InfoException;
+import com.mehome.requestDTO.SupplierBean;
 import com.mehome.requestDTO.SupplierRequestDTO;
+import com.mehome.service.iface.ISupplierService;
 import com.mehome.utils.AssertUtils;
 import com.mehome.utils.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.mehome.dao.SupplierListDao;
-import com.mehome.domain.SupplierList;
-import com.mehome.requestDTO.SupplierBean;
-import com.mehome.service.iface.ISupplierService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("ISupplierSerive")
 public class SupplierServiceImpl implements ISupplierService {
@@ -87,16 +86,32 @@ public class SupplierServiceImpl implements ISupplierService {
         if (!PayTypeEnum.contain(record.getRecipientType())) {
             throw new InfoException("收款方式不合法！");
         }
-        if (PayTypeEnum.contain(record.getRecipientType())
-                && !PayTypeEnum.CASH.getKey().equals(record)
+        if ((!PayTypeEnum.CASH.getKey().equals(record.getRecipientType()))
                 && StringUtils.isNull(record.getRecipientAccount())) {
             throw new InfoException("非现金支付方式账户不能为空！");
         }
+        if (null == record.getDepositOnline()) {
+            record.setDepositOnline(false);
+        }
 
-        if (null != record.getRentOnline()
-                && record.getRentOnline()
-                && StringUtils.isNull(record.getRecipientAccount())) {
-            throw new InfoException("非现金支付方式账户不能为空！");
+        //押金线上支付
+        if (record.getDepositOnline()
+                && (PayTypeEnum.CASH.getKey().equals(record.getRecipientType()))
+                ) {
+            throw new InfoException("押金线上支付状态与收款方式冲突！");
+        }
+        if (null == record.getRentOnline()) {
+            record.setRentOnline(false);
+        }
+        //租金线上支付状态
+        if (record.getRentOnline()
+                && PayTypeEnum.CASH.getKey().equals(record.getRecipientType())) {
+            throw new InfoException("租金线上支付状态与收款方式冲突！");
+        }
+        if (!PayTypeEnum.CASH.getKey().equals(record.getRecipientType())) {
+            if ((!record.getRentOnline()) && (!record.getDepositOnline())) {
+                throw new InfoException("租金为线上支付，但租金和押金都未开启线上支付！");
+            }
         }
         if (null != record.getRentPercent() && (record.getRentPercent().doubleValue() > 100.0d || record.getRentPercent().doubleValue() < 0d)) {
             throw new InfoException("租金收款比例不合法");
@@ -146,15 +161,32 @@ public class SupplierServiceImpl implements ISupplierService {
         if (!PayTypeEnum.contain(record.getRecipientType())) {
             throw new InfoException("收款方式不合法！");
         }
-        if (PayTypeEnum.contain(record.getRecipientType())
-                && !PayTypeEnum.CASH.getKey().equals(record)
+        if ((!PayTypeEnum.CASH.getKey().equals(record.getRecipientType()))
                 && StringUtils.isNull(record.getRecipientAccount())) {
             throw new InfoException("非现金支付方式账户不能为空！");
         }
-        if (null != record.getRentOnline()
-                && record.getRentOnline()
-                && StringUtils.isNull(record.getRecipientAccount())) {
-            throw new InfoException("非现金支付方式账户不能为空！");
+        if (null == record.getDepositOnline()) {
+            record.setDepositOnline(false);
+        }
+
+        //押金线上支付
+        if (record.getDepositOnline()
+                && (PayTypeEnum.CASH.getKey().equals(record.getRecipientType()))
+                ) {
+            throw new InfoException("押金线上支付状态与收款方式冲突！");
+        }
+        if (null == record.getRentOnline()) {
+            record.setRentOnline(false);
+        }
+        //租金线上支付状态
+        if (record.getRentOnline()
+                && PayTypeEnum.CASH.getKey().equals(record.getRecipientType())) {
+            throw new InfoException("租金线上支付状态与收款方式冲突！");
+        }
+        if (!PayTypeEnum.CASH.getKey().equals(record.getRecipientType())) {
+            if ((!record.getRentOnline()) && (!record.getDepositOnline())) {
+                throw new InfoException("租金为线上支付，但租金和押金都未开启线上支付！");
+            }
         }
         if (null != record.getRentPercent() && (record.getRentPercent().doubleValue() > 100.0d || record.getRentPercent().doubleValue() < 0d)) {
             throw new InfoException("租金收款比例不合法");
