@@ -44,6 +44,9 @@ public class ReplyServiceImpl implements IReplyService {
 			return "";
 		}
 		Integer max=forumReplyDao.getMaxFloorByTid(tid);
+		if(max==null){
+			max=0;
+		}
 		bean.setFloor(max+1);
 		ForumReply reply=bean.beanToPojo();
 		int row=forumReplyDao.insert(reply);
