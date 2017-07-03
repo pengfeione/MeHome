@@ -108,6 +108,7 @@
             if(type=='orderConfirm'){
             	var depositBoolean = $("input[name='optionsRadios']:checked").val();
             	dataSubmit['platformHost'] = depositBoolean;
+            	dataSubmit['orderStatus']=2;
             }
             console.log(JSON.stringify(dataSubmit));
             $.ajax({
