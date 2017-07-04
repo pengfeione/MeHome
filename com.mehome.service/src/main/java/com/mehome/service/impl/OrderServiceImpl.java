@@ -92,6 +92,7 @@ public class OrderServiceImpl implements IOrderService {
                 bean.setHouseSubject(house.getSubject());
                 bean.setProductId(house.getProductId());
                 bean.setProductName(product.getProductName());
+                bean = calculateWelfare(bean, 1);
             }
             order = bean.beanToPojo(Boolean.TRUE);
             orderListDAO.insert(order);
@@ -168,7 +169,12 @@ public class OrderServiceImpl implements IOrderService {
     public OrderBean calculateWelfare(OrderBean bean, Integer calculateMonth) {
         // TODO Auto-generated method stub
         String orderId = bean.getOrderId();
-        OrderList order = orderListDAO.selectById(orderId);
+        OrderList order=null;
+        if(StringUtils.isEmpty(orderId)){
+        	order = bean.beanToPojo(Boolean.TRUE);
+        }else{
+        	order = orderListDAO.selectById(orderId);
+        }
         String biller = order.getBiller();
         Integer userCompanyId = null;
         if (!StringUtils.isEmpty(biller)) {
