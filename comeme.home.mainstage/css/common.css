@@ -12,6 +12,7 @@ body     { margin:0; font-size:14px; font-family:"黑体"; background:#ffffff; }
 .btn       { border-radius:5px; height:44px; display:block; text-align:center; font-size:16px; line-height:44px; background:url(../img/btnSubmit.png) no-repeat; background-size:100% 44px; color:#fff; }
 .iconMy    { width:20px; height:20px; display:block; background:url(../img/iconOrder.png) no-repeat; background-size:20px; position:absolute; left:10px; top:12px; z-index:3; }
 .iconEdit  { width:20px; height:20px; display:block; background:url(../img/iconEdit.png) no-repeat; background-size:20px; position:absolute; left:10px; top:12px; z-index:3; }
+.iconTelNo { width:20px; height:20px; display:block; background:url(../img/iconTel2.png) no-repeat; background-size:20px; position:absolute; left:10px; top:12px; z-index:3; }
 .iconMore  { width:8px; height:13px; display:block; background:url(../img/iconMore.png) no-repeat; background-size:8px 13px; position:absolute; right:10px; top:15px; z-index:3; }
 .iconTel   { width:19px; height:19px; display:block; background:url(../img/iconTel.png) no-repeat; background-size:19px 18px; position:absolute; left:10px; top:0; z-index:3; }
 .iconQrz,.iconXyy,.iconYqr,.iconYrz   { width:60px; height:60px; display:block; position:absolute; right:0; top:-10px; z-index:3; }
@@ -44,7 +45,7 @@ body     { margin:0; font-size:14px; font-family:"黑体"; background:#ffffff; }
 .iconSuccess  { margin:15px auto 10px; width:50px; height:50px; display:block; background:url(../img/iconSuccess.png) no-repeat; background-size:50px; }
 .iconFail     { margin:15px auto 10px; width:50px; height:50px; display:block; background:url(../img/iconFail.png) center center no-repeat; background-size:30px; }
 
-.popBox,.popOrder  { margin:-100px 0 0 -150px; width:300px; height:200px; display:none; border-radius:10px; background:#fff; position:fixed; left:50%; top:50%; z-index:9999; }
+.popBox,.popOrder  { margin:-90px 0 0 -150px; width:300px; height:180px; display:none; border-radius:10px; background:#fff; position:fixed; left:50%; top:50%; z-index:9999; }
 .popBox h3         { height:60px; line-height:60px; text-align:center; }
 .popBox span       { line-height:20px; display:block; text-align:center; }
 .btnPop            { margin-top:20px; height:40px; text-align:center; }
@@ -74,8 +75,8 @@ body     { margin:0; font-size:14px; font-family:"黑体"; background:#ffffff; }
 /* common */
 .commonList li                { padding:10px 0 10px 50px; position:relative; overflow:hidden; border-bottom:1px solid #f0f0f0; color:#282828; }
 .commonList li img            { width:36px; height:36px; display:block; border-radius:50%; overflow:hidden; position:absolute; left:0; top:10px; z-index:3; }
-.commonList li .commonName    { height:20px; line-height:20px; font-size:14px; font-weight:normal; overflow:hidden; }
-.commonList li .commonDate    { margin-bottom:5px; height:20px; font-size:12px; line-height:20px; display:block; color:#3c3c3c; }
+.commonList li .commonName    { height:20px; line-height:20px; font-size:14px; font-weight:normal; color:#888; overflow:hidden; }
+.commonList li .commonDate    { margin-bottom:5px; height:20px; font-size:12px; line-height:20px; display:block; color:#888; }
 .commonList li .commonContent { display:block; line-height:20px; text-align:justify; }
 .commonList li .commonStar    { width:125px; height:30px; text-align:right; display:block; position:absolute; right:0; top:10px; z-index:3; }
 .commonList li .commonStar em { margin-right:1px; width:12px; height:12px; vertical-align:middle; display:inline-block; background:url(../img/smStar.png) no-repeat; background-size:12px; }
@@ -83,7 +84,7 @@ body     { margin:0; font-size:14px; font-family:"黑体"; background:#ffffff; }
 .commonList li .commonStar i  { margin-left:5px; font-size:12px; font-style:normal; color:#f39800; }
 .common .commonList li .commonStar em { background:url(../img/smStar2.png) no-repeat; background-size:12px; }
 .common .commonList li .commonStar .selectStart { background:url(../img/smStarSelect.png) no-repeat; background-size:12px; }
-.commonList li .commonDateNews    { margin-bottom:5px; height:20px; line-height:20px; display:block; color:#3c3c3c; position:absolute; right:0; top:10px; z-index:3; }
+.commonList li .commonDateNews    { margin-bottom:5px; height:20px; line-height:20px; display:block; color:#888; position:absolute; right:0; top:10px; z-index:3; }
 .noCommon { width:100%; padding:50px 0; overflow:hidden; }
 .noCommon img { width:100%; display:block; }
 

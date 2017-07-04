@@ -21,12 +21,12 @@ body { background:#fafafa; }
 
 
 .bgLargeImg,.bgLargeImg img { width:100%; display:block; }
-.newsInfo         { margin:-60px 20px 0 0; height:82px; background:#fff; box-shadow:2px 2px 2px #ccc; position:relative; z-index:10; }
-.newsInfo h3      { padding:10px 10px 5px; height:40px; line-height:20px; display:block; color:#282828; overflow:hidden; }
+.newsInfo         { margin:-60px 20px 0 0; height:auto; background:#fff; box-shadow:0 0 8px rgba(0, 0, 0, 0.2);; position:relative; z-index:10; }
+.newsInfo h3      { padding:10px 10px 5px; font-size:18px; line-height:24px; display:block; color:#282828; overflow:hidden; }
 .newsInfo span    { height:30px; font-size:12px; line-height:20px; display:block; overflow:hidden; }
 .newsInfo span em { margin:0 10px; font-style:normal; color:#b5b5b5; }
 .newsInfo span i  { font-style:normal; color:#b5b5b5;}
-.newsContent      { margin:0 10px 10px; padding:10px 0; line-height:20px; color:#282828; border-bottom:1px solid #f0f0f0; }
+.newsContent      { margin:0 10px 10px; padding:10px 0; line-height:24px; color:#282828; border-bottom:1px solid #f0f0f0; }
 .newsContent p    { margin:10px 0 0; }
 
 .newsCommon    { margin:0 10px; }
@@ -36,3 +36,29 @@ body { background:#fafafa; }
 .commonFCont   { margin-top:6px; padding:0 72px 0 10px; height:32px; position:relative; overflow:hidden; }
 .commonFCont .text { width:100%; height:32px; text-indent:10px; border-radius:5px; line-height:32px; background:#eeeeee; }
 .commonFCont .btnSend { width:55px; height:32px; font-size:14px; text-align:center; line-height:32px; color:#fff; display:block; border-radius:5px; background:url(../img/btnSubmit.png) no-repeat; background-size:100% 32px; position:absolute; right:10px; top:0; z-index:3; }
+
+/*// 下拉更新 /////////////*/
+#news { position:relative; overflow:hidden; }
+#pullDown, #pullUp                             { display:none; height:30px; line-height:30px; padding:10px 0; font-weight:bold; font-size:14px; color:#888; }
+#pullDown .pullDownLabel, #pullUp .pullUpLabel { display:none; }
+#pullDown .pullDownIcon, #pullUp .pullUpIcon   { margin:0 auto; display:block; width:30px; height:30px; background:url(../img/pull-icon@2x.png) no-repeat; background-size:30px 60px; -webkit-transition-property:-webkit-transform; -webkit-transition-duration:250ms; transition-property:transform; transition-duration:250ms; }
+#pullDown .pullDownIcon                        { -webkit-transform:rotate(0deg) translateZ(0); transform:rotate(0deg) translateZ(0); }
+#pullUp .pullUpIcon                            { -webkit-transform:rotate(-180deg) translateZ(0); transform:rotate(-180deg) translateZ(0); }
+#pullDown.flip .pullDownIcon                   { -webkit-transform:rotate(-180deg) translateZ(0); transform:rotate(-180deg) translateZ(0); }
+#pullUp.flip .pullUpIcon                       { -webkit-transform:rotate(0deg) translateZ(0); transform:rotate(0deg) translateZ(0); }
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon { background-position:0 100%; -webkit-transform:rotate(0deg) translateZ(0); -webkit-transition-duration:0ms; -webkit-animation-name:loading; -webkit-animation-duration:2s; -webkit-animation-iteration-count:infinite; -webkit-animation-timing-function:linear; }
+
+@keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to   { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to   { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+
+@-moz-keyframes loading {
+	from { -moz-transform:rotate(0deg) translateZ(0); }
+	to   { -moz-transform:rotate(360deg) translateZ(0); }
+}
