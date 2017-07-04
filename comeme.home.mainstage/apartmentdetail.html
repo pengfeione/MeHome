@@ -197,10 +197,10 @@
 					util.logResult(result.notice);
 					welfareStr ='<p>';
 					if(result.notice != undefined && result.notice != ''){
-						welfareStr += result.notice;
+						welfareStr += result.notice+'<br>';
 					}
 					if(result.remitPercent != undefined && result.remitPercent != ''){
-						welfareStr += ',优惠'+result.remitPercent+'%';
+						welfareStr += '优惠'+result.remitPercent+'% <br>';
 					}
 					if(result.mortagageNum != undefined && result.mortagageNum != ''){
 						welfareStr += '押'+result.mortagageNum;

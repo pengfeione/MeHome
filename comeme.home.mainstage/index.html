@@ -218,8 +218,8 @@
 								 + '</li>';
 					$('#ul_product').append(html_str);
 				});
-				setTimeout( function(){loadLayer();}, ( 3 * 100 ) );
-//				loadLayer();
+//				setTimeout( function(){loadLayer();}, ( 3 * 100 ) );
+				loadLayer();
 			});
 		}
 		
@@ -246,7 +246,8 @@
 							 + '</li>';
 				$('#ul_product').append(html_str);
 			});
-			setTimeout( function(){loadLayer();}, ( 3 * 100 ) );
+			//setTimeout( function(){loadLayer();}, ( 3 * 100 ) );
+			loadLayer();
 			if(data.totalCount == 0){
 				$('#lab_remind').show();
 			}
@@ -259,7 +260,9 @@
 			var self = $(this);
 			var houseMask = self.find(".houseMask");
 			var houseImg = self.find("img");
-			houseMask.css({"width":($(window).width()-20)+"px","height":houseImg.get(0).offsetHeight+"px"});
+			houseImg.load(function(){
+				houseMask.css({"width":($(window).width()-20)+"px","height":houseImg.get(0).offsetHeight+"px"});
+			});
 		});
 	}
 	
