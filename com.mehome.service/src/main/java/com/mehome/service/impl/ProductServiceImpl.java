@@ -14,6 +14,8 @@ import com.mehome.requestDTO.CompanyWelfareNotice;
 import com.mehome.requestDTO.ProductCompanyWelfareDTO;
 import com.mehome.resonpseDTO.ProductCompanyWelfare;
 import com.mehome.utils.AssertUtils;
+import com.mehome.utils.LbsAmapUtils;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import com.mehome.requestDTO.BasicBean;
 import com.mehome.requestDTO.ProductBean;
 import com.mehome.service.iface.IProductService;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Service("IProductService")
 public class ProductServiceImpl implements IProductService {
@@ -95,6 +98,10 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public String addProduct(ProductList bean) {
+    	if (!StringUtils.isEmpty(bean.getAddress())) {
+            String position = LbsAmapUtils.formatPosition(bean.getAddress());
+            bean.setPosition(position);
+        }
         productListDAO.insertRequired(bean);
         return bean.getProductId() == null ? "" : bean.getProductId().toString();
     }
