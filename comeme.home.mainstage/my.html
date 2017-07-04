@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="css/base.css" />
 <link rel="stylesheet" type="text/css" href="css/common.css" />
 <link rel="stylesheet" type="text/css" href="css/index.css" />
+<link rel="stylesheet" type="text/css" href="css/loginshare.css" />
 <script src="js/jquery.min.js"></script>
 <script src="js/util.js"></script>
 </head>
@@ -39,7 +40,7 @@
                      </li>
                      <li>
                      	<a onclick="bindMobile();">
-                     		<em class="iconMy"></em>绑定手机号<em class="rz" id="em_bind">未绑定</em><i class="iconMore"></i>
+                     		<em class="iconTelNo"></em>绑定手机号<em class="rz" id="em_bind">未绑定</em><i class="iconMore"></i>
                      	</a>
                      </li>
                 </ul>
@@ -85,22 +86,23 @@
 //				setTimeout( function(){$( '#div_register_fail' ).fadeOut();
 //					window.location.href='relation.html';
 //				}, ( 1* 1000 ) );
+
+				util.logResult(userInfoJson.userId);
+				var userId = userInfoJson.userId;
+				var url = util.baseUrl + '/usr/get'; 
+				var param ='{"userId": '+userId+'}';
+				var contentType = "application/json";
+				util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+					var result = data.result;
+					if(result == null || result == undefined){
+						window.location.href='login.html';
+					}
+					util.logResult(result); 
+					var companyStatus = result.companyStatus;
+					userInfoJson.companyStatus = companyStatus;
+					util.setCookie("userInfo", JSON.stringify(userInfoJson));
+				});	
 			}
-			util.logResult(userInfoJson.userId);
-			var userId = userInfoJson.userId;
-			var url = util.baseUrl + '/usr/get'; 
-			var param ='{"userId": '+userId+'}';
-			var contentType = "application/json";
-			util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
-				var result = data.result;
-				if(result == null || result == undefined){
-					window.location.href='login.html';
-				}
-				util.logResult(result); 
-				var companyStatus = result.companyStatus;
-				userInfoJson.companyStatus = companyStatus;
-				util.setCookie("userInfo", JSON.stringify(userInfoJson));
-			});
 		}
 	}
 	
@@ -134,6 +136,18 @@
 	
 	//我的订单
 	function myOrder(){
+		var userInfo = util.getCookie("userInfo");
+		var userInfoJson = eval('(' + userInfo + ')');
+		var mobile = userInfoJson.mobile;
+		if(mobile == null || mobile == '' || mobile == undefined){
+			$('#registerFail').html('请绑定手机号!');
+			$( '#div_register_fail' ).fadeIn();
+			setTimeout( function(){$( '#div_register_fail' ).fadeOut();
+				window.location.href='relation.html';
+			}, ( 1* 1000 ) );
+			return false;
+		}
+		
 		window.location.href='order.html';
 	}
 	
@@ -147,6 +161,16 @@
 		var userInfo = util.getCookie("userInfo");
 		var userInfoJson = eval('(' + userInfo + ')');
 		var companyStatus = userInfoJson.companyStatus;
+		var mobile = userInfoJson.mobile;
+		if(mobile == null || mobile == '' || mobile == undefined){
+			$('#registerFail').html('请绑定手机号!');
+			$( '#div_register_fail' ).fadeIn();
+			setTimeout( function(){$( '#div_register_fail' ).fadeOut();
+				window.location.href='relation.html';
+			}, ( 1* 1000 ) );
+			return false;
+		}
+		
 		if(companyStatus == 0 || companyStatus == 3){
 			window.location.href='enterpriseuser2.html';
 		}
@@ -157,9 +181,9 @@
 		var userInfo = util.getCookie("userInfo");
 		var userInfoJson = eval('(' + userInfo + ')');
 		var mobile = userInfoJson.mobile;
-		if(mobile == null || mobile == '' || mobile == undefined){
+//		if(mobile == null || mobile == '' || mobile == undefined){
 			window.location.href='relation.html';
-		}
+//		}
 	}
 	
 	//退出登录

@@ -38,7 +38,7 @@
                     	</a>
                     </li>
                     <li class="setPwd"><span>设置密码</span>
-                    	<input type="password" placeholder="6位数字" class="text" id="pwd"/>
+                    	<input type="password" placeholder="6-20个字母、数字、下划线" class="text" id="pwd"/>
                     	<a class="btnShowPwd"></a>
                     </li>
                 </ul>
@@ -176,14 +176,14 @@
 			
 			var userInfo = util.getCookie("userInfo");
 			var userInfoJson = eval('(' + userInfo + ')');
-			util.logResult(userInfoJson.openId);
+			util.logResult("========>"+userInfoJson.openId);
 			var openId = userInfoJson.openId;
 			var avatar = userInfoJson.avatar;
 			var sex = userInfoJson.sex;
 			var nickName = userInfoJson.nickName;
 			var url = util.baseUrl + '/usr/mobile_register';
 			var param ='{"mobile": '+mobile+',"password":"'+pwd+'","verifyCode":"'+code
-					  +'","openId":'+openId+',"avatar":'+avatar+',"sex":'+sex+',"nickName":"'+nickName+'"}';
+					  +'","openId":"'+openId+'","avatar":"'+avatar+'","sex":'+sex+',"nickName":"'+nickName+'"}';
 			var contentType = "application/json";
 			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 				util.logResult(data); 
@@ -194,7 +194,7 @@
 					$('#div_register_res').fadeIn();
 					setTimeout( function(){$( '#div_register_res' ).fadeOut();
 						flushUerInfo();
-						window.history.back(); 
+						window.location.href="enterpriseuser.html?userId="+userId;
 						}, ( 1 * 1000 ) );
 				}else{
 					$('#registerFail').html(data.msg);
@@ -214,26 +214,28 @@
 			var userInfoJson = eval('(' + userInfo + ')');
 			util.logResult(userInfoJson);
 			var userId = userInfoJson.userId;
-			var updateTime = userInfoJson.updateTime;
-			var url = util.baseUrl + '/usr/get'; 
-			var param ='{"userId": '+userId+'}';
-			var contentType = "application/json";
-			util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
-				util.logResult(data); 
-				var result = data.result;
-				if(result == null || result == undefined){
-					util.setCookie("userInfo", '');
-				}
-				var newUpdateTime = result.updateTime;
-				util.logResult(newUpdateTime+' '+updateTime);
-				if(newUpdateTime != updateTime){
-					userInfoJson.avatar = result.avatar;
-					userInfoJson.updateTime = newUpdateTime;
-					userInfoJson.mobile = result.mobile;
-				 	util.setCookie("userInfo", JSON.stringify(userInfoJson));
-				}
-				
-			});
+			if(userId != undefined && userId != null && userId != '' ){
+				var updateTime = userInfoJson.updateTime;
+				var url = util.baseUrl + '/usr/get'; 
+				var param ='{"userId": '+userId+'}';
+				var contentType = "application/json";
+				util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+					util.logResult(data); 
+					var result = data.result;
+					if(result == null || result == undefined){
+						util.setCookie("userInfo", '');
+					}
+					var newUpdateTime = result.updateTime;
+					util.logResult(newUpdateTime+' '+updateTime);
+					if(newUpdateTime != updateTime){
+						userInfoJson.avatar = result.avatar;
+						userInfoJson.updateTime = newUpdateTime;
+						userInfoJson.mobile = result.mobile;
+					 	util.setCookie("userInfo", JSON.stringify(userInfoJson));
+					}
+					
+				});
+			}
 		}
 	}
 	 

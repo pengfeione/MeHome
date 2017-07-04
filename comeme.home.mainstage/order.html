@@ -22,13 +22,15 @@
     <!-- header -->
         <div class="header">
         	<div class="headerCont">
-            	<a class="btnBack" onclick="history.back();">&lt;</a>
+            	<a class="btnBack" href="my.html">&lt;</a>
             	<span>我的订单</span>
             </div>
         </div>
         <div class="order headerTop">
         	<ul class="orderList" >
             </ul>
+            
+            <div class="noRecord" id="div_no_record" style="display: none;"><img src="img/noRecord.png"></div>
         </div>
     </div>
 </body>
@@ -72,7 +74,7 @@
 					var subject = orders[i].house.subject;
 					var productName= orders[i].productName;
 					var rent = orders[i].house.roomRent/100+"元／月";
-					var address = orders[i].house.address;
+					var address = orders[i].house.address==null?'':orders[i].house.address;
 					var roomTypeDesc = orders[i].house.roomTypeDesc;
 					var rommArea = orders[i].house.roomArea;
 					var roomType=eval('(' + roomTypeDesc + ')');
@@ -85,7 +87,7 @@
 						liType='cancelEnd';
 						href='javascript:void(0)';
 					}
-					address=address+roomType.room+"室"+roomType.hall+"厅"+roomType.toilet+"卫"+rommArea+"㎡";
+					address=subject+' '+address+roomType.room+"室"+roomType.hall+"厅"+roomType.toilet+"卫"+rommArea+"㎡";
 					  html += '<li class="'+liType+'"><a href="'+href+'"><span class="orderTop">'
 							+ '<img src="'+img+'" />'
 							+ '<h3>'+productName+'</h3>'
@@ -96,6 +98,9 @@
 							+ '</a></li>'
 				}
 				$('.orderList').append(html);
+			}
+			if(pageIndex = 1 && data.result == ''){
+				$('#div_no_record').show();
 			}
 		});
 		}

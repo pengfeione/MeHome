@@ -102,20 +102,21 @@
 				var contentFrom = newsInfo.contentFrom;
 				var tid = newsInfo.tid;
 				var isActive = newsInfo.isActive;
+				var listpicStr = listpic==null?'':'	<img src="'+listpic[0]+'" />';
 				if(isActive){
 					if(topicType == 'activity'){
 						news_str += '<a href="newsdetail.html?tid='+tid+'" class="newsListTj">'
 								   +'	<h3><i class="iconAct"></i>'+subject+'</h3>'
-								   +'	<img src="'+listpic[0]+'" />'
+								   +listpicStr
 								   +'</a>';
 					}else if(topicType == 'topic'){
 						news_str += '<a href="newsdetail.html?tid='+tid+'" class="newsListTj">'
 								   +'	<h3><i class="iconZt"></i>'+subject+'</h3>'
-								   +'	<img src="'+listpic[0]+'" />'
+								   +listpicStr
 								   +'</a>';
 					}else{
-	                	news_str += '<a href=newsdetail.html?tid="'+tid+'" class="newsList">'
-	                			   +'	<img src="'+listpic[0]+'" />'
+	                	news_str += '<a href=newsdetail.html?tid='+tid+' class="newsList">'
+	                			   +listpicStr
 	                			   +'	<h3>'+subject+'</h3>'
 	                			   +'	<span>'+contentFrom+'</span>'
 	                			   +'</a>';

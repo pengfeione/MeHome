@@ -29,7 +29,7 @@
     
     	<!-- header -->
     	<header class="bannerDetail">
-    		<a href="#" class="btnBack2"></a>
+    		<a  onclick="history.back();" class="btnBack2"></a>
             <div class="swiper-container">
                 <div class="swiper-wrapper" id="div_swiper">
                     <!--<div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
@@ -47,7 +47,7 @@
         	<div class="houseInfo" id="div_house">
             </div>
             
-            <div class="housePt">
+            <div class="housePt" style="overflow: hidden;">
             	<h3><em></em>配套设施</h3>
                 <ul id="ul_basic">
                 </ul>
@@ -77,7 +77,7 @@
         <div class="btnPop"><a class="btnCancel" onclick="isAppointment(0);">取消</a><a class="btnQd2" onclick="isAppointment(1);">确定</a></div>
     </div>
     
-    <div class="mask"></div>
+    <div class="mask" id="mask"></div>
     
 </body>
 <script type="text/javascript">
@@ -136,9 +136,10 @@
 					var room_type_des =  roomTypeDesc.room +'室'+roomTypeDesc.hall+'厅'+roomTypeDesc.toilet+'卫';
 					var payType = eval('(' + houseInfo.payType + ')');
 					var pay_type_des = '押'+payType.mortagageNum+'付'+payType.payMentNum;
+					var roomRent = houseInfo.roomRent/100;
 					var house_html =  ' <h3>'+houseInfo.subject+'</h3>'
 					 				+ '	<span><i>'+pay_type_des+'</i>'+room_type_des+' '+houseInfo.roomArea+'㎡</span>'
-					 				+ '	<em>'+houseInfo.roomRent+'元／月</em>';
+					 				+ '	<em>'+roomRent+'元／月</em>';
 					$('#div_house').append(house_html);
 					
 					var detailpic = houseInfo.detailpic;
@@ -163,7 +164,7 @@
 	//加载产品基础设施
 	function loadProductBasic(){
 		var productId = util.getUrlParam('productId');
-		var url = util.baseUrl + '/product/list';
+		var url = util.baseUrl + '/house/list';
 		var param ='{"productId": '+productId+'}';
 		var contentType = "application/json";
 		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
@@ -183,7 +184,31 @@
 	
 	//立即预约
 	function appointment(){
+		var userInfo = util.getCookie("userInfo");
+		if(userInfo == null || userInfo == ''){
+			$('#mask').fadeOut();
+			$('#div_popbox').fadeOut();
+			$('#span_pop').html('请先登录!');
+			$( '#div_popFail' ).fadeIn();
+			setTimeout( function(){$( '#div_popFail' ).fadeOut();
+				window.location.href='login.html?jumpType=0';
+			}, ( 1* 1000 ) );
+			return false;
+		}
+		var userInfoJson = eval('(' + userInfo + ')');
+		var mobile = userInfoJson.mobile;
+		if(mobile == null || mobile == ''){
+			$('#div_popbox').fadeOut();
+			$('#mask').fadeOut();
+			$('#span_pop').html('请先绑定手机号!');
+			$( '#div_popFail' ).fadeIn();
+			setTimeout( function(){$( '#div_popFail' ).fadeOut();
+				window.location.href='relation.html';
+			}, ( 1* 1000 ) );
+			return false;
+		}
 		if(judgeStatus == 'true'){
+			$('#mask').fadeIn();
 			$('#div_popbox').fadeIn();
 		}
 	}
@@ -191,12 +216,14 @@
 	//是否预约
 	function isAppointment(flag){
 		if(flag == 0){
+			$('#mask').fadeOut();
 			$('#div_popbox').fadeOut();
 		}else{
 			flushUerInfo();
 			var houseId = util.getUrlParam('houseId');
 			var userInfo = util.getCookie("userInfo");
 			if(userInfo == null || userInfo == ''){
+				$('#mask').fadeOut();
 				$('#div_popbox').fadeOut();
 				$('#span_pop').html('请先登录!');
 				$( '#div_popFail' ).fadeIn();
@@ -209,6 +236,7 @@
 			var mobile = userInfoJson.mobile;
 			if(mobile == null || mobile == ''){
 				$('#div_popbox').fadeOut();
+				$('#mask').fadeOut();
 				$('#span_pop').html('请先绑定手机号!');
 				$( '#div_popFail' ).fadeIn();
 				setTimeout( function(){$( '#div_popFail' ).fadeOut();
@@ -226,6 +254,7 @@
 				util.logResult(errorCode); 
 				if(errorCode == 0){
 					$('#div_popbox').fadeOut();
+					$('#mask').fadeOut();
 					$( '#div_popSuccess' ).fadeIn();
 					judgeStatus = 'false';
 					$('#a_yy').html('已预约');
@@ -235,6 +264,7 @@
 					}, ( 1 * 1000 ) );
 				}else{
 					$('#div_popbox').fadeOut();
+					$('#mask').fadeOut();
 					$( '#div_popFail' ).fadeIn();
 					setTimeout( function(){$( '#div_popFail' ).fadeOut();}, ( 1 * 1000 ) );
 				}
@@ -249,22 +279,24 @@
 			var userInfoJson = eval('(' + userInfo + ')');
 			util.logResult(userInfoJson);
 			var userId = userInfoJson.userId;
-			var updateTime = userInfoJson.updateTime;
-			var url = util.baseUrl + '/usr/get'; 
-			var param ='{"userId": '+userId+'}';
-			var contentType = "application/json";
-			util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
-				var result = data.result;
-				if(result == null || result == undefined){
-					util.setCookie("userInfo", '');
-				}
-				var newUpdateTime = result.updateTime;
-				util.logResult(newUpdateTime+' '+updateTime);
-				if(newUpdateTime != updateTime){
-					util.setCookie("userInfo", '');
-				}
-				
-			});
+			if(userId != undefined && userId != null && userId != '' ){
+				var updateTime = userInfoJson.updateTime;
+				var url = util.baseUrl + '/usr/get'; 
+				var param ='{"userId": '+userId+'}';
+				var contentType = "application/json";
+				util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+					var result = data.result;
+					if(result == null || result == undefined){
+						util.setCookie("userInfo", '');
+					}
+					var newUpdateTime = result.updateTime;
+					util.logResult(newUpdateTime+' '+updateTime);
+					if(newUpdateTime != updateTime){
+						util.setCookie("userInfo", '');
+					}
+					
+				});
+			}
 		}
 	}
 	

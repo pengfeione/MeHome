@@ -8,10 +8,10 @@
 <title>Me+资讯详情</title>
 <meta name="keywords" content="ME+">
 <meta name="description" content="ME+">
+<link rel="stylesheet" type="text/css" href="css/index.css" />
 <link rel="stylesheet" type="text/css" href="css/base.css" />
 <link rel="stylesheet" type="text/css" href="css/common.css" />
 <link rel="stylesheet" type="text/css" href="css/news.css" />
-<link rel="stylesheet" type="text/css" href="css/index.css" />
 <script src="js/jquery.min.js"></script>
 <script src="js/util.js"></script>
 </head>
@@ -115,15 +115,17 @@
 					var summary = newsInfo.summary;
 					var subject = newsInfo.subject;
 					var displayPic = newsInfo.displayPic;
+					var listpic = newsInfo.listpic;
 					var contentFrom = newsInfo.contentFrom;
 					var content = newsInfo.content;
 					var formatContent = newsInfo.formatContent;
 					var tid = newsInfo.tid;
 					var createTime = newsInfo.createTime;
+					var listpicStr = listpic==null?'':'	<img src="'+listpic[0]+'" />';
 					var timeStr = createTime.substr(0,4)+'年'+createTime.substr(5,2)+'月'+createTime.substr(8,2)+'日'+' '+createTime.substr(11,5);
-					var head_str = '<span class="bgLargeImg"><img src="'+displayPic+'" /></span>'
+					var head_str = '<span class="bgLargeImg">'+listpicStr+'</span>'
 								  +' <div class="newsInfo"> '
-								  +' <h3>'+summary+'</h3> '
+								  +' <h3>'+subject+'</h3> '
 								  +' <span><em>来源：'+contentFrom+'</em><i>'+timeStr+'</i></span> '
 								  +'</div>';
 		            $('#head_info').append(head_str);
@@ -219,6 +221,13 @@
 		if(content == '发表评论...'){
 			content = '';
 		}
+		if(content == ''){
+			$('#span_commonet').html('请输入评论!');
+			$( '#div_popSuccess' ).fadeIn();
+			setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+			}, ( 1* 1000 ) );
+			return false;
+		}
 		var url = util.baseUrl + '/reply/add';
 		var param ='{"tid":"'+tid+'","replier":'+userId+',"formatContent":"'+content
 				  +'","platform":3}';
@@ -227,6 +236,7 @@
 			util.logResult(data);
 			var code = data.code;
 			if(code == 0){
+				$('#span_commonet').html('评论成功!');
 				$('#div_popSuccess').fadeIn();
 				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
 					}, ( 1 * 1000 ) );

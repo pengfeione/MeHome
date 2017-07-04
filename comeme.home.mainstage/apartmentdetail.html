@@ -22,8 +22,8 @@
 <script src="js/util.js"></script>
 <style>
 .swiper-button-next, .swiper-button-prev { width:44px; height:44px; }
-.swiper-button-next { background:url(static/img/showImageRt.png) no-repeat; background-size:44px; }
-.swiper-button-prev { background:url(static/img/showImageLt.png) no-repeat; background-size:44px;  }
+.swiper-button-next { background:url(img/showImageRt.png) no-repeat; background-size:44px; }
+.swiper-button-prev { background:url(img/showImageLt.png) no-repeat; background-size:44px;  }
 .swiper-slide img   { width:100%; }
 </style>
 </head>
@@ -43,7 +43,7 @@
     	<div class="apartmentInfo">
             <div class="apartTop">
                 <span class="apartImg"><a><img id="img_head" src="img/test/test1.jpg" onclick="showLargeImg();"><i id='i_num'>5张</i></a></span>
-                <h3>Ascott商务服务中心</h3>
+                <h3 id="h_title">Ascott商务服务中心</h3>
                 <span class="apartStar" id="span_star"></span>
                 <span class="apartTag">
                 	<i id="i_gw" class="tagGw" style="display: none;">购物</i>
@@ -61,7 +61,7 @@
                  	<a onclick="showMap();"><i></i><label id="l_address">上海市浦东新区福山路82号</label><em class="iconMore"></em></a>
                  </li>
 
-                <li ><i class="iconCar"></i><label id="l_jt"></label></li>
+                <li ><i class="iconCar"></i><label id="l_jt">无</label></li>
             </ul>
         </div>
 
@@ -83,6 +83,7 @@
         <!-- 评价 -->
         <div class="houseStyle">
             <h3 class="houseTag">
+            	<em class="houseLine"></em>
             	<a class="curr" onclick="showTab(1);" id="a_tab_house">全部房型</a>
             	<a onclick="showTab(2);" id="a_tab_user">用户评价</a>
             </h3>
@@ -90,8 +91,10 @@
                 <div class="houseSection" id="div_house">
                     <ul class="apartList" id="ul_house">
                     </ul>
+                    <span class="listEnd" id="listEnd2">亲已经到底了哦~</span>
                 </div>
                 <div class="houseSection" style="display: none;"  id="div_common">
+                	<div class="noCommon" id="div_no_common"><img src="img/noCommon.png" /></div>
                     <ul class="commonList"  id="ul_common">
                     </ul>
                     <span class="listEnd" id="listEnd" style="display: none;">亲已经到底了哦~</span>
@@ -123,16 +126,7 @@
         <div class="houseWrap">
             <a class="showClose"></a>
         	<h3>房屋守则</h3>
-            <div class="houseText">
-                <dl>
-                    <dt>找房</dt>
-                    <dd>亲~通过青客官网、微信平台有房屋地址查找、地图查找这两大功能，是我推荐给亲你的。可以自己耐心地查看青客全部房源。然，你要是木得耐心呢，就直接拔打区域服务中心电话、或者是400客服电话选择当地的地主房管员帮你找房吧吧。</dd>
-                    <dt>预约看房</dt>
-                    <dd>亲~选好了图片上看中的房房，满意的就和她约个会，选个时间亲自看下吧。毕竟眼见为实嘛！嘛~~~或者还有一个“高大上”的看房方式：选择个有WIFI的方方，与地主房管员开通视频，一切真相竟收眼底。记得微信向他发个5元钱小费的哟！亲~为你节约的交通费、时间，赏他一个小红包吧！</dd>
-                    <dt>定房与签约</dt>
-                    <dd>亲~看中啦？没看中！噢，好。。。我送你到地铁，行礼很重吧！拜拜,要记得想起我哟！神马~~你又看中啦！那回来吧，带上一个月房租费费，签定房协议。看清楚哟，是定房，不是订房，定房后如果不租了，需从定金中扣除预定耽误的几天房租。吼~~~直接到你公司签约，好不啦~</dd>
-                </dl>
-            </div>
+            <iframe class="houseText" scrolling="no" frameborder="0" allowtransparency="true" id="iframe_rule"></iframe>
         </div>
     </div>
 
@@ -172,7 +166,7 @@
 		
 		$(window).on('scroll',function(){
 			sTop=$(window).scrollTop();
-			if(sTop>=$(".houseSection").get(0).offsetHeight-$(".wrap").height())
+			if(sTop>=$(".houseSection").get(1).offsetHeight-$(".wrap").height())
 			{
 				loadCommonList(tempPageIndex);
 				tempPageIndex++;
@@ -188,25 +182,39 @@
 		}
 		var userInfoJson = eval('(' + userInfo + ')');
 		var companyId = userInfoJson.companyId;
-		var productId = util.getUrlParam('productId');
-		var url = util.baseUrl+'/product/get_company_welfare';
-		var param ='{"productId":'+productId+',"companyId":'+companyId+'}';
-		var contentType = "application/json";
-		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
-			util.logResult(data);
-			var code = data.code;
-			if(code == 0){
-				var result = data.result;
-				var welfareStr='';
-				util.logResult(result.notice);
-				welfareStr ='<p>'
-							+ result.notice+',优惠'+result.remitPercent
-							+'%,押'+result.mortagageNum+'付'+result.payMentNum
-							+'</p>';
-				$('#div_welfare2').html(welfareStr);
-				$('#div_apartF2').show();
-			}
-		});
+		var companyStatus = userInfoJson.companyStatus;
+		if(companyId != 0 && companyStatus == 1){
+			var productId = util.getUrlParam('productId');
+			var url = util.baseUrl+'/product/get_company_welfare';
+			var param ='{"productId":'+productId+',"companyId":'+companyId+'}';
+			var contentType = "application/json";
+			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+				util.logResult(data);
+				var code = data.code;
+				if(code == 0){
+					var result = data.result;
+					var welfareStr='';
+					util.logResult(result.notice);
+					welfareStr ='<p>';
+					if(result.notice != undefined && result.notice != ''){
+						welfareStr += result.notice;
+					}
+					if(result.remitPercent != undefined && result.remitPercent != ''){
+						welfareStr += ',优惠'+result.remitPercent+'%';
+					}
+					if(result.mortagageNum != undefined && result.mortagageNum != ''){
+						welfareStr += '押'+result.mortagageNum;
+					}
+					if(result.payMentNum != undefined && result.payMentNum != ''){
+						welfareStr += '付'+result.payMentNum;
+					}
+					welfareStr += '</p>';
+					$('#div_welfare2').html(welfareStr);
+					$('#div_apartF2').show();
+					$('#div_apartFl').hide();
+				}
+			});
+		}
 	}
 	
 	//加载产品详细
@@ -229,10 +237,13 @@
 					var transport = productInfo.transport;
 					var delicacy = productInfo.delicacy;
 					var entertainment = productInfo.entertainment;
+					var netRulesUrl = productInfo.netRulesUrl;
+					
+					$('#iframe_rule').attr("src",netRulesUrl); 
 					if(shopping != null){
 						$('#i_gw').show();
 					}
-					if(transport != null){
+					if(transport != null && transport != ''){
 						$('#i_jt').show();
 						$('#l_jt').html(transport);
 					}
@@ -262,9 +273,20 @@
 					if(productInfo.hasPersonal){
 						var personalWelfare = eval('(' + productInfo.personalWelfare + ')');
 						util.logResult(personalWelfare.notice);
-						welfareStr ='<p>'+ personalWelfare.notice+',优惠'+personalWelfare.remitPercent
-										+'%,押'+personalWelfare.mortagageNum+'付'+personalWelfare.payMentNum
-										+'</p>';
+						welfareStr ='<p>';
+						if(personalWelfare.notice != undefined && personalWelfare.notice != ''){
+							welfareStr += personalWelfare.notice;
+						}
+						if(personalWelfare.remitPercent != undefined && personalWelfare.remitPercent != ''){
+							welfareStr += ',优惠'+personalWelfare.remitPercent+'%';
+						}
+						if(personalWelfare.mortagageNum != undefined && personalWelfare.mortagageNum != ''){
+							welfareStr += '押'+personalWelfare.mortagageNum;
+						}
+						if(personalWelfare.payMentNum != undefined && personalWelfare.payMentNum != ''){
+							welfareStr += '付'+personalWelfare.payMentNum;
+						}
+						welfareStr += '</p>';
 						$('#div_welfare').html(welfareStr);
 						$('#div_apartFl').show();
 					}
@@ -278,6 +300,8 @@
 						var img_html = '<div class="swiper-slide" ><img src="'+detailpic[i]+'" /></div>';
 						$('#div_swiper').append(img_html);
 					}
+					var productName = productInfo.productName;
+					$('#h_title').html(productName);
 				}
 			});
 		});
@@ -287,18 +311,18 @@
 	function loadHouseList(){
 		var productId = util.getUrlParam('productId');
 		var url = util.baseUrl + '/house/list';
-		var param ='{"productId": '+productId+',"status":1}';
+		var param ='{"productId": '+productId+'}';
 		var contentType = "application/json";
 		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 			util.logResult(data); 
 			$.each(data.result,function(index,houseInfo){
-				if(houseInfo.status != 3){
+				if(houseInfo.status != 3 && houseInfo.status != 0){
 					 var roomTypeDesc = eval('(' + houseInfo.roomTypeDesc + ')');
 					 var room_type_des =  roomTypeDesc.room +'室'+roomTypeDesc.hall+'厅'+roomTypeDesc.toilet+'卫';
 					 var li_html = '';
 					 var room_status_str = '';
 					 if(houseInfo.status == 1){
-					 	li_html = '<li onclick="gotoHouseDetail('+houseInfo.houseId+','+houseInfo.productId+');">';
+					 	li_html = '<li onclick="gotoHouseDetail('+houseInfo.houseId+','+houseInfo.productId+','+houseInfo.status+');">';
 					 	room_status_str = '<a class="btnApart btnYya">预约</a>';
 					 }else if(houseInfo.status == 2){
 					 	li_html = '<li>';
@@ -309,15 +333,17 @@
 //					 	room_status_str = '<a class="btnApart btnYjc">已下线</a>';
 //					 }
 					 var listpic = houseInfo.listpic;
+					 var roomRent = houseInfo.roomRent/100;
 					 var house_html = li_html
 					 				+ '	<img src="'+listpic+'" />'
 					 				+ '	<h3 class="hi">'+houseInfo.subject+'</h3>'
 					 				+ '	<span class="ht">'+room_type_des+' '+houseInfo.roomArea+'㎡</span>'
-					 				+ '	<span class="hm">'+houseInfo.roomRent+'／月</span>'
+					 				+ '	<span class="hm">'+roomRent+'／月</span>'
 					 				+ room_status_str
 					 				+'</li>';
 					 $('#ul_house').append(house_html);
 					 $('#div_house').show();
+					 $('#listEnd2').show();
 				 }
 			});
 		});
@@ -338,9 +364,16 @@
 		if(hasMore){
 			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 				util.logResult(data); 
+				if(pageIndex == 1 && data.result.length == 0){
+					$('#div_no_common').show();
+				}
+				if(pageIndex != 1 || data.result.length != 0){
+					$('#div_no_common').hide();
+				}
 				var totalCount = data.totalCount;
-				if(pageIndex*10>=totalCount){
+				if(pageIndex*10>=totalCount && totalCount > 0){
 					hasMore=false;
+					$('#listEnd').show();
 				}
 				$.each(data.result,function(index,commentInfo){
 					userIds += commentInfo.replier+',';
@@ -393,17 +426,22 @@
 			$('#a_tab_user').css('color','gray');
 			$('#div_house').show();
 			$('#div_common').hide();
+			$('#listEnd').hide();
+			$('#listEnd2').show();
 		}else{
 			$('#a_tab_house').css('color','gray');
 			$('#a_tab_user').css('color','#20aa94');
 			$('#div_house').hide();
 			$('#div_common').show();
+			$('#listEnd2').hide();
 		}
 	}
 	
 	//进入房间详情页面
-	function gotoHouseDetail(houseId,productId){
-		window.location.href="housedetail.html?houseId="+houseId+"&productId="+productId;
+	function gotoHouseDetail(houseId,productId,houseStatus){
+		if(houseStatus == 1){
+			window.location.href="housedetail.html?houseId="+houseId+"&productId="+productId;
+		}
 	}
 	
 	//批量获取用户信息 
@@ -462,26 +500,28 @@
 			var userInfoJson = eval('(' + userInfo + ')');
 			util.logResult(userInfoJson);
 			var userId = userInfoJson.userId;
-			var updateTime = userInfoJson.updateTime;
-			var url = util.baseUrl + '/usr/get'; 
-			var param ='{"userId": '+userId+'}';
-			var contentType = "application/json";
-			util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
-				util.logResult(data)
-				var result = data.result;
-				if(result == null || result == undefined){
-					util.setCookie("userInfo", '');
-				}
-				userInfoJson.companyId = result.companyId;
-				util.logResult(userInfoJson); 
-				util.setCookie("userInfo", JSON.stringify(userInfoJson));
-//				var newUpdateTime = result.updateTime;
-//				util.logResult(newUpdateTime+' '+updateTime);
-//				if(newUpdateTime != updateTime){
-//					util.setCookie("userInfo", '');
-//				}
-				
-			});
+			if(userId != undefined && userId != null && userId != '' ){
+				var updateTime = userInfoJson.updateTime;
+				var url = util.baseUrl + '/usr/get'; 
+				var param ='{"userId": '+userId+'}';
+				var contentType = "application/json";
+				util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+					util.logResult(data)
+					var result = data.result;
+					if(result == null || result == undefined){
+						util.setCookie("userInfo", '');
+					}
+					userInfoJson.companyId = result.companyId;
+					util.logResult(userInfoJson); 
+					util.setCookie("userInfo", JSON.stringify(userInfoJson));
+	//				var newUpdateTime = result.updateTime;
+	//				util.logResult(newUpdateTime+' '+updateTime);
+	//				if(newUpdateTime != updateTime){
+	//					util.setCookie("userInfo", '');
+	//				}
+					
+				});
+			}
 		}
 	}
 	

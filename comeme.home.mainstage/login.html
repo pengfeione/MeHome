@@ -85,7 +85,7 @@
 			}
 			
 			var url = util.baseUrl + '/usr/mobile_login';
-			var param ='{"mobile": '+mobile+',"password":'+pwd+'}';
+			var param ='{"mobile": '+mobile+',"password":"'+pwd+'"}';
 			var contentType = "application/json";
 			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 				util.logResult(data); 

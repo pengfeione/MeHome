@@ -20,6 +20,14 @@
     
     <div class="wrap">
     
+     	<!-- header -->
+        <div class="header">
+        	<div class="headerCont">
+            	<a class="btnBack" onclick="history.back();">&lt;</a>
+            	<span>企业用户认证</span>
+            </div>
+        </div>
+        
     	<!-- header -->
     	<header class="editInfo">--请提交您的个人信息，并等待企业审核--</header>
         
@@ -27,7 +35,7 @@
         	<div class="loginList edit">
             	<ul>
                 	<li><span>授权码<i>*</i></span>
-                		<input type="text" value="" class="text" id="auth_code" onblur="authCodeIsExists();"/>
+                		<input type="text" value="" class="text" id="auth_code" />
                 	</li>
                     <li><span>姓名<i>*</i></span>
                     	<input type="text" value="" class="text" id="user_name"/>
@@ -58,6 +66,14 @@
 	//判断授权码是否存在
 	function authCodeIsExists(){
 		var authCode = $('#auth_code').val();
+		if(authCode == null || authCode == ''){
+			$('#span_pop').html('请输入授权码!');
+			$('#auth_code').select();
+			$( '#div_popSuccess' ).fadeIn();
+			setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+			isSubmit = 0
+			return false;
+		}
 		var url = util.baseUrl + '/usr/judge_auth_code?authCode='+authCode;
 		util.requestRemoteData(url,null,function(data){
 			util.logResult(data);
@@ -87,49 +103,70 @@
 				$('#span_pop').html('请先登录!');
 				$( '#div_popSuccess' ).fadeIn();
 				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
-				isSubmit = 0
+				isSubmit = 0;
 				return false;
 			 }
 			if(authCode == null || authCode == ''){
 				$('#span_pop').html('请输入授权码!');
 				$( '#div_popSuccess' ).fadeIn();
 				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
-				isSubmit = 0
+				isSubmit = 0;
 				return false;
 			}
 			if(realName == null || realName == ''){
 				$('#span_pop').html('请输入姓名!');
 				$( '#div_popSuccess' ).fadeIn();
 				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
-				isSubmit = 0
+				isSubmit = 0;
+				return false;
+			}
+			if(idCard == null || idCard==''){
+				$('#span_pop').html('请输入身份证号!');
+				$( '#div_popSuccess' ).fadeIn();
+				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+				isSubmit = 0;
 				return false;
 			}
 			 var res= util.identityCodeValid(idCard);
 			 if(!res){
-			 	isSubmit = 0
+			 	isSubmit = 0;
 			 	return false;
 			 }
-			 var url = util.baseUrl + '/usr/apply_company';
-			 var param ='{"userId": '+userId+',"authCode":"'+authCode+'","realName":"'+realName+'","idCard":'+idCard+'}';
-			 var contentType = "application/json";
-			 util.requestRemoteDataJsonPost(url,param,contentType,function(data){
-					util.logResult(data); 
-					var code = data.code;
-					if(code == 0){
-						$('#span_pop').html('提交成功<br>等待企业审核');
-						$('#div_popSuccess').fadeIn();
-						setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
-							flushUerInfo();
-							window.location.href="my.html";
-							}, ( 1 * 1000 ) );
-					}else{
-						$('#span_pop').html('提交失败!');
-						$('#div_popSuccess').fadeIn();
-						setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
-							}, ( 1 * 1000 ) );
-						isSubmit = 0
-					}
-			 });
+			 var url = util.baseUrl + '/usr/judge_auth_code?authCode='+authCode;
+			 util.requestRemoteData(url,null,function(data){
+				util.logResult(data);
+				var dataResult = eval('(' + data + ')');
+				var authResult = dataResult.result;
+				if(!authResult){
+					$('#span_pop').html('授权码不存在!');
+					$( '#div_popSuccess' ).fadeIn();
+					setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
+					$('#auth_code').select();
+					isSubmit = 0;
+				}else{
+					var url = util.baseUrl + '/usr/apply_company';
+					 var param ='{"userId": '+userId+',"authCode":"'+authCode+'","realName":"'+realName+'","idCard":'+idCard+'}';
+					 var contentType = "application/json";
+					 util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+							util.logResult(data); 
+							var code = data.code;
+							if(code == 0){
+								$('#span_pop').html('提交成功<br>等待企业审核');
+								$('#div_popSuccess').fadeIn();
+								setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+									flushUerInfo();
+									window.location.href="my.html";
+									}, ( 1 * 1000 ) );
+							}else{
+								$('#span_pop').html('提交失败!');
+								$('#div_popSuccess').fadeIn();
+								setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
+									}, ( 1 * 1000 ) );
+								isSubmit = 0
+							}
+					 });
+				}
+			});
 		 }
 	}
 	

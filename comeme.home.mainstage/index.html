@@ -64,6 +64,8 @@
 		                <div id="pullUp">
 		                    <span class="pullUpIcon"></span><span class="pullUpLabel">Pull up to refresh</span>
 		                </div>
+		                <center style=" height:40px; display:none; text-align:center; line-height:40px; color:#c8c8c8;" 
+		                	class="listEnd" id="listEnd" style="display: none;">亲已经到底了哦~</center>
 		            </div>
 		        </section>
             </div>
@@ -160,13 +162,16 @@
 	
 	//加载轮播图片
 	function loadImages(){
-		var url = util.baseUrl + '/recommend/list';
-		var param ='{}';
+		var url = util.baseUrl + '/topic/list';
+		var param ='{"displayLocation":"index"}';
 		var contentType = "application/json";
 		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
 			util.logResult(data);
 			$.each(data.result,function(index,imgInfo){
-				var img_html = '<div class="swiper-slide" onclick="gotoProduct('+imgInfo.productId+');"><img src="'+imgInfo.img+'" /></div>';
+				var listpic = imgInfo.listpic;
+				var tid = imgInfo.tid;
+				var listpicStr = listpic==null?'':listpic[0];
+				var img_html = '<div class="swiper-slide" productId='+tid+' onclick="gotoProduct(this);"><img src="'+listpicStr+'" /></div>';
 				$('#div_swiper').append(img_html);
 			});
 			
@@ -199,6 +204,7 @@
 				var totalCount = data.totalCount;
 				if(pageIndex*10>=totalCount){
 					hasMore=false;
+					$('#listEnd').show();
 				}
 				$.each(data.result,function(index,productInfo){
 					var detailpic = productInfo.detailpic;
@@ -212,8 +218,8 @@
 								 + '</li>';
 					$('#ul_product').append(html_str);
 				});
-				setTimeout( function(){loadLayer();}, ( 1 * 1000 ) );
-				loadLayer();
+				setTimeout( function(){loadLayer();}, ( 3 * 100 ) );
+//				loadLayer();
 			});
 		}
 		
@@ -240,7 +246,7 @@
 							 + '</li>';
 				$('#ul_product').append(html_str);
 			});
-			loadLayer();
+			setTimeout( function(){loadLayer();}, ( 3 * 100 ) );
 			if(data.totalCount == 0){
 				$('#lab_remind').show();
 			}
@@ -272,8 +278,9 @@
 	}
 	
 	//跳到产品页面
-	function gotoProduct(productId){
-		window.location.href='apartmentdetail.html?productId='+productId;
+	function gotoProduct(obj){
+		var productId = $(obj).attr('productid');
+		window.location.href='newsdetail.html?tid='+productId;
 	}
 	
 	//刷新个人信息
@@ -283,22 +290,24 @@
 			var userInfoJson = eval('(' + userInfo + ')');
 			util.logResult(userInfoJson);
 			var userId = userInfoJson.userId;
-			var updateTime = userInfoJson.updateTime;
-			var url = util.baseUrl + '/usr/get'; 
-			var param ='{"userId": '+userId+'}';
-			var contentType = "application/json";
-			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
-				var result = data.result;
-				if(result == null || result == undefined){
-					util.setCookie("userInfo", '');
-				}
-//				var newUpdateTime = result.updateTime;
-//				util.logResult(newUpdateTime+' '+updateTime);
-//				if(newUpdateTime != updateTime){
-//					util.setCookie("userInfo", '');
-//				}
-				
-			});
+			if(userId != undefined && userId != null && userId != '' ){
+				var updateTime = userInfoJson.updateTime;
+				var url = util.baseUrl + '/usr/get'; 
+				var param ='{"userId": '+userId+'}';
+				var contentType = "application/json";
+				util.requestRemoteDataJsonPost(url,param,contentType,function(data){
+					var result = data.result;
+					if(result == null || result == undefined){
+						util.setCookie("userInfo", '');
+					}
+	//				var newUpdateTime = result.updateTime;
+	//				util.logResult(newUpdateTime+' '+updateTime);
+	//				if(newUpdateTime != updateTime){
+	//					util.setCookie("userInfo", '');
+	//				}
+					
+				});
+			}
 		}
 	}
 	
@@ -307,6 +316,7 @@
 		var ua = navigator.userAgent.toLowerCase();
 		if(ua.match(/MicroMessenger/i)=="micromessenger") {
 			var oUserInfo= util.getCookie("userInfo");
+			
 			if(oUserInfo == null || oUserInfo == '' || oUserInfo == undefined || oUserInfo == 'undefined'){
 				var code = util.getUrlParam('code');
 				if(code == null){
