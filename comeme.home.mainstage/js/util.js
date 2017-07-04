@@ -1,6 +1,6 @@
 
 function Util(){
-	this.baseUrl = "http://api.mjiahome.com/api";//api.mjiahome.com
+	this.baseUrl = "http://event.m.shihou.tv/shihou_cf_guess";//api.mjiahome.com
 	this.reportUrl = "http://event.m.shihou.tv/shihou_report";
 	this.webUrl = "http://m.shihoutv.com/lion_module_share_temp/share?room_id=";
 	this.init();

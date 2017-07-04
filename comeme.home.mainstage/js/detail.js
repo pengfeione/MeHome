@@ -11,7 +11,7 @@ Detail.prototype={
 	{
 		var _this = this;
 		_this.houseDetailScrollImg();
-		_this.houseStyle();
+		//_this.houseStyle();
 		_this.showHideFl();
 		_this.houseRule();
 		_this.showImageSamll();
