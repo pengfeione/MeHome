@@ -1,30 +1,29 @@
 package com.mehome.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mehome.dao.*;
 import com.mehome.domain.*;
+import com.mehome.enumDTO.UserCompanyEnum;
 import com.mehome.exceptions.InfoException;
+import com.mehome.requestDTO.BasicBean;
 import com.mehome.requestDTO.CompanyWelfareNotice;
+import com.mehome.requestDTO.ProductBean;
 import com.mehome.requestDTO.ProductCompanyWelfareDTO;
 import com.mehome.resonpseDTO.ProductCompanyWelfare;
+import com.mehome.service.iface.IProductService;
 import com.mehome.utils.AssertUtils;
 import com.mehome.utils.LbsAmapUtils;
-
+import com.mehome.utils.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.mehome.requestDTO.BasicBean;
-import com.mehome.requestDTO.ProductBean;
-import com.mehome.service.iface.IProductService;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 @Service("IProductService")
 public class ProductServiceImpl implements IProductService {
@@ -43,6 +42,8 @@ public class ProductServiceImpl implements IProductService {
     private CompanyListDao companyListDao;
     @Autowired
     private CompanyWelfareDao companyWelfareDao;
+    @Autowired
+    private UserInfoDao userInfoDao;
 
     @Override
     public List<ProductBean> getListByCondition(ProductBean bean) {
@@ -80,15 +81,42 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public JSONObject getCompanyWelfare(CompanyWelfareDTO companyWelfareDTO) {
-        List<Integer> welfareIds = productRelationWelfareDao.selectByProductId(companyWelfareDTO.getProductId());
-        if (welfareIds.size() <= 0) {
-            welfareIds = null;
+        if (null != companyWelfareDTO.getUserId()) {
+            UserInfo userInfo = userInfoDao.selectById(companyWelfareDTO.getUserId());
+            if (null != userInfo
+                    && null != userInfo.getCompanyId()
+                    && null != companyWelfareDTO.getCompanyId()
+                    && userInfo.getCompanyId() == companyWelfareDTO.getCompanyId()
+                    && userInfo.getCompanyStatus() == UserCompanyEnum.ACTIVE.getKey()
+                    ) {
+                //是该企业且已通过审核
+                List<Integer> welfareIds = productRelationWelfareDao.selectByProductId(companyWelfareDTO.getProductId());
+                if (welfareIds.size() <= 0) {
+                    welfareIds = null;
+                }
+                String companyWelfareByProduct = companyWelfareDao.selectWelfareByCondition(welfareIds, companyWelfareDTO.getCompanyId());
+                if (null != companyWelfareByProduct) {
+                    return JSONObject.parseObject(companyWelfareByProduct);
+                }
+                return new JSONObject();
+            }
         }
-        String companyWelfareByProduct = companyWelfareDao.selectWelfareByCondition(welfareIds, companyWelfareDTO.getCompanyId());
-        if (null != companyWelfareByProduct) {
-            return JSONObject.parseObject(companyWelfareByProduct);
+        ProductList productList = productListDAO.selectById(companyWelfareDTO.getProductId());
+        if (null != productList) {
+            if (StringUtils.isNull(productList.getPersonalWelfare())) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("mortagageNum", 0);
+                jsonObject.put("name", "该产品暂无个人福利！");
+                jsonObject.put("notice", "该产品暂无个人福利");
+                jsonObject.put("payMentNum", 0);
+                jsonObject.put("remitPercent", 0);
+                return jsonObject;
+            } else {
+                return JSONObject.parseObject(productList.getPersonalWelfare());
+            }
+        } else {
+            throw new InfoException("产品不存在！");
         }
-        return new JSONObject();
     }
 
     @Override
@@ -98,7 +126,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public String addProduct(ProductList bean) {
-    	if (!StringUtils.isEmpty(bean.getAddress())) {
+        if (!StringUtils.isEmpty(bean.getAddress())) {
             String position = LbsAmapUtils.formatPosition(bean.getAddress());
             bean.setPosition(position);
         }

@@ -109,6 +109,15 @@ public class ProductController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(productService.getCompanyWelfare(companyWelfareDTO)));
     }
+    @PostMapping("/get_company_welfare_by_usr")
+    @ResponseBody
+    public ResponseEntity<Result> getCompanyWelfareByUser(@RequestBody CompanyWelfareDTO companyWelfareDTO) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(productService.getCompanyWelfare(companyWelfareDTO)));
+    }
 
     @PostMapping("/add_company_welfare")
     @ResponseBody
