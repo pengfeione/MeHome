@@ -44,6 +44,8 @@ public class CommentServiceImpl implements ICommentService {
 				return "";
 			}
 			Integer max=ProductCommentDAO.getMaxFloorByProduct(productId);
+			if(max==null)
+				max=0;
 			bean.setFloor(max+1);
 			comment = bean.beanToPojo(Boolean.TRUE);
 			ProductCommentDAO.insert(comment);
