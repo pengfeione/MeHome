@@ -92,6 +92,9 @@ public class OrderServiceImpl implements IOrderService {
                 bean.setHouseSubject(house.getSubject());
                 bean.setProductId(house.getProductId());
                 bean.setProductName(product.getProductName());
+                bean.setSupplierId(product.getSupplierId());
+                SupplierList supplier=supplierListDAO.selectById(product.getSupplierId());
+                bean.setSupplierName(supplier.getSupplierName());
                 bean = calculateWelfare(bean, 1);
             }
             order = bean.beanToPojo(Boolean.TRUE);
