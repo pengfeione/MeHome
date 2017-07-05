@@ -5,7 +5,10 @@ import com.mehome.dao.CompanyListDao;
 import com.mehome.dao.SmsRecordDao;
 import com.mehome.dao.UserInfoDao;
 import com.mehome.dao.UserReviewDao;
-import com.mehome.domain.*;
+import com.mehome.domain.CompanyList;
+import com.mehome.domain.SmsRecord;
+import com.mehome.domain.UserInfo;
+import com.mehome.domain.WeChatUserInfo;
 import com.mehome.enumDTO.SmsEnum;
 import com.mehome.enumDTO.UserCompanyEnum;
 import com.mehome.enumDTO.UserOpenType;
@@ -21,12 +24,9 @@ import com.mehome.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -123,7 +123,19 @@ public class UserInfoServiceImpl implements IUserInfoService {
                 userInfo.setOpenType(UserOpenType.MOBILE.getKey());
             }
             userInfo.setCreateTime(Calendar.getInstance().getTime());
-            userInfoDao.insertRequired(userInfo);
+            if (StringUtils.isNotNull(userInfo.getOpenId())) {
+                UserInfo sameOpenUserInfo = userInfoDao.selectByOpen(userInfo);
+                if (null == sameOpenUserInfo) {
+                    userInfoDao.insertRequired(userInfo);
+                } else {
+                    userInfo.setUserId(sameOpenUserInfo.getUserId());
+                    sameOpenUserInfo.setMobile(userInfo.getMobile());
+                    sameOpenUserInfo.setPassword(userInfo.getPassword());
+                    userInfoDao.updateRequired(sameOpenUserInfo);
+                }
+            } else {
+                userInfoDao.insertRequired(userInfo);
+            }
             return userInfo.getUserId();
         }
     }
