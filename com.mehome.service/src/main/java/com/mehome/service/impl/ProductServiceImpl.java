@@ -44,6 +44,8 @@ public class ProductServiceImpl implements IProductService {
     private CompanyWelfareDao companyWelfareDao;
     @Autowired
     private UserInfoDao userInfoDao;
+    @Autowired
+    private HouseResourceDao houseResourceDao;
 
     @Override
     public List<ProductBean> getListByCondition(ProductBean bean) {
@@ -81,41 +83,73 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public JSONObject getCompanyWelfare(CompanyWelfareDTO companyWelfareDTO) {
+        //若用户ID不为空，需要判断用户和企业的关系
         if (null != companyWelfareDTO.getUserId()) {
             UserInfo userInfo = userInfoDao.selectById(companyWelfareDTO.getUserId());
             if (null != userInfo
                     && null != userInfo.getCompanyId()
                     && null != companyWelfareDTO.getCompanyId()
-                    && userInfo.getCompanyId() == companyWelfareDTO.getCompanyId()
                     && userInfo.getCompanyStatus() == UserCompanyEnum.ACTIVE.getKey()
                     ) {
-                //是该企业且已通过审核
-                List<Integer> welfareIds = productRelationWelfareDao.selectByProductId(companyWelfareDTO.getProductId());
+                //是关联该产品的所有企业福利id
+                List<String> welfareIds = productRelationWelfareDao.selectByProductIdAndCompanyId(companyWelfareDTO.getProductId(), userInfo.getCompanyId());
                 if (welfareIds.size() <= 0) {
-                    welfareIds = null;
+                    throw new InfoException("暂无企业福利！");
+                } else {
+                    return JSONObject.parseObject(welfareIds.get(0));
                 }
-                String companyWelfareByProduct = companyWelfareDao.selectWelfareByCondition(welfareIds, companyWelfareDTO.getCompanyId());
-                if (null != companyWelfareByProduct) {
-                    return JSONObject.parseObject(companyWelfareByProduct);
-                }
-                return new JSONObject();
-            }
-        }
-        ProductList productList = productListDAO.selectById(companyWelfareDTO.getProductId());
-        if (null != productList) {
-            if (StringUtils.isNull(productList.getPersonalWelfare())) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("mortagageNum", 0);
-                jsonObject.put("name", "该产品暂无个人福利！");
-                jsonObject.put("notice", "该产品暂无个人福利");
-                jsonObject.put("payMentNum", 0);
-                jsonObject.put("remitPercent", 0);
-                return jsonObject;
             } else {
-                return JSONObject.parseObject(productList.getPersonalWelfare());
+                throw new InfoException("暂无企业福利！");
             }
         } else {
-            throw new InfoException("产品不存在！");
+            throw new InfoException("暂无企业福利！");
+        }
+    }
+
+    @Override
+    public JSONObject getWelfare(CompanyWelfareDTO companyWelfareDTO) {
+        JSONObject personWelfare = null;
+        JSONObject companyWelfare = null;
+        JSONObject houseWelfare = null;
+        if (null != companyWelfareDTO.getProductId()) {
+            ProductList productList = productListDAO.selectById(companyWelfareDTO.getProductId());
+            if (null != productList && StringUtils.isNotNull(productList.getPersonalWelfare())) {
+                personWelfare = JSONObject.parseObject(productList.getPersonalWelfare());
+            }
+        }
+        if (null != companyWelfareDTO.getUserId()) {
+            UserInfo userInfo = userInfoDao.selectById(companyWelfareDTO.getUserId());
+            if (null != userInfo
+                    && null != userInfo.getCompanyId()
+                    && null != companyWelfareDTO.getCompanyId()
+                    && userInfo.getCompanyStatus() == UserCompanyEnum.ACTIVE.getKey()
+                    ) {
+                //是关联该产品的所有企业福利id
+                List<String> welfareIds = productRelationWelfareDao.selectByProductIdAndCompanyId(companyWelfareDTO.getProductId(), userInfo.getCompanyId());
+                if (welfareIds.size() > 0) {
+                    companyWelfare = JSONObject.parseObject(welfareIds.get(0));
+                }
+            }
+        }
+        if (null != companyWelfareDTO.getHouseId()) {
+            HouseResource houseResource = houseResourceDao.selectById(companyWelfareDTO.getHouseId());
+            if (null != houseResource && StringUtils.isNotNull(houseResource.getPayType())) {
+                houseWelfare = new JSONObject();
+                houseWelfare = JSONObject.parseObject(houseResource.getPayType());
+                houseWelfare.put("remitPercent", 0);
+            }
+        }
+        if (null != companyWelfare) {
+            companyWelfare.put("type", "company");
+            return companyWelfare;
+        } else if (null != personWelfare) {
+            personWelfare.put("type", "person");
+            return personWelfare;
+        } else if (null != houseWelfare) {
+            houseWelfare.put("type", "house");
+            return houseWelfare;
+        } else {
+            throw new InfoException("暂无任何福利!");
         }
     }
 

@@ -54,6 +54,17 @@
         FROM product_relation_welfare
         WHERE product_id = #{productId,jdbcType=INTEGER}
     </select>
+    <select id="selectByProductIdAndCompanyId" resultType="java.lang.String" parameterType="map">
+        SELECT welfare.welfare_content
+        FROM (SELECT *
+            FROM product_relation_welfare
+            WHERE product_id =#{productId,jdbcType=INTEGER}
+            ) product LEFT JOIN (SELECT *
+            FROM company_welfare
+            WHERE company_id = #{companyId,jdbcType=INTEGER}
+                AND welfare_active = 1
+            ) welfare ON product.welfare_id = welfare.welfare_id
+    </select>
     <delete id="delete" parameterType="map">
         DELETE FROM product_relation_welfare
         WHERE welfare_id = #{welfareId,jdbcType=INTEGER}

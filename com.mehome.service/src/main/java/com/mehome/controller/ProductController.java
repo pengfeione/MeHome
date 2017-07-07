@@ -1,24 +1,17 @@
 package com.mehome.controller;
 
-import com.alipay.api.domain.Product;
-import com.mehome.domain.CompanyWelfare;
 import com.mehome.domain.CompanyWelfareDTO;
 import com.mehome.domain.ProductList;
-import com.mehome.enumDTO.RoleEnum;
 import com.mehome.requestDTO.CompanyWelfareNotice;
+import com.mehome.requestDTO.ProductBean;
 import com.mehome.requestDTO.ProductCompanyWelfareDTO;
-import com.mehome.utils.Permits;
+import com.mehome.service.iface.IProductService;
+import com.mehome.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.mehome.requestDTO.HouseBean;
-import com.mehome.requestDTO.ProductBean;
-import com.mehome.service.iface.IHouseService;
-import com.mehome.service.iface.IProductService;
-import com.mehome.utils.Result;
 
 @RestController
 @RequestMapping("/api/product")
@@ -109,6 +102,7 @@ public class ProductController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(productService.getCompanyWelfare(companyWelfareDTO)));
     }
+
     @PostMapping("/get_company_welfare_by_usr")
     @ResponseBody
     public ResponseEntity<Result> getCompanyWelfareByUser(@RequestBody CompanyWelfareDTO companyWelfareDTO) {
@@ -118,6 +112,17 @@ public class ProductController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(productService.getCompanyWelfare(companyWelfareDTO)));
     }
+
+    @PostMapping("/get_welfare_by_usr")
+    @ResponseBody
+    public ResponseEntity<Result> getWelfareByUser(@RequestBody CompanyWelfareDTO companyWelfareDTO) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(productService.getWelfare(companyWelfareDTO)));
+    }
+
 
     @PostMapping("/add_company_welfare")
     @ResponseBody

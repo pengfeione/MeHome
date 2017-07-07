@@ -1,181 +1,196 @@
 <!DOCTYPE HTML>
 <html lang="zh-cn">
 <head>
-<!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
-<base href="http://m.mjiahome.com/"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name = "format-detection" content="telephone=no">
-<meta name="viewport"  content="width=device-width,user-scalable=no">
-<title>Me+编辑个人信息</title>
-<meta name="keywords" content="ME+">
-<meta name="description" content="ME+">
-<link rel="stylesheet" type="text/css" href="css/base.css" />
-<link rel="stylesheet" type="text/css" href="css/common.css" />
-<link rel="stylesheet" type="text/css" href="css/loginshare.css" />
-<link rel="stylesheet" type="text/css" href="css/index.css" />
-<script src="js/jquery.min.js"></script>
-<script src="js/loginshare.js"></script>
-<script src="js/util.js"></script>
+    <!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
+    <base href="http://m.mjiahome.com/"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <title>Me+编辑个人信息</title>
+    <meta name="keywords" content="ME+">
+    <meta name="description" content="ME+">
+    <link rel="stylesheet" type="text/css" href="css/base.css"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/loginshare.css"/>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/loginshare.js"></script>
+    <script src="js/util.js"></script>
 </head>
 <body class="editBody">
-	<input type="hidden" id="userId" />
-    <div class="wrap">
-    	<div id="ossfile"></div>
-        <br/>
-        <div id="container">
-	        <a class="userHead btn" id="selectfiles">
-	        	<span class="userText" style="height:74px; line-height:74px; display:block; color:#282828; position:absolute; left:10px; top:0; z-index:0;font-size:12px;">头像</span>
-	            <span class="userImg"  style="width:64px; height:44px; display:block; position:absolute; right:10px; top:15px; z-index:0;">
-	               <img id="img_avatar" src="" style="width:44px; height:44px; display:block; overflow:hidden; border-radius:50%;"/>
+<input type="hidden" id="userId"/>
+<div class="wrap">
+    <div id="ossfile"></div>
+    <br/>
+    <div id="container">
+        <a class="userHead btn" id="selectfiles">
+            <span class="userText"
+                  style="height:74px; line-height:74px; display:block; color:#282828; position:absolute; left:10px; top:0; z-index:0;font-size:12px;">头像</span>
+            <span class="userImg"
+                  style="width:64px; height:44px; display:block; position:absolute; right:10px; top:15px; z-index:0;">
+	               <img id="img_avatar" src=""
+                        style="width:44px; height:44px; display:block; overflow:hidden; border-radius:50%;"/>
 	            </span>
-	            <i class="iconMore"></i>
-	        </a>
-		</div>
-        <section>
-        	<div class="userEditInfo">
-            	<ul>
-                	<li id="li_name"><a onclick="editName();"><span style="font-size: 12px;">昵称</span><em id="em_name"></em><i class="iconMore"></i></a></li>
-                    <li id="li_edit" style="display: none;">
-                    	<a><span style="font-size: 12px;">昵称</span>
-	                    	<em>
-		                    	<input type="text" value="" class="txt" id="i_name"
-		                    		onblur="submitUser();"/>
-	                    	</em>
-	                    	<!--<i class="btnClose" id="i_close" onclick="clearName();"></i>-->
-                    	</a>
-                    </li>
-                    <!--<li><a onclick="enterprise();"><span>企业用户认证</span><em id="em_auth">未认证，点我认证</em><i class="iconMore"></i></a></li>-->
-                </ul>
-            </div>
-        </section>
+            <i class="iconMore"></i>
+        </a>
     </div>
-    
-     <!-- 评价成功 -->
-    <div class="pop popEva" id="div_popSuccess">
-    	<em class="iconSuccess"></em>
-    	<span id="span_commonet">评价成功</span>
-    </div>
+    <section>
+        <div class="userEditInfo">
+            <ul>
+                <li id="li_name"><a onclick="editName();"><span style="font-size: 12px;">昵称</span><em id="em_name"></em><i
+                        class="iconMore"></i></a></li>
+                <li id="li_edit" style="display: none;">
+                    <a><span style="font-size: 12px;">昵称</span>
+                        <em>
+                            <input type="text" value="" class="txt" id="i_name"
+                                   onblur="submitUser();"/>
+                        </em>
+                        <!--<i class="btnClose" id="i_close" onclick="clearName();"></i>-->
+                    </a>
+                </li>
+                <!--<li><a onclick="enterprise();"><span>企业用户认证</span><em id="em_auth">未认证，点我认证</em><i class="iconMore"></i></a></li>-->
+            </ul>
+        </div>
+    </section>
+</div>
+
+<!-- 评价成功 -->
+<div class="pop popEva" id="div_popSuccess">
+    <em class="iconSuccess"></em>
+    <span id="span_commonet">评价成功</span>
+</div>
 </body>
 <script type="text/javascript">
-	var util;
-	var isSubmit = 0;
-	//页面初始化
-	$(function(){
-		util = new Util();
-		flushUerInfo();
-		loadUserInfo();
-	});
-	
-	//加载个人信息
-	function loadUserInfo(){
-		var userInfo = util.getCookie("userInfo");
-		var userInfoJson = eval('(' + userInfo + ')');
-		util.logResult(userInfoJson); 
-		var avatar = userInfoJson.avatar;
-		var nickName = userInfoJson.nickName;
-		var companyStatus = userInfoJson.companyStatus;
-		var userId = userInfoJson.userId;
-		$("#img_avatar").attr('src',avatar);
-		$('#em_name').html(nickName);
-		$("#i_name").val(nickName);
-		$('#userId').val(userId);
-		if(companyStatus == 0){
-			$('#em_auth').html('未认证，点我认证');
-		}else if(companyStatus == 1){
-			$('#em_auth').html('已认证');
-		}else if(companyStatus == 2){
-			$('#em_auth').html('待审核');
-		}else if(companyStatus == 3){
-			$('#em_auth').html('审核不通过');
-		}
-	}
-	
-	//企业用户认证
-	function enterprise(){
-		var userInfo = util.getCookie("userInfo");
-		var userInfoJson = eval('(' + userInfo + ')');
-		var companyStatus = userInfoJson.companyStatus;
-		if(companyStatus == 0){
-			window.location.href='enterpriseuser2.html';
-		}
-	}
-	
-	//编辑用户昵称
-	function editName(){
-		$('#li_name').hide();
-		$('#li_edit').show();
-		$('#i_name').click();
-		$('#i_name').select();
-	}
-	
-	//清除姓名
-	function clearName(){
-		$('#i_name').val('');
-		$('#i_close').hide();
-	}
-	
-	//提交用户信息
-	function submitUser(){
-		var userInfo = util.getCookie("userInfo");
-		var userInfoJson = eval('(' + userInfo + ')');
-		var userId = userInfoJson.userId;
-		var nikeName = $('#i_name').val();
-		util.logResult(userInfoJson); 
-		if(nikeName.trim() == ''){
-			$('#span_commonet').html('昵称不可为空!');
-			$( '#div_popSuccess' ).fadeIn();
-			setTimeout( function(){$( '#div_popSuccess' ).fadeOut();}, ( 1* 1000 ) );
-		}
-		var url = util.baseUrl + '/usr/update_info';
-		var param ='{"userId": '+userId+',"nickName":"'+nikeName+'"}';
-		var contentType = "application/json";
-		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
-			util.logResult(data);
-			var code = data.code;
-			if(code == 0){
-				 userInfoJson.nickName = nikeName;
-				 util.logResult(userInfoJson); 
-				 util.setCookie("userInfo", JSON.stringify(userInfoJson));
-				 $('#em_name').html(nikeName);
-				 $('#li_name').show();
-				 $('#li_edit').hide();
-				 flushUerInfo();
-			}
-		});
-	}
-	
-	//刷新个人信息
-	function flushUerInfo(){
-		var userInfo = util.getCookie("userInfo");
-		if(userInfo != null && userInfo != ''){
-			var userInfoJson = eval('(' + userInfo + ')');
-			util.logResult(userInfoJson);
-			var userId = userInfoJson.userId;
-			if(userId != undefined && userId != null && userId != '' ){
-				var updateTime = userInfoJson.updateTime;
-				var url = util.baseUrl + '/usr/get'; 
-				var param ='{"userId": '+userId+'}';
-				var contentType = "application/json";
-				util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
-					util.logResult(data); 
-					var result = data.result;
-					if(result == null || result == undefined){
-						util.setCookie("userInfo", '');
-					}
-					var newUpdateTime = result.updateTime;
-					util.logResult(newUpdateTime+' '+updateTime);
-					if(newUpdateTime != updateTime){
-						userInfoJson.avatar = result.avatar;
-						userInfoJson.updateTime = newUpdateTime;
-					 	util.logResult(userInfoJson); 
-					 	util.setCookie("userInfo", JSON.stringify(userInfoJson));
-					}
-					
-				});
-			}
-		}
-	}
-	
+    var util;
+    var isSubmit = 0;
+    //页面初始化
+    $(function () {
+        util = new Util();
+        flushUerInfo();
+        loadUserInfo();
+    });
+    var oldNickName = '';
+    //加载个人信息
+    function loadUserInfo() {
+        var userInfo = util.getCookie("userInfo");
+        var userInfoJson = eval('(' + userInfo + ')');
+        util.logResult(userInfoJson);
+        var avatar = userInfoJson.avatar;
+        var nickName = userInfoJson.nickName;
+        oldNickName = nickName;
+        var companyStatus = userInfoJson.companyStatus;
+        var userId = userInfoJson.userId;
+        $("#img_avatar").attr('src', avatar);
+        $('#em_name').html(nickName);
+        $("#i_name").val(nickName);
+        $('#userId').val(userId);
+        if (companyStatus == 0) {
+            $('#em_auth').html('未认证，点我认证');
+        } else if (companyStatus == 1) {
+            $('#em_auth').html('已认证');
+        } else if (companyStatus == 2) {
+            $('#em_auth').html('待审核');
+        } else if (companyStatus == 3) {
+            $('#em_auth').html('审核不通过');
+        }
+    }
+
+    //企业用户认证
+    function enterprise() {
+        var userInfo = util.getCookie("userInfo");
+        var userInfoJson = eval('(' + userInfo + ')');
+        var companyStatus = userInfoJson.companyStatus;
+        if (companyStatus == 0) {
+            window.location.href = 'enterpriseuser2.html';
+        }
+    }
+
+    //编辑用户昵称
+    function editName() {
+        $('#li_name').hide();
+        $('#li_edit').show();
+        $('#i_name').click();
+        $('#i_name').select();
+    }
+
+    //清除姓名
+    function clearName() {
+        $('#i_name').val('');
+        $('#i_close').hide();
+    }
+
+    //提交用户信息
+    function submitUser() {
+        var userInfo = util.getCookie("userInfo");
+        var userInfoJson = eval('(' + userInfo + ')');
+        var userId = userInfoJson.userId;
+        var nikeName = $('#i_name').val();
+        util.logResult(userInfoJson);
+        if (nikeName.trim() == '') {
+            $("#i_name").val(oldNickName);
+            $('#span_commonet').html('昵称不可为空!');
+            $('#div_popSuccess').fadeIn();
+            setTimeout(function () {
+                $('#div_popSuccess').fadeOut();
+            }, ( 1 * 1000 ));
+            $("#i_name").focus()
+        } else {
+            var url = util.baseUrl + '/usr/update_info';
+            var param = '{"userId": ' + userId + ',"nickName":"' + nikeName + '"}';
+            var contentType = "application/json";
+            util.requestRemoteDataJsonPost(url, param, contentType, function (data) {
+                util.logResult(data);
+                var code = data.code;
+                if (code == 0) {
+                    userInfoJson.nickName = nikeName;
+                    util.logResult(userInfoJson);
+                    util.setCookie("userInfo", JSON.stringify(userInfoJson));
+                    $('#em_name').html(nikeName);
+                    $('#li_name').show();
+                    $('#li_edit').hide();
+                    flushUerInfo();
+                    $('#span_commonet').html('修改成功！');
+                    $('#div_popSuccess').fadeIn();
+                    setTimeout(function () {
+                        $('#div_popSuccess').fadeOut();
+                    }, ( 1 * 1000 ));
+                }
+            });
+        }
+    }
+
+    //刷新个人信息
+    function flushUerInfo() {
+        var userInfo = util.getCookie("userInfo");
+        if (userInfo != null && userInfo != '') {
+            var userInfoJson = eval('(' + userInfo + ')');
+            util.logResult(userInfoJson);
+            var userId = userInfoJson.userId;
+            if (userId != undefined && userId != null && userId != '') {
+                var updateTime = userInfoJson.updateTime;
+                var url = util.baseUrl + '/usr/get';
+                var param = '{"userId": ' + userId + '}';
+                var contentType = "application/json";
+                util.requestRemoteDataJsonPosta(url, param, contentType, function (data) {
+                    util.logResult(data);
+                    var result = data.result;
+                    if (result == null || result == undefined) {
+                        util.setCookie("userInfo", '');
+                    }
+                    var newUpdateTime = result.updateTime;
+                    util.logResult(newUpdateTime + ' ' + updateTime);
+                    if (newUpdateTime != updateTime) {
+                        userInfoJson.avatar = result.avatar;
+                        userInfoJson.updateTime = newUpdateTime;
+                        util.logResult(userInfoJson);
+                        util.setCookie("userInfo", JSON.stringify(userInfoJson));
+                    }
+
+                });
+            }
+        }
+    }
+
 </script>
 <script type="text/javascript"
         src="http://resource.mjiahome.com/mj/static/oss_js/lib/plupload-2.1.2/js/plupload.full.min.js"></script>

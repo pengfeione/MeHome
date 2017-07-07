@@ -1,537 +1,580 @@
 <!DOCTYPE HTML>
 <html lang="zh-cn">
 <head>
-<!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
-<base href="http://m.mjiahome.com/"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name = "format-detection" content="telephone=no">
-<meta name="viewport"  content="width=device-width,user-scalable=no">
-<title>Me+公寓详情</title>
-<meta name="keywords" content="ME+">
-<meta name="description" content="ME+">
-<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
-<link rel="stylesheet" type="text/css" href="css/base.css" />
-<link rel="stylesheet" type="text/css" href="css/common.css" />
-<link rel="stylesheet" type="text/css" href="css/detail.css" />
-<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css?v=1.0?v=1.0" />
-<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
-<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=c0fa8f5562c420a8d94038427bd9bdc0&plugin=AMap.ToolBar"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/swiper.min.js"></script>
-<script src="js/detail.js"></script>
-<script src="js/util.js"></script>
-<style>
-.swiper-button-next, .swiper-button-prev { width:44px; height:44px; }
-.swiper-button-next { background:url(img/showImageRt.png) no-repeat; background-size:44px; }
-.swiper-button-prev { background:url(img/showImageLt.png) no-repeat; background-size:44px;  }
-.swiper-slide img   { width:100%; }
-</style>
+    <!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
+    <base href="http://m.mjiahome.com/"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <title>Me+公寓详情</title>
+    <meta name="keywords" content="ME+">
+    <meta name="description" content="ME+">
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/base.css"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/detail.css"/>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css?v=1.0?v=1.0"/>
+    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script type="text/javascript"
+            src="http://webapi.amap.com/maps?v=1.3&key=c0fa8f5562c420a8d94038427bd9bdc0&plugin=AMap.ToolBar"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/swiper.min.js"></script>
+    <script src="js/detail.js"></script>
+    <script src="js/util.js"></script>
+    <style>
+        .swiper-button-next, .swiper-button-prev {
+            width: 44px;
+            height: 44px;
+        }
+
+        .swiper-button-next {
+            background: url(img/showImageRt.png) no-repeat;
+            background-size: 44px;
+        }
+
+        .swiper-button-prev {
+            background: url(img/showImageLt.png) no-repeat;
+            background-size: 44px;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+        }
+    </style>
 </head>
 <body class="bodyApartmentdetail">
 
-    <div class="wrap headerTop" id="div_header_top">
-    	
-    	<!-- header -->
-        <div class="header" id="div_header">
-        	<div class="headerCont">
-            	<a class="btnBack" onclick="history.back();">&lt;</a>
-            	<span>公寓详情</span>
-            </div>
-        </div>
+<div class="wrap headerTop" id="div_header_top">
 
-    	<!-- apartmenInfo -->
-    	<div class="apartmentInfo">
-            <div class="apartTop">
-                <span class="apartImg"><a><img id="img_head" src="img/test/test1.jpg" onclick="showLargeImg();"><i id='i_num'>5张</i></a></span>
-                <h3 id="h_title">Ascott商务服务中心</h3>
-                <span class="apartStar" id="span_star"></span>
-                <span class="apartTag">
+    <!-- header -->
+    <div class="header" id="div_header">
+        <div class="headerCont">
+            <a class="btnBack" onclick="history.back();">&lt;</a>
+            <span>公寓详情</span>
+        </div>
+    </div>
+
+    <!-- apartmenInfo -->
+    <div class="apartmentInfo">
+        <div class="apartTop">
+            <span class="apartImg"><a><img id="img_head" src="img/test/test1.jpg" onclick="showLargeImg();"><i
+                    id='i_num'>5张</i></a></span>
+            <h3 id="h_title">Ascott商务服务中心</h3>
+            <span class="apartStar" id="span_star"></span>
+            <span class="apartTag">
                 	<i id="i_gw" class="tagGw" style="display: none;">购物</i>
                 	<i id="i_jt" class="tagJt" style="display: none;">交通</i>
                 	<i id="i_cy" class="tagCy" style="display: none;">餐饮</i>
                 	<i id="i_yl" class="tagYl" style="display: none;">娱乐</i>
                 </span>
-                <a class="btnHouseRule" onclick="showRule();"></a>
-            </div>
-            <ul class="mapInfo">
-            	<!--<a onclick="showMap();">
-                	<li class="apartAddress"><i></i><label id="l_address">上海市浦东新区福山路82号</label></li>
-                </a>-->
-                 <li class="apartAddress">
-                 	<a onclick="showMap();"><i></i><label id="l_address">上海市浦东新区福山路82号</label><em class="iconMore"></em></a>
-                 </li>
-
-                <li ><i class="iconCar"></i><label id="l_jt">无</label></li>
-            </ul>
+            <a class="btnHouseRule" onclick="showRule();"></a>
         </div>
+        <ul class="mapInfo">
+            <!--<a onclick="showMap();">
+                <li class="apartAddress"><i></i><label id="l_address">上海市浦东新区福山路82号</label></li>
+            </a>-->
+            <li class="apartAddress">
+                <a onclick="showMap();"><i></i><label id="l_address">上海市浦东新区福山路82号</label><em class="iconMore"></em></a>
+            </li>
 
-        <div class="apartFl" id="div_apartFl" style="display: none;">
-            <h3><em><i class="iconWelfare"></i>个人用户福利</em><a class="btnShow"><span>展开</span><i></i></a></h3>
-            <div class="apartFlcont" id="div_welfare">
-            	<p>1. 个人用户福利个人用户福利个人用户福利个人用户福利个人个人用户福利；2. 个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；</p>
-            </div>        
-        </div>
-        
-        <div class="apartFl" id="div_apartF2" style="display: none;">
-            <h3><em><i class="iconWelfare"></i>企业福利</em><a class="btnShow"><span>展开</span><i></i></a></h3>
-            <div class="apartFlcont" id="div_welfare2">
-            	<p>1. 个人用户福利个人用户福利个人用户福利个人用户福利个人个人用户福利；2. 个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；</p>
-            </div>        
-        </div>
-        <span class="apartLogin" id="span_apartLogin">企业用户福利多多，<a href="login.html?jumpType=0">立即登陆</a></span>
+            <li><i class="iconCar"></i><label id="l_jt">无</label></li>
+        </ul>
+    </div>
 
-        <!-- 评价 -->
-        <div class="houseStyle">
-            <h3 class="houseTag">
-            	<em class="houseLine"></em>
-            	<a class="curr" onclick="showTab(1);" id="a_tab_house">全部房型</a>
-            	<a onclick="showTab(2);" id="a_tab_user">用户评价</a>
-            </h3>
-            <div class="houseBox">
-                <div class="houseSection" id="div_house">
-                    <ul class="apartList" id="ul_house">
-                    </ul>
+    <div class="apartFl" id="div_apartFl" style="display: none;">
+        <h3><em><i class="iconWelfare"></i>个人用户福利</em><a class="btnShow"><span>展开</span><i></i></a></h3>
+        <div class="apartFlcont" id="div_welfare">
+            <p>1. 个人用户福利个人用户福利个人用户福利个人用户福利个人个人用户福利；2.
+                个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；</p>
+        </div>
+    </div>
+
+    <div class="apartFl" id="div_apartF2" style="display: none;">
+        <h3><em><i class="iconWelfare"></i>企业福利</em><a class="btnShow"><span>展开</span><i></i></a></h3>
+        <div class="apartFlcont" id="div_welfare2">
+            <p>1. 个人用户福利个人用户福利个人用户福利个人用户福利个人个人用户福利；2.
+                个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；个人用户福利个人用户福利个人用户福利个人用户福利个人用户福利；</p>
+        </div>
+    </div>
+    <span class="apartLogin" id="span_apartLogin">企业用户福利多多，<a href="login.html?jumpType=0">立即登陆</a></span>
+
+    <!-- 评价 -->
+    <div class="houseStyle">
+        <h3 class="houseTag">
+            <em class="houseLine"></em>
+            <a class="curr" onclick="showTab(1);" id="a_tab_house">全部房型</a>
+            <a onclick="showTab(2);" id="a_tab_user">用户评价</a>
+        </h3>
+        <div class="houseBox">
+            <div class="houseSection" id="div_house">
+                <ul class="apartList" id="ul_house">
+                </ul>
+                <div style="text-align: center;">
                     <span class="listEnd" id="listEnd2">亲已经到底了哦~</span>
                 </div>
-                <div class="houseSection" style="display: none;"  id="div_common">
-                	<div class="noCommon" id="div_no_common"><img src="img/noCommon.png" /></div>
-                    <ul class="commonList"  id="ul_common">
-                    </ul>
+            </div>
+            <div class="houseSection" style="display: none;" id="div_common">
+                <div class="noCommon" id="div_no_common"><img src="img/noCommon.png"/></div>
+                <ul class="commonList" id="ul_common">
+                </ul>
+                <div style="text-align: center;">
                     <span class="listEnd" id="listEnd" style="display: none;">亲已经到底了哦~</span>
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 
-    <!-- show large image -->
-    <div class="showLargeImg" id="showLargeImg">
-    	<div class="showLargeImageWrap">
-            <a class="showClose" id="showClose"></a>
-            <div class="swiper-container" id="showImage">
-                <div class="swiper-wrapper" id="div_swiper">
-                    <!--<div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
-                    <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
-                    <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
-                    <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
-                    <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>-->
-                </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+<!-- show large image -->
+<div class="showLargeImg" id="showLargeImg">
+    <div class="showLargeImageWrap">
+        <a class="showClose" id="showClose"></a>
+        <div class="swiper-container" id="showImage">
+            <div class="swiper-wrapper" id="div_swiper">
+                <!--<div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
+                <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
+                <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
+                <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>
+                <div class="swiper-slide"><img src="img/test/test3.jpg" /></div>-->
             </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
     </div>
+</div>
 
-	<!-- houseRule -->
-    <div class="houseRule" id="houseRule">
-        <div class="houseWrap">
-            <a class="showClose"></a>
-        	<h3>房屋守则</h3>
-            <iframe class="houseText" scrolling="no" frameborder="0" allowtransparency="true" id="iframe_rule"></iframe>
-        </div>
+<!-- houseRule -->
+<div class="houseRule" id="houseRule">
+    <div class="houseWrap">
+        <a class="showClose"></a>
+        <h3>房屋守则</h3>
+        <iframe class="houseText" scrolling="yes" frameborder="0" allowtransparency="true" id="iframe_rule"></iframe>
     </div>
+</div>
 
-    <div class="mask"></div>
-    
-    <div id="mapContainer"  style="display: none;"></div>
-    <input type="hidden" name="longitude" id="longitude" value=""/>
-    <input type="hidden" name="latitude" id="latitude" value=""/>
+<div class="mask"></div>
+
+<div id="mapContainer" style="display: none;"></div>
+<input type="hidden" name="longitude" id="longitude" value=""/>
+<input type="hidden" name="latitude" id="latitude" value=""/>
 
 </body>
 <script type="text/javascript">
-	var util;
-	var isSubmit = 0;
-	var h = $(window).height();
-	$(".wrap").css("height",h);
-	var hasMore=true;
-	var tempPageIndex = 2;
-	var sTop=0;
-	//页面初始化
-	$(function(){
-		util = new Util();
-		
-		//刷新个人信息
-		flushUerInfo();
-		
-		//加载产品详细
-		loadProductDetail();
-		//加载房屋列表
-		loadHouseList();
-		//加载评论列表
-		loadCommonList();
-		
-		//加载企业福利
-		loadWelfare();
-		
-		hideBanner();
-		
-		$(window).on('scroll',function(){
-			sTop=$(window).scrollTop();
-			if(sTop>=$(".houseSection").get(1).offsetHeight-$(".wrap").height())
-			{
-				loadCommonList(tempPageIndex);
-				tempPageIndex++;
-			}
-		});
-	});
-	
-	//加载企业福利
-	function loadWelfare(){
-		var userInfo = util.getCookie("userInfo");
-		if(userInfo != null && userInfo != ''){
-			$('#span_apartLogin').hide();
-		}
-		var userInfoJson = eval('(' + userInfo + ')');
-		var companyId = userInfoJson.companyId;
-		var companyStatus = userInfoJson.companyStatus;
-		if(companyId != 0 && companyStatus == 1){
-			var productId = util.getUrlParam('productId');
-			var url = util.baseUrl+'/product/get_company_welfare';
-			var param ='{"productId":'+productId+',"companyId":'+companyId+'}';
-			var contentType = "application/json";
-			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
-				util.logResult(data);
-				var code = data.code;
-				if(code == 0){
-					var result = data.result;
-					var welfareStr='';
-					util.logResult(result.notice);
-					welfareStr ='<p>';
-					if(result.notice != undefined && result.notice != ''){
-						welfareStr += result.notice+'<br>';
-					}
-					if(result.remitPercent != undefined && result.remitPercent != ''){
-						welfareStr += '优惠'+result.remitPercent+'% <br>';
-					}
-					if(result.mortagageNum != undefined && result.mortagageNum != ''){
-						welfareStr += '押'+result.mortagageNum;
-					}
-					if(result.payMentNum != undefined && result.payMentNum != ''){
-						welfareStr += '付'+result.payMentNum;
-					}
-					welfareStr += '</p>';
-					$('#div_welfare2').html(welfareStr);
-					$('#div_apartF2').show();
-					$('#div_apartFl').hide();
-				}
-			});
-		}
-	}
-	
-	//加载产品详细
-	function loadProductDetail(){
-		var productId = util.getUrlParam('productId');
-		var url = util.baseUrl + '/product/list';
-		var param ='{"productId": '+productId+'}';
-		var contentType = "application/json";
-		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
-			util.logResult(data);
-			$.each(data.result,function(index,productInfo){
-				if(index == 0){
-					$('#l_address').html(productInfo.address);
-					var position = productInfo.position;
-					var positions = position.split(',');
-					$('#longitude').val(positions[0]);
-					$('#latitude').val(positions[1]);
-					var detailpic = productInfo.detailpic;
-					var shopping = productInfo.shopping;
-					var transport = productInfo.transport;
-					var delicacy = productInfo.delicacy;
-					var entertainment = productInfo.entertainment;
-					var netRulesUrl = productInfo.netRulesUrl;
-					
-					$('#iframe_rule').attr("src",netRulesUrl); 
-					if(shopping != null){
-						$('#i_gw').show();
-					}
-					if(transport != null && transport != ''){
-						$('#i_jt').show();
-						$('#l_jt').html(transport);
-					}
-					if(delicacy != null){
-						$('#i_cy').show();
-					}
-					if(entertainment != null){
-						$('#i_yl').show();
-					}
-					var score = productInfo.score;
-					if(score == null || score == ''){
-						score = 5.0;
-					}
-					var span_star_str = '';
-					for(k=0;k<5;k++){
-						if(k<score){
-							span_star_str += '<i class="curr"></i>'; 
-						}else{
-							span_star_str += '<i></i>'; 
-						}
-					}
-					score = parseFloat(score);
-					score = score.toFixed(1); 
-					span_star_str += '<em>'+score+'</em>'; 
-					$('#span_star').html(span_star_str);
-					var welfareStr='';
-					if(productInfo.hasPersonal){
-						var personalWelfare = eval('(' + productInfo.personalWelfare + ')');
-						util.logResult(personalWelfare.notice);
-						welfareStr ='<p>';
-						if(personalWelfare.notice != undefined && personalWelfare.notice != ''){
-							welfareStr += personalWelfare.notice;
-						}
-						if(personalWelfare.remitPercent != undefined && personalWelfare.remitPercent != ''){
-							welfareStr += ',优惠'+personalWelfare.remitPercent+'%';
-						}
-						if(personalWelfare.mortagageNum != undefined && personalWelfare.mortagageNum != ''){
-							welfareStr += '押'+personalWelfare.mortagageNum;
-						}
-						if(personalWelfare.payMentNum != undefined && personalWelfare.payMentNum != ''){
-							welfareStr += '付'+personalWelfare.payMentNum;
-						}
-						welfareStr += '</p>';
-						$('#div_welfare').html(welfareStr);
-						$('#div_apartFl').show();
-					}
-					$('#i_num').html(detailpic.length+'张');
-					if(detailpic.length == 0){
-						$('#img_head').attr('src',productInfo.listpic);
-					}else{
-						$('#img_head').attr('src',detailpic[0]);
-					}
-					for(var i=0;i<detailpic.length;i++){
-						var img_html = '<div class="swiper-slide" ><img src="'+detailpic[i]+'" /></div>';
-						$('#div_swiper').append(img_html);
-					}
-					var productName = productInfo.productName;
-					$('#h_title').html(productName);
-				}
-			});
-		});
-	}
-	
-	//加载房屋列表
-	function loadHouseList(){
-		var productId = util.getUrlParam('productId');
-		var url = util.baseUrl + '/house/list';
-		var param ='{"productId": '+productId+'}';
-		var contentType = "application/json";
-		util.requestRemoteDataJsonPost(url,param,contentType,function(data){
-			util.logResult(data); 
-			$.each(data.result,function(index,houseInfo){
-				if(houseInfo.status != 3 && houseInfo.status != 0){
-					 var roomTypeDesc = eval('(' + houseInfo.roomTypeDesc + ')');
-					 var room_type_des =  roomTypeDesc.room +'室'+roomTypeDesc.hall+'厅'+roomTypeDesc.toilet+'卫';
-					 var li_html = '';
-					 var room_status_str = '';
-					 if(houseInfo.status == 1){
-					 	li_html = '<li onclick="gotoHouseDetail('+houseInfo.houseId+','+houseInfo.productId+','+houseInfo.status+');">';
-					 	room_status_str = '<a class="btnApart btnYya">预约</a>';
-					 }else if(houseInfo.status == 2){
-					 	li_html = '<li>';
-					 	room_status_str = '<a class="btnApart btnYjc">已借出</a>';
-					 }
+    var util;
+    var isSubmit = 0;
+    var h = $(window).height();
+    $(".wrap").css("height", h);
+    var hasMore = true;
+    var tempPageIndex = 2;
+    var sTop = 0;
+    //页面初始化
+    $(function () {
+        util = new Util();
+
+        //刷新个人信息
+        flushUerInfo();
+
+        //加载产品详细
+        loadProductDetail();
+        //加载房屋列表
+        loadHouseList();
+        //加载评论列表
+        loadCommonList();
+
+        //加载企业福利
+        loadWelfare();
+
+        hideBanner();
+
+        $(window).on('scroll', function () {
+            sTop = $(window).scrollTop();
+            if (sTop >= $(".houseSection").get(1).offsetHeight - $(".wrap").height()) {
+                loadCommonList(tempPageIndex);
+                tempPageIndex++;
+            }
+        });
+    });
+    var hasCompanyWelfare = false;
+    //加载企业福利
+    function loadWelfare() {
+        var userInfo = util.getCookie("userInfo");
+        if (userInfo != null && userInfo != '') {
+            $('#span_apartLogin').hide();
+        }
+        var userInfoJson = eval('(' + userInfo + ')');
+        var companyId=0;
+        var companyStatus=1;
+        try {
+            companyId = userInfoJson.companyId;
+            companyStatus = userInfoJson.companyStatus;
+        } catch (e) {
+        }
+        if (companyId != 0 && companyStatus == 1) {
+            var productId = util.getUrlParam('productId');
+            var paramJSON = {
+                'productId': productId,
+                'companyId': companyId,
+                'userId': userInfoJson.userId
+            };
+            var url = util.baseUrl + '/product/get_company_welfare_by_usr';
+            var contentType = "application/json";
+            util.requestRemoteDataJsonPost(url, JSON.stringify(paramJSON), contentType, function (data) {
+                util.logResult(data);
+                var code = data.code;
+                if (code == 0) {
+                    hasCompanyWelfare = true;
+                    var result = data.result;
+                    var welfareStr = '';
+                    util.logResult(result.notice);
+                    welfareStr = '<p>';
+                    if (result.notice != undefined && result.notice != '') {
+                        welfareStr += result.notice + '<br>';
+                    }
+                    if (result.remitPercent != undefined && result.remitPercent != '') {
+                        welfareStr += '优惠' + result.remitPercent + '% <br>';
+                    }
+                    if (result.mortagageNum != undefined && result.mortagageNum != '') {
+                        welfareStr += '押' + result.mortagageNum;
+                    }
+                    if (result.payMentNum != undefined && result.payMentNum != '') {
+                        welfareStr += '付' + result.payMentNum;
+                    }
+                    welfareStr += '</p>';
+                    $('#div_welfare2').html(welfareStr);
+                    $('#div_apartF2').show();
+                    $('#div_apartFl').hide();
+                }else{
+                    $('#div_apartF2').hide();
+                }
+            });
+        }
+    }
+
+    //加载产品详细
+    function loadProductDetail() {
+        var productId = util.getUrlParam('productId');
+        var url = util.baseUrl + '/product/list';
+        var param = '{"productId": ' + productId + '}';
+        var contentType = "application/json";
+        util.requestRemoteDataJsonPost(url, param, contentType, function (data) {
+            util.logResult(data);
+            $.each(data.result, function (index, productInfo) {
+                if (index == 0) {
+                    $('#l_address').html(productInfo.address);
+                    var position = productInfo.position;
+                    var positions = position.split(',');
+                    $('#longitude').val(positions[0]);
+                    $('#latitude').val(positions[1]);
+                    var detailpic = productInfo.detailpic;
+                    var shopping = productInfo.shopping;
+                    var transport = productInfo.transport;
+                    var delicacy = productInfo.delicacy;
+                    var entertainment = productInfo.entertainment;
+                    var netRulesUrl = productInfo.netRulesUrl;
+
+                    $('#iframe_rule').attr("src", netRulesUrl);
+                    if (shopping != null) {
+                        $('#i_gw').show();
+                    }
+                    if (transport != null && transport != '') {
+                        $('#i_jt').show();
+                        $('#l_jt').html(transport);
+                    }
+                    if (delicacy != null) {
+                        $('#i_cy').show();
+                    }
+                    if (entertainment != null) {
+                        $('#i_yl').show();
+                    }
+                    var score = productInfo.score;
+                    if (score == null || score == '') {
+                        score = 5.0;
+                    }
+                    var span_star_str = '';
+                    for (k = 0; k < 5; k++) {
+                        if (k < score) {
+                            span_star_str += '<i class="curr"></i>';
+                        } else {
+                            span_star_str += '<i></i>';
+                        }
+                    }
+                    score = parseFloat(score);
+                    score = score.toFixed(1);
+                    span_star_str += '<em>' + score + '</em>';
+                    $('#span_star').html(span_star_str);
+
+                    if(hasCompanyWelfare){
+
+                    }else{
+                        var welfareStr = '';
+                        if (productInfo.hasPersonal) {
+                            var personalWelfare = eval('(' + productInfo.personalWelfare + ')');
+                            util.logResult(personalWelfare.notice);
+                            welfareStr = '<p>';
+                            if (personalWelfare.notice != undefined && personalWelfare.notice != '') {
+                                welfareStr += personalWelfare.notice;
+                            }
+                            if (personalWelfare.remitPercent != undefined && personalWelfare.remitPercent != '') {
+                                welfareStr += ',优惠' + personalWelfare.remitPercent + '%';
+                            }
+                            if (personalWelfare.mortagageNum != undefined && personalWelfare.mortagageNum != '') {
+                                welfareStr += '押' + personalWelfare.mortagageNum;
+                            }
+                            if (personalWelfare.payMentNum != undefined && personalWelfare.payMentNum != '') {
+                                welfareStr += '付' + personalWelfare.payMentNum;
+                            }
+                            welfareStr += '</p>';
+                            $('#div_welfare').html(welfareStr);
+                            $('#div_apartFl').show();
+                            $('#div_apartF2').hide();
+                        }
+                    }
+                    $('#i_num').html(detailpic.length + '张');
+                    if (detailpic.length == 0) {
+                        $('#img_head').attr('src', productInfo.listpic);
+                    } else {
+                        $('#img_head').attr('src', detailpic[0]);
+                    }
+                    for (var i = 0; i < detailpic.length; i++) {
+                        var img_html = '<div class="swiper-slide" ><img src="' + detailpic[i] + '" /></div>';
+                        $('#div_swiper').append(img_html);
+                    }
+                    var productName = productInfo.productName;
+                    $('#h_title').html(productName);
+                }
+            });
+        });
+    }
+
+    //加载房屋列表
+    function loadHouseList() {
+        var productId = util.getUrlParam('productId');
+        var url = util.baseUrl + '/house/list';
+        var param = '{"productId": ' + productId + '}';
+        var contentType = "application/json";
+        util.requestRemoteDataJsonPost(url, param, contentType, function (data) {
+            util.logResult(data);
+            $.each(data.result, function (index, houseInfo) {
+                if (houseInfo.status != 3 && houseInfo.status != 0) {
+                    var roomTypeDesc = eval('(' + houseInfo.roomTypeDesc + ')');
+                    var room_type_des = roomTypeDesc.room + '室' + roomTypeDesc.hall + '厅' + roomTypeDesc.toilet + '卫';
+                    var li_html = '';
+                    var room_status_str = '';
+                    if (houseInfo.status == 1) {
+                        li_html = '<li onclick="gotoHouseDetail(' + houseInfo.houseId + ',' + houseInfo.productId + ',' + houseInfo.status + ');">';
+                        room_status_str = '<a class="btnApart btnYya">预约</a>';
+                    } else if (houseInfo.status == 2) {
+                        li_html = '<li>';
+                        room_status_str = '<a class="btnApart btnYjc">已借出</a>';
+                    }
 //					 else if(houseInfo.status == 3){
 //					 	li_html = '<li>';
 //					 	room_status_str = '<a class="btnApart btnYjc">已下线</a>';
 //					 }
-					 var listpic = houseInfo.listpic;
-					 var roomRent = houseInfo.roomRent/100;
-					 var house_html = li_html
-					 				+ '	<img src="'+listpic+'" />'
-					 				+ '	<h3 class="hi">'+houseInfo.subject+'</h3>'
-					 				+ '	<span class="ht">'+room_type_des+' '+houseInfo.roomArea+'㎡</span>'
-					 				+ '	<span class="hm">'+roomRent+'／月</span>'
-					 				+ room_status_str
-					 				+'</li>';
-					 $('#ul_house').append(house_html);
-					 $('#div_house').show();
-					 $('#listEnd2').show();
-				 }
-			});
-		});
-	}
-	
-	//加载评论列表
-	function loadCommonList(pageIndexVal){
-		var pageIndex = pageIndexVal;
-		if(pageIndex == undefined || pageIndex == ""){
-			pageIndex = 1;
-		}
-		var productId = util.getUrlParam('productId');
-		var url = util.baseUrl + '/comment/list';
-		var param ='{"productId": '+productId+',"isCheck":true,"pageSize":10,"pageNow":'+pageIndex+'}';
-		var contentType = "application/json";
-		var userIds = '';
-		var userInfos;
-		if(hasMore){
-			util.requestRemoteDataJsonPost(url,param,contentType,function(data){
-				util.logResult(data); 
-				if(pageIndex == 1 && data.result.length == 0){
-					$('#div_no_common').show();
-				}
-				if(pageIndex != 1 || data.result.length != 0){
-					$('#div_no_common').hide();
-				}
-				var totalCount = data.totalCount;
-				if(pageIndex*10>=totalCount && totalCount > 0){
-					hasMore=false;
-					$('#listEnd').show();
-				}
-				$.each(data.result,function(index,commentInfo){
-					userIds += commentInfo.replier+',';
-				});
-				userIds = userIds.substring(0,userIds.length-1)
-				util.logResult(userIds);
-				userInfos = getUserBatch(userIds);
-	            $.each(data.result,function(index,commentInfo){
-	            	var replier = commentInfo.replier;
-	            	var userInfo = userInfos[replier];
-	            	var userInfo1 = JSON.stringify(userInfo) ;
-	            	var userInfoJson = eval('(' + userInfo1 + ')');
-	            	var avatar = '';
-	            	if(userInfos[replier] != undefined && userInfoJson.avatar != undefined){
-	            		avatar = userInfoJson.avatar;
-	            	}
-	            	nickName = (userInfos[replier] != undefined && userInfoJson.nickName != undefined)?userInfoJson.nickName:'';
-	            	var createTime = commentInfo.createTime;
-	            	createTime = createTime.substr(5,5)+' '+createTime.substr(14,5);
-	            	var score = commentInfo.score;
-	            	score = parseFloat(score);
-					score = score.toFixed(1); 
-	            	var span_star_str = '';
-					for(k=0;k<5;k++){
-						if(k<score){
-							span_star_str += '<em class="selectStart"></em>'; 
-						}else{
-							span_star_str += '<em></em>'; 
-						}
-					}
-					span_star_str += '<i>'+score+'</i>'; 
-	            	var comment_html = '<li>'
-	            					  +' <img src="'+avatar+'" />'
-	            					  +' <label>'+nickName+'</label>'
-	            					  +'<span class="commonDate">'+createTime+'</span>'
-	            					  +' <span class="commonStar">'+span_star_str+'</span>'
-	            					  +' <span>'+commentInfo.formatContent+'</span>'
-	            					  +' </li>';
-	            		$('#ul_common').append(comment_html);
-	            });
-			});
-		}
-	}
-	
-	
-	//切换tab 
-	function showTab(flag){
-		if(flag == 1){
-			$('#a_tab_house').css('color','#20aa94');
-			$('#a_tab_user').css('color','gray');
-			$('#div_house').show();
-			$('#div_common').hide();
-			$('#listEnd').hide();
-			$('#listEnd2').show();
-		}else{
-			$('#a_tab_house').css('color','gray');
-			$('#a_tab_user').css('color','#20aa94');
-			$('#div_house').hide();
-			$('#div_common').show();
-			$('#listEnd2').hide();
-		}
-	}
-	
-	//进入房间详情页面
-	function gotoHouseDetail(houseId,productId,houseStatus){
-		if(houseStatus == 1){
-			window.location.href="housedetail.html?houseId="+houseId+"&productId="+productId;
-		}
-	}
-	
-	//批量获取用户信息 
-	function getUserBatch(userIds){
-		var url = util.baseUrl + '/usr/batch_info?userIds='+userIds+'&returnType=map';
-		var result = {};
-		util.sendRequest(url, null, "post", false, function(data) {
-			var dataJson = eval('(' + JSON.stringify(data) + ')');
-			result = dataJson.result;
-		});
-		return result;
-	}
-	
-	//展示地图
-	function showMap(){
-		var address = $('#l_address').html();
-		var longitude = $('#longitude').val();
-		var latitude = $('#latitude').val();
-		map = new AMap.Map("mapContainer", {
+                    var listpic = houseInfo.listpic;
+                    var roomRent = houseInfo.roomRent / 100;
+                    var house_html = li_html
+                        + '	<img src="' + listpic + '" />'
+                        + '	<h3 class="hi">' + houseInfo.subject + '</h3>'
+                        + '	<span class="ht">' + room_type_des + ' ' + houseInfo.roomArea + '㎡</span>'
+                        + '	<span class="hm">' + roomRent + '元/月</span>'
+                        + room_status_str
+                        + '</li>';
+                    $('#ul_house').append(house_html);
+                    $('#div_house').show();
+                    $('#listEnd2').show();
+                }
+            });
+        });
+    }
+
+    //加载评论列表
+    function loadCommonList(pageIndexVal) {
+        var pageIndex = pageIndexVal;
+        if (pageIndex == undefined || pageIndex == "") {
+            pageIndex = 1;
+        }
+        var productId = util.getUrlParam('productId');
+        var url = util.baseUrl + '/comment/list';
+        var param = '{"productId": ' + productId + ',"isCheck":true,"pageSize":10,"pageNow":' + pageIndex + '}';
+        var contentType = "application/json";
+        var userIds = '';
+        var userInfos;
+        if (hasMore) {
+            util.requestRemoteDataJsonPost(url, param, contentType, function (data) {
+                util.logResult(data);
+                if (pageIndex == 1 && data.result.length == 0) {
+                    $('#div_no_common').show();
+                }
+                if (pageIndex != 1 || data.result.length != 0) {
+                    $('#div_no_common').hide();
+                }
+                var totalCount = data.totalCount;
+                if (pageIndex * 10 >= totalCount && totalCount > 0) {
+                    hasMore = false;
+                    $('#listEnd').show();
+                }
+                $.each(data.result, function (index, commentInfo) {
+                    userIds += commentInfo.replier + ',';
+                });
+                userIds = userIds.substring(0, userIds.length - 1)
+                util.logResult(userIds);
+                userInfos = getUserBatch(userIds);
+                $.each(data.result, function (index, commentInfo) {
+                    var replier = commentInfo.replier;
+                    var userInfo = userInfos[replier];
+                    var userInfo1 = JSON.stringify(userInfo);
+                    var userInfoJson = eval('(' + userInfo1 + ')');
+                    var avatar = '';
+                    if (userInfos[replier] != undefined && userInfoJson.avatar != undefined) {
+                        avatar = userInfoJson.avatar;
+                    }
+                    nickName = (userInfos[replier] != undefined && userInfoJson.nickName != undefined) ? userInfoJson.nickName : '';
+                    var createTime = commentInfo.createTime;
+                    console.log("-------------------------");
+                    console.log(createTime);
+                    console.log("-------------------------");
+                    createTime = createTime.substr(5, 5) + ' ' + createTime.substr(11, 5);
+                    var score = commentInfo.score;
+                    score = parseFloat(score);
+                    score = score.toFixed(1);
+                    var span_star_str = '';
+                    for (k = 0; k < 5; k++) {
+                        if (k < score) {
+                            span_star_str += '<em class="selectStart"></em>';
+                        } else {
+                            span_star_str += '<em></em>';
+                        }
+                    }
+                    span_star_str += '<i>' + score + '</i>';
+                    var comment_html = '<li>'
+                        + ' <img src="' + avatar + '" />'
+                        + ' <label>' + nickName + '</label>'
+                        + '<span class="commonDate">' + createTime + '</span>'
+                        + ' <span class="commonStar">' + span_star_str + '</span>'
+                        + ' <span>' + commentInfo.formatContent + '</span>'
+                        + ' </li>';
+                    $('#ul_common').append(comment_html);
+                });
+            });
+        }
+    }
+
+
+    //切换tab
+    function showTab(flag) {
+        if (flag == 1) {
+            $('#a_tab_house').css('color', '#20aa94');
+            $('#a_tab_user').css('color', 'gray');
+            $('#div_house').show();
+            $('#div_common').hide();
+            $('#listEnd').hide();
+            $('#listEnd2').show();
+        } else {
+            $('#a_tab_house').css('color', 'gray');
+            $('#a_tab_user').css('color', '#20aa94');
+            $('#div_house').hide();
+            $('#div_common').show();
+            $('#listEnd2').hide();
+        }
+    }
+
+    //进入房间详情页面
+    function gotoHouseDetail(houseId, productId, houseStatus) {
+        if (houseStatus == 1) {
+            window.location.href = "housedetail.html?houseId=" + houseId + "&productId=" + productId;
+        }
+    }
+
+    //批量获取用户信息
+    function getUserBatch(userIds) {
+        var url = util.baseUrl + '/usr/batch_info?userIds=' + userIds + '&returnType=map';
+        var result = {};
+        util.sendRequest(url, null, "post", false, function (data) {
+            var dataJson = eval('(' + JSON.stringify(data) + ')');
+            result = dataJson.result;
+        });
+        return result;
+    }
+
+    //展示地图
+    function showMap() {
+        var address = $('#l_address').html();
+        var longitude = $('#longitude').val();
+        var latitude = $('#latitude').val();
+        map = new AMap.Map("mapContainer", {
             zoom: 18,
-            center:[longitude,latitude]
+            center: [longitude, latitude]
         });
         marker = new AMap.Marker({
-            map:map,
-            position:[longitude,latitude]
+            map: map,
+            position: [longitude, latitude]
         });
-		marker.markOnAMAP({
-            name:address,
-            position:marker.getPosition()
+        marker.markOnAMAP({
+            name: address,
+            position: marker.getPosition()
         });
-	}
-	
-	//展示规则 
-	function showRule(){
-		$('#houseRule').fadeIn();
-	}
-	
-	//展示大图
-	function showLargeImg(){
-		$('#showLargeImg').show();
-		$('#showClose').show();
-		var swiper = new Swiper('#showImage', {
-			prevButton:'.swiper-button-prev',
-			nextButton:'.swiper-button-next',
-			spaceBetween: 10,
-			centeredSlides: true,
-			loop:true,
-			autoplayDisableOnInteraction : false  //播放完毕后
-		});
-	}
-	
-	//刷新个人信息
-	function flushUerInfo(){
-		var userInfo = util.getCookie("userInfo");
-		if(userInfo != null && userInfo != ''){
-			var userInfoJson = eval('(' + userInfo + ')');
-			util.logResult(userInfoJson);
-			var userId = userInfoJson.userId;
-			if(userId != undefined && userId != null && userId != '' ){
-				var updateTime = userInfoJson.updateTime;
-				var url = util.baseUrl + '/usr/get'; 
-				var param ='{"userId": '+userId+'}';
-				var contentType = "application/json";
-				util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
-					util.logResult(data)
-					var result = data.result;
-					if(result == null || result == undefined){
-						util.setCookie("userInfo", '');
-					}
-					userInfoJson.companyId = result.companyId;
-					util.logResult(userInfoJson); 
-					util.setCookie("userInfo", JSON.stringify(userInfoJson));
-	//				var newUpdateTime = result.updateTime;
-	//				util.logResult(newUpdateTime+' '+updateTime);
-	//				if(newUpdateTime != updateTime){
-	//					util.setCookie("userInfo", '');
-	//				}
-					
-				});
-			}
-		}
-	}
-	
-	//隐藏退出登录
-	function hideBanner(){
-		var ua = navigator.userAgent.toLowerCase();
-		if(ua.match(/MicroMessenger/i)=="micromessenger") {
-			 $('#div_header').hide();
-			 $('#div_header_top').attr('class','wrap');
-		}
-	}
+    }
+
+    //展示规则
+    function showRule() {
+        $('#houseRule').fadeIn();
+    }
+
+    //展示大图
+    function showLargeImg() {
+        $('#showLargeImg').show();
+        $('#showClose').show();
+        var swiper = new Swiper('#showImage', {
+            prevButton: '.swiper-button-prev',
+            nextButton: '.swiper-button-next',
+            spaceBetween: 10,
+            centeredSlides: true,
+            loop: true,
+            autoplayDisableOnInteraction: false  //播放完毕后
+        });
+    }
+
+    //刷新个人信息
+    function flushUerInfo() {
+        var userInfo = util.getCookie("userInfo");
+        if (userInfo != null && userInfo != '') {
+            var userInfoJson = eval('(' + userInfo + ')');
+            util.logResult(userInfoJson);
+            var userId = userInfoJson.userId;
+            if (userId != undefined && userId != null && userId != '') {
+                var updateTime = userInfoJson.updateTime;
+                var url = util.baseUrl + '/usr/get';
+                var param = '{"userId": ' + userId + '}';
+                var contentType = "application/json";
+                util.requestRemoteDataJsonPosta(url, param, contentType, function (data) {
+                    util.logResult(data)
+                    var result = data.result;
+                    if (result == null || result == undefined) {
+                        util.setCookie("userInfo", '');
+                    }
+                    userInfoJson.companyId = result.companyId;
+                    util.logResult(userInfoJson);
+                    util.setCookie("userInfo", JSON.stringify(userInfoJson));
+                    //				var newUpdateTime = result.updateTime;
+                    //				util.logResult(newUpdateTime+' '+updateTime);
+                    //				if(newUpdateTime != updateTime){
+                    //					util.setCookie("userInfo", '');
+                    //				}
+
+                });
+            }
+        }
+    }
+
+    //隐藏退出登录
+    function hideBanner() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            $('#div_header').hide();
+            $('#div_header_top').attr('class', 'wrap');
+        }
+    }
 </script>
 </html>

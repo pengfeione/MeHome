@@ -48,6 +48,12 @@
         from company_welfare
         where company_id = #{companyId,jdbcType=INTEGER} and welfare_active=1
     </select>
+    <select id="selectActiveIdByCompanyId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select
+        welfare_id
+        from company_welfare
+        where company_id = #{companyId,jdbcType=INTEGER} and welfare_active=1
+    </select>
     <select id="listAllCompanyWelfare" resultMap="BaseResultMap"
             parameterType="com.mehome.requestDTO.ProductCompanyWelfareDTO">
         select

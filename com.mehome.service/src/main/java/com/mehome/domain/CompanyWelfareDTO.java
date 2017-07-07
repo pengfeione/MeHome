@@ -5,7 +5,17 @@ import com.alibaba.fastjson.JSONObject;
 public class CompanyWelfareDTO {
     private Integer productId;
     private Integer companyId;
+    private Integer houseId;
     private Integer userId;
+
+
+    public Integer getHouseId() {
+        return houseId;
+    }
+
+    public void setHouseId(Integer houseId) {
+        this.houseId = houseId;
+    }
 
     public Integer getUserId() {
         return userId;

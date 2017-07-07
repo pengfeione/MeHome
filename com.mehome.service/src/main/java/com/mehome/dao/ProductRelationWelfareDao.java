@@ -28,6 +28,9 @@ public interface ProductRelationWelfareDao {
 
     List<Integer> selectByProductId(@Param("productId") Integer productId);
 
+
+    List<String> selectByProductIdAndCompanyId(@Param("productId") Integer productId, @Param("companyId") Integer companyId);
+
     List<ProductCompanyWelfare> listWelfareByProductId(ProductCompanyWelfareDTO productCompanyWelfareDTO);
 
     Long countWelfareByProductId(ProductCompanyWelfareDTO productCompanyWelfareDTO);

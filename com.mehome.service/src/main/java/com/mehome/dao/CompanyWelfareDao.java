@@ -23,6 +23,9 @@ public interface CompanyWelfareDao {
 
     List<CompanyWelfare> selectByCompanyId(Integer companyId);
 
+
+    List<Integer> selectActiveIdByCompanyId(Integer companyId);
+
     /**
      * 一个企业福利可以被多个产品关联
      *
