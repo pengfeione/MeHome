@@ -55,5 +55,32 @@ $("#pay").click(function() {
 	util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
 		$("#pay_choose").fadeOut();
 		$("#already_deposit").attr("class", "depositSelect");
+		if (typeof WeixinJSBridge == "undefined"){
+	    	   if( document.addEventListener ){
+	    	       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+	    	   }else if (document.attachEvent){
+	    	       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+	    	       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+	    	   }
+	    }else{
+	    	   onBridgeReady();
+	    }
 	});
 });
+
+function onBridgeReady(result){
+	//由后台接口获取
+	   WeixinJSBridge.invoke(
+	       'getBrandWCPayRequest', {
+	           "appId":result.appId,     //公众号名称，由商户传入     "wx966efd886c5be652"
+	           "timeStamp":"1395712654",         //时间戳，自1970年以来的秒数     
+	           "nonceStr":result.nonceStr, //随机串     "e61463f8efa94090b1f366cccfbbb444"
+	           "package":result.packageStr, //prepay_id=u802345jgfjsdfgsdg888    
+	           "signType":"MD5",         //微信签名方式：     
+	           "paySign":result.paySign //微信签名 "70EA570631E4BB79628FBCA90534C63FF7FADD89"
+	       },
+	       function(res){     
+	           if(res.err_msg == "get_brand_wcpay_request:ok" ) {}     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+	       }
+	   ); 
+	}
