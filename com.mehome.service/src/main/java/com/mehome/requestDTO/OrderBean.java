@@ -118,6 +118,8 @@ public class OrderBean extends PageMysqlUtil{
 	private Integer days;
 	
 	private Integer months;
+	
+	private String openId;
 
 	public String getBiller() {
 		return biller;
@@ -495,6 +497,15 @@ public class OrderBean extends PageMysqlUtil{
 
 	public void setMonths(Integer months) {
 		this.months = months;
+	}
+
+	
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 	public OrderBean(){
