@@ -156,7 +156,7 @@ function bindUpload(param) {
             FileUploaded: function (up, file, info) {
                 if (info.status == 200) {
                     console.log('upload to oss success, object name:' + get_uploaded_object_name(file.name));
-                    param.finish("http://resource.mjiahome.com/" + get_uploaded_object_name(file.name));
+                    param.finish("http://resource.mjiahome.com/" + get_uploaded_object_name(file.name)+"?x-oss-process=style/mijia");
                     console.log('aaaaaa');
                 } else {
                     console.log(info.response);
