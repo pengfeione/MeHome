@@ -3,10 +3,16 @@ package com.mehome.controller;
 import com.mehome.domain.UserInfo;
 import com.mehome.requestDTO.ProductBean;
 import com.mehome.requestDTO.UserBackPasswordDTO;
+import com.mehome.service.iface.IOrderService;
 import com.mehome.service.iface.IUserInfoService;
+import com.mehome.service.weixin.WXResult;
 import com.mehome.utils.Result;
 import com.mehome.utils.WeChatInfo;
 import com.mehome.utils.WeChatTokenService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -26,6 +32,8 @@ public class WeChatController {
     private WeChatInfo weChatInfo;
     @Autowired
     private IUserInfoService userInfoService;
+    @Autowired
+    private IOrderService orderService;
 
     /**
      * 通过url获取微信code
@@ -74,5 +82,15 @@ public class WeChatController {
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(userInfoService.weChatInfo(weChatInfo.GetWeixinInfo(code))));
+    }
+    
+    @RequestMapping("/notify")
+    public ResponseEntity<WXResult> notify(HttpServletRequest req, HttpServletResponse resp) {
+    	orderService.payNotify();
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(WXResult.build());
     }
 }
