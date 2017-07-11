@@ -71,8 +71,8 @@ public class OrderIdUtils {
     	
 //    	String newOrderId=OrderIdUtils.getOrderId();
 //    	System.out.println(newOrderId);
-    	long max=0L;
-    	String id=String.format("%06d", max);
-    	System.out.println(id);
+//    	long max=0L;
+//    	String id=String.format("%06d", max);
+    	System.out.println(getAutoId());
 	}
 }
