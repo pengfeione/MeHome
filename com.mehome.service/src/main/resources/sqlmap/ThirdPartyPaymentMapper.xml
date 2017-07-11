@@ -12,14 +12,26 @@
     <result column="pay_amount" property="payAmount" jdbcType="INTEGER" />
     <result column="pay_reason" property="payReason" jdbcType="VARCHAR" />
     <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_body" property="payBody" jdbcType="VARCHAR" />
+    <result column="pay_body_id" property="payBodyId" jdbcType="VARCHAR" />
+    <result column="callback_url" property="callbackUrl" jdbcType="VARCHAR" />
+    <result column="trade_seq" property="tradeSeq" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mehome.domain.ThirdPartyPayment" extends="BaseResultMap" >
+    <result column="pay_content" property="payContent" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     payment_id, order_id, pay_uid, pay_account, receive_account, pay_type, pay_status, 
-    pay_amount, pay_reason, pay_time
+    pay_amount, pay_reason, pay_time, pay_body, pay_body_id, callback_url, trade_seq
   </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <sql id="Blob_Column_List" >
+    pay_content
+  </sql>
+  <select id="selectById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from third_party_payment
     where payment_id = #{paymentId,jdbcType=VARCHAR}
   </select>
@@ -31,11 +43,15 @@
     insert into third_party_payment (payment_id, order_id, pay_uid, 
       pay_account, receive_account, pay_type, 
       pay_status, pay_amount, pay_reason, 
-      pay_time)
+      pay_time, pay_body, pay_body_id, 
+      callback_url, trade_seq, pay_content
+      )
     values (#{paymentId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{payUid,jdbcType=INTEGER}, 
       #{payAccount,jdbcType=VARCHAR}, #{receiveAccount,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, 
       #{payStatus,jdbcType=INTEGER}, #{payAmount,jdbcType=INTEGER}, #{payReason,jdbcType=VARCHAR}, 
-      #{payTime,jdbcType=TIMESTAMP})
+      #{payTime,jdbcType=TIMESTAMP}, #{payBody,jdbcType=VARCHAR}, #{payBodyId,jdbcType=VARCHAR}, 
+      #{callbackUrl,jdbcType=VARCHAR}, #{tradeSeq,jdbcType=VARCHAR}, #{payContent,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertRequired" parameterType="com.mehome.domain.ThirdPartyPayment" >
     insert into third_party_payment
@@ -70,6 +86,21 @@
       <if test="payTime != null" >
         pay_time,
       </if>
+      <if test="payBody != null" >
+        pay_body,
+      </if>
+      <if test="payBodyId != null" >
+        pay_body_id,
+      </if>
+      <if test="callbackUrl != null" >
+        callback_url,
+      </if>
+      <if test="tradeSeq != null" >
+        trade_seq,
+      </if>
+      <if test="payContent != null" >
+        pay_content,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="paymentId != null" >
@@ -101,6 +132,21 @@
       </if>
       <if test="payTime != null" >
         #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payBody != null" >
+        #{payBody,jdbcType=VARCHAR},
+      </if>
+      <if test="payBodyId != null" >
+        #{payBodyId,jdbcType=VARCHAR},
+      </if>
+      <if test="callbackUrl != null" >
+        #{callbackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeSeq != null" >
+        #{tradeSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="payContent != null" >
+        #{payContent,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -134,7 +180,40 @@
       <if test="payTime != null" >
         pay_time = #{payTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="payBody != null" >
+        pay_body = #{payBody,jdbcType=VARCHAR},
+      </if>
+      <if test="payBodyId != null" >
+        pay_body_id = #{payBodyId,jdbcType=VARCHAR},
+      </if>
+      <if test="callbackUrl != null" >
+        callback_url = #{callbackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeSeq != null" >
+        trade_seq = #{tradeSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="payContent != null" >
+        pay_content = #{payContent,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where payment_id = #{paymentId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mehome.domain.ThirdPartyPayment" >
+    update third_party_payment
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      pay_uid = #{payUid,jdbcType=INTEGER},
+      pay_account = #{payAccount,jdbcType=VARCHAR},
+      receive_account = #{receiveAccount,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=VARCHAR},
+      pay_status = #{payStatus,jdbcType=INTEGER},
+      pay_amount = #{payAmount,jdbcType=INTEGER},
+      pay_reason = #{payReason,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      pay_body = #{payBody,jdbcType=VARCHAR},
+      pay_body_id = #{payBodyId,jdbcType=VARCHAR},
+      callback_url = #{callbackUrl,jdbcType=VARCHAR},
+      trade_seq = #{tradeSeq,jdbcType=VARCHAR},
+      pay_content = #{payContent,jdbcType=LONGVARCHAR}
     where payment_id = #{paymentId,jdbcType=VARCHAR}
   </update>
   <update id="update" parameterType="com.mehome.domain.ThirdPartyPayment" >
@@ -147,7 +226,11 @@
       pay_status = #{payStatus,jdbcType=INTEGER},
       pay_amount = #{payAmount,jdbcType=INTEGER},
       pay_reason = #{payReason,jdbcType=VARCHAR},
-      pay_time = #{payTime,jdbcType=TIMESTAMP}
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      pay_body = #{payBody,jdbcType=VARCHAR},
+      pay_body_id = #{payBodyId,jdbcType=VARCHAR},
+      callback_url = #{callbackUrl,jdbcType=VARCHAR},
+      trade_seq = #{tradeSeq,jdbcType=VARCHAR}
     where payment_id = #{paymentId,jdbcType=VARCHAR}
   </update>
 </mapper>

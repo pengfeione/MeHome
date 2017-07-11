@@ -23,6 +23,16 @@ public class ThirdPartyPayment {
 
     private Date payTime;
 
+    private String payBody;
+
+    private String payBodyId;
+
+    private String callbackUrl;
+
+    private String tradeSeq;
+
+    private String payContent;
+
     public String getPaymentId() {
         return paymentId;
     }
@@ -103,6 +113,46 @@ public class ThirdPartyPayment {
         this.payTime = payTime;
     }
 
+    public String getPayBody() {
+        return payBody;
+    }
+
+    public void setPayBody(String payBody) {
+        this.payBody = payBody == null ? null : payBody.trim();
+    }
+
+    public String getPayBodyId() {
+        return payBodyId;
+    }
+
+    public void setPayBodyId(String payBodyId) {
+        this.payBodyId = payBodyId == null ? null : payBodyId.trim();
+    }
+
+    public String getCallbackUrl() {
+        return callbackUrl;
+    }
+
+    public void setCallbackUrl(String callbackUrl) {
+        this.callbackUrl = callbackUrl == null ? null : callbackUrl.trim();
+    }
+
+    public String getTradeSeq() {
+        return tradeSeq;
+    }
+
+    public void setTradeSeq(String tradeSeq) {
+        this.tradeSeq = tradeSeq == null ? null : tradeSeq.trim();
+    }
+
+    public String getPayContent() {
+        return payContent;
+    }
+
+    public void setPayContent(String payContent) {
+        this.payContent = payContent == null ? null : payContent.trim();
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -124,7 +174,12 @@ public class ThirdPartyPayment {
             && (this.getPayStatus() == null ? other.getPayStatus() == null : this.getPayStatus().equals(other.getPayStatus()))
             && (this.getPayAmount() == null ? other.getPayAmount() == null : this.getPayAmount().equals(other.getPayAmount()))
             && (this.getPayReason() == null ? other.getPayReason() == null : this.getPayReason().equals(other.getPayReason()))
-            && (this.getPayTime() == null ? other.getPayTime() == null : this.getPayTime().equals(other.getPayTime()));
+            && (this.getPayTime() == null ? other.getPayTime() == null : this.getPayTime().equals(other.getPayTime()))
+            && (this.getPayBody() == null ? other.getPayBody() == null : this.getPayBody().equals(other.getPayBody()))
+            && (this.getPayBodyId() == null ? other.getPayBodyId() == null : this.getPayBodyId().equals(other.getPayBodyId()))
+            && (this.getCallbackUrl() == null ? other.getCallbackUrl() == null : this.getCallbackUrl().equals(other.getCallbackUrl()))
+            && (this.getTradeSeq() == null ? other.getTradeSeq() == null : this.getTradeSeq().equals(other.getTradeSeq()))
+            && (this.getPayContent() == null ? other.getPayContent() == null : this.getPayContent().equals(other.getPayContent()));
     }
 
     @Override
@@ -141,6 +196,11 @@ public class ThirdPartyPayment {
         result = prime * result + ((getPayAmount() == null) ? 0 : getPayAmount().hashCode());
         result = prime * result + ((getPayReason() == null) ? 0 : getPayReason().hashCode());
         result = prime * result + ((getPayTime() == null) ? 0 : getPayTime().hashCode());
+        result = prime * result + ((getPayBody() == null) ? 0 : getPayBody().hashCode());
+        result = prime * result + ((getPayBodyId() == null) ? 0 : getPayBodyId().hashCode());
+        result = prime * result + ((getCallbackUrl() == null) ? 0 : getCallbackUrl().hashCode());
+        result = prime * result + ((getTradeSeq() == null) ? 0 : getTradeSeq().hashCode());
+        result = prime * result + ((getPayContent() == null) ? 0 : getPayContent().hashCode());
         return result;
     }
 }
