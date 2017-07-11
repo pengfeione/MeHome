@@ -16,22 +16,15 @@
     <result column="pay_body_id" property="payBodyId" jdbcType="VARCHAR" />
     <result column="callback_url" property="callbackUrl" jdbcType="VARCHAR" />
     <result column="trade_seq" property="tradeSeq" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.mehome.domain.ThirdPartyPayment" extends="BaseResultMap" >
     <result column="pay_content" property="payContent" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     payment_id, order_id, pay_uid, pay_account, receive_account, pay_type, pay_status, 
-    pay_amount, pay_reason, pay_time, pay_body, pay_body_id, callback_url, trade_seq
+    pay_amount, pay_reason, pay_time, pay_body, pay_body_id, callback_url, trade_seq,pay_content
   </sql>
-  <sql id="Blob_Column_List" >
-    pay_content
-  </sql>
-  <select id="selectById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from third_party_payment
     where payment_id = #{paymentId,jdbcType=VARCHAR}
   </select>
@@ -198,7 +191,7 @@
     </set>
     where payment_id = #{paymentId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mehome.domain.ThirdPartyPayment" >
+  <update id="update" parameterType="com.mehome.domain.ThirdPartyPayment" >
     update third_party_payment
     set order_id = #{orderId,jdbcType=VARCHAR},
       pay_uid = #{payUid,jdbcType=INTEGER},
@@ -214,23 +207,6 @@
       callback_url = #{callbackUrl,jdbcType=VARCHAR},
       trade_seq = #{tradeSeq,jdbcType=VARCHAR},
       pay_content = #{payContent,jdbcType=LONGVARCHAR}
-    where payment_id = #{paymentId,jdbcType=VARCHAR}
-  </update>
-  <update id="update" parameterType="com.mehome.domain.ThirdPartyPayment" >
-    update third_party_payment
-    set order_id = #{orderId,jdbcType=VARCHAR},
-      pay_uid = #{payUid,jdbcType=INTEGER},
-      pay_account = #{payAccount,jdbcType=VARCHAR},
-      receive_account = #{receiveAccount,jdbcType=VARCHAR},
-      pay_type = #{payType,jdbcType=VARCHAR},
-      pay_status = #{payStatus,jdbcType=INTEGER},
-      pay_amount = #{payAmount,jdbcType=INTEGER},
-      pay_reason = #{payReason,jdbcType=VARCHAR},
-      pay_time = #{payTime,jdbcType=TIMESTAMP},
-      pay_body = #{payBody,jdbcType=VARCHAR},
-      pay_body_id = #{payBodyId,jdbcType=VARCHAR},
-      callback_url = #{callbackUrl,jdbcType=VARCHAR},
-      trade_seq = #{tradeSeq,jdbcType=VARCHAR}
     where payment_id = #{paymentId,jdbcType=VARCHAR}
   </update>
 </mapper>

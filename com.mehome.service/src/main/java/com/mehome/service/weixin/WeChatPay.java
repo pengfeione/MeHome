@@ -1,4 +1,4 @@
-package com.mehome.service.impl;
+package com.mehome.service.weixin;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
@@ -23,6 +25,8 @@ import com.mehome.utils.XmlUtil;
 @Service("weixin")
 public class WeChatPay implements IThirdPay {
 	RestTemplate restTemplate = new RestTemplate();
+    private WXPayConfigImpl config;
+    private WXPay wxpay;
     private Logger logger = Logger.getLogger(this.getClass());
     @Autowired
     public WeChatUnifiedOrder weChatUnifiedOrder;
@@ -32,12 +36,27 @@ public class WeChatPay implements IThirdPay {
 //    private String unifiedOrderUrl = weChatProperties.getPay_unifiedorder();
     private String payKey;
 //    private String mchId = weChatUnifiedOrder.getMch_id();
-
+    @PostConstruct
+    public void init() throws Exception{
+    	config = WXPayConfigImpl.getInstance();
+    	wxpay=new WXPay(config);
+    }
 	@Override
 	public ThirdPayMentBean pay(ThirdPayMentBean bean) {
 		try {
-			String payflow=unifiedOrder(bean.getOpenId(), bean.getOrderId(), bean.getAmount(),bean.getCallbackUrl());
-			bean.setPayFlow(payflow);
+			HashMap<String, String> data = new HashMap<String, String>();
+	        data.put("body", "腾讯充值中心-QQ会员充值");
+	        //data.put("body", order.getProductName());
+	        data.put("out_trade_no", bean.getOrderId());
+	        data.put("device_info", "WEB");
+	        data.put("fee_type", "CNY");
+	        //data.put("total_fee", order.getDeposit().toString());
+	        data.put("total_fee", "1");
+	        data.put("spbill_create_ip", "121.40.18.88");
+	        data.put("notify_url", "http://m.mjiahome.com/api/wechat/notify");
+	        data.put("trade_type", "JSAPI");
+	        data.put("openid",bean.getOpenId());
+	        Map<String, String> r = wxpay.unifiedOrder(data);
 		} catch (Exception e) {
 			logger.error("微信下单出错:"+e);
 		}

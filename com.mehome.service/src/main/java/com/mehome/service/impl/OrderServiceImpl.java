@@ -348,4 +348,21 @@ public class OrderServiceImpl implements IOrderService {
         AssertUtils.isNotNull(bean.getHouseId(), "订单编号不能为空！");
         return orderListDAO.houseTimePiece(bean.getHouseId());
     }
+
+	@Override
+	public void payNotify() {
+		log.info("收到支付结果通知");
+		
+	}
+
+	@Override
+	public ThirdPayMentBean paymentCreateOrder(ThirdPayMentBean bean) {
+		//TODO 创建第三方订单
+		String payType = bean.getPayType();
+        //动态加载对应支付渠道的实现类
+        IThirdPay payImpl = SpringContextUtil.getBean(payType);
+        ThirdPayMentBean paybean = new ThirdPayMentBean();
+        ThirdPayMentBean payRet = payImpl.pay(paybean);
+        return payRet;
+	}
 }

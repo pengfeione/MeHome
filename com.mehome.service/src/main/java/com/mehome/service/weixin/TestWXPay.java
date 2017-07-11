@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.mehome.requestDTO.OrderBean;
+import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.utils.OrderIdUtils;
 
 
@@ -25,7 +26,7 @@ public class TestWXPay {
     /**
      * 扫码支付  下单
      */
-    public void doUnifiedOrder(OrderBean order) {
+    public void doUnifiedOrder(ThirdPayMentBean order) {
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("body", "腾讯充值中心-QQ会员充值");
         //data.put("body", order.getProductName());
@@ -248,9 +249,9 @@ public class TestWXPay {
         // dodo.doRefundQuery();
         // dodo.doOrderReverse();
         // dodo.test001();
-        OrderBean bean=new OrderBean();
+        ThirdPayMentBean bean=new ThirdPayMentBean();
         bean.setOpenId("oG8mDwPoEBVITawjiLh5_9niR-i8");
-        bean.setOrderId("ME201707031611194674077742");
+        bean.setOrderId("ME201707031611194674077745");
          dodo.doUnifiedOrder(bean);
 
 //        dodo.doOrderQuery();

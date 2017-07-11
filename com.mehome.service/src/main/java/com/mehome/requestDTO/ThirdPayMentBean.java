@@ -1,5 +1,7 @@
 package com.mehome.requestDTO;
 
+import java.util.Map;
+
 import com.mehome.domain.ThirdPartyPayment;
 import com.mehome.utils.PageMysqlUtil;
 
@@ -17,7 +19,23 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 	
 	private String callbackUrl;
 	
-	private String payFlow;
+	private String tradeSeq;
+	
+	private String nonceStr;
+	
+	private String packageStr;
+	
+	private String paySign;
+	
+	private String payer;
+	
+	private Long seconds;
+	
+	private Map<String,String> payRet;
+	
+	private String tradeType;
+	
+	private String body;
 
 	public String getOrderId() {
 		return orderId;
@@ -67,17 +85,85 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 		this.callbackUrl = callbackUrl;
 	}
 
-	public String getPayFlow() {
-		return payFlow;
+	public String getTradeSeq() {
+		return tradeSeq;
 	}
 
-	public void setPayFlow(String payFlow) {
-		this.payFlow = payFlow;
+	public void setTradeSeq(String tradeSeq) {
+		this.tradeSeq = tradeSeq;
+	}
+
+	public String getNonceStr() {
+		return nonceStr;
+	}
+
+	public void setNonceStr(String nonceStr) {
+		this.nonceStr = nonceStr;
+	}
+
+	public String getPackageStr() {
+		return packageStr;
+	}
+
+	public void setPackageStr(String packageStr) {
+		this.packageStr = packageStr;
+	}
+
+	public String getPaySign() {
+		return paySign;
+	}
+
+	public void setPaySign(String paySign) {
+		this.paySign = paySign;
+	}
+
+	public String getPayer() {
+		return payer;
+	}
+
+	public void setPayer(String payer) {
+		this.payer = payer;
+	}
+
+	public Map<String, String> getPayRet() {
+		return payRet;
+	}
+
+	public void setPayRet(Map<String, String> payRet) {
+		this.payRet = payRet;
+	}
+
+	public Long getSeconds() {
+		return seconds;
+	}
+
+	public void setSeconds(Long seconds) {
+		this.seconds = seconds;
+	}
+
+	public String getTradeType() {
+		return tradeType;
+	}
+
+	public void setTradeType(String tradeType) {
+		this.tradeType = tradeType;
 	}
 	
-	public ThirdPartyPayment beanToPojo(Boolean addBoolean){
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public ThirdPartyPayment beanToPojo(){
 		ThirdPartyPayment payMent=new ThirdPartyPayment();
+		payMent.setOrderId(this.getOrderId());
 		
+		payMent.setPayAccount(this.getPayer());
+		payMent.setPayAmount(this.getAmount());
+		payMent.setPayBody("");
 		return null;
 		
 	}

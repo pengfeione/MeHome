@@ -67,6 +67,10 @@ public class DateUtils {
 		cal.set(Calendar.MILLISECOND, 0);
 		return cal.getTime();
 	}
+	
+	public static Long getSeconds(Date date){
+		return date.getTime()/1000;
+	}
 	public static void main(String[] args) {
 		Date date=getDayEnd(new Date(), "day", 1);
 		System.out.println(DateUtils.dateToStr(date));
