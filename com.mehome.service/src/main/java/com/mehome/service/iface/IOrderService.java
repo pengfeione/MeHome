@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mehome.domain.HouseResource;
 import com.mehome.requestDTO.OrderBean;
+import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.resonpseDTO.HouseTimePiece;
 
 public interface IOrderService {
@@ -35,5 +36,7 @@ public interface IOrderService {
 
     List<HouseTimePiece> pieceByHouse(HouseResource bean);
 
-
+    public void payNotify();
+    
+    public ThirdPayMentBean paymentCreateOrder(ThirdPayMentBean bean);
 }

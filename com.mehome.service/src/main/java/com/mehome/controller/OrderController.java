@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.mehome.requestDTO.OrderBean;
+import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IOrderService;
 import com.mehome.utils.DateUtils;
 import com.mehome.utils.Result;
@@ -164,5 +165,15 @@ public class OrderController {
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(orderService.pieceByHouse(house)));
+    }
+    
+    @PostMapping("/payment_create_order")
+    @ResponseBody
+    public ResponseEntity<Result> payment_create_order(@RequestBody ThirdPayMentBean bean) {
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(orderService.paymentCreateOrder(bean)));
     }
 }
