@@ -381,6 +381,7 @@ public class OrderServiceImpl implements IOrderService {
         OrderList order = orderListDAO.selectById(orderId);
         
         ThirdPayMentBean paybean = new ThirdPayMentBean(order);
+        paybean.setTradeType(bean.getTradeType());
         paybean.setOpenId(openId);
         ThirdPayMentBean payRet = payImpl.pay(paybean);
         return payRet;
