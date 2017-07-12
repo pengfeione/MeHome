@@ -127,7 +127,7 @@ function bindUpload(param) {
     var uploader = new plupload.Uploader({
         runtimes: 'html5,flash,silverlight,html4',
         browse_button: '' + param.id,
-        multi_selection: false,
+        multi_selection: true,
         // container: document.getElementById(''+triggerId),
         url: 'http://oss.aliyuncs.com',
         filters: {
@@ -156,7 +156,7 @@ function bindUpload(param) {
             FileUploaded: function (up, file, info) {
                 if (info.status == 200) {
                     console.log('upload to oss success, object name:' + get_uploaded_object_name(file.name));
-                    param.finish("http://resource.mjiahome.com/" + get_uploaded_object_name(file.name)+"?x-oss-process=style/mijia");
+                    param.finish("http://resource.mjiahome.com/" + get_uploaded_object_name(file.name) + "?x-oss-process=style/mijia");
                     console.log('aaaaaa');
                 } else {
                     console.log(info.response);
