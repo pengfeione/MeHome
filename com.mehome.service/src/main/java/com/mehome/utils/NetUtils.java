@@ -5,9 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
@@ -138,4 +142,41 @@ public class NetUtils {
         }
         return jsonObject.toJSONString();
     }
+    
+    /** 
+     * 获取外网地址 
+     * @param strUrl 
+     * @return 
+     */  
+    public static String getWebIP(String strUrl) {  
+    try {  
+    //连接网页  
+     URL url = new URL(strUrl);  
+     BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));  
+     String s = "";  
+     StringBuffer sb = new StringBuffer("");   
+     String webContent = "";  
+     //读取网页信息  
+     while ((s = br.readLine()) != null) {  
+     sb.append(s + "\r\n");  
+     }  
+     br.close();  
+     //网页信息  
+     webContent = sb.toString();  
+     int start = webContent.indexOf("[")+1;  
+     int end = webContent.indexOf("]");  
+     //获取网页中  当前 的 外网IP  
+     webContent = webContent.substring(start,end);  
+     return webContent;  
+     
+    } catch (Exception e) {  
+     e.printStackTrace();  
+     return "error open url:" + strUrl;  
+    }  
+   }
+    
+    public static void main(String[] args) {
+		String ip=NetUtils.getWebIP("http://www.ip138.com/ip2city.asp");
+		System.out.println(ip);
+	}
 }

@@ -48,5 +48,6 @@ public class WXPayConstants {
     public static final String SANDBOX_SHORTURL_URL_SUFFIX     = "/sandboxnew/tools/shorturl";
     public static final String SANDBOX_AUTHCODETOOPENID_URL_SUFFIX = "/sandboxnew/tools/authcodetoopenid";
 
+    public static final String TRADETYPE_JSAPI = "JSAPI";
 }
 

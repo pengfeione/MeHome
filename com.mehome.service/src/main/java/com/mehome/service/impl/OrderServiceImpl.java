@@ -359,9 +359,29 @@ public class OrderServiceImpl implements IOrderService {
 	public ThirdPayMentBean paymentCreateOrder(ThirdPayMentBean bean) {
 		//TODO 创建第三方订单
 		String payType = bean.getPayType();
+		String orderId = bean.getOrderId();
+		String payer = bean.getPayer();
+		String openId = null;
+		if(StringUtils.isNotBlank(payer)){
+			UserInfo info = userInfoDAO.selectById(Integer.parseInt(payer));
+			if(info!=null&&StringUtils.isNotBlank(info.getOpenId())){
+				openId=info.getOpenId();
+			}else{
+				log.error("未获取到用户的openId");
+				return null;
+			}
+		}else{
+			log.error("未传payer属性");
+			return null;
+		}
+		
         //动态加载对应支付渠道的实现类
         IThirdPay payImpl = SpringContextUtil.getBean(payType);
-        ThirdPayMentBean paybean = new ThirdPayMentBean();
+        //TODO 将订单有关数据塞进第三方支付对象中
+        OrderList order = orderListDAO.selectById(orderId);
+        
+        ThirdPayMentBean paybean = new ThirdPayMentBean(order);
+        paybean.setOpenId(openId);
         ThirdPayMentBean payRet = payImpl.pay(paybean);
         return payRet;
 	}

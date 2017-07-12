@@ -6,10 +6,11 @@ import org.springframework.stereotype.Component;
  * Created by Administrator on 2017/3/2.
  */
 @Component
-@ConfigurationProperties(prefix = "thirdpay")
+@ConfigurationProperties(prefix = "thirdpay.weixin")
 public class PropertiesUtil {
     private String iface;
     private String impl;
+    private String appid;
 	public String getIface() {
 		return iface;
 	}
@@ -22,4 +23,11 @@ public class PropertiesUtil {
 	public void setImpl(String impl) {
 		this.impl = impl;
 	}
+	public String getAppid() {
+		return appid;
+	}
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
+	
 }
