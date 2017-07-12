@@ -1,7 +1,9 @@
 package com.mehome.requestDTO;
 
+import java.util.Date;
 import java.util.Map;
 
+import com.mehome.domain.OrderList;
 import com.mehome.domain.ThirdPartyPayment;
 import com.mehome.utils.PageMysqlUtil;
 
@@ -36,6 +38,8 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 	private String tradeType;
 	
 	private String body;
+	
+	private String appId;
 
 	public String getOrderId() {
 		return orderId;
@@ -157,17 +161,40 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 		this.body = body;
 	}
 
-	public ThirdPartyPayment beanToPojo(){
+	public String getAppId() {
+		return appId;
+	}
+
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
+
+	public ThirdPartyPayment beanToPojo() throws Exception{
 		ThirdPartyPayment payMent=new ThirdPartyPayment();
+		Date date=new Date();
 		payMent.setOrderId(this.getOrderId());
-		
 		payMent.setPayAccount(this.getPayer());
 		payMent.setPayAmount(this.getAmount());
 		payMent.setPayBody("");
-		return null;
+		payMent.setPayStatus(this.getPayStatus());
+		payMent.setPayTime(date);
+		payMent.setCallbackUrl(this.getCallbackUrl());
+		payMent.setPayType(this.getPayType());
+		payMent.setPayUid(Integer.parseInt(this.getPayer()));
+		payMent.setTradeSeq(this.getTradeSeq());
+		payMent.setUpdateTime(date);
+		return payMent;
 		
 	}
-	
+	public ThirdPayMentBean(OrderList order){
+		this.setAmount(order.getDeposit());
+		this.setBody(order.getProductName());
+		this.setOrderId(order.getOrderId());
+//		this.set
+	}
+	public ThirdPayMentBean(){
+		
+	}
 	
 
 }

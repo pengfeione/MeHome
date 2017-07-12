@@ -32,6 +32,8 @@ public class ThirdPartyPayment {
     private String tradeSeq;
 
     private String payContent;
+    
+    private Date updateTime;
 
     public String getPaymentId() {
         return paymentId;
@@ -153,7 +155,15 @@ public class ThirdPartyPayment {
         this.payContent = payContent == null ? null : payContent.trim();
     }
 
-    @Override
+    public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	@Override
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -179,7 +189,8 @@ public class ThirdPartyPayment {
             && (this.getPayBodyId() == null ? other.getPayBodyId() == null : this.getPayBodyId().equals(other.getPayBodyId()))
             && (this.getCallbackUrl() == null ? other.getCallbackUrl() == null : this.getCallbackUrl().equals(other.getCallbackUrl()))
             && (this.getTradeSeq() == null ? other.getTradeSeq() == null : this.getTradeSeq().equals(other.getTradeSeq()))
-            && (this.getPayContent() == null ? other.getPayContent() == null : this.getPayContent().equals(other.getPayContent()));
+            && (this.getPayContent() == null ? other.getPayContent() == null : this.getPayContent().equals(other.getPayContent()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -201,6 +212,7 @@ public class ThirdPartyPayment {
         result = prime * result + ((getCallbackUrl() == null) ? 0 : getCallbackUrl().hashCode());
         result = prime * result + ((getTradeSeq() == null) ? 0 : getTradeSeq().hashCode());
         result = prime * result + ((getPayContent() == null) ? 0 : getPayContent().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
     }
 }

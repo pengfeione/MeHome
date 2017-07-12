@@ -17,10 +17,11 @@
     <result column="callback_url" property="callbackUrl" jdbcType="VARCHAR" />
     <result column="trade_seq" property="tradeSeq" jdbcType="VARCHAR" />
     <result column="pay_content" property="payContent" jdbcType="LONGVARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     payment_id, order_id, pay_uid, pay_account, receive_account, pay_type, pay_status, 
-    pay_amount, pay_reason, pay_time, pay_body, pay_body_id, callback_url, trade_seq,pay_content
+    pay_amount, pay_reason, pay_time, pay_body, pay_body_id, callback_url, trade_seq,pay_content,update_time
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -37,13 +38,14 @@
       pay_account, receive_account, pay_type, 
       pay_status, pay_amount, pay_reason, 
       pay_time, pay_body, pay_body_id, 
-      callback_url, trade_seq, pay_content
+      callback_url, trade_seq, pay_content,update_time
       )
     values (#{paymentId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{payUid,jdbcType=INTEGER}, 
       #{payAccount,jdbcType=VARCHAR}, #{receiveAccount,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, 
       #{payStatus,jdbcType=INTEGER}, #{payAmount,jdbcType=INTEGER}, #{payReason,jdbcType=VARCHAR}, 
       #{payTime,jdbcType=TIMESTAMP}, #{payBody,jdbcType=VARCHAR}, #{payBodyId,jdbcType=VARCHAR}, 
-      #{callbackUrl,jdbcType=VARCHAR}, #{tradeSeq,jdbcType=VARCHAR}, #{payContent,jdbcType=LONGVARCHAR}
+      #{callbackUrl,jdbcType=VARCHAR}, #{tradeSeq,jdbcType=VARCHAR}, #{payContent,jdbcType=LONGVARCHAR},
+      #{payTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertRequired" parameterType="com.mehome.domain.ThirdPartyPayment" >
@@ -94,6 +96,9 @@
       <if test="payContent != null" >
         pay_content,
       </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="paymentId != null" >
@@ -140,6 +145,9 @@
       </if>
       <if test="payContent != null" >
         #{payContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -188,6 +196,9 @@
       <if test="payContent != null" >
         pay_content = #{payContent,jdbcType=LONGVARCHAR},
       </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where payment_id = #{paymentId,jdbcType=VARCHAR}
   </update>
@@ -206,7 +217,8 @@
       pay_body_id = #{payBodyId,jdbcType=VARCHAR},
       callback_url = #{callbackUrl,jdbcType=VARCHAR},
       trade_seq = #{tradeSeq,jdbcType=VARCHAR},
-      pay_content = #{payContent,jdbcType=LONGVARCHAR}
+      pay_content = #{payContent,jdbcType=LONGVARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
     where payment_id = #{paymentId,jdbcType=VARCHAR}
   </update>
 </mapper>
