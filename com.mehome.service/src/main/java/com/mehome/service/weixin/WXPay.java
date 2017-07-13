@@ -134,6 +134,7 @@ public class WXPay {
         sb.append("appId").append("=").append(reqData.get("appId").trim()).append("&")
         .append("timeStamp").append("=").append(reqData.get("timeStamp").trim()).append("&")
         .append("nonceStr").append("=").append(reqData.get("nonceStr").trim()).append("&")
+        .append("package").append("=").append(reqData.get("package").trim()).append("&")
         .append("signType").append("=").append(reqData.get("signType").trim()).append("&");
         sb.append("key=").append(config.getKey());
         return WXPayUtil.MD5(sb.toString()).toUpperCase();
