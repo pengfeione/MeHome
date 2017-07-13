@@ -1,21 +1,20 @@
 package com.mehome.service.impl;
 
-import java.util.*;
-
 import com.mehome.dao.BasicFacilitiesDao;
+import com.mehome.dao.HouseResourceDao;
 import com.mehome.dao.ProductListDao;
 import com.mehome.domain.BasicFacilities;
+import com.mehome.domain.HouseResource;
 import com.mehome.domain.ProductList;
+import com.mehome.requestDTO.HouseBean;
+import com.mehome.service.iface.IHouseService;
 import com.mehome.utils.AssertUtils;
 import com.mehome.utils.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mehome.dao.HouseResourceDao;
-import com.mehome.domain.HouseResource;
-import com.mehome.requestDTO.HouseBean;
-import com.mehome.service.iface.IHouseService;
+import java.util.*;
 
 @Service("IHouseService")
 public class HouseServiceImpl implements IHouseService {
@@ -62,6 +61,11 @@ public class HouseServiceImpl implements IHouseService {
         HouseResource resource = null;
         try {
             resource = bean.beanToPojo(Boolean.TRUE);
+            if ((!resource.getDetailpic().contains("["))
+                    || (!resource.getDetailpic().contains("]"))
+                    ) {
+                resource.setDetailpic(null);
+            }
             houseResourceDAO.insert(resource);
         } catch (Exception e) {
             log.error("加入房源出错:" + e);
@@ -81,6 +85,11 @@ public class HouseServiceImpl implements IHouseService {
         ProductList productList = productListDao.selectById(bean.getProductId());
         AssertUtils.isNotNull(productList, "选择的产品非法！");
         bean.setSupplierId(productList.getSupplierId());
+        if ((!bean.getDetailpic().contains("["))
+                || (!bean.getDetailpic().contains("]"))
+                ) {
+            bean.setDetailpic(null);
+        }
         houseResourceDAO.insertRequired(bean);
         return bean.getHouseId() + "";
     }
@@ -88,6 +97,11 @@ public class HouseServiceImpl implements IHouseService {
     @Override
     public String updateHouse(HouseResource bean) {
         AssertUtils.isNotNull(bean.getHouseId(), "更新标识不能为空！");
+        if ((!bean.getDetailpic().contains("["))
+                || (!bean.getDetailpic().contains("]"))
+                ) {
+            bean.setDetailpic(null);
+        }
         houseResourceDAO.updateRequired(bean);
         return bean.getHouseId() + "";
     }
