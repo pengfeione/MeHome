@@ -1,11 +1,14 @@
 package com.mehome.service.weixin;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import com.mehome.service.weixin.WXPayConstants.SignType;
+import com.mehome.utils.DateUtils;
+import com.mehome.utils.OrderIdUtils;
 
 
 public class WXPay {
@@ -118,13 +121,20 @@ public class WXPay {
      */
     public String fillRequestDataWithMD5(Map<String, String> reqData) throws Exception {
     	Set<String> keySet = reqData.keySet();
-        String[] keyArray = keySet.toArray(new String[keySet.size()]);
-        Arrays.sort(keyArray);
+    	//reqData.put("appId", bean.getAppId());
+//    	bean.setSeconds(DateUtils.getSeconds(new Date()));
+//    	reqData.put("timeStamp", bean.getSeconds().toString());
+//    	bean.setNonceStr(OrderIdUtils.getAutoId());
+//    	reqData.put("nonceStr", bean.getNonceStr());
+//    	bean.setPackageStr(packageStr);
+//    	reqData.put("package", bean.getPackageStr());
+    	//signType为MD5
+//    	reqData.put("signType", "MD5");
         StringBuilder sb = new StringBuilder();
-        for (String k : keyArray) {
-            if (reqData.get(k).trim().length() > 0) // 参数值为空，则不参与签名
-                sb.append(k).append("=").append(reqData.get(k).trim()).append("&");
-        }
+        sb.append("appId").append("=").append(reqData.get("appId").trim()).append("&")
+        .append("timeStamp").append("=").append(reqData.get("timeStamp").trim()).append("&")
+        .append("nonceStr").append("=").append(reqData.get("nonceStr").trim()).append("&")
+        .append("signType").append("=").append(reqData.get("signType").trim()).append("&");
         sb.append("key=").append(config.getKey());
         return WXPayUtil.MD5(sb.toString()).toUpperCase();
     }
