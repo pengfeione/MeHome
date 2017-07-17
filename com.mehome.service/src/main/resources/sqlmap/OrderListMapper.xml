@@ -69,6 +69,8 @@
         FROM order_list
         WHERE house_id = #{houseId,jdbcType=VARCHAR}
               AND end_time >= now()
+              AND start_time IS NOT NULL
+              AND end_time IS NOT NULL
     </select>
     <delete id="delete" parameterType="java.lang.String">
         DELETE FROM order_list
