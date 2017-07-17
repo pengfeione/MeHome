@@ -72,7 +72,7 @@ function onBridgeReady(data){
 	//由后台接口获取
 	   WeixinJSBridge.invoke(
 	       'getBrandWCPayRequest', {
-	           "appId":data.result.appId,     //公众号名称，由商户传入     "wx966efd886c5be652"
+	           "appId":data.result.appId,     //1公众号名称，由商户传入     "wx966efd886c5be652"
 	           "timeStamp":data.result.seconds+"",         //时间戳，自1970年以来的秒数     
 	           "nonceStr":data.result.nonceStr, //随机串     "e61463f8efa94090b1f366cccfbbb444"
 	           "package":data.result.packageStr, //prepay_id=u802345jgfjsdfgsdg888    
