@@ -2,13 +2,17 @@ package com.mehome.service.impl;
 
 import com.mehome.dao.BasicFacilitiesDao;
 import com.mehome.dao.HouseResourceDao;
+import com.mehome.dao.OrderListDao;
 import com.mehome.dao.ProductListDao;
 import com.mehome.domain.BasicFacilities;
 import com.mehome.domain.HouseResource;
 import com.mehome.domain.ProductList;
+import com.mehome.enumDTO.HouseStatusEnum;
 import com.mehome.requestDTO.HouseBean;
+import com.mehome.resonpseDTO.HouseTimePiece;
 import com.mehome.service.iface.IHouseService;
 import com.mehome.utils.AssertUtils;
+import com.mehome.utils.DateUtils;
 import com.mehome.utils.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +29,12 @@ public class HouseServiceImpl implements IHouseService {
     private BasicFacilitiesDao basicFacilitiesDao;
     @Autowired
     private ProductListDao productListDao;
+    @Autowired
+    private OrderListDao orderListDAO;
 
     @Override
     public List<HouseBean> getListByCondition(HouseBean bean) {
+    	Date now=new Date();
         List<HouseResource> houseList = houseResourceDAO.getListByCondition(bean);
         List<BasicFacilities> basicFacilities = basicFacilitiesDao.list();
         Map<String, BasicFacilities> map = new HashMap<String, BasicFacilities>();
@@ -50,6 +57,18 @@ public class HouseServiceImpl implements IHouseService {
                     houseResource.setBasicList(list);
                 }
                 HouseBean newBean = new HouseBean(houseResource);
+                //TODO 根据时间片更新房源状态
+                List<HouseTimePiece> pieceList=orderListDAO.houseTimePiece(houseResource.getHouseId());
+                for (HouseTimePiece houseTimePiece : pieceList) {
+					String startTime=houseTimePiece.getStartTime();
+					String endTime=houseTimePiece.getEndTime();
+					Date startDate=DateUtils.strToDate(startTime);
+					Date endDate=DateUtils.strToDate(endTime);
+					if(now.after(startDate)&&now.before(endDate)){
+						newBean.setStatus(HouseStatusEnum.LEASED.getKey());
+						break;
+					}
+				}
                 houseBeanList.add(newBean);
             }
         }

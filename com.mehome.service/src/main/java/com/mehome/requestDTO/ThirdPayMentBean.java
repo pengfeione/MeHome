@@ -27,11 +27,19 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 	
 	private String packageStr;
 	
+	
+//	 "appId":data.result.appId,     //公众号名称，由商户传入     "wx966efd886c5be652"
+//     "timeStamp":data.result.seconds,         //时间戳，自1970年以来的秒数     
+//     "nonceStr":data.result.nonceStr, //随机串     "e61463f8efa94090b1f366cccfbbb444"
+//     "package":data.result.packageStr, //prepay_id=u802345jgfjsdfgsdg888    
+//     "signType":"MD5",         //微信签名方式：     
+//     "paySign":data.result.paySign //微信签名 "70EA570631E4BB79628FBCA90534C63FF7FADD89"
+	
 	private String paySign;
 	
 	private String payer;
 	
-	private Long seconds;
+	private String seconds;
 	
 	private Map<String,String> payRet;
 	
@@ -40,6 +48,8 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 	private String body;
 	
 	private String appId;
+	
+	private String mwebUrl;
 
 	public String getOrderId() {
 		return orderId;
@@ -137,11 +147,11 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 		this.payRet = payRet;
 	}
 
-	public Long getSeconds() {
+	public String getSeconds() {
 		return seconds;
 	}
 
-	public void setSeconds(Long seconds) {
+	public void setSeconds(String seconds) {
 		this.seconds = seconds;
 	}
 
@@ -167,6 +177,14 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 
 	public void setAppId(String appId) {
 		this.appId = appId;
+	}
+
+	public String getMwebUrl() {
+		return mwebUrl;
+	}
+
+	public void setMwebUrl(String mwebUrl) {
+		this.mwebUrl = mwebUrl;
 	}
 
 	public ThirdPartyPayment beanToPojo() throws Exception{

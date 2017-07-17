@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.mehome.service.weixin.WXPayConstants.SignType;
 import com.mehome.utils.DateUtils;
 import com.mehome.utils.OrderIdUtils;
@@ -13,6 +15,7 @@ import com.mehome.utils.OrderIdUtils;
 
 public class WXPay {
 
+	private Logger log = Logger.getLogger(this.getClass());
     private WXPayConfig config;
     private SignType signType;
     private boolean autoReport;
@@ -132,11 +135,12 @@ public class WXPay {
 //    	reqData.put("signType", "MD5");
         StringBuilder sb = new StringBuilder();
         sb.append("appId").append("=").append(reqData.get("appId").trim()).append("&")
-        .append("timeStamp").append("=").append(reqData.get("timeStamp").trim()).append("&")
         .append("nonceStr").append("=").append(reqData.get("nonceStr").trim()).append("&")
         .append("package").append("=").append(reqData.get("package").trim()).append("&")
-        .append("signType").append("=").append(reqData.get("signType").trim()).append("&");
+        .append("signType").append("=").append(reqData.get("signType").trim()).append("&")
+        .append("timeStamp").append("=").append(reqData.get("timeStamp").trim()).append("&");
         sb.append("key=").append(config.getKey());
+        log.info("needMD5Str:"+sb.toString());
         return WXPayUtil.MD5(sb.toString()).toUpperCase();
     }
 
@@ -727,6 +731,18 @@ public class WXPay {
         String respXml = this.requestWithoutCert(url, this.fillRequestData(reqData), connectTimeoutMs, readTimeoutMs);
         return this.processResponseXml(respXml);
     }
-
+    public static void main(String[] args) throws Exception {
+    	WXPayConfigImpl config = WXPayConfigImpl.getInstance();
+    	WXPay wxpay=new WXPay(config);
+    	Map<String,String> reqData=new HashMap<String,String>();
+    	reqData.put("appId", "wx2421b1c4370ec43b");
+    	reqData.put("timeStamp", "1395712654");
+    	reqData.put("nonceStr", "e61463f8efa94090b1f366cccfbbb444");
+    	reqData.put("package", "prepay_id=u802345jgfjsdfgsdg888");
+    	//signType为MD5
+    	reqData.put("signType", "MD5");
+    	String Sign =wxpay.fillRequestDataWithMD5(reqData);
+    	System.out.println(Sign);
+	}
 
 } // end class

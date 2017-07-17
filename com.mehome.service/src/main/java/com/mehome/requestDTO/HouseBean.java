@@ -349,6 +349,7 @@ public class HouseBean extends PageMysqlUtil {
         this.setRoomTypeDesc(resource.getRoomTypeDesc());
         this.setSort(resource.getSort());
         this.setStartTime(resource.getStartTime() == null ? null : DateUtils.dateToStr(resource.getStartTime()));
+        //TODO 
         this.setStatus(resource.getStatus());
         this.setSubject(resource.getSubject());
         this.setSummary(resource.getSummary());
