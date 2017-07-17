@@ -136,13 +136,17 @@ public class OrderServiceImpl implements IOrderService {
             if ((bean.getOrderStatus() != null && bean.getOrderStatus().intValue() == OrderStatusEnum.CONFIRMED.getKey()) || (oldOrder.getOrderStatus().intValue() == 1)) {
                 bean = calculateWelfare(bean, null);
                 //更新房源为已经租借状态
-                Integer houseId = oldOrder.getHouseId();
-                HouseResource house = houseResourceDAO.selectById(houseId);
-                house.setStatus(HouseStatusEnum.LEASED.getKey());
-                house.setLeaseHolder(oldOrder.getBiller());
-                houseResourceDAO.update(house);
+//                Integer houseId = oldOrder.getHouseId();
+//                HouseResource house = houseResourceDAO.selectById(houseId);
+//                house.setStatus(HouseStatusEnum.LEASED.getKey());
+//                house.setLeaseHolder(oldOrder.getBiller());
+//                houseResourceDAO.update(house);
             }
             order = bean.compareToPojo();
+            if(bean.getOrderStatus() != null && bean.getOrderStatus().intValue() == OrderStatusEnum.CANCEL.getKey()){
+            	order.setStartTime(null);
+            	order.setEndTime(null);
+            }
             if (order.getStartTime() != null && order.getEndTime() != null) {
                 Long mills = order.getEndTime().getTime() - order.getStartTime().getTime();
                 Long day = mills / (1000 * 60 * 60 * 24);
@@ -297,6 +301,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public String judgeExistOrder(OrderBean bean) {
+    	Date now = new Date();
         Integer houseId = bean.getHouseId();
         if (houseId == null) {
             log.error("houseId未传");
@@ -313,6 +318,17 @@ public class OrderServiceImpl implements IOrderService {
         requestBean.setBiller(biller);
         requestBean.setOrderStatus(OrderStatusEnum.ORDER.getKey());
         long num = orderListDAO.getSizeByCondition(requestBean);
+      //TODO 根据时间片更新房源状态
+        List<HouseTimePiece> pieceList=orderListDAO.houseTimePiece(houseId);
+        for (HouseTimePiece houseTimePiece : pieceList) {
+			String startTime=houseTimePiece.getStartTime();
+			String endTime=houseTimePiece.getEndTime();
+			Date startDate=DateUtils.strToDate(startTime);
+			Date endDate=DateUtils.strToDate(endTime);
+			if(now.after(startDate)&&now.before(endDate)){
+				return Boolean.FALSE.toString();
+			}
+		}
         if (house != null && house.getStatus().intValue() == HouseStatusEnum.AVAILABLE.getKey() && num == 0) {
             return Boolean.TRUE.toString();
         }

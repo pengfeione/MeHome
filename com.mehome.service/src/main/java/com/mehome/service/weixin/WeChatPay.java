@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IThirdPay;
 import com.mehome.utils.DateUtils;
@@ -62,14 +64,32 @@ public class WeChatPay implements IThirdPay {
 	        data.put("fee_type", "CNY");
 	        //data.put("total_fee", order.getDeposit().toString());
 	        data.put("total_fee", "1");
-	        data.put("spbill_create_ip", NetUtils.getWebIP("http://www.ip138.com/ip2city.asp"));
+	        data.put("spbill_create_ip", "121.40.18.88");
 	        data.put("notify_url", "http://m.mjiahome.com/api/wechat/notify");
 	        data.put("trade_type", bean.getTradeType());
 //	        data.put("trade_type", "JSAPI");
 	        if(WXPayConstants.TRADETYPE_JSAPI.equals(bean.getTradeType())){
 	        data.put("openid",bean.getOpenId());
 	        }
+	        if(WXPayConstants.TRADETYPE_H5.equals(bean.getTradeType())){
+//	        	3，WAP网站应用
+//	        	{"h5_info": //h5支付固定传"h5_info" 
+//	        	   {"type": "",  //场景类型
+//	        	    "wap_url": "",//WAP网站URL地址
+//	        	    "wap_name": ""  //WAP 网站名
+//	        	    }
+//	        	}
+	        	Map<String,Map> infoMap=new HashMap<String,Map>();
+	        	Map<String,String> h5Map=new HashMap<String,String>();
+	        	h5Map.put("type", "Wap");
+	        	h5Map.put("wap_url", "http://m.mjiahome.com");
+	        	h5Map.put("wap_name", "米家公寓");
+	        	infoMap.put("h5_info", h5Map);
+	        	String sceneInfo=JSON.toJSONString(infoMap);
+	        	data.put("scene_info", sceneInfo);
+	        }
 	        Map<String, String> ret = wxpay.unifiedOrder(data);
+	        log.info("ret:"+ret);
 	        bean.setPayRet(ret);
 	        
 //	        "appId":data.appId,     //公众号名称，由商户传入     "wx966efd886c5be652"
@@ -83,16 +103,19 @@ public class WeChatPay implements IThirdPay {
 	        	Map<String,String> reqData=new HashMap<String,String>();
 	        	bean.setAppId(propertiesUtil.getAppid());
 	        	reqData.put("appId", bean.getAppId());
-	        	bean.setSeconds(DateUtils.getSeconds(new Date()));
+	        	bean.setSeconds(WXPayUtil.getCurrentTimestamp()+"");
 	        	reqData.put("timeStamp", bean.getSeconds().toString());
-	        	bean.setNonceStr(OrderIdUtils.getAutoId());
+	        	bean.setNonceStr(WXPayUtil.generateUUID());
 	        	reqData.put("nonceStr", bean.getNonceStr());
 	        	bean.setPackageStr(packageStr);
 	        	reqData.put("package", bean.getPackageStr());
 	        	//signType为MD5
 	        	reqData.put("signType", "MD5");
 	        	String Sign =wxpay.fillRequestDataWithMD5(reqData);
+	        	log.info("paySign:"+Sign);
 	        	bean.setPaySign(Sign);
+	        	if(ret.get("mweb_url")!=null)
+	        	bean.setMwebUrl(ret.get("mweb_url"));
 	        }
 		} catch (Exception e) {
 			log.error("微信下单出错:"+e);
