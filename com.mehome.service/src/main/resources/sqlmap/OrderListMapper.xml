@@ -61,6 +61,8 @@
             order_id != #{orderId,jdbcType=VARCHAR}
             AND house_id = #{houseId,jdbcType=VARCHAR}
             AND end_time >= now()
+            AND start_time IS NOT NULL
+            AND end_time IS NOT NULL
     </select>
     <select id="houseTimePiece" resultMap="HouseTimePieceBase" parameterType="map">
         SELECT
