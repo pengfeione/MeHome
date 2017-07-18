@@ -618,7 +618,7 @@ public class OrderBean extends PageMysqlUtil{
 		if(this.getDiscountRent()!=null)
 		order.setDiscountRent(this.getDiscountRent());
 		if(StringUtils.isNotBlank(this.getEndTime()))
-		order.setEndTime(DateUtils.strToDate(this.getEndTime()+" 00:00:00"));
+		order.setEndTime(DateUtils.strToDate(this.getEndTime()+" 23:59:59"));
 		if(StringUtils.isNotBlank(this.getOrderId()))
 		order.setOrderId(this.getOrderId());
 		if(StringUtils.isNotBlank(this.getOrderReason()))
