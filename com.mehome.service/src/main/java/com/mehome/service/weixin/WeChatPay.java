@@ -101,17 +101,34 @@ public class WeChatPay implements IThirdPay {
 	        if(ret.containsKey("prepay_id")){
 	        	String packageStr="prepay_id="+ret.get("prepay_id");
 	        	Map<String,String> reqData=new HashMap<String,String>();
-//	        	bean.setAppId(propertiesUtil.getAppid());
+	        	
+	        	
+	        	
+	        	//大写模式
 	        	bean.setAppId(ret.get("appid"));
-	        	reqData.put("appId", bean.getAppId());
+	        	reqData.put("appId", bean.getAppId().trim());
 	        	bean.setSeconds(WXPayUtil.getCurrentTimestamp()+"");
 	        	reqData.put("timeStamp", bean.getSeconds().toString());
-	        	bean.setNonceStr(WXPayUtil.generateUUID());
+	        	bean.setNonceStr(WXPayUtil.generateUUID().trim());
 	        	reqData.put("nonceStr", bean.getNonceStr());
-	        	bean.setPackageStr(packageStr);
+	        	bean.setPackageStr(packageStr.trim());
 	        	reqData.put("package", bean.getPackageStr());
+	        	String signType="MD5";
+	        	bean.setSignType(signType);
 	        	//signType为MD5
-	        	reqData.put("signType", "MD5");
+				reqData.put("signType", signType);
+	        	
+//	        	bean.setAppId(ret.get("appid"));
+//	        	reqData.put("appid", bean.getAppId());
+//	        	bean.setSeconds(WXPayUtil.getCurrentTimestamp()+"");
+//	        	reqData.put("timestamp", bean.getSeconds().toString());
+//	        	bean.setNonceStr(WXPayUtil.generateUUID());
+//	        	reqData.put("nonce_str", bean.getNonceStr());
+//	        	bean.setPackageStr(packageStr);
+//	        	reqData.put("package", bean.getPackageStr());
+//	        	//signType为MD5
+//	        	reqData.put("signtype", "MD5");
+	        	
 	        	String Sign =wxpay.fillRequestDataWithMD5(reqData);
 	        	log.info("paySign:"+Sign);
 	        	bean.setPaySign(Sign);

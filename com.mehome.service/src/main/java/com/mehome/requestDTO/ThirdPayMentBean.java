@@ -50,6 +50,8 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 	private String appId;
 	
 	private String mwebUrl;
+	
+	private String signType;
 
 	public String getOrderId() {
 		return orderId;
@@ -185,6 +187,14 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 
 	public void setMwebUrl(String mwebUrl) {
 		this.mwebUrl = mwebUrl;
+	}
+
+	public String getSignType() {
+		return signType;
+	}
+
+	public void setSignType(String signType) {
+		this.signType = signType;
 	}
 
 	public ThirdPartyPayment beanToPojo() throws Exception{

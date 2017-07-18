@@ -3,8 +3,11 @@ package com.mehome.service.weixin;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
@@ -133,6 +136,9 @@ public class WXPay {
 //    	reqData.put("package", bean.getPackageStr());
     	//signType为MD5
 //    	reqData.put("signType", "MD5");
+    	
+    	
+    	
         StringBuilder sb = new StringBuilder();
         sb.append("appId").append("=").append(reqData.get("appId").trim()).append("&")
         .append("nonceStr").append("=").append(reqData.get("nonceStr").trim()).append("&")
@@ -142,7 +148,42 @@ public class WXPay {
         sb.append("key=").append(config.getKey());
         log.info("needMD5Str:"+sb.toString());
         return WXPayUtil.MD5(sb.toString()).toUpperCase();
+        
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("appid").append("=").append(reqData.get("appid").trim()).append("&")
+//        .append("nonce_str").append("=").append(reqData.get("nonce_str").trim()).append("&")
+//        .append("package").append("=").append(reqData.get("package").trim()).append("&")
+//        .append("signtype").append("=").append(reqData.get("signtype").trim()).append("&")
+//        .append("timestamp").append("=").append(reqData.get("timestamp").trim()).append("&");
+//        sb.append("key=").append(config.getKey());
+//        log.info("needMD5Str:"+sb.toString());
+//        return WXPayUtil.MD5(sb.toString()).toUpperCase();
+        
     }
+    
+    /**
+	 * 创建md5摘要,规则是:按参数名称a-z排序,遇到空值的参数不参加签名。
+     * @throws Exception 
+	 */
+	public String createSign(SortedMap<String, String> packageParams) throws Exception {
+		StringBuffer sb = new StringBuffer();
+		Set es = packageParams.entrySet();
+		Iterator it = es.iterator();
+		while (it.hasNext()) {
+			Map.Entry entry = (Map.Entry) it.next();
+			String k = (String) entry.getKey();
+			String v = (String) entry.getValue();
+			if (null != v && !"".equals(v) && !"sign".equals(k)
+					&& !"key".equals(k)) {
+				sb.append(k + "=" + v + "&");
+			}
+		}
+		sb.append("key=" + config.getKey());
+		System.out.println("md5 sb:" + sb);
+
+		return WXPayUtil.MD5(sb.toString()).toUpperCase();
+
+	}
 
     /**
      * 判断xml数据的sign是否有效，必须包含sign字段，否则返回false。
@@ -741,8 +782,19 @@ public class WXPay {
     	reqData.put("package", "prepay_id=u802345jgfjsdfgsdg888");
     	//signType为MD5
     	reqData.put("signType", "MD5");
+    	//8E7FC81D264F34795A14E60351332E49
     	String Sign =wxpay.fillRequestDataWithMD5(reqData);
-    	System.out.println(Sign);
+    	
+    	
+    	SortedMap<String, String> packageParams=new TreeMap<String, String>();
+    	packageParams.put("appId", "wx2421b1c4370ec43b");
+    	packageParams.put("timeStamp", "1395712654");
+    	packageParams.put("nonceStr", "e61463f8efa94090b1f366cccfbbb444");
+    	packageParams.put("package", "prepay_id=u802345jgfjsdfgsdg888");
+    	//signType为MD5
+    	packageParams.put("signType", "MD5");
+    	String sign = wxpay.createSign(packageParams);
+    	System.out.println(sign);
 	}
 
 } // end class

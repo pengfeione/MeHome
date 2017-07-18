@@ -17,8 +17,8 @@ public class OrderTask {
 	private Logger log = Logger.getLogger(this.getClass());
 	@Autowired
     private IOrderService orderService;
-	 //每日凌晨 更新已经确认的订单  是否到达入住时间   以及 结束时间，进行对应状态的更新   @Scheduled(cron="0 0 1  * * ? ")
-    @Scheduled(cron="0 0/5 * * * ?")
+	 //每日凌晨1点 更新已经确认的订单  是否到达入住时间   以及 结束时间，进行对应状态的更新   @Scheduled(cron="0 0 1  * * ? ")
+    @Scheduled(cron="0 0 1  * * ? ")
     public void updateOrderStatus(){
     	log.info("触发更新订单状态进程");
     	Date date = new Date();
@@ -27,8 +27,8 @@ public class OrderTask {
     	bean.setOrderStatus(OrderStatusEnum.CONFIRMED.getKey());
     	List<OrderBean> list=orderService.getListByCondition(bean);
     	for (OrderBean orderBean : list) {
-    		String startTime=orderBean.getStartTime();
-    		String endTime=orderBean.getEndTime();
+    		String startTime=orderBean.getStartTime()+" 00:00:00";
+    		String endTime=orderBean.getEndTime()+" 23:59:59";
     		//更新为入住状态
     		Date start=DateUtils.strToDate(startTime);
     		Date end=DateUtils.strToDate(endTime);
@@ -43,7 +43,7 @@ public class OrderTask {
     	checkBean.setOrderStatus(OrderStatusEnum.CHECKIN.getKey());
     	List<OrderBean> checkList=orderService.getListByCondition(checkBean);
     	for (OrderBean orderBean : checkList) {
-    		String endTime=orderBean.getEndTime();
+    		String endTime=orderBean.getEndTime()+" 23:59:59";
     		//更新为结束状态
     		Date end=DateUtils.strToDate(endTime);
     		if(end.before(compareDate)){
