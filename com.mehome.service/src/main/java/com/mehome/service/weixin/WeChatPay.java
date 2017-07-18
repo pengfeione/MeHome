@@ -101,7 +101,8 @@ public class WeChatPay implements IThirdPay {
 	        if(ret.containsKey("prepay_id")){
 	        	String packageStr="prepay_id="+ret.get("prepay_id");
 	        	Map<String,String> reqData=new HashMap<String,String>();
-	        	bean.setAppId(propertiesUtil.getAppid());
+//	        	bean.setAppId(propertiesUtil.getAppid());
+	        	bean.setAppId(ret.get("appid"));
 	        	reqData.put("appId", bean.getAppId());
 	        	bean.setSeconds(WXPayUtil.getCurrentTimestamp()+"");
 	        	reqData.put("timeStamp", bean.getSeconds().toString());
