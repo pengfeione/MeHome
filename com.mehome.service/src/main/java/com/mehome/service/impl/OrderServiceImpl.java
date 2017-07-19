@@ -1,34 +1,8 @@
 package com.mehome.service.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import com.mehome.resonpseDTO.HouseTimePiece;
-import com.mehome.utils.*;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson.JSONObject;
-import com.mehome.dao.CompanyWelfareDao;
-import com.mehome.dao.HouseResourceDao;
-import com.mehome.dao.OrderListDao;
-import com.mehome.dao.ProductListDao;
-import com.mehome.dao.ProductRelationWelfareDao;
-import com.mehome.dao.SupplierListDao;
-import com.mehome.dao.UserAccountOperationDao;
-import com.mehome.dao.UserInfoDao;
-import com.mehome.domain.CompanyWelfare;
-import com.mehome.domain.HouseResource;
-import com.mehome.domain.OrderList;
-import com.mehome.domain.ProductList;
-import com.mehome.domain.ProductRelationWelfare;
-import com.mehome.domain.SupplierList;
-import com.mehome.domain.UserAccountOperation;
-import com.mehome.domain.UserInfo;
+import com.mehome.dao.*;
+import com.mehome.domain.*;
 import com.mehome.enumDTO.HouseStatusEnum;
 import com.mehome.enumDTO.OperationTypeEnum;
 import com.mehome.enumDTO.OrderStatusEnum;
@@ -36,8 +10,19 @@ import com.mehome.enumDTO.UserCompanyEnum;
 import com.mehome.requestDTO.HouseBean;
 import com.mehome.requestDTO.OrderBean;
 import com.mehome.requestDTO.ThirdPayMentBean;
+import com.mehome.resonpseDTO.HouseTimePiece;
 import com.mehome.service.iface.IOrderService;
 import com.mehome.service.iface.IThirdPay;
+import com.mehome.utils.*;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service("IOrderService")
 public class OrderServiceImpl implements IOrderService {
@@ -79,6 +64,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public synchronized String placeOrder(OrderBean bean) {
+        System.out.println("a");
         OrderList order = null;
         try {
             Integer houseId = bean.getHouseId();
@@ -93,7 +79,7 @@ public class OrderServiceImpl implements IOrderService {
                 bean.setProductId(house.getProductId());
                 bean.setProductName(product.getProductName());
                 bean.setSupplierId(product.getSupplierId());
-                SupplierList supplier=supplierListDAO.selectById(product.getSupplierId());
+                SupplierList supplier = supplierListDAO.selectById(product.getSupplierId());
                 bean.setSupplierName(supplier.getSupplierName());
                 bean = calculateWelfare(bean, 1);
             }
@@ -143,9 +129,9 @@ public class OrderServiceImpl implements IOrderService {
 //                houseResourceDAO.update(house);
             }
             order = bean.compareToPojo();
-            if(bean.getOrderStatus() != null && bean.getOrderStatus().intValue() == OrderStatusEnum.CANCEL.getKey()){
-            	order.setStartTime(null);
-            	order.setEndTime(null);
+            if (bean.getOrderStatus() != null && bean.getOrderStatus().intValue() == OrderStatusEnum.CANCEL.getKey()) {
+                order.setStartTime(null);
+                order.setEndTime(null);
             }
             if (order.getStartTime() != null && order.getEndTime() != null) {
                 Long mills = order.getEndTime().getTime() - order.getStartTime().getTime();
@@ -176,11 +162,11 @@ public class OrderServiceImpl implements IOrderService {
     public OrderBean calculateWelfare(OrderBean bean, Integer calculateMonth) {
         // TODO Auto-generated method stub
         String orderId = bean.getOrderId();
-        OrderList order=null;
-        if(StringUtils.isEmpty(orderId)){
-        	order = bean.beanToPojo(Boolean.TRUE);
-        }else{
-        	order = orderListDAO.selectById(orderId);
+        OrderList order = null;
+        if (StringUtils.isEmpty(orderId)) {
+            order = bean.beanToPojo(Boolean.TRUE);
+        } else {
+            order = orderListDAO.selectById(orderId);
         }
         String biller = order.getBiller();
         Integer userCompanyId = null;
@@ -215,12 +201,19 @@ public class OrderServiceImpl implements IOrderService {
                     }
 
                 } else {
+                    if (StringUtils.isNotEmpty(product.getPersonalWelfare())) {
+                        JSONObject personalWelfare = JSONObject.parseObject(product.getPersonalWelfare());
+                        mortagageNum = personalWelfare.getInteger("mortagageNum");
+                        payMentNum = personalWelfare.getInteger("payMentNum");
+                        remitPercent = personalWelfare.getInteger("remitPercent");
+                    } else {
+                        mortagageNum = 1;
+                        payMentNum = 1;
+                        remitPercent = 0;
+                    }
                     // 先取个人福利里面的支付方式
                     // &&!StringUtils.isEmpty(product.getPersonalWelfare())
-                    JSONObject personalWelfare = JSONObject.parseObject(product.getPersonalWelfare());
-                    mortagageNum = personalWelfare.getInteger("mortagageNum");
-                    payMentNum = personalWelfare.getInteger("payMentNum");
-                    remitPercent = personalWelfare.getInteger("remitPercent");
+
                 }
             } else {
                 String payType = house.getPayType();
@@ -301,7 +294,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public String judgeExistOrder(OrderBean bean) {
-    	Date now = new Date();
+        Date now = new Date();
         Integer houseId = bean.getHouseId();
         if (houseId == null) {
             log.error("houseId未传");
@@ -318,17 +311,17 @@ public class OrderServiceImpl implements IOrderService {
         requestBean.setBiller(biller);
         requestBean.setOrderStatus(OrderStatusEnum.ORDER.getKey());
         long num = orderListDAO.getSizeByCondition(requestBean);
-      //TODO 根据时间片更新房源状态
-        List<HouseTimePiece> pieceList=orderListDAO.houseTimePiece(houseId);
+        //TODO 根据时间片更新房源状态
+        List<HouseTimePiece> pieceList = orderListDAO.houseTimePiece(houseId);
         for (HouseTimePiece houseTimePiece : pieceList) {
-			String startTime=houseTimePiece.getStartTime();
-			String endTime=houseTimePiece.getEndTime();
-			Date startDate=DateUtils.strToDate(startTime);
-			Date endDate=DateUtils.strToDate(endTime);
-			if(now.after(startDate)&&now.before(endDate)){
-				return Boolean.FALSE.toString();
-			}
-		}
+            String startTime = houseTimePiece.getStartTime();
+            String endTime = houseTimePiece.getEndTime();
+            Date startDate = DateUtils.strToDate(startTime);
+            Date endDate = DateUtils.strToDate(endTime);
+            if (now.after(startDate) && now.before(endDate)) {
+                return Boolean.FALSE.toString();
+            }
+        }
         if (house != null && house.getStatus().intValue() == HouseStatusEnum.AVAILABLE.getKey() && num == 0) {
             return Boolean.TRUE.toString();
         }
@@ -365,41 +358,41 @@ public class OrderServiceImpl implements IOrderService {
         return orderListDAO.houseTimePiece(bean.getHouseId());
     }
 
-	@Override
-	public void payNotify() {
-		log.info("收到支付结果通知");
-		
-	}
+    @Override
+    public void payNotify() {
+        log.info("收到支付结果通知");
 
-	@Override
-	public ThirdPayMentBean paymentCreateOrder(ThirdPayMentBean bean) {
-		//TODO 创建第三方订单
-		String payType = bean.getPayType();
-		String orderId = bean.getOrderId();
-		String payer = bean.getPayer();
-		String openId = null;
-		if(StringUtils.isNotBlank(payer)){
-			UserInfo info = userInfoDAO.selectById(Integer.parseInt(payer));
-			if(info!=null&&StringUtils.isNotBlank(info.getOpenId())){
-				openId=info.getOpenId();
-			}else{
-				log.error("未获取到用户的openId");
-				return null;
-			}
-		}else{
-			log.error("未传payer属性");
-			return null;
-		}
-		
+    }
+
+    @Override
+    public ThirdPayMentBean paymentCreateOrder(ThirdPayMentBean bean) {
+        //TODO 创建第三方订单
+        String payType = bean.getPayType();
+        String orderId = bean.getOrderId();
+        String payer = bean.getPayer();
+        String openId = null;
+        if (StringUtils.isNotBlank(payer)) {
+            UserInfo info = userInfoDAO.selectById(Integer.parseInt(payer));
+            if (info != null && StringUtils.isNotBlank(info.getOpenId())) {
+                openId = info.getOpenId();
+            } else {
+                log.error("未获取到用户的openId");
+                return null;
+            }
+        } else {
+            log.error("未传payer属性");
+            return null;
+        }
+
         //动态加载对应支付渠道的实现类
         IThirdPay payImpl = SpringContextUtil.getBean(payType);
         //TODO 将订单有关数据塞进第三方支付对象中
         OrderList order = orderListDAO.selectById(orderId);
-        
+
         ThirdPayMentBean paybean = new ThirdPayMentBean(order);
         paybean.setTradeType(bean.getTradeType());
         paybean.setOpenId(openId);
         ThirdPayMentBean payRet = payImpl.pay(paybean);
         return payRet;
-	}
+    }
 }
