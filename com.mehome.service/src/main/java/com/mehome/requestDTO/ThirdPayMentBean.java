@@ -188,7 +188,7 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 	public void setMwebUrl(String mwebUrl) {
 		this.mwebUrl = mwebUrl;
 	}
-
+	//增加
 	public String getSignType() {
 		return signType;
 	}
