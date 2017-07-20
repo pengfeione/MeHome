@@ -127,17 +127,6 @@ public class WXPay {
      */
     public String fillRequestDataWithMD5(Map<String, String> reqData) throws Exception {
     	Set<String> keySet = reqData.keySet();
-    	//reqData.put("appId", bean.getAppId());
-//    	bean.setSeconds(DateUtils.getSeconds(new Date()));
-//    	reqData.put("timeStamp", bean.getSeconds().toString());
-//    	bean.setNonceStr(OrderIdUtils.getAutoId());
-//    	reqData.put("nonceStr", bean.getNonceStr());
-//    	bean.setPackageStr(packageStr);
-//    	reqData.put("package", bean.getPackageStr());
-    	//signType为MD5
-//    	reqData.put("signType", "MD5");
-    	
-    	
     	
         StringBuilder sb = new StringBuilder();
         sb.append("appId").append("=").append(reqData.get("appId").trim()).append("&")
@@ -148,16 +137,7 @@ public class WXPay {
         sb.append("key=").append(config.getKey());
         log.info("needMD5Str:"+sb.toString());
         return WXPayUtil.MD5(sb.toString()).toUpperCase();
-        
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("appid").append("=").append(reqData.get("appid").trim()).append("&")
-//        .append("nonce_str").append("=").append(reqData.get("nonce_str").trim()).append("&")
-//        .append("package").append("=").append(reqData.get("package").trim()).append("&")
-//        .append("signtype").append("=").append(reqData.get("signtype").trim()).append("&")
-//        .append("timestamp").append("=").append(reqData.get("timestamp").trim()).append("&");
-//        sb.append("key=").append(config.getKey());
-//        log.info("needMD5Str:"+sb.toString());
-//        return WXPayUtil.MD5(sb.toString()).toUpperCase();
+
         
     }
     
