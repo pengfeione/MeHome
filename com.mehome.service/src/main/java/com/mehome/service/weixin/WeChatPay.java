@@ -78,7 +78,7 @@ public class WeChatPay implements IThirdPay {
                 Map<String, String> h5Map = new HashMap<String, String>();
                 h5Map.put("type", "Wap");
                 h5Map.put("wap_url", "http://m.mjiahome.com");
-                h5Map.put("wap_name", "米家公寓");
+                h5Map.put("wap_name", "miahome");
                 infoMap.put("h5_info", h5Map);
                 String sceneInfo = JSON.toJSONString(infoMap);
                 data.put("scene_info", sceneInfo);
