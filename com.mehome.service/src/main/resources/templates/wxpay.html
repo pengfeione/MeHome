@@ -16,17 +16,17 @@
                 function (res) {
                     if (res.err_msg == "get_brand_wcpay_request:ok") {
                         alert("支付成功");
-                        location.href = "$url";
-                    }
-                    else {
+                        location.href = "http://m.mjiahome.com/pay/wxPayCallback.html?code=ok";
+                    } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
+                        location.href = "http://m.mjiahome.com/pay/wxPayCallback.html?code=cancel";
+                    } else {
                         alert(JSON.stringify(res));
-                        window.history.go(-1);
+                        location.href = "http://m.mjiahome.com/pay/wxPayCallback.html?code=fail";
                     }
                 }
             );
         }
         if (typeof WeixinJSBridge == "undefined") {
-
             if (document.addEventListener) {
                 document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
             } else if (document.attachEvent) {
