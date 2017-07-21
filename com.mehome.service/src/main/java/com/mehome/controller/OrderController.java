@@ -167,13 +167,13 @@ public class OrderController {
                 .body(Result.build().content(orderService.pieceByHouse(house)));
     }
     
-    @PostMapping("/payment_create_order")
-    @ResponseBody
-    public ResponseEntity<Result> payment_create_order(@RequestBody ThirdPayMentBean bean) {
-        return ResponseEntity
-                .ok()
-                .header("Access-Control-Allow-Origin", cros)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(Result.build().content(orderService.paymentCreateOrder(bean)));
-    }
+//    @PostMapping("/payment_create_order")
+//    @ResponseBody
+//    public ResponseEntity<Result> payment_create_order(@RequestBody ThirdPayMentBean bean) {
+//        return ResponseEntity
+//                .ok()
+//                .header("Access-Control-Allow-Origin", cros)
+//                .contentType(MediaType.APPLICATION_JSON_UTF8)
+//                .body(Result.build().content(orderService.paymentCreateOrder(bean)));
+//    }
 }

@@ -3,15 +3,28 @@ package com.mehome.view;
 import com.alibaba.fastjson.JSONObject;
 import com.mehome.enumDTO.TradeType;
 import com.mehome.pay.iface.IWeChatService;
+import com.mehome.requestDTO.ThirdPayMentBean;
+import com.mehome.service.iface.IOrderService;
 import com.mehome.utils.RandomUtils;
+import com.mehome.utils.Result;
 import com.mehome.utils.SignUtils;
 import com.mehome.utils.WeChatApiProperties;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/api/order")
@@ -20,7 +33,27 @@ public class WxOrder {
     private WeChatApiProperties weChatProperties;
     @Autowired
     private IWeChatService weChatService;
+    @Autowired
+    private IOrderService orderService;
 
+    @PostMapping("/payment_create_order" )
+    public String payment_create_order(HttpServletRequest request,Model model) {
+    	//var param = '{"orderId":' + orderId + ',"tradeType":"JSAPI","payer":' + uid + ',"payType":"wechat"}';
+    	System.out.println("收到表单请求");
+    	ThirdPayMentBean bean=new ThirdPayMentBean();
+    	bean.setOrderId(request.getParameter("orderId"));
+    	bean.setTradeType(request.getParameter("tradeType"));
+    	bean.setPayer(request.getParameter("payer"));
+    	bean.setPayType(request.getParameter("payType"));
+    	ThirdPayMentBean retBean=orderService.paymentCreateOrder(bean);
+    	model.addAttribute("appId", retBean.getAppId());
+        model.addAttribute("timeStamp", retBean.getSeconds());
+        model.addAttribute("nonceStr", retBean.getNonceStr());
+        model.addAttribute("package", retBean.getPackageStr());
+        model.addAttribute("signType",retBean.getSignType());
+        model.addAttribute("paySign", retBean.getPaySign());
+        return "wxpay";
+    }
     @GetMapping(path = "/wx/pay")
     public String list(Model model) {
         HttpHeaders httpHeaders = new HttpHeaders();
