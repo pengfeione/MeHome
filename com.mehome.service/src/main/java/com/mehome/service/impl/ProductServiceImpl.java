@@ -203,7 +203,7 @@ public class ProductServiceImpl implements IProductService {
             throw new InfoException("首次支付支付的月数必须大于0");
         }
         ProductList product = productListDAO.selectById(productId);
-        AssertUtils.isNotNull(product, "更新的产品标识非法！");
+        AssertUtils.isNotNull(product, "更新的产品标识非法！！");
         ProductList persistentProduct = new ProductList();
         persistentProduct.setProductId(product.getProductId());
         persistentProduct.setHasPersonal(true);
