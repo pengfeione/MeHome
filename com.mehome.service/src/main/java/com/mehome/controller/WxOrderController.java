@@ -76,6 +76,7 @@ public class WxOrderController {
             result.put("package", "prepay_id=" + orderResult.getString("prepay_id"));
             result.put("signType", "MD5");
             result.put("paySign", SignUtils.sign(result, weChatProperties.getKey()));
+            System.out.println(result.toJSONString());
             return ResponseEntity
                     .ok()
                     .headers(httpHeaders)

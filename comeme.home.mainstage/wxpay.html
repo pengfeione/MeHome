@@ -62,52 +62,13 @@
 
 </style>
 <body ontouchstart>
-
 <header class='demos-header'>
     <h1 class="demos-title">微信支付</h1>
 </header>
 <div class='demos-content-padded'>
-    <a href="javascript:;" id='show-success' class="weui-btn weui-btn_primary">确认</a>
+    <a href="http://api.mjiahome.com/api/order/wx/pay" id='show-success' class="weui-btn weui-btn_primary">确认</a>
 </div>
 <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
-<script>
-    var param = undefined;
-    $(document)
-        .on('click', '#show-success', function () {
-            $.getJSON("http://api.mjiahome.com/wx/order/make", function (result, status, xhr) {
-                param = result;
-            });
-        });
-    function onBridgeReady() {
-        if (undefined != param) {
-            WeixinJSBridge.invoke(
-                'getBrandWCPayRequest',
-                {
-                    "appId": param['appId'],     //公众号名称，由商户传入
-                    "timeStamp": param['timeStamp'] + '',         //时间戳，自1970年以来的秒数
-                    "nonceStr": param['nonceStr'], //随机串
-                    "package": param['package'],
-                    "signType": "MD5",         //微信签名方式：
-                    "paySign": param['paySign'] //微信签名
-                },
-                function (res) {
-                    if (res.err_msg == "get_brand_wcpay_request:ok") {
-                    }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
-                }
-            );
-        }
-    }
-    if (typeof WeixinJSBridge == "undefined") {
-        if (document.addEventListener) {
-            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-        } else if (document.attachEvent) {
-            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-        }
-    } else {
-        onBridgeReady();
-    }
-</script>
 </body>
 </html>

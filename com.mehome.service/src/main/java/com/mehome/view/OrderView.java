@@ -32,6 +32,7 @@ public class OrderView {
         return mav;
     }
 
+
     @Permits(role = {RoleEnum.PLATFORM}, needLogin = true)
     @PostMapping(path = "/update")
     public ModelAndView update(@RequestBody OrderBean order) {
