@@ -46,10 +46,12 @@ $("#pay").click(function() {
 	var url = util.baseUrl + "/order/payment_create_order";
 	var param ='{"orderId":'+orderId+',"tradeType":"JSAPI","payer":'+uid+',"payType":"wechat"}';
 	var contentType = "application/json";
-	util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
-		$("#pay_choose").fadeOut();
-		$("#already_deposit").attr("class", "depositSelect");
-		window.location.href =data.result.mwebUrl;
+	$("#pay_choose").fadeOut();
+	$("#already_deposit").attr("class", "depositSelect");
+//	util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+//		$("#pay_choose").fadeOut();
+//		$("#already_deposit").attr("class", "depositSelect");
+//		window.location.href =data.result.mwebUrl;
 //		alert("appid:"+data.result.appId);
 //		alert("timeStamp:"+data.result.seconds);
 //		alert("nonceStr:"+data.result.nonceStr);
@@ -63,26 +65,60 @@ $("#pay").click(function() {
 	    	       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
 	    	   }
 	    }else{
-	    	   onBridgeReady(data);
+	    	   onBridgeReady();
 	    }
-	});
+//	});
 });
 
-function onBridgeReady(data){
+function onBridgeReady(){
+	var orderId = util.getUrlParam("orderId"); 
+	var userInfo = util.getCookie("userInfo");
+	var userInfoJson = eval('(' + userInfo + ')');
+	var uid = userInfoJson.userId;
+	var url = util.baseUrl + "/order/payment_create_order";
+	var param ='{"orderId":'+orderId+',"tradeType":"JSAPI","payer":'+uid+',"payType":"wechat"}';
+	var contentType = "application/json";
+	var appId;
+	var timeStamp;
+	var nonceStr;
+	var packageStr;
+	var signType;
+	var paySign;
+	util.requestRemoteDataJsonPosta(url,param,contentType,function(data){
+		alert("appId:"+data.result.appId);
+		alert("timeStamp:"+data.result.seconds.toString());
+		alert("nonceStr:"+data.result.nonceStr);
+		alert("package:"+data.result.packageStr);
+		alert("signType:"+data.result.signType);
+		alert("paySign:"+data.result.paySign);
+		alert("这是修改过的");
+		appId=data.result.appId;
+		timeStamp=data.result.seconds.toString();
+		nonceStr=data.result.nonceStr;
+		packageStr=data.result.packageStr;
+		signType=data.result.signType;
+		paySign=data.result.paySign;
+	});
 	//由后台接口获取
 	   WeixinJSBridge.invoke(
 	       'getBrandWCPayRequest', {
-	           "appId":data.result.appId,     //1公众号名称，由商户传入     "wx966efd886c5be652"
-	           "timeStamp":data.result.seconds+"",         //时间戳，自1970年以来的秒数     
-	           "nonceStr":data.result.nonceStr, //随机串     "e61463f8efa94090b1f366cccfbbb444"
-	           "package":data.result.packageStr, //prepay_id=u802345jgfjsdfgsdg888    
-	           "signType":"MD5",         //微信签名方式：     
-	           "paySign":data.result.paySign //微信签名 "70EA570631E4BB79628FBCA90534C63FF7FADD89"
+	           "appId":appId,     //1公众号名称，由商户传入     "wx966efd886c5be652"
+	           "timeStamp":timeStamp,         //时间戳，自1970年以来的秒数     
+	           "nonceStr":nonceStr, //随机串     "e61463f8efa94090b1f366cccfbbb444"
+	           "package":packageStr, //prepay_id=u802345jgfjsdfgsdg888    
+	           "signType":signType,         //微信签名方式：     
+	           "paySign":paySign //微信签名 "70EA570631E4BB79628FBCA90534C63FF7FADD89"	           
+//	           "appId":"wx966efd886c5be652",     //1公众号名称，由商户传入     "wx966efd886c5be652"
+//	           "timeStamp":"1500357664",         //时间戳，自1970年以来的秒数     
+//	           "nonceStr":"152fe1229c4840d580289a43c75f41cb", //随机串     "e61463f8efa94090b1f366cccfbbb444"
+//	           "package":"prepay_id=wx201707181401047fe23e7c6d0199683511", //prepay_id=u802345jgfjsdfgsdg888    
+//	           "signType":"MD5",         //微信签名方式：     
+//	           "paySign":"9B319D8AC90CE550E4E984052A9E32CE" //微信签名 "70EA570631E4BB79628FBCA90534C63FF7FADD89"
 	       },
 	       function(res){     
 	           if(res.err_msg == "get_brand_wcpay_request:ok" ) {alert("支付通信成功");}     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
 	           if(res.err_msg == "get_brand_wcpay_request:cancel" ) {alert("支付通信取消");}
 	           if(res.err_msg == "get_brand_wcpay_request:fail" ) {alert(JSON.stringify(res));alert("支付通信失败");}
 	       }
-	   ); 
-	}
+	   );
+}
