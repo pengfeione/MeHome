@@ -94,7 +94,8 @@ public class WeChatPay implements IThirdPay {
                 reqData.put("appId", bean.getAppId().trim());
                 bean.setSeconds(WXPayUtil.getCurrentTimestamp() + "");
                 reqData.put("timeStamp", bean.getSeconds().toString());
-                bean.setNonceStr(WXPayUtil.generateUUID().trim());
+//                bean.setNonceStr(WXPayUtil.generateUUID().trim());
+                bean.setNonceStr(ret.get("nonce_str"));
                 reqData.put("nonceStr", bean.getNonceStr());
                 bean.setPackageStr(packageStr.trim());
                 reqData.put("package", bean.getPackageStr());
