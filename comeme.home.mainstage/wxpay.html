@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery WeUI</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <meta name="description"
+          content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+</head>
+<style>
+    body, html {
+        height: 100%;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .demos-title {
+        text-align: center;
+        font-size: 34px;
+        color: #3cc51f;
+        font-weight: 400;
+        margin: 0 15%;
+    }
+
+    .demos-sub-title {
+        text-align: center;
+        color: #888;
+        font-size: 14px;
+    }
+
+    .demos-header {
+        padding: 35px 0;
+    }
+
+    .demos-content-padded {
+        padding: 15px;
+    }
+
+    .demos-second-title {
+        text-align: center;
+        font-size: 24px;
+        color: #3cc51f;
+        font-weight: 400;
+        margin: 0 15%;
+    }
+
+    footer {
+        text-align: center;
+        font-size: 14px;
+        padding: 20px;
+    }
+
+    footer a {
+        color: #999;
+        text-decoration: none;
+    }
+
+
+</style>
+<body ontouchstart>
+
+<header class='demos-header'>
+    <h1 class="demos-title">微信支付</h1>
+</header>
+<div class='demos-content-padded'>
+    <a href="javascript:;" id='show-success' class="weui-btn weui-btn_primary">确认</a>
+</div>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+<script>
+    var param = undefined;
+    $(document)
+        .on('click', '#show-success', function () {
+            $.getJSON("http://api.mjiahome.com/wx/order/make", function (result, status, xhr) {
+                param = result;
+            });
+        });
+    function onBridgeReady() {
+        if (undefined != param) {
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                {
+                    "appId": param['appId'],     //公众号名称，由商户传入
+                    "timeStamp": param['timeStamp'] + '',         //时间戳，自1970年以来的秒数
+                    "nonceStr": param['nonceStr'], //随机串
+                    "package": param['package'],
+                    "signType": "MD5",         //微信签名方式：
+                    "paySign": param['paySign'] //微信签名
+                },
+                function (res) {
+                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                    }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+                }
+            );
+        }
+    }
+    if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    } else {
+        onBridgeReady();
+    }
+</script>
+</body>
+</html>

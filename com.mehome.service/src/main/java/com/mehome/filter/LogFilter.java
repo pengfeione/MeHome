@@ -61,7 +61,6 @@ public class LogFilter implements Filter {
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Origin,X-Requested-With,content-type,Accept");
-        BodyRequestWrapper bodyRequestWrapper = new BodyRequestWrapper(httpServletRequest);
         log.info("\n------------------------------------------------------------------------------------------" +
                 "\n\t     user-agent : " + allow +
                 "\n\t      client IP : " + httpServletRequest.getRemoteAddr() +
@@ -69,7 +68,6 @@ public class LogFilter implements Filter {
                 "\n\t    request url : " + httpServletRequest.getRequestURL() +
                 "\n\t      host name : " + InetAddress.getLocalHost().getHostName() +
                 "\n\t     parameters : " + buildGetParameters(httpServletRequest) +
-                "\n\t           body : " + bodyRequestWrapper.getBody() +
                 "\n------------------------------------------------------------------------------------------");
         String type = httpServletRequest.getParameter("type");
         String st = httpServletRequest.getRequestURI().toString();
@@ -79,7 +77,7 @@ public class LogFilter implements Filter {
         }
         printHeader(httpServletRequest);
         try {
-            filterChain.doFilter(bodyRequestWrapper, response);
+            filterChain.doFilter(httpServletRequest, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
