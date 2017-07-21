@@ -98,7 +98,7 @@ public class OrderServiceImpl implements IOrderService {
         //动态加载对应支付渠道的实现类
         IThirdPay payImpl = SpringContextUtil.getBean(payType);
         ThirdPayMentBean paybean = new ThirdPayMentBean();
-        ThirdPayMentBean payRet = payImpl.pay(paybean);
+        JSONObject payRet = payImpl.pay(paybean);
         return null;
     }
 
@@ -365,7 +365,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public ThirdPayMentBean paymentCreateOrder(ThirdPayMentBean bean) {
+    public JSONObject paymentCreateOrder(ThirdPayMentBean bean) {
         //TODO 创建第三方订单
         String payType = bean.getPayType();
         String orderId = bean.getOrderId();
@@ -383,7 +383,6 @@ public class OrderServiceImpl implements IOrderService {
             log.error("未传payer属性");
             return null;
         }
-
         //动态加载对应支付渠道的实现类
         IThirdPay payImpl = SpringContextUtil.getBean(payType);
         //TODO 将订单有关数据塞进第三方支付对象中
@@ -391,8 +390,10 @@ public class OrderServiceImpl implements IOrderService {
 
         ThirdPayMentBean paybean = new ThirdPayMentBean(order);
         paybean.setTradeType(bean.getTradeType());
+
+
+
         paybean.setOpenId(openId);
-        ThirdPayMentBean payRet = payImpl.pay(paybean);
-        return payRet;
+        return payImpl.pay(paybean);
     }
 }

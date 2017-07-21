@@ -1,16 +1,17 @@
 package com.mehome.service.impl;
 
-import org.springframework.stereotype.Service;
-
+import com.alibaba.fastjson.JSONObject;
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IThirdPay;
+import org.springframework.stereotype.Service;
+
 @Service("creditcard")
 public class CardPay implements IThirdPay {
 
-	@Override
-	public ThirdPayMentBean pay(ThirdPayMentBean bean) {
-		System.out.println(" creditcard");
-		return null;
-	}
+    @Override
+    public JSONObject pay(ThirdPayMentBean bean) {
+        System.out.println(" creditcard");
+        return null;
+    }
 
 }

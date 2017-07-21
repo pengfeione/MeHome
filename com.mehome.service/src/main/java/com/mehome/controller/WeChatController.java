@@ -1,23 +1,21 @@
 package com.mehome.controller;
 
-import com.mehome.domain.UserInfo;
-import com.mehome.requestDTO.ProductBean;
-import com.mehome.requestDTO.UserBackPasswordDTO;
+import com.alibaba.fastjson.JSONObject;
 import com.mehome.service.iface.IOrderService;
 import com.mehome.service.iface.IUserInfoService;
 import com.mehome.service.weixin.WXResult;
 import com.mehome.utils.Result;
 import com.mehome.utils.WeChatInfo;
-import com.mehome.utils.WeChatTokenService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.mehome.utils.XmlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by pengfei on 2017/5/17.
@@ -83,14 +81,37 @@ public class WeChatController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(userInfoService.weChatInfo(weChatInfo.GetWeixinInfo(code))));
     }
-    
+
     @RequestMapping("/notify")
     public ResponseEntity<WXResult> notify(HttpServletRequest req, HttpServletResponse resp) {
-    	orderService.payNotify();
+        orderService.payNotify();
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(WXResult.build());
     }
+
+    @RequestMapping("/notify2")
+    @ResponseBody
+    public ResponseEntity<JSONObject> callback(@RequestParam(value = "return_code", required = false) String returnCode,
+                                               @RequestParam(value = "return_msg", required = false) String returnMsg,
+                                               @RequestBody String body
+    ) {
+        String str = "";
+        try {
+            System.out.println(body);
+            str = new String(body.getBytes("ISO-8859-1"), "UTF-8");
+            System.out.println(XmlUtils.toJSON(str));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            System.out.println(XmlUtils.toJSON(body));
+        } finally {
+            return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .body(new JSONObject());
+        }
+    }
+
 }

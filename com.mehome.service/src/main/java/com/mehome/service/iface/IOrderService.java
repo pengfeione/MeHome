@@ -1,11 +1,12 @@
 package com.mehome.service.iface;
 
-import java.util.List;
-
+import com.alibaba.fastjson.JSONObject;
 import com.mehome.domain.HouseResource;
 import com.mehome.requestDTO.OrderBean;
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.resonpseDTO.HouseTimePiece;
+
+import java.util.List;
 
 public interface IOrderService {
 
@@ -37,6 +38,6 @@ public interface IOrderService {
     List<HouseTimePiece> pieceByHouse(HouseResource bean);
 
     public void payNotify();
-    
-    public ThirdPayMentBean paymentCreateOrder(ThirdPayMentBean bean);
+
+    public JSONObject paymentCreateOrder(ThirdPayMentBean bean);
 }

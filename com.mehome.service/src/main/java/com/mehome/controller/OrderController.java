@@ -1,20 +1,20 @@
 package com.mehome.controller;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import com.mehome.domain.HouseResource;
+import com.mehome.requestDTO.OrderBean;
+import com.mehome.requestDTO.ThirdPayMentBean;
+import com.mehome.service.iface.IOrderService;
+import com.mehome.utils.DateUtils;
+import com.mehome.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.mehome.requestDTO.OrderBean;
-import com.mehome.requestDTO.ThirdPayMentBean;
-import com.mehome.service.iface.IOrderService;
-import com.mehome.utils.DateUtils;
-import com.mehome.utils.Result;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Calendar;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/order")
@@ -166,14 +166,16 @@ public class OrderController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(orderService.pieceByHouse(house)));
     }
-    
-//    @PostMapping("/payment_create_order")
-//    @ResponseBody
-//    public ResponseEntity<Result> payment_create_order(@RequestBody ThirdPayMentBean bean) {
-//        return ResponseEntity
-//                .ok()
-//                .header("Access-Control-Allow-Origin", cros)
-//                .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                .body(Result.build().content(orderService.paymentCreateOrder(bean)));
-//    }
+
+    @PostMapping("/payment_create_order")
+    @ResponseBody
+    public ResponseEntity<Result> payment_create_order(@RequestBody ThirdPayMentBean bean, HttpServletRequest request) {
+        String clientIp = request.getHeader("x-real-ip");
+
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build().content(orderService.paymentCreateOrder(bean)));
+    }
 }

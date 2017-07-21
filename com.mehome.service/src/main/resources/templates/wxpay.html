@@ -25,6 +25,7 @@
                     }
                 }
             );
+            WeixinJSBridge.log(res.err_msg);
         }
         if (typeof WeixinJSBridge == "undefined") {
             if (document.addEventListener) {

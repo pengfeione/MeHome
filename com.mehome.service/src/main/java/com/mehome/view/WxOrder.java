@@ -1,32 +1,22 @@
 package com.mehome.view;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mehome.domain.CreateOrderBean;
 import com.mehome.enumDTO.TradeType;
 import com.mehome.pay.iface.IWeChatService;
-import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IOrderService;
-import com.mehome.utils.RandomUtils;
-import com.mehome.utils.Result;
-import com.mehome.utils.SignUtils;
-import com.mehome.utils.WeChatApiProperties;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.http.HttpRequest;
+import com.mehome.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+
+@RestController
 @RequestMapping("/api/order")
 public class WxOrder {
     @Autowired
@@ -36,26 +26,67 @@ public class WxOrder {
     @Autowired
     private IOrderService orderService;
 
-    @PostMapping("/payment_create_order" )
-    public String payment_create_order(HttpServletRequest request,Model model) {
-    	//var param = '{"orderId":' + orderId + ',"tradeType":"JSAPI","payer":' + uid + ',"payType":"wechat"}';
-    	System.out.println("收到表单请求");
-    	ThirdPayMentBean bean=new ThirdPayMentBean();
-    	bean.setOrderId(request.getParameter("orderId"));
-    	bean.setTradeType(request.getParameter("tradeType"));
-    	bean.setPayer(request.getParameter("payer"));
-    	bean.setPayType(request.getParameter("payType"));
-    	ThirdPayMentBean retBean=orderService.paymentCreateOrder(bean);
-    	model.addAttribute("appId", retBean.getAppId());
-        model.addAttribute("timeStamp", retBean.getSeconds());
-        model.addAttribute("nonceStr", retBean.getNonceStr());
-        model.addAttribute("package", retBean.getPackageStr());
-        model.addAttribute("signType",retBean.getSignType());
-        model.addAttribute("paySign", retBean.getPaySign());
+//    @RequestMapping("/payment_create_order")
+//    public String payment_create_order(@ModelAttribute CreateOrderBean orderBean, HttpServletRequest request, Model model) {
+//        System.out.println("收到表单请求");
+//        try {
+//            System.out.println(orderBean);
+//            String clientIp = request.getHeader("x-real-ip");
+//            System.out.println("clientIp : " + clientIp);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        ThirdPayMentBean bean = new ThirdPayMentBean();
+//        bean.setOrderId(orderBean.getOrderId());
+//        bean.setTradeType(orderBean.getTradeType());
+//        bean.setPayer(orderBean.getPayer());
+//        bean.setPayType(orderBean.getPayType());
+//        ThirdPayMentBean retBean = orderService.paymentCreateOrder(bean);
+//        model.addAttribute("appId", retBean.getAppId());
+//        model.addAttribute("timeStamp", retBean.getSeconds());
+//        model.addAttribute("nonceStr", retBean.getNonceStr());
+//        model.addAttribute("package", retBean.getPackageStr());
+//        model.addAttribute("signType", retBean.getSignType());
+//        model.addAttribute("paySign", retBean.getPaySign());
+//        if ("wechat".equals(orderBean.getTradeType()) && "JSAPI".equals(orderBean.getTradeType())) {
+//            //微信支付
+//            return "wxpay";
+//        } else {
+//            //其他支付
+//            return "wxpay";
+//        }
+//    }
+
+    @PostMapping("/test1")
+    public String test1(@ModelAttribute CreateOrderBean orderBean, HttpServletRequest request, Model model) {
+        System.out.println(orderBean);
         return "wxpay";
     }
-    @GetMapping(path = "/wx/pay")
-    public String list(Model model) {
+
+    @RequestMapping("/notify")
+    @ResponseBody
+    public ResponseEntity<JSONObject> callback(@RequestParam(value = "return_code", required = false) String returnCode,
+                                               @RequestParam(value = "return_msg", required = false) String returnMsg,
+                                               @RequestBody String body) {
+
+        String str = "";
+        try {
+            System.out.println(body);
+            str = new String(body.getBytes("ISO-8859-1"), "UTF-8");
+            System.out.println(XmlUtils.toJSON(str));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            System.out.println(XmlUtils.toJSON(body));
+        } finally {
+            return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .body(new JSONObject());
+        }
+    }
+
+    @RequestMapping(path = "/wx/pay")
+    public ResponseEntity<Result> list() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Access-Control-Allow-Origin", "http://m.mjiahome.com");
         httpHeaders.add("Access-Control-Allow-Methods", "GET, POST");
@@ -64,13 +95,13 @@ public class WxOrder {
         orderParam.put("appid", weChatProperties.getAppid());
         orderParam.put("mch_id", weChatProperties.getMchid());
         orderParam.put("out_trade_no", System.currentTimeMillis());
-        orderParam.put("total_fee", "100");
+        orderParam.put("total_fee", "1");
         orderParam.put("trade_type", TradeType.JSAPI.getName());
         orderParam.put("body", "goods-id");
         orderParam.put("nonce_str", randomStr);
         orderParam.put("spbill_create_ip", "180.173.205.205");
         orderParam.put("openid", "oG8mDwNxCJeM0Ll01x4Eyb1nm6S0");
-        orderParam.put("notify_url", "http://api.mjiahome.com//wx/order/callback");
+        orderParam.put("notify_url", "http://api.mjiahome.com//wx/order/notify2");
         orderParam.put("sign", SignUtils.sign(orderParam, weChatProperties.getKey()));
         JSONObject orderResult = weChatService.makeOrder(orderParam);
         if ("SUCCESS".equals(orderResult.getString("return_code"))) {
@@ -80,13 +111,15 @@ public class WxOrder {
             result.put("nonceStr", randomStr);
             result.put("package", "prepay_id=" + orderResult.getString("prepay_id"));
             result.put("signType", "MD5");
-            model.addAttribute("appId", weChatProperties.getAppid());
-            model.addAttribute("timeStamp", System.currentTimeMillis() / 1000 + "");
-            model.addAttribute("nonceStr", randomStr);
-            model.addAttribute("package", "prepay_id=" + orderResult.getString("prepay_id"));
-            model.addAttribute("signType", "MD5");
-            model.addAttribute("paySign", SignUtils.sign(result, weChatProperties.getKey()));
+            result.put("paySign", SignUtils.sign(result, weChatProperties.getKey()));
+            return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .body(Result.build().content(result));
         }
-        return "wxpay";
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(Result.build());
     }
 }
