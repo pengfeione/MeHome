@@ -8,6 +8,7 @@ import com.mehome.utils.DateUtils;
 import com.mehome.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -171,7 +172,10 @@ public class OrderController {
     @ResponseBody
     public ResponseEntity<Result> payment_create_order(@RequestBody ThirdPayMentBean bean, HttpServletRequest request) {
         String clientIp = request.getHeader("x-real-ip");
-
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Access-Control-Allow-Origin", "http://m.mjiahome.com");
+        httpHeaders.add("Access-Control-Allow-Methods", "GET, POST");
+        
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)

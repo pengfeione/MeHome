@@ -3,11 +3,16 @@ package com.mehome.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.mehome.enumDTO.TradeType;
 import com.mehome.pay.iface.IWeChatService;
+import com.mehome.requestDTO.OrderBean;
+import com.mehome.requestDTO.ThirdPayMentBean;
+import com.mehome.service.iface.IOrderService;
+import com.mehome.service.weixin.WXResult;
 import com.mehome.utils.RandomUtils;
 import com.mehome.utils.SignUtils;
 import com.mehome.utils.WeChatApiProperties;
 import com.mehome.utils.XmlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +26,14 @@ import java.io.UnsupportedEncodingException;
 @RestController
 @RequestMapping("/wx/order")
 public class WxOrderController {
+	@Value("${cros}")
+    private String cros;
     @Autowired
     private WeChatApiProperties weChatProperties;
     @Autowired
     private IWeChatService weChatService;
-
+    @Autowired
+    private IOrderService orderService;
     @RequestMapping("/callback")
     @ResponseBody
     public ResponseEntity<JSONObject> callback(@RequestParam(value = "return_code", required = false) String returnCode,
@@ -90,5 +98,38 @@ public class WxOrderController {
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
                     .body(weChatService.makeOrder(result));
         }
+    }
+    
+    
+    @RequestMapping("/notify")
+    public ResponseEntity<WXResult> notify(@RequestBody String body) {
+    	String str;
+		try {
+			str = new String(body.getBytes("ISO-8859-1"), "UTF-8");
+			JSONObject ret=XmlUtils.toJSON(str);
+			if("SUCCESS".equals(ret.getString("return_code"))){
+				String openId=ret.getString("openid");
+				//receiveAccount
+				String mchId=ret.getString("mch_id");
+				//orderId
+				String outTradeNo=ret.getString("out_trade_no");
+				//微信支付流水
+				String transactionId=ret.getString("transaction_id");
+				ThirdPayMentBean thirdPay=new ThirdPayMentBean();
+				thirdPay.setOrderId(outTradeNo);
+				thirdPay.setOpenId(openId);
+				thirdPay.setReceiveAccount(mchId);
+				thirdPay.setTradeSeq(transactionId);
+				orderService.payNotify(thirdPay);
+			}
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return ResponseEntity
+                .ok()
+                .header("Access-Control-Allow-Origin", cros)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(WXResult.build());
     }
 }

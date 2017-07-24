@@ -87,7 +87,7 @@ function onBridgeReady() {
     var userInfo = util.getCookie("userInfo");
     var userInfoJson = eval('(' + userInfo + ')');
     var uid = userInfoJson.userId;
-    var url = util.baseUrl + "/order/wx/pay";
+    var url = util.baseUrl + "/order/payment_create_order";
     var param = '{"orderId":' + orderId + ',"tradeType":"JSAPI","payer":' + uid + ',"payType":"wechat"}';
     var contentType = "application/json";
     var appId;
@@ -97,13 +97,13 @@ function onBridgeReady() {
     var signType;
     var paySign;
     util.requestRemoteDataJsonPosta(url, param, contentType, function (data) {
-        alert("appId:" + data.result.appId);
-        alert("timeStamp:" + data.result.timeStamp);
-        alert("nonceStr:" + data.result.nonceStr);
-        alert("package:" + data.result.package);
-        alert("signType:" + data.result.signType);
-        alert("paySign:" + data.result.paySign);
-        alert("这是修改过的");
+//        alert("appId:" + data.result.appId);
+//        alert("timeStamp:" + data.result.timeStamp);
+//        alert("nonceStr:" + data.result.nonceStr);
+//        alert("package:" + data.result.package);
+//        alert("signType:" + data.result.signType);
+//        alert("paySign:" + data.result.paySign);
+//        alert("这是修改过的");
         appId = data.result.appId;
         timeStamp = data.result.timeStamp;
         nonceStr = data.result.nonceStr;
@@ -129,14 +129,14 @@ function onBridgeReady() {
         },
         function (res) {
             if (res.err_msg == "get_brand_wcpay_request:ok") {
-                alert("支付通信成功");
+//                alert("支付通信成功");
             }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
             if (res.err_msg == "get_brand_wcpay_request:cancel") {
-                alert("支付通信取消");
+//                alert("支付通信取消");
             }
             if (res.err_msg == "get_brand_wcpay_request:fail") {
                 alert(JSON.stringify(res));
-                alert("支付通信失败");
+//                alert("支付通信失败");
             }
         }
     );

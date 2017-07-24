@@ -83,8 +83,9 @@ public class WeChatController {
     }
 
     @RequestMapping("/notify")
-    public ResponseEntity<WXResult> notify(HttpServletRequest req, HttpServletResponse resp) {
-        orderService.payNotify();
+    public ResponseEntity<WXResult> notify(@RequestParam(value = "return_code", required = false) String returnCode,@RequestParam(value = "out_trade_no", required = false) String outTradeNo,@RequestParam(value = "transaction_id", required = false) String transactionId,@RequestParam(value = "mch_id", required = false) String mchId,@RequestParam(value = "openid", required = false) String openId) {
+    	System.out.println("returnCode:"+returnCode);
+//        orderService.payNotify();
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Origin", cros)

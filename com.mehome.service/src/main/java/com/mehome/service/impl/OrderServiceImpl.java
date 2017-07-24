@@ -359,8 +359,9 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public void payNotify() {
+    public void payNotify(ThirdPayMentBean thirdPay) {
         log.info("收到支付结果通知");
+        //TODO  处理通知对象   更新  orderlist表记录   和  thirdpay表记录
 
     }
 

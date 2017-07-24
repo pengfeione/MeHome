@@ -37,7 +37,7 @@ public interface IOrderService {
 
     List<HouseTimePiece> pieceByHouse(HouseResource bean);
 
-    public void payNotify();
+    public void payNotify(ThirdPayMentBean thirdPay);
 
     public JSONObject paymentCreateOrder(ThirdPayMentBean bean);
 }
