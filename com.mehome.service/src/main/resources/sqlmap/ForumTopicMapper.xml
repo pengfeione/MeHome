@@ -393,31 +393,6 @@
         </if>
         ORDER BY create_time DESC
     </select>
-    <select id="getAllActivities" parameterType="com.mehome.requestDTO.TopicBean" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM forum_topic
-        WHERE (topic_type = 'activity' or topic_type='topic')
-        <if test="tid != null">
-            AND tid = #{tid,jdbcType=VARCHAR}
-        </if>
-        <if test="subject != null">
-            AND subject like CONCAT('%','${subject}','%' )
-        </if>
-        <if test="uid != null">
-            AND uid = #{uid,jdbcType=VARCHAR}
-        </if>
-        <if test="isActive != null">
-            AND is_active = #{isActive,jdbcType=BIT}
-        </if>
-        <if test="displayLocation != null">
-            AND display_location = #{displayLocation,jdbcType=VARCHAR}
-        </if>
-        <if test="platform != null">
-            AND platform = #{platform,jdbcType=VARCHAR}
-        </if>
-        ORDER BY create_time DESC
-    </select>
     <select id="getAllNormal" parameterType="com.mehome.requestDTO.TopicBean" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
