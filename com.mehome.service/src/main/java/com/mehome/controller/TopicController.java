@@ -29,7 +29,6 @@ public class TopicController {
 				.contentType(MediaType.APPLICATION_JSON_UTF8).body(Result.build()
 						.content(topicService.getListByCondition(topic), topicService.getSizeByCondition(topic)));
 	}
-
 	@PostMapping("/add")
 	@ResponseBody
 	public ResponseEntity<Result> add(@RequestBody TopicBean topic) {

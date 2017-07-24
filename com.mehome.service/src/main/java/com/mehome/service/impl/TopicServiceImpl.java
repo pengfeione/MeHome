@@ -22,35 +22,47 @@ public class TopicServiceImpl implements ITopicService {
 
     @Override
     public List<TopicBean> getListByCondition(TopicBean bean) {
-        List<ForumTopic> specialTopics = forumTopicDao.getAllActivities(bean);
-        List<ForumTopic> normalTopics = forumTopicDao.getAllNormal(bean);
-        List<ForumTopic> TempTopics = new ArrayList<ForumTopic>();
-        Iterator<ForumTopic> specialIterator = specialTopics.iterator();
-        Iterator<ForumTopic> normalIterator = normalTopics.iterator();
-        int i = 1;
-        while (specialIterator.hasNext() || normalIterator.hasNext()) {
-            i++;
-            if (i % 3 == 0) {
-                if (specialIterator.hasNext()) {
-                    TempTopics.add(specialIterator.next());
-                }
-            } else {
-                if (normalIterator.hasNext()) {
-                    TempTopics.add(normalIterator.next());
+        if ("index".equals(bean.getDisplayLocation())) {
+            List<ForumTopic> specialTopics = forumTopicDao.getAllActivities(bean);
+            List<TopicBean> beanList = new ArrayList<TopicBean>();
+            List<ForumTopic> resultList = CollectionsUtils.page(bean.getSourcePageNow(), bean.getSourcePageSize(), specialTopics);
+            if (null != resultList && resultList.size() > 0) {
+                for (ForumTopic forumTopic : resultList) {
+                    TopicBean newBean = new TopicBean(forumTopic);
+                    beanList.add(newBean);
                 }
             }
-        }
+            return beanList;
+        } else {
+            List<ForumTopic> specialTopics = forumTopicDao.getAllActivities(bean);
+            List<ForumTopic> normalTopics = forumTopicDao.getAllNormal(bean);
+            List<ForumTopic> TempTopics = new ArrayList<ForumTopic>();
+            Iterator<ForumTopic> specialIterator = specialTopics.iterator();
+            Iterator<ForumTopic> normalIterator = normalTopics.iterator();
+            int i = 1;
+            while (specialIterator.hasNext() || normalIterator.hasNext()) {
+                i++;
+                if (i % 4 == 0) {
+                    if (specialIterator.hasNext()) {
+                        TempTopics.add(specialIterator.next());
+                    }
+                } else {
+                    if (normalIterator.hasNext()) {
+                        TempTopics.add(normalIterator.next());
+                    }
+                }
+            }
 //        3条一般资讯＋1条活动／专题＋（6条一般资讯＋1条活动／专题）n…（以iphone6一屏估算），按发布时间倒序
-        // TODO Auto-generated method stub
-        List<TopicBean> beanList = new ArrayList<TopicBean>();
-        List<ForumTopic> resultList = CollectionsUtils.page(bean.getSourcePageNow(), bean.getSourcePageSize(), TempTopics);
-        if (null != resultList && resultList.size() > 0) {
-            for (ForumTopic forumTopic : resultList) {
-                TopicBean newBean = new TopicBean(forumTopic);
-                beanList.add(newBean);
+            List<TopicBean> beanList = new ArrayList<TopicBean>();
+            List<ForumTopic> resultList = CollectionsUtils.page(bean.getSourcePageNow(), bean.getSourcePageSize(), TempTopics);
+            if (null != resultList && resultList.size() > 0) {
+                for (ForumTopic forumTopic : resultList) {
+                    TopicBean newBean = new TopicBean(forumTopic);
+                    beanList.add(newBean);
+                }
             }
+            return beanList;
         }
-        return beanList;
     }
 
     @Override
