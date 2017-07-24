@@ -5,12 +5,13 @@ import com.mehome.enumDTO.TradeType;
 import com.mehome.pay.iface.IWeChatService;
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IThirdPay;
-import com.mehome.utils.*;
+import com.mehome.utils.PropertiesUtil;
+import com.mehome.utils.RandomUtils;
+import com.mehome.utils.SignUtils;
+import com.mehome.utils.WeChatApiProperties;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,7 +50,7 @@ public class WeChatPay implements IThirdPay {
         orderParam.put("appid", weChatProperties.getAppid());
         orderParam.put("mch_id", weChatProperties.getMchid());
         orderParam.put("out_trade_no", bean.getOrderId());
-        orderParam.put("total_fee", order.getDeposit().toString());
+        orderParam.put("total_fee", 100);
         orderParam.put("trade_type", TradeType.JSAPI.getName());
         orderParam.put("body", "goods-id");
         orderParam.put("nonce_str", randomStr);

@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mehome.dao.ForumTopicDao" >
-  <resultMap id="BaseResultMap" type="com.mehome.domain.ForumTopic" >
-    <id column="tid" property="tid" jdbcType="VARCHAR" />
-    <result column="fid" property="fid" jdbcType="VARCHAR" />
-    <result column="uid" property="uid" jdbcType="VARCHAR" />
-    <result column="bid" property="bid" jdbcType="INTEGER" />
-    <result column="topic_type" property="topicType" jdbcType="VARCHAR" />
-    <result column="subject" property="subject" jdbcType="VARCHAR" />
-    <result column="summary" property="summary" jdbcType="VARCHAR" />
-    <result column="content_from" property="contentFrom" jdbcType="VARCHAR" />
-    <result column="platform" property="platform" jdbcType="SMALLINT" />
-    <result column="last_reply_time" property="lastReplyTime" jdbcType="TIMESTAMP" />
-    <result column="last_replier" property="lastReplier" jdbcType="VARCHAR" />
-    <result column="views" property="views" jdbcType="INTEGER" />
-    <result column="replies" property="replies" jdbcType="INTEGER" />
-    <result column="watchs" property="watchs" jdbcType="INTEGER" />
-    <result column="display_order" property="displayOrder" jdbcType="SMALLINT" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="is_active" property="isActive" jdbcType="BIT" />
-    <result column="display_location" property="displayLocation" jdbcType="VARCHAR" />
-    <result column="display_pic" property="displayPic" jdbcType="VARCHAR" />
-    <result column="topic_url" property="topicUrl" jdbcType="VARCHAR" />
-    <result column="listpic" property="listpic" jdbcType="LONGVARCHAR" />
-    <result column="content" property="content" jdbcType="LONGVARCHAR" />
-    <result column="format_content" property="formatContent" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.mehome.dao.ForumTopicDao">
+    <resultMap id="BaseResultMap" type="com.mehome.domain.ForumTopic">
+        <id column="tid" property="tid" jdbcType="VARCHAR"/>
+        <result column="fid" property="fid" jdbcType="VARCHAR"/>
+        <result column="uid" property="uid" jdbcType="VARCHAR"/>
+        <result column="bid" property="bid" jdbcType="INTEGER"/>
+        <result column="topic_type" property="topicType" jdbcType="VARCHAR"/>
+        <result column="subject" property="subject" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="content_from" property="contentFrom" jdbcType="VARCHAR"/>
+        <result column="platform" property="platform" jdbcType="SMALLINT"/>
+        <result column="last_reply_time" property="lastReplyTime" jdbcType="TIMESTAMP"/>
+        <result column="last_replier" property="lastReplier" jdbcType="VARCHAR"/>
+        <result column="views" property="views" jdbcType="INTEGER"/>
+        <result column="replies" property="replies" jdbcType="INTEGER"/>
+        <result column="watchs" property="watchs" jdbcType="INTEGER"/>
+        <result column="display_order" property="displayOrder" jdbcType="SMALLINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_active" property="isActive" jdbcType="BIT"/>
+        <result column="display_location" property="displayLocation" jdbcType="VARCHAR"/>
+        <result column="display_pic" property="displayPic" jdbcType="VARCHAR"/>
+        <result column="topic_url" property="topicUrl" jdbcType="VARCHAR"/>
+        <result column="listpic" property="listpic" jdbcType="LONGVARCHAR"/>
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+        <result column="format_content" property="formatContent" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     tid, fid, uid, bid, topic_type, subject, summary, content_from, platform, last_reply_time, 
     last_replier, views, replies, watchs, display_order, create_time, update_time, is_active, 
     display_location, display_pic, topic_url,listpic, content, format_content
   </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from forum_topic
-    where tid = #{tid,jdbcType=VARCHAR}
-  </select>
-  <delete id="delete" parameterType="java.lang.String" >
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from forum_topic
+        where tid = #{tid,jdbcType=VARCHAR}
+    </select>
+    <delete id="delete" parameterType="java.lang.String">
     delete from forum_topic
     where tid = #{tid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.mehome.domain.ForumTopic" >
+    <insert id="insert" parameterType="com.mehome.domain.ForumTopic">
     insert into forum_topic (tid, fid, uid, 
       bid, topic_type, subject, 
       summary, content_from, platform, 
@@ -62,233 +62,233 @@
       #{listpic,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}, #{formatContent,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertRequired" parameterType="com.mehome.domain.ForumTopic" >
-    insert into forum_topic
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="tid != null" >
-        tid,
-      </if>
-      <if test="fid != null" >
-        fid,
-      </if>
-      <if test="uid != null" >
-        uid,
-      </if>
-      <if test="bid != null" >
-        bid,
-      </if>
-      <if test="topicType != null" >
-        topic_type,
-      </if>
-      <if test="subject != null" >
-        subject,
-      </if>
-      <if test="summary != null" >
-        summary,
-      </if>
-      <if test="contentFrom != null" >
-        content_from,
-      </if>
-      <if test="platform != null" >
-        platform,
-      </if>
-      <if test="lastReplyTime != null" >
-        last_reply_time,
-      </if>
-      <if test="lastReplier != null" >
-        last_replier,
-      </if>
-      <if test="views != null" >
-        views,
-      </if>
-      <if test="replies != null" >
-        replies,
-      </if>
-      <if test="watchs != null" >
-        watchs,
-      </if>
-      <if test="displayOrder != null" >
-        display_order,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="isActive != null" >
-        is_active,
-      </if>
-      <if test="displayLocation != null" >
-        display_location,
-      </if>
-      <if test="displayPic != null" >
-        display_pic,
-      </if>
-      <if test="topicUrl != null" >
-        topic_url,
-      </if>
-      <if test="listpic != null" >
-        listpic,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-      <if test="formatContent != null" >
-        format_content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="tid != null" >
-        #{tid,jdbcType=VARCHAR},
-      </if>
-      <if test="fid != null" >
-        #{fid,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null" >
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="bid != null" >
-        #{bid,jdbcType=INTEGER},
-      </if>
-      <if test="topicType != null" >
-        #{topicType,jdbcType=VARCHAR},
-      </if>
-      <if test="subject != null" >
-        #{subject,jdbcType=VARCHAR},
-      </if>
-      <if test="summary != null" >
-        #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="contentFrom != null" >
-        #{contentFrom,jdbcType=VARCHAR},
-      </if>
-      <if test="platform != null" >
-        #{platform,jdbcType=SMALLINT},
-      </if>
-      <if test="lastReplyTime != null" >
-        #{lastReplyTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastReplier != null" >
-        #{lastReplier,jdbcType=VARCHAR},
-      </if>
-      <if test="views != null" >
-        #{views,jdbcType=INTEGER},
-      </if>
-      <if test="replies != null" >
-        #{replies,jdbcType=INTEGER},
-      </if>
-      <if test="watchs != null" >
-        #{watchs,jdbcType=INTEGER},
-      </if>
-      <if test="displayOrder != null" >
-        #{displayOrder,jdbcType=SMALLINT},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isActive != null" >
-        #{isActive,jdbcType=BIT},
-      </if>
-      <if test="displayLocation != null" >
-        #{displayLocation,jdbcType=VARCHAR},
-      </if>
-      <if test="displayPic != null" >
-        #{displayPic,jdbcType=VARCHAR},
-      </if>
-      <if test="topicUrl != null" >
-        #{topicUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="listpic != null" >
-        #{listpic,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="formatContent != null" >
-        #{formatContent,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateRequired" parameterType="com.mehome.domain.ForumTopic" >
-    update forum_topic
-    <set >
-      <if test="fid != null" >
-        fid = #{fid,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null" >
-        uid = #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="bid != null" >
-        bid = #{bid,jdbcType=INTEGER},
-      </if>
-      <if test="topicType != null" >
-        topic_type = #{topicType,jdbcType=VARCHAR},
-      </if>
-      <if test="subject != null" >
-        subject = #{subject,jdbcType=VARCHAR},
-      </if>
-      <if test="summary != null" >
-        summary = #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="contentFrom != null" >
-        content_from = #{contentFrom,jdbcType=VARCHAR},
-      </if>
-      <if test="platform != null" >
-        platform = #{platform,jdbcType=SMALLINT},
-      </if>
-      <if test="lastReplyTime != null" >
-        last_reply_time = #{lastReplyTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastReplier != null" >
-        last_replier = #{lastReplier,jdbcType=VARCHAR},
-      </if>
-      <if test="views != null" >
-        views = #{views,jdbcType=INTEGER},
-      </if>
-      <if test="replies != null" >
-        replies = #{replies,jdbcType=INTEGER},
-      </if>
-      <if test="watchs != null" >
-        watchs = #{watchs,jdbcType=INTEGER},
-      </if>
-      <if test="displayOrder != null" >
-        display_order = #{displayOrder,jdbcType=SMALLINT},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isActive != null" >
-        is_active = #{isActive,jdbcType=BIT},
-      </if>
-      <if test="displayLocation != null" >
-        display_location = #{displayLocation,jdbcType=VARCHAR},
-      </if>
-      <if test="displayPic != null" >
-        display_pic = #{displayPic,jdbcType=VARCHAR},
-      </if>
-      <if test="topicUrl != null" >
-        topic_url = #{topicUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="listpic != null" >
-        listpic = #{listpic,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="formatContent != null" >
-        format_content = #{formatContent,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where tid = #{tid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mehome.domain.ForumTopic" >
+    <insert id="insertRequired" parameterType="com.mehome.domain.ForumTopic">
+        insert into forum_topic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tid != null">
+                tid,
+            </if>
+            <if test="fid != null">
+                fid,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="bid != null">
+                bid,
+            </if>
+            <if test="topicType != null">
+                topic_type,
+            </if>
+            <if test="subject != null">
+                subject,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="contentFrom != null">
+                content_from,
+            </if>
+            <if test="platform != null">
+                platform,
+            </if>
+            <if test="lastReplyTime != null">
+                last_reply_time,
+            </if>
+            <if test="lastReplier != null">
+                last_replier,
+            </if>
+            <if test="views != null">
+                views,
+            </if>
+            <if test="replies != null">
+                replies,
+            </if>
+            <if test="watchs != null">
+                watchs,
+            </if>
+            <if test="displayOrder != null">
+                display_order,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="isActive != null">
+                is_active,
+            </if>
+            <if test="displayLocation != null">
+                display_location,
+            </if>
+            <if test="displayPic != null">
+                display_pic,
+            </if>
+            <if test="topicUrl != null">
+                topic_url,
+            </if>
+            <if test="listpic != null">
+                listpic,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="formatContent != null">
+                format_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tid != null">
+                #{tid,jdbcType=VARCHAR},
+            </if>
+            <if test="fid != null">
+                #{fid,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="bid != null">
+                #{bid,jdbcType=INTEGER},
+            </if>
+            <if test="topicType != null">
+                #{topicType,jdbcType=VARCHAR},
+            </if>
+            <if test="subject != null">
+                #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="contentFrom != null">
+                #{contentFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="platform != null">
+                #{platform,jdbcType=SMALLINT},
+            </if>
+            <if test="lastReplyTime != null">
+                #{lastReplyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastReplier != null">
+                #{lastReplier,jdbcType=VARCHAR},
+            </if>
+            <if test="views != null">
+                #{views,jdbcType=INTEGER},
+            </if>
+            <if test="replies != null">
+                #{replies,jdbcType=INTEGER},
+            </if>
+            <if test="watchs != null">
+                #{watchs,jdbcType=INTEGER},
+            </if>
+            <if test="displayOrder != null">
+                #{displayOrder,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isActive != null">
+                #{isActive,jdbcType=BIT},
+            </if>
+            <if test="displayLocation != null">
+                #{displayLocation,jdbcType=VARCHAR},
+            </if>
+            <if test="displayPic != null">
+                #{displayPic,jdbcType=VARCHAR},
+            </if>
+            <if test="topicUrl != null">
+                #{topicUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="listpic != null">
+                #{listpic,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="formatContent != null">
+                #{formatContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateRequired" parameterType="com.mehome.domain.ForumTopic">
+        update forum_topic
+        <set>
+            <if test="fid != null">
+                fid = #{fid,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="bid != null">
+                bid = #{bid,jdbcType=INTEGER},
+            </if>
+            <if test="topicType != null">
+                topic_type = #{topicType,jdbcType=VARCHAR},
+            </if>
+            <if test="subject != null">
+                subject = #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="contentFrom != null">
+                content_from = #{contentFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="platform != null">
+                platform = #{platform,jdbcType=SMALLINT},
+            </if>
+            <if test="lastReplyTime != null">
+                last_reply_time = #{lastReplyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastReplier != null">
+                last_replier = #{lastReplier,jdbcType=VARCHAR},
+            </if>
+            <if test="views != null">
+                views = #{views,jdbcType=INTEGER},
+            </if>
+            <if test="replies != null">
+                replies = #{replies,jdbcType=INTEGER},
+            </if>
+            <if test="watchs != null">
+                watchs = #{watchs,jdbcType=INTEGER},
+            </if>
+            <if test="displayOrder != null">
+                display_order = #{displayOrder,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isActive != null">
+                is_active = #{isActive,jdbcType=BIT},
+            </if>
+            <if test="displayLocation != null">
+                display_location = #{displayLocation,jdbcType=VARCHAR},
+            </if>
+            <if test="displayPic != null">
+                display_pic = #{displayPic,jdbcType=VARCHAR},
+            </if>
+            <if test="topicUrl != null">
+                topic_url = #{topicUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="listpic != null">
+                listpic = #{listpic,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="formatContent != null">
+                format_content = #{formatContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where tid = #{tid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mehome.domain.ForumTopic">
     update forum_topic
     set fid = #{fid,jdbcType=VARCHAR},
       uid = #{uid,jdbcType=VARCHAR},
@@ -315,7 +315,7 @@
       format_content = #{formatContent,jdbcType=LONGVARCHAR}
     where tid = #{tid,jdbcType=VARCHAR}
   </update>
-  <update id="update" parameterType="com.mehome.domain.ForumTopic" >
+    <update id="update" parameterType="com.mehome.domain.ForumTopic">
     update forum_topic
     set fid = #{fid,jdbcType=VARCHAR},
       uid = #{uid,jdbcType=VARCHAR},
@@ -339,7 +339,7 @@
       topic_url = #{topicUrl,jdbcType=VARCHAR}
     where tid = #{tid,jdbcType=VARCHAR}
   </update>
-  <select id="getListByCondition" parameterType="com.mehome.requestDTO.TopicBean" resultMap="BaseResultMap">
+    <select id="getListByCondition" parameterType="com.mehome.requestDTO.TopicBean" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM forum_topic
@@ -367,6 +367,81 @@
         </if>
         ORDER BY create_time DESC
         limit #{pageNow},#{pageSize}
+    </select>
+    <select id="getAllActivities" parameterType="com.mehome.requestDTO.TopicBean" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM forum_topic
+        WHERE (topic_type = 'activity' or topic_type='topic')
+        <if test="tid != null">
+            AND tid = #{tid,jdbcType=VARCHAR}
+        </if>
+        <if test="subject != null">
+            AND subject like CONCAT('%','${subject}','%' )
+        </if>
+        <if test="uid != null">
+            AND uid = #{uid,jdbcType=VARCHAR}
+        </if>
+        <if test="isActive != null">
+            AND is_active = #{isActive,jdbcType=BIT}
+        </if>
+        <if test="displayLocation != null">
+            AND display_location = #{displayLocation,jdbcType=VARCHAR}
+        </if>
+        <if test="platform != null">
+            AND platform = #{platform,jdbcType=VARCHAR}
+        </if>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getAllActivities" parameterType="com.mehome.requestDTO.TopicBean" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM forum_topic
+        WHERE (topic_type = 'activity' or topic_type='topic')
+        <if test="tid != null">
+            AND tid = #{tid,jdbcType=VARCHAR}
+        </if>
+        <if test="subject != null">
+            AND subject like CONCAT('%','${subject}','%' )
+        </if>
+        <if test="uid != null">
+            AND uid = #{uid,jdbcType=VARCHAR}
+        </if>
+        <if test="isActive != null">
+            AND is_active = #{isActive,jdbcType=BIT}
+        </if>
+        <if test="displayLocation != null">
+            AND display_location = #{displayLocation,jdbcType=VARCHAR}
+        </if>
+        <if test="platform != null">
+            AND platform = #{platform,jdbcType=VARCHAR}
+        </if>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getAllNormal" parameterType="com.mehome.requestDTO.TopicBean" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM forum_topic
+        WHERE topic_type ='normal'
+        <if test="tid != null">
+            AND tid = #{tid,jdbcType=VARCHAR}
+        </if>
+        <if test="subject != null">
+            AND subject like CONCAT('%','${subject}','%' )
+        </if>
+        <if test="uid != null">
+            AND uid = #{uid,jdbcType=VARCHAR}
+        </if>
+        <if test="isActive != null">
+            AND is_active = #{isActive,jdbcType=BIT}
+        </if>
+        <if test="displayLocation != null">
+            AND display_location = #{displayLocation,jdbcType=VARCHAR}
+        </if>
+        <if test="platform != null">
+            AND platform = #{platform,jdbcType=VARCHAR}
+        </if>
+        ORDER BY create_time DESC
     </select>
     <select id="getSizeByCondition" parameterType="com.mehome.requestDTO.TopicBean" resultType="java.lang.Long">
         SELECT count(*)
