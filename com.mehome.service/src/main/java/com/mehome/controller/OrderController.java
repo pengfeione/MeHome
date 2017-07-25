@@ -1,9 +1,11 @@
 package com.mehome.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mehome.domain.HouseResource;
 import com.mehome.requestDTO.OrderBean;
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IOrderService;
+import com.mehome.utils.AlipayProperties;
 import com.mehome.utils.DateUtils;
 import com.mehome.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -24,7 +29,8 @@ public class OrderController {
     private String cros;
     @Autowired
     private IOrderService orderService;
-
+    @Autowired
+	private AlipayProperties alipayProperties;
     /**
      * 订单列表
      *
@@ -170,7 +176,7 @@ public class OrderController {
 
     @PostMapping("/payment_create_order")
     @ResponseBody
-    public ResponseEntity<Result> payment_create_order(@RequestBody ThirdPayMentBean bean, HttpServletRequest request) {
+    public ResponseEntity<Result> paymentCreateOrder(@RequestBody ThirdPayMentBean bean, HttpServletRequest request) {
         String clientIp = request.getHeader("x-real-ip");
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Access-Control-Allow-Origin", "http://m.mjiahome.com");
@@ -181,5 +187,24 @@ public class OrderController {
                 .header("Access-Control-Allow-Origin", cros)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(Result.build().content(orderService.paymentCreateOrder(bean)));
+    }
+    
+    @PostMapping("/alipay_create_order")
+    @ResponseBody
+    public void alipayCreateOrder(@RequestBody ThirdPayMentBean bean, HttpServletRequest request,HttpServletResponse response) {
+    	
+    	JSONObject ret=orderService.paymentCreateOrder(bean);
+    	String form=ret.getString("retStr");
+        response.setContentType("text/html;charset=" + alipayProperties.getCharset()); 
+	    try {
+	    	//直接将完整的表单html输出到页面 
+			response.getWriter().write(form);
+			response.getWriter().flush(); 
+		    response.getWriter().close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
     }
 }

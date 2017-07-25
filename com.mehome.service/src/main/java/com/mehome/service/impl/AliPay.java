@@ -2,9 +2,14 @@ package com.mehome.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.*;
+import com.alipay.api.domain.AlipayTradeWapPayModel;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.mehome.requestDTO.ThirdPayMentBean;
 import com.mehome.service.iface.IThirdPay;
+import com.mehome.utils.AlipayProperties;
+import com.mehome.utils.WeChatApiProperties;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,37 +17,59 @@ import java.io.IOException;
 
 @Service("alipay")
 public class AliPay implements IThirdPay {
+	@Autowired
+	private AlipayProperties alipayProperties;
 
-    @Override
-    public JSONObject pay(ThirdPayMentBean bean) {
-        System.out.println("alipay");
-        return null;
-    }
+	@Override
+	public JSONObject pay(ThirdPayMentBean bean) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			System.out.println("alipay");
+			String retStr = gatewayDo(bean);
+			jsonObject.put("ret", retStr);
+		} catch (AlipayApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jsonObject;
+	}
 
-
-    public String gatewayDo() throws AlipayApiException, IOException {
-        HttpServletResponse httpResponse = null;
-        String serverUrl = "";
-        String appId = "";
-        String privateKey = "";
-        AlipayClient alipayClient = new AlipayMobilePublicMultiMediaClient(serverUrl, appId, privateKey);
-        AlipayClient alipayClientA = new DefaultAlipayClient(serverUrl, appId, privateKey);
-        AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();
-        alipayRequest.setReturnUrl("http://domain.com/CallBack/return_url.jsp");
-        alipayRequest.setNotifyUrl("http://domain.com/CallBack/notify_url.jsp");//在公共参数中设置回跳和通知地址
-        alipayRequest.setBizContent("{" +
-                "    \"out_trade_no\":\"20150320010101002\"," +
-                "    \"total_amount\":88.88," +
-                "    \"subject\":\"Iphone6 16G\"," +
-                "    \"seller_id\":\"2088123456789012\"," +
-                "    \"product_code\":\"QUICK_WAP_PAY\"" +
-                "  }");//填充业务参数
-        String form = alipayClientA.pageExecute(alipayRequest).getBody(); //调用SDK生成表单
-        httpResponse.setContentType("text/html;charset=" + AlipayConstants.CHARSET);
-        httpResponse.getWriter().write(form);//直接将完整的表单html输出到页面
-        httpResponse.getWriter().flush();
-        return null;
-
-    }
-
+	public String gatewayDo(ThirdPayMentBean bean) throws AlipayApiException, IOException {
+		HttpServletResponse httpResponse = null;
+		// AlipayClient alipayClient = new
+		// AlipayMobilePublicMultiMediaClient(serverUrl, appId, privateKey);
+		// AlipayClient alipayClientA = new DefaultAlipayClient(serverUrl,
+		// appId, privateKey);
+		AlipayClient alipayClientA = new DefaultAlipayClient(alipayProperties.getServeurl(),
+				alipayProperties.getAppid(), alipayProperties.getPrivatekey(), "json", "UTF-8",
+				alipayProperties.getPublickey(), "RSA2");
+		AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();
+		// 封装请求支付信息
+		AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
+		model.setOutTradeNo(bean.getOrderId());
+		model.setSubject("me公寓支付");
+		model.setTotalAmount("0.01");
+		model.setBody("me公寓支付");
+		model.setTimeoutExpress(alipayProperties.getTimeout());
+		model.setProductCode(alipayProperties.getProductcode());
+		alipayRequest.setBizModel(model);
+		alipayRequest.setReturnUrl(alipayProperties.getReturnurl());
+		alipayRequest.setNotifyUrl(alipayProperties.getNotifyurl());// 在公共参数中设置回跳和通知地址
+		// alipayRequest.setBizContent("{" +
+		// " \"out_trade_no\":\"20150320010101002\"," +
+		// " \"total_amount\":88.88," +
+		// " \"subject\":\"Iphone6 16G\"," +
+		// " \"seller_id\":\"2088123456789012\"," +
+		// " \"product_code\":\"QUICK_WAP_PAY\"" +
+		// " }");//填充业务参数
+		String form = alipayClientA.pageExecute(alipayRequest).getBody(); // 调用SDK生成表单
+		// response.setContentType("text/html;charset=" + AlipayConfig.CHARSET);
+		// response.getWriter().write(form);//直接将完整的表单html输出到页面
+		// response.getWriter().flush();
+		// response.getWriter().close();
+		return form;
+	}
 }
