@@ -1,6 +1,9 @@
 package com.mehome.dao;
 
+import java.util.List;
+
 import com.mehome.domain.ThirdPartyPayment;
+import com.mehome.requestDTO.ThirdPayMentBean;
 
 public interface ThirdPartyPaymentDao {
     int delete(String paymentId);
@@ -16,4 +19,8 @@ public interface ThirdPartyPaymentDao {
     int updateByPrimaryKeyWithBLOBs(ThirdPartyPayment record);
 
     int update(ThirdPartyPayment record);
+    
+    List<ThirdPartyPayment> selectByCondition(ThirdPayMentBean bean);
+    
+    Long countByCondition(ThirdPayMentBean bean);
 }

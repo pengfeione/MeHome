@@ -54,6 +54,7 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 	private String signType;
 	
 	private String receiveAccount;
+	
 
 	public String getOrderId() {
 		return orderId;
@@ -211,7 +212,7 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 		ThirdPartyPayment payMent=new ThirdPartyPayment();
 		Date date=new Date();
 		payMent.setOrderId(this.getOrderId());
-		payMent.setPayAccount(this.getPayer());
+//		payMent.setPayAccount(this.getPayer());
 		payMent.setPayAmount(this.getAmount());
 		payMent.setPayBody("");
 		payMent.setPayStatus(this.getPayStatus());
@@ -225,8 +226,13 @@ public class ThirdPayMentBean extends PageMysqlUtil {
 		
 	}
 	public ThirdPayMentBean(OrderList order){
-		this.setAmount(order.getDeposit());
+		if(order.getPlatformHost()!=null&&order.getPlatformHost()){
+			this.setAmount(order.getDeposit());
+		}
 		this.setBody(order.getProductName());
+		this.setOrderId(order.getOrderId());
+		this.setPayType(order.getPayType());
+		this.setPayer(order.getPayer());
 		this.setOrderId(order.getOrderId());
 //		this.set
 	}

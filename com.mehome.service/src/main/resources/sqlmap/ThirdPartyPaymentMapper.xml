@@ -221,4 +221,23 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
     where payment_id = #{paymentId,jdbcType=VARCHAR}
   </update>
+  <select id="countByCondition" parameterType="com.mehome.requestDTO.ThirdPayMentBean" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM third_party_payment
+        WHERE 1=1
+        <if test="tradeSeq != null">
+            AND trade_seq = #{tradeSeq,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <select id="selectByCondition" parameterType="com.mehome.requestDTO.ThirdPayMentBean" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM third_party_payment
+        WHERE 1=1
+        <if test="tradeSeq != null">
+            AND trade_seq = #{tradeSeq,jdbcType=VARCHAR}
+        </if>
+        ORDER BY pay_time DESC
+        limit #{pageNow},#{pageSize}
+    </select>
 </mapper>

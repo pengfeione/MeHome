@@ -53,9 +53,10 @@ public class WeChatPay implements IThirdPay {
         httpHeaders.add("Access-Control-Allow-Methods", "GET, POST");
 //        String randomStr = RandomUtils.random(16);
         JSONObject orderParam = new JSONObject();
-        orderParam.put("appid", config.getAppID());
-        orderParam.put("mch_id", config.getMchID());
+        orderParam.put("appid", weChatProperties.getAppid());
+        orderParam.put("mch_id", weChatProperties.getMchid());
         orderParam.put("out_trade_no", bean.getOrderId());
+      //orderParam.put("total_fee", order.getDeposit().toString());
         orderParam.put("total_fee", 1);
         orderParam.put("trade_type", bean.getTradeType());
         orderParam.put("body", "me"+bean.getOrderId());
@@ -77,7 +78,7 @@ public class WeChatPay implements IThirdPay {
 //        orderParam.put("openid", "oG8mDwNxCJeM0Ll01x4Eyb1nm6S0");
         //http://api.mjiahome.com//api/wechat/notify   http://api.mjiahome.com//wx/order/notify2
         orderParam.put("notify_url", "http://api.mjiahome.com//wx/order/notify");
-        orderParam.put("sign", SignUtils.sign(orderParam, config.getKey()));
+        orderParam.put("sign", SignUtils.sign(orderParam, weChatProperties.getKey()));
         JSONObject orderResult = weChatService.makeOrder(orderParam);
         if ("SUCCESS".equals(orderResult.getString("return_code"))) {
         	System.out.println("统一下单正常,orderResult:"+orderResult.toJSONString());
@@ -86,7 +87,7 @@ public class WeChatPay implements IThirdPay {
             result.put("nonceStr", WXPayUtil.generateUUID());
             result.put("package", "prepay_id=" + orderResult.getString("prepay_id"));
             result.put("signType", "MD5");
-            result.put("paySign", SignUtils.sign(result, config.getKey()));
+            result.put("paySign", SignUtils.sign(result, weChatProperties.getKey()));
         }else{
         	String error=orderResult.getString("return_msg");
         	log.error("统一下单报错:"+error);
