@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -189,22 +190,27 @@ public class OrderController {
                 .body(Result.build().content(orderService.paymentCreateOrder(bean)));
     }
     
-    @PostMapping("/alipay_create_order")
-    @ResponseBody
-    public void alipayCreateOrder(@RequestBody ThirdPayMentBean bean, HttpServletRequest request,HttpServletResponse response) {
-    	
-    	JSONObject ret=orderService.paymentCreateOrder(bean);
-    	String form=ret.getString("retStr");
-        response.setContentType("text/html;charset=" + alipayProperties.getCharset()); 
-	    try {
-	    	//直接将完整的表单html输出到页面 
-			response.getWriter().write(form);
-			response.getWriter().flush(); 
-		    response.getWriter().close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    
-    }
+//    @RequestMapping(value = "/alipay_create_order", method = RequestMethod.GET)
+//    public void alipayCreateOrder(HttpServletRequest request,HttpServletResponse response) {
+//    	ThirdPayMentBean bean=new ThirdPayMentBean();
+//    	String orderId="201707251736151087652137";
+//    	String payer="10056";
+//    	bean.setOrderId(orderId);
+//    	bean.setPayer(payer);
+//    	bean.setPayType("alipay");
+//    	JSONObject ret=orderService.paymentCreateOrder(bean);
+//    	String form=ret.getString("retStr");
+//        response.setContentType("text/html;charset=" + alipayProperties.getCharset()); 
+//	    try {
+//	    	//直接将完整的表单html输出到页面 
+//	    	PrintWriter print=response.getWriter();
+//	    	print.write(form);
+//	    	print.flush(); 
+//	    	print.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	    
+//    }
 }

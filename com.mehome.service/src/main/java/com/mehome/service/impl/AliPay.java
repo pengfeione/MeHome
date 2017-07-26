@@ -26,19 +26,21 @@ public class AliPay implements IThirdPay {
 		try {
 			System.out.println("alipay");
 			String retStr = gatewayDo(bean);
+			System.out.println("form:"+retStr);
 			jsonObject.put("ret", retStr);
 		} catch (AlipayApiException e) {
 			// TODO Auto-generated catch block
+			System.out.println("alipay error:"+e);
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			System.out.println("io error:"+e);
 			e.printStackTrace();
 		}
 		return jsonObject;
 	}
 
 	public String gatewayDo(ThirdPayMentBean bean) throws AlipayApiException, IOException {
-		HttpServletResponse httpResponse = null;
 		// AlipayClient alipayClient = new
 		// AlipayMobilePublicMultiMediaClient(serverUrl, appId, privateKey);
 		// AlipayClient alipayClientA = new DefaultAlipayClient(serverUrl,

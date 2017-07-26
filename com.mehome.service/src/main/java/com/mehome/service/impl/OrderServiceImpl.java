@@ -392,6 +392,7 @@ public class OrderServiceImpl implements IOrderService {
 			order.setPayTime(date);
 			order.setPayFlow(thirdPay.getTradeSeq());
 			order.setUpdateTime(date);
+			order.setPayAccount(thirdPay.getOpenId());
 			orderListDAO.update(order);
 		} catch (Exception e) {
 			log.error("支付通知结果处理出错:" + e);
