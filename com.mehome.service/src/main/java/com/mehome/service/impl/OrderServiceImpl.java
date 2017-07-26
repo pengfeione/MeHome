@@ -427,6 +427,8 @@ public class OrderServiceImpl implements IOrderService {
 			order.setPayAmount(order.getDeposit());
 		}
 		order.setPayer(payer);
+		//更新为押金由平台持有状态
+		order.setPlatformHost(Boolean.TRUE);
 		orderListDAO.update(order);
 		ThirdPayMentBean paybean = new ThirdPayMentBean(order);
 		paybean.setTradeType(bean.getTradeType());
