@@ -53,6 +53,9 @@ public class AliPay implements IThirdPay {
 		AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
 		model.setOutTradeNo(bean.getOrderId());
 		model.setSubject("me公寓支付");
+//		Integer amount=bean.getAmount();
+//		Float f=(float) (amount*0.01);
+//		model.setTotalAmount(f.toString());
 		model.setTotalAmount("0.01");
 		model.setBody("me公寓支付");
 		model.setTimeoutExpress(alipayProperties.getTimeout());
