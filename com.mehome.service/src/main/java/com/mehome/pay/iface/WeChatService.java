@@ -29,10 +29,14 @@ public class WeChatService implements IWeChatService {
         mediaTypes.add(MediaType.APPLICATION_XML);
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setAccept(mediaTypes);
-        HttpEntity<String> entity = new HttpEntity<String>(XmlUtils.toXML(order), requestHeaders);
-        ResponseEntity<String> resp = restTemplate.exchange(weChatProperties.getMakeOrder(), HttpMethod.POST, entity, String.class);
-        String str = resp.getBody();
+//        HttpEntity<String> entity = new HttpEntity<String>(new String(XmlUtils.toXML(order).getBytes(),"ISO8859-1"), requestHeaders);
+//        ResponseEntity<String> resp = restTemplate.exchange(weChatProperties.getMakeOrder(), HttpMethod.POST, entity, String.class);
+//        String str = resp.getBody();
+        String str="";
         try {
+        	HttpEntity<String> entity = new HttpEntity<String>(new String(XmlUtils.toXML(order).getBytes(),"ISO8859-1"), requestHeaders);
+            ResponseEntity<String> resp = restTemplate.exchange(weChatProperties.getMakeOrder(), HttpMethod.POST, entity, String.class);
+            str = resp.getBody();
             return XmlUtils.toJSON(new String(str.getBytes("ISO-8859-1"), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             return XmlUtils.toJSON(str);

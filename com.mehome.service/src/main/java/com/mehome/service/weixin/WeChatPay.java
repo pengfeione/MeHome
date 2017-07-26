@@ -59,7 +59,8 @@ public class WeChatPay implements IThirdPay {
       //orderParam.put("total_fee", order.getDeposit().toString());
         orderParam.put("total_fee", 1);
         orderParam.put("trade_type", bean.getTradeType());
-        orderParam.put("body", "me"+bean.getOrderId());
+//        orderParam.put("body", "me"+bean.getOrderId());
+        orderParam.put("body", "米家公寓平台支付");
         orderParam.put("nonce_str", WXPayUtil.generateUUID());
         orderParam.put("spbill_create_ip", "121.40.18.88");
         if (WXPayConstants.TRADETYPE_JSAPI.equals(bean.getTradeType())) {

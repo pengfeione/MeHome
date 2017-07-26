@@ -388,11 +388,14 @@ public class OrderServiceImpl implements IOrderService {
 			thirdObj.setReceiveAccount(thirdPay.getReceiveAccount());
 			thirdObj.setPaymentId(OrderIdUtils.getUUID());
 			thirdObj.setPayStatus(PayStatusEnum.PAY_SUCCESS.getKey());
+			thirdObj.setTradeSeq(tradeSeq);
 			thirdPartyPaymentDAO.insert(thirdObj);
 			order.setPayTime(date);
 			order.setPayFlow(thirdPay.getTradeSeq());
 			order.setUpdateTime(date);
 			order.setPayAccount(thirdPay.getOpenId());
+			order.setPayOnline(Boolean.TRUE);
+			order.setPayAmount(thirdObj.getPayAmount());
 			orderListDAO.update(order);
 		} catch (Exception e) {
 			log.error("支付通知结果处理出错:" + e);
@@ -429,6 +432,7 @@ public class OrderServiceImpl implements IOrderService {
 		order.setPayer(payer);
 		//更新为押金由平台持有状态
 		order.setPlatformHost(Boolean.TRUE);
+		order.setPayType(payType);
 		orderListDAO.update(order);
 		ThirdPayMentBean paybean = new ThirdPayMentBean(order);
 		paybean.setTradeType(bean.getTradeType());

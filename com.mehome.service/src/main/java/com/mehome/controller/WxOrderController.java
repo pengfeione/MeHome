@@ -109,8 +109,10 @@ public class WxOrderController {
 					data.put(string, ret.getString(string));
 				}
 				Boolean valid=WXPayUtil.isSignatureValid(data, weChatProperties.getKey());
-				if(valid){
-					System.out.println("签名验证不过");
+				if(!valid){
+					System.out.println("验签不过");
+					return ResponseEntity.ok().header("Access-Control-Allow-Origin", cros)
+							.contentType(MediaType.APPLICATION_JSON_UTF8).body(WXResult.build());
 				}
 				String openId = ret.getString("openid");
 				// receiveAccount
