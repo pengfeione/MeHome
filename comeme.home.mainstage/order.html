@@ -83,7 +83,8 @@
 					var orderId=orders[i].orderId;
 					var liType='';
 					var href='orderdetail.html?orderId='+orderId;
-					if(status==5){
+					//订单状态: 0预约   1确认中 2已经确认 4入住  5结束 6取消
+					if(status==6){
 						liType='cancelEnd';
 						href='javascript:void(0)';
 					}

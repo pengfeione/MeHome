@@ -4,9 +4,11 @@ $("#next").click(function () {
 });
 $("#pay_close").click(function () {
     $("#pay_choose").fadeOut();
+    $("#mask").fadeOut();
 });
 $("#next_close").click(function () {
     $("#hold_choose").fadeOut();
+    $("#mask").fadeOut();
 });
 $("#confirm").click(function () {
     $("#hold_choose").fadeIn();
@@ -14,12 +16,14 @@ $("#confirm").click(function () {
 $("#already_deposit").click(function () {
     if ($("#already_deposit").attr("class") == "depositInit") {
         $("#hold_choose").fadeIn();
+        $("#mask").fadeIn();
     } else {
         $("#order_offline").fadeIn();
     }
 });
 $("#offline_cancel").click(function () {
     $("#order_offline").fadeOut();
+    $("#mask").fadeOut();
 });
 $("#offline_sure").click(function () {
     var orderId = util.getUrlParam("orderId");
@@ -28,6 +32,7 @@ $("#offline_sure").click(function () {
     var contentType = "application/json";
     util.requestRemoteDataJsonPosta(url, param, contentType, function (data) {
         $("#order_offline").fadeOut();
+        $("#mask").fadeOut();
         $("#already_deposit").attr("class", "depositInit");
         // alert($("#already_deposit").attr("class"));1
         $("#em").hide();
@@ -46,6 +51,7 @@ $("#pay").click(function () {
     var param = '{"orderId":' + orderId + ',"tradeType":"JSAPI","payer":' + uid + ',"payType":"wechat"}';
     var contentType = "application/json";
     $("#pay_choose").fadeOut();
+    $("#mask").fadeOut();
     $("#already_deposit").attr("class", "depositSelect");
 
 //    //在页面中追加隐藏表单
