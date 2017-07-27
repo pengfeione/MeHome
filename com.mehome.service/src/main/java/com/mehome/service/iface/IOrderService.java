@@ -40,4 +40,6 @@ public interface IOrderService {
     public void payNotify(ThirdPayMentBean thirdPay);
 
     public JSONObject paymentCreateOrder(ThirdPayMentBean bean);
+    
+    public Boolean updateOrderWithoutDeal(OrderBean bean);
 }

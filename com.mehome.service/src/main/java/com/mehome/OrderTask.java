@@ -36,7 +36,7 @@ public class OrderTask {
     			OrderBean updateBean=new OrderBean();
     			updateBean.setOrderId(orderBean.getOrderId());
     			updateBean.setOrderStatus(OrderStatusEnum.CHECKIN.getKey());
-    			orderService.updateOrder(updateBean);
+    			orderService.updateOrderWithoutDeal(updateBean);
     		}
     	}
     	OrderBean checkBean=new OrderBean();
@@ -50,7 +50,7 @@ public class OrderTask {
     			OrderBean updateBean=new OrderBean();
     			updateBean.setOrderId(orderBean.getOrderId());
     			updateBean.setOrderStatus(OrderStatusEnum.END.getKey());
-    			orderService.updateOrder(updateBean);
+    			orderService.updateOrderWithoutDeal(updateBean);
     		}
 		}
     }

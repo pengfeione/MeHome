@@ -440,4 +440,11 @@ public class OrderServiceImpl implements IOrderService {
 		paybean.setOpenId(openId);
 		return payImpl.pay(paybean);
 	}
+
+	@Override
+	public Boolean updateOrderWithoutDeal(OrderBean bean) {
+		OrderList order = bean.compareToPojo();
+		orderListDAO.updateRequired(order);
+		return Boolean.TRUE;
+	}
 }
