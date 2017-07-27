@@ -19,6 +19,7 @@ $("#already_deposit").click(function () {
         $("#mask").fadeIn();
     } else {
         $("#order_offline").fadeIn();
+        $("#mask").fadeIn();
     }
 });
 $("#offline_cancel").click(function () {
