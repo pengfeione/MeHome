@@ -40,6 +40,8 @@
         .swiper-slide img {
             width: 100%;
         }
+        
+        .warpper0 { overflow: auto; -webkit-overflow-scrolling: touch; width: 100%; height: 330px; }
     </style>
 </head>
 <body class="bodyApartmentdetail">
@@ -149,7 +151,9 @@
     <div class="houseWrap">
         <a class="showClose"></a>
         <h3>房屋守则</h3>
-        <iframe class="houseText" scrolling="yes" frameborder="0" allowtransparency="true" id="iframe_rule"></iframe>
+        <div class="warpper0">
+        	<iframe class="houseText" scrolling="yes" frameborder="0" allowtransparency="true" id="iframe_rule"></iframe>
+    	</div>
     </div>
 </div>
 
@@ -211,12 +215,13 @@
         } catch (e) {
         }
         if (companyId != 0 && companyStatus == 1) {
+
             var productId = util.getUrlParam('productId');
             var paramJSON = {
                 'productId': productId,
                 'companyId': companyId,
                 'userId': userInfoJson.userId
-            };
+            }
             var url = util.baseUrl + '/product/get_company_welfare_by_usr';
             var contentType = "application/json";
             util.requestRemoteDataJsonPost(url, JSON.stringify(paramJSON), contentType, function (data) {

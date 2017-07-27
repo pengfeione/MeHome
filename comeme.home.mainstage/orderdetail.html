@@ -1,349 +1,285 @@
 <!DOCTYPE HTML>
 <html lang="zh-cn">
 <head>
-    <!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
-    <base href="http://m.mjiahome.com/"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width,user-scalable=no">
-    <title>Me+订单详情</title>
-    <meta name="keywords" content="ME+">
-    <meta name="description" content="ME+">
-    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/base.css"/>
-    <link rel="stylesheet" type="text/css" href="css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="css/order.css"/>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/swiper.min.js"></script>
-    <script src="js/util.js"></script>
+	<!--<base href="http://127.0.0.1:8020/comeme.home.mainstage/"/>-->
+<base href="http://m.mjiahome.com/"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width,user-scalable=no">
+<title>Me+订单详情</title>
+<meta name="keywords" content="ME+">
+<meta name="description" content="ME+">
+<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<link rel="stylesheet" type="text/css" href="css/common.css" />
+<link rel="stylesheet" type="text/css" href="css/order.css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/swiper.min.js"></script>
+<script src="js/util.js"></script>
 </head>
 <body>
 
-<div class="wrap">
-    <!-- header -->
-    <div class="header">
-        <div class="headerCont">
-            <a class="btnBack" href="order.html">&lt;</a>
-            <span>订单详情</span>
-        </div>
-    </div>
-    <!-- 新预约 -->
-    <!-- <ul class="orderList">
-        <li>
-            <div class="boxList">
-                <span class="orderTop">
-                    <section class="iconXyy"></section> <img
-                    src="img/test/test3.jpg" />
-                    <h3>Ascott商务服务中心</h3> <em>1000元／月
-                        <section class="iconYj">押一付三</section>
-                </em> <i>A栋-1010室1室0厅1卫 25㎡</i>
-                </span> <span class="orderLine orderDatilLine"><i class="orderLt"></i><i
-                    class="orderRt"></i></span> <a class="orderTel"><em class="iconTel"></em>客服电话：021-83844848<i
-                    class="iconMore"></i></a>
+	<div class="wrap">
+		<!-- header -->
+        <div class="header">
+        	<div class="headerCont">
+            	<a class="btnBack" href="order.html">&lt;</a>
+            	<span>订单详情</span>
             </div>
-        </li>
-    </ul> -->
+        </div>
+		<!-- 新预约 -->
+		<!-- <ul class="orderList">
+			<li>
+				<div class="boxList">
+					<span class="orderTop">
+						<section class="iconXyy"></section> <img
+						src="img/test/test3.jpg" />
+						<h3>Ascott商务服务中心</h3> <em>1000元／月
+							<section class="iconYj">押一付三</section>
+					</em> <i>A栋-1010室1室0厅1卫 25㎡</i>
+					</span> <span class="orderLine orderDatilLine"><i class="orderLt"></i><i
+						class="orderRt"></i></span> <a class="orderTel"><em class="iconTel"></em>客服电话：021-83844848<i
+						class="iconMore"></i></a>
+				</div>
+			</li>
+		</ul> -->
 
-    <!-- 确认中 -->
-    <!-- <ul class="orderList">
-        <li>
-            <div class="boxList">
-                <span class="orderTop">
-                    <section class="iconQrz"></section> <img
-                    src="img/test/test3.jpg" />
-                    <h3>Ascott商务服务中心</h3> <em>1000元／月
-                        <section class="iconYj">押一付三</section>
-                </em> <i>A栋-1010室1室0厅1卫 25㎡</i>
-                </span> <span class="orderLine orderDatilLine"><i class="orderLt"></i><i
-                    class="orderRt"></i></span> <a class="orderTel"><em class="iconTel"></em>客服电话：021-83844848<i
-                    class="iconMore"></i></a>
+		<!-- 确认中 -->
+		<!-- <ul class="orderList">
+			<li>
+				<div class="boxList">
+					<span class="orderTop">
+						<section class="iconQrz"></section> <img
+						src="img/test/test3.jpg" />
+						<h3>Ascott商务服务中心</h3> <em>1000元／月
+							<section class="iconYj">押一付三</section>
+					</em> <i>A栋-1010室1室0厅1卫 25㎡</i>
+					</span> <span class="orderLine orderDatilLine"><i class="orderLt"></i><i
+						class="orderRt"></i></span> <a class="orderTel"><em class="iconTel"></em>客服电话：021-83844848<i
+						class="iconMore"></i></a>
+				</div>
+			</li>
+		</ul> -->
+
+		<!-- 已确认 -->
+		<!-- <ul class="orderList">
+			<li>
+				<div class="boxList">
+					<span class="orderTop">
+						<section class="iconYqr"></section> <img
+						src="img/test/test3.jpg" />
+						<h3>Ascott商务服务中心</h3> <em>1000元／月
+							<section class="iconYj">押一付三</section>
+					</em> <i>A栋-1010室1室0厅1卫 25㎡</i>
+					</span> <span class="orderLine orderOverLine"></span> <a class="orderTel"><em
+						class="iconTel"></em>客服电话：021-83844848<i class="iconMore"></i></a>
+				</div>
+			</li>
+		</ul> -->
+
+		<!-- 已入住 -->
+		<!-- <ul class="orderList">
+			<li>
+				<div class="boxList">
+					<span class="orderTop">
+						<section class="iconYrz"></section> <img
+						src="img/test/test3.jpg" />
+						<h3>Ascott商务服务中心</h3> <em>1000元／月
+							<section class="iconYj">押一付三</section>
+					</em> <i>A栋-1010室1室0厅1卫 25㎡</i>
+					</span> <span class="orderLine orderOverLine"></span> <a class="orderTel"><em
+						class="iconTel"></em>客服电话：021-83844848<i class="iconMore"></i></a>
+				</div>
+			</li>
+		</ul> -->
+
+		<!-- /// 分割线套程序时删除 //////////////////-->
+
+		<!-- 初始状态 -->
+		<!-- <div class="box boxDeposit"  id="box_init">
+            <h3>押金托管（支持微信支付）</h3>
+            <div class="deposit">
+                平台押金托管（押金：1000元）
+                <em class="depositInit" id="init"></em>
             </div>
-        </li>
-    </ul> -->
+        </div> -->
 
-    <!-- 已确认 -->
-    <!-- <ul class="orderList">
-        <li>
-            <div class="boxList">
-                <span class="orderTop">
-                    <section class="iconYqr"></section> <img
-                    src="img/test/test3.jpg" />
-                    <h3>Ascott商务服务中心</h3> <em>1000元／月
-                        <section class="iconYj">押一付三</section>
-                </em> <i>A栋-1010室1室0厅1卫 25㎡</i>
-                </span> <span class="orderLine orderOverLine"></span> <a class="orderTel"><em
-                    class="iconTel"></em>客服电话：021-83844848<i class="iconMore"></i></a>
+		<!-- 已确认 -->
+		<!-- <div class="box boxDeposit" id="box_confirm">
+            <h3>押金托管（支持微信支付）</h3>
+            <div class="deposit">
+                平台押金托管（押金：1000元）
+                <em class="depositSelect" id="confirm"></em>
             </div>
-        </li>
-    </ul> -->
+        </div> -->
 
-    <!-- 已入住 -->
-    <!-- <ul class="orderList">
-        <li>
-            <div class="boxList">
-                <span class="orderTop">
-                    <section class="iconYrz"></section> <img
-                    src="img/test/test3.jpg" />
-                    <h3>Ascott商务服务中心</h3> <em>1000元／月
-                        <section class="iconYj">押一付三</section>
-                </em> <i>A栋-1010室1室0厅1卫 25㎡</i>
-                </span> <span class="orderLine orderOverLine"></span> <a class="orderTel"><em
-                    class="iconTel"></em>客服电话：021-83844848<i class="iconMore"></i></a>
+		<!-- 已托管 -->
+		<!-- <div class="box boxDeposit">
+			<h3>
+				押金托管（支持微信支付）<em id="em">已托管</em>
+			</h3>
+			<div class="deposit">
+				平台押金托管（押金：1000元） <em class="depositSelect" id="already_deposit"></em>
+			</div>
+		</div> -->
+
+		<!-- 未托管 -->
+		<!-- <div class="box boxDeposit">
+            <h3>押金托管（支持微信支付）<em>未托管</em></h3>
+            <div class="deposit">
+                平台押金托管（押金：1000元）
+                <em class="depositInit"></em>
             </div>
-        </li>
-    </ul> -->
+        </div> -->
 
-    <!-- /// 分割线套程序时删除 //////////////////-->
+		<!-- /// 分割线套程序时删除 //////////////////-->
 
-    <!-- 初始状态 -->
-    <!-- <div class="box boxDeposit"  id="box_init">
-        <h3>押金托管（支持微信支付）</h3>
-        <div class="deposit">
-            平台押金托管（押金：1000元）
-            <em class="depositInit" id="init"></em>
-        </div>
-    </div> -->
+		<!-- <div class="box boxInfo">
+			<h3>租聘信息</h3>
+			<ul>
+				<li>租借周期：2016年1月5日-2017年1月5日</li>
+				<li>押金：1000元</li>
+				<li>首付房租：3000元</li>
+				<li>首付订单总额：4000元</li>
+			</ul>
+		</div> -->
 
-    <!-- 已确认 -->
-    <!-- <div class="box boxDeposit" id="box_confirm">
-        <h3>押金托管（支持微信支付）</h3>
-        <div class="deposit">
-            平台押金托管（押金：1000元）
-            <em class="depositSelect" id="confirm"></em>
-        </div>
-    </div> -->
+		<!--<div class="btnPj" id="pj">
+			<a href="#" class="btn">评价</a>
+		</div>-->
+		
 
-    <!-- 已托管 -->
-    <!-- <div class="box boxDeposit">
-        <h3>
-            押金托管（支持微信支付）<em id="em">已托管</em>
-        </h3>
-        <div class="deposit">
-            平台押金托管（押金：1000元） <em class="depositSelect" id="already_deposit"></em>
-        </div>
-    </div> -->
+		<!-- /// 分割线套程序时删除 //////////////////-
+        
+        <!-- 选择托管方式 -->
+		<div class="popOrder" id="hold_choose">
+			<h3 class="titleTg">
+				选择托管方式<a class="close" id="next_close"></a>
+			</h3>
+			<div class="selectTg">
+				<span>平台托管押金</span><i>押金可线上支付</i>
+			</div>
+			<div class="btnTg">
+				<a  class="btn" id="next">确认</a>
+			</div>
+		</div>
 
-    <!-- 未托管 -->
-    <!-- <div class="box boxDeposit">
-        <h3>押金托管（支持微信支付）<em>未托管</em></h3>
-        <div class="deposit">
-            平台押金托管（押金：1000元）
-            <em class="depositInit"></em>
-        </div>
-    </div> -->
+		<!-- 选择支付方式 -->
+		<div class="popOrder" id="pay_choose">
+			<h3 class="titlePay">
+				选择支付方式<i>可选择线上支付</i><a class="close" id="pay_close"></a>
+			</h3>
+			<div class="selectPay">
+				<em class="payWx"><i></i>微信</em><em class="paySel"></em>
+			</div>
+			<div class="btnTg">
+				<a  class="btn" id="pay">立即支付</a>
+			</div>
+		</div>
 
-    <!-- /// 分割线套程序时删除 //////////////////-->
+		<!-- 线下结算 -->
+		<div class="popOrder" id="order_offline">
+			<h3 class="titleOffline">
+				确定取消平台押金托管<br>与公寓方线下结算？
+			</h3>
+			<div class="btnOffline">
+				<a href="#" class="btnQx" id="offline_cancel">取消</a><a 
+					class="btnPay" id="offline_sure">确定</a>
+			</div>
+		</div>
+		<div class="mask"></div>
 
-    <!-- <div class="box boxInfo">
-        <h3>租聘信息</h3>
-        <ul>
-            <li>租借周期：2016年1月5日-2017年1月5日</li>
-            <li>押金：1000元</li>
-            <li>首付房租：3000元</li>
-            <li>首付订单总额：4000元</li>
-        </ul>
-    </div> -->
-
-    <!--<div class="btnPj" id="pj">
-        <a href="#" class="btn">评价</a>
-    </div>-->
+	</div>
 
 
-    <!-- /// 分割线套程序时删除 //////////////////-
-
-    <!-- 选择托管方式 -->
-    <div class="popOrder" id="hold_choose">
-        <h3 class="titleTg">
-            选择托管方式<a class="close" id="next_close"></a>
-        </h3>
-        <div class="selectTg">
-            <span>平台托管押金</span><i>押金可线上支付</i>
-        </div>
-        <div class="btnTg">
-            <a class="btn" id="next">确认</a>
-        </div>
-    </div>
-
-    <!-- 选择支付方式 -->
-    <div class="popOrder" id="pay_choose">
-        <h3 class="titlePay">
-            选择支付方式<i>可选择线上支付</i><a class="close" id="pay_close"></a>
-        </h3>
-        <div class="selectPay">
-            <em class="payWx"><i></i>微信</em><em class="paySel"></em>
-        </div>
-        <div class="btnTg">
-            <a class="btn" id="pay">立即支付</a>
-        </div>
-    </div>
-
-    <!-- 线下结算 -->
-    <div class="popOrder" id="order_offline">
-        <h3 class="titleOffline">
-            确定取消平台押金托管<br>与公寓方线下结算？
-        </h3>
-        <div class="btnOffline">
-            <a class="btnQx" id="offline_cancel">取消</a><a
-                class="btnPay" id="offline_sure">确定</a>
-        </div>
-    </div>
-
-</div>
-<div class="mask" id="mask"></div>
 
 </body>
 <script language="JavaScript">
-    /* $("#init").click(function(){
-     $("#hold_choose").fadeIn();
-     }); */
-    var util = new Util();
-    var orderId = util.getUrlParam("orderId");
-    OrderById(orderId);
-    function OrderById(orderId) {
-        var topicDetailParam = '{"orderId" : ' + orderId + '}';
-        if (orderId == "" || orderId == null) {
-            return false;
-        }
-        var url = util.baseUrl + "/order/list";
-        var contentType = "application/json";
-        util.requestRemoteDataJsonPost(url, topicDetailParam, contentType, function (data) {
-            util.logResult(data);
-            if (data.code == 0 && data.result != '') {
-                var order = data.result;
-                var orderStatus = order[0].orderStatus;
-                var platformHost = order[0].platformHost;
-                var house = order[0].house;
-                var productId = order[0].productId;
-                var productName = order[0].productName;
-                var img = house.listpic;
-                var biller = order[0].biller;
-                var houseId = order[0].houseId;
-                var rent = house.roomRent / 100;
-                var houseSubject = order[0].houseSubject == null ? '' : order[0].houseSubject;
-                var roomTypeDesc = house.roomTypeDesc;
-                var roomType = eval('(' + roomTypeDesc + ')');
-                var address = house.address == null ? '' : house.address;
-                var startTime = order[0].startTime;
-                var endTime = order[0].endTime;
-                var discountRent = order[0].discountRent / 100;
-                var discountAmount = order[0].discountAmount / 100;
-                var deposit = order[0].deposit / 100;
-                var depositHtml = '';
-                if (orderStatus == 2) {
-                    depositHtml = '<div class="box boxDeposit"><h3>押金托管（支持微信支付）<em id="em" style="display:none;">已托管</em></h3><div class="deposit">平台押金托管（押金：1000元） <em class="depositInit" id="already_deposit"></em></div></div>';
-                }
-                if (orderStatus > 2) {
-                    depositHtml = '<div class="box boxDeposit"><h3>押金托管（支持微信支付）<em id="em">未托管</em></h3><div class="deposit">平台押金托管（押金：1000元） <em class="depositInit" id="already_deposit"></em></div></div>';
-                }
-                if (platformHost) {
-                    depositHtml = '<div class="box boxDeposit"><h3>押金托管（支持微信支付）<em id="em">已托管</em></h3><div class="deposit">平台押金托管（押金：1000元） <em class="depositSelect" id="already_deposit"></em></div></div>';
-                }
-                //0预约
-                var sectionType = 'iconXyy';
-                var orderLineType = 'orderLine orderDatilLine';
-                var rentInfo = '<div class="box boxInfo"><h3>租聘信息</h3><ul><li>租借周期:' + startTime + '-' + endTime + '</li><li>押金：' + deposit + '元</li><li>首付房租：' + discountRent + '元</li><li>首付订单总额：' + discountAmount + '元</li></ul></div>';
-                var pj = '<div class="btnPj" id="pj"><a onclick="goCommon(' + productId + ');" class="btn">评价</a></div>';
-                //订单状态: 0预约   1确认中 2已经确认 4入住  5结束 6取消
-                if (orderStatus == 0 || orderStatus == 1) {
-                    rentInfo = '';
-                    pj = '';
-                }
-                if (orderStatus == 1) {
-                    sectionType = 'iconQrz';
-                }
-                if (orderStatus == 2) {
-                    sectionType = 'iconYqr';
-                    orderLineType = 'orderLine orderOverLine';
-                }
-                if (orderStatus == 4) {
-                    sectionType = 'iconYrz';
-                    orderLineType = 'orderLine orderOverLine';
-                }
-                if (orderStatus == 6) {
-                    sectionType = 'iconYj';
-                    orderLineType = 'orderLine orderOverLine';
-                }
-                address = houseSubject + ' ' + address + roomType.room + "室" + roomType.hall + "厅" + roomType.toilet + "卫" + house.roomArea + "㎡";
-                var orderdetail = '<ul class="orderList headerTop">' +
-                    '<li><div class="boxList"><span class="orderTop">' +
-                    '<section class="' + sectionType + '"></section> ' +
-                    '<img src="' + img + '" />' +
-                    '<h3>' + productName + '</h3> ' +
-                    '<em>' + rent + '元／月<section class="iconYj" id="payMode">押一付三</section></em>' +
-                    '<i>' + address + '</i></span>' +
-                    '<span class="' + orderLineType + '">' +
-                    '<i class="orderLt"></i><i class="orderRt"></i></span> <a class="orderTel" href="tel:021-83844848"><em class="iconTel"></em>客服电话：021-83844848<i class="iconMore"></i></a></div></li></ul>';
-                $('.wrap').append(orderdetail).append(rentInfo).append(depositHtml).append(pj);
+	/* $("#init").click(function(){
+	 $("#hold_choose").fadeIn();
+	 }); */
+	var util = new Util();
+	var orderId = util.getUrlParam("orderId");
+	OrderById(orderId);
+	function OrderById(orderId) {
+		var topicDetailParam = '{"orderId" : '+orderId+'}';
+		if (orderId == "" || orderId == null) {
+			return false;
+		}
+		var url = util.baseUrl + "/order/list";
+		var contentType = "application/json";
+		util.requestRemoteDataJsonPost(url,topicDetailParam,contentType,function(data) {
+							util.logResult(data); 
+							if (data.code == 0 && data.result != '') {
+								var order = data.result;
+								var orderStatus = order[0].orderStatus;
+								var platformHost = order[0].platformHost;
+								var house = order[0].house;
+								var productId =order[0].productId;
+								var productName =order[0].productName;
+								var img= house.listpic;
+								var rent =house.roomRent/100;
+								var houseSubject = order[0].houseSubject==null?'': order[0].houseSubject;
+								var roomTypeDesc = house.roomTypeDesc;
+								var roomType=eval('(' + roomTypeDesc + ')');
+								var address = house.address==null?'': house.address;
+								var startTime=order[0].startTime;
+								var endTime=order[0].endTime;
+								var discountRent=order[0].discountRent/100;
+								var discountAmount=order[0].discountAmount/100;
+								var deposit=order[0].deposit/100;
+								var depositHtml = '';
+								if (orderStatus == 2) {
+									depositHtml = '<div class="box boxDeposit"><h3>押金托管（支持微信支付）<em id="em" style="display:none;">已托管</em></h3><div class="deposit">平台押金托管（押金：1000元） <em class="depositInit" id="already_deposit"></em></div></div>';
+								}
+								if (orderStatus > 2) {
+									depositHtml = '<div class="box boxDeposit"><h3>押金托管（支持微信支付）<em id="em">未托管</em></h3><div class="deposit">平台押金托管（押金：1000元） <em class="depositInit" id="already_deposit"></em></div></div>';
+								}
+								if (platformHost) {
+									depositHtml = '<div class="box boxDeposit"><h3>押金托管（支持微信支付）<em id="em">已托管</em></h3><div class="deposit">平台押金托管（押金：1000元） <em class="depositSelect" id="already_deposit"></em></div></div>';
+								}
+								//0预约
+								var sectionType = 'iconXyy';
+								var orderLineType='orderLine orderDatilLine';
+								var rentInfo='<div class="box boxInfo"><h3>租聘信息</h3><ul><li>租借周期:'+startTime+'-'+endTime+'</li><li>押金：'+deposit+'元</li><li>首付房租：'+discountRent+'元</li><li>首付订单总额：'+discountAmount+'元</li></ul></div>';
+								var pj='<div class="btnPj" id="pj"><a onclick="goCommon('+productId+');" class="btn">评价</a></div>';
+								//订单状态: 0预约   1确认中 2已经确认 3入住  4结束 5取消
+								if(orderStatus==0||orderStatus==1){
+									rentInfo='';
+									pj='';
+								}
+								if (orderStatus == 1) {
+									sectionType = 'iconQrz';
+								}
+								if (orderStatus == 2) {
+									sectionType = 'iconYqr';
+									orderLineType='orderLine orderOverLine';
+								}
+								if (orderStatus == 3) {
+									sectionType = 'iconYrz';
+									orderLineType='orderLine orderOverLine';
+								}
+								if (orderStatus == 4) {
+									sectionType = 'iconYj';
+									orderLineType='orderLine orderOverLine';
+								}
+								address=houseSubject+' '+address+roomType.room+"室"+roomType.hall+"厅"+roomType.toilet+"卫"+house.roomArea+"㎡";
+								var orderdetail='<ul class="orderList headerTop"><li><div class="boxList"><span class="orderTop"><section class="'+sectionType+'"></section> <img src="'+img+'" /><h3>'+productName+'</h3> <em>'+rent+'元／月<section class="iconYj">押一付三</section></em> <i>'+address+'</i></span> <span class="'+orderLineType+'"><i class="orderLt"></i><i class="orderRt"></i></span> <a class="orderTel"><em class="iconTel"></em>客服电话：021-83844848<i class="iconMore"></i></a></div></li></ul>';
+								$('.wrap').append(orderdetail).append(rentInfo).append(depositHtml).append(pj);
+								loadScript("js/orderdetail.js");
+							}
+						});
 
-                var paramJSON = {
-                    'productId': productId,
-                    'userId': biller,
-                    'houseId': houseId
-                };
-                var url = util.baseUrl + '/product/get_welfare_by_usr';
-                var contentType = "application/json";
-                util.requestRemoteDataJsonPost(url, JSON.stringify(paramJSON), contentType, function (data) {
-                    util.logResult(data);
-                    var code = data.code;
-                    if (code == 0) {
-                        hasCompanyWelfare = true;
-                        var result = data.result;
-                        var text = '';
-                        if(result.mortagageNum>0){
-                            text+='押' + parse(result.mortagageNum);
-                        }
-                        if(result.payMentNum>0){
-                            text+='付' + parse(result.payMentNum);
-                        }
-                        $("#payMode").html(text);
-                    }
-                });
-                loadScript("js/orderdetail.js");
-
-
-            }
-        });
-    }
-    function parse(num) {
-        switch (num) {
-            case 0:
-                return '零';
-            case 1:
-                return '一';
-            case 2:
-                return '二';
-            case 3:
-                return '三';
-            case 4:
-                return '四';
-            case 5:
-                return '五';
-            case 6:
-                return '陆';
-            case 7:
-                return '柒';
-            case 8:
-                return '捌';
-            case 9:
-                return '玖';
-            case 10:
-                return '拾一';
-            case 11:
-                return '拾一';
-            default:
-                return '';
-        }
-    }
-
-    function loadScript(url) {
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = url;
-        document.body.appendChild(script);
-    }
-    //跳转到评价页面
-    function goCommon(productId) {
-        window.location.href = 'evaluate.html?productId=' + productId;
-    }
+	}
+	function loadScript(url) {
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = url;
+		document.body.appendChild(script);
+	}
+	//跳转到评价页面
+	function goCommon(productId){
+		window.location.href='evaluate.html?productId='+productId;
+	}
 </script>
 </html>

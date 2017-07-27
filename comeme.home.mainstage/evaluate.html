@@ -180,11 +180,9 @@ $(function()
 	            	var userInfo = userInfos[replier];
 	            	var userInfo1 = JSON.stringify(userInfo) ;
 	            	var userInfoJson = eval('(' + userInfo1 + ')');
-	            	var time = commentInfo.createTime;
 	            	var comment_html = '<li>'
 	            					  +' <img src="'+userInfoJson.avatar+'" />'
 	            					  +' <h3>'+userInfoJson.nickName+'</h3>'
-                                      +'<span class="commonDate">'+time.substr(0,time.length-3)+'</span>'
 	            					  +' <span>'+commentInfo.formatContent+'</span>'
 	            					  +' </li>';
 	            		$('#ul_common').append(comment_html);
@@ -245,14 +243,12 @@ $(function()
 			util.logResult(data);
 			var code = data.code;
 			if(code == 0){
-//                loadCommonList();
-
-                $('#div_popSuccess').fadeIn();
+				$('#div_popSuccess').fadeIn();
 				setTimeout( function(){$( '#div_popSuccess' ).fadeOut();
 					}, ( 1 * 1000 ) );
 				$('#area_content').val('说点什么吧');
 			    $('#area_content').css('color','gray');
-                location.reload();
+			    loadCommonList();
 			}else{
 				$('#span_commonet').html('评论失败!');
 				$('#div_popSuccess').fadeIn();
